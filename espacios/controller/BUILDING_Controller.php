@@ -15,7 +15,7 @@ include '../locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
 
 function get_data_form() {
 
-    $idBuilding = $_GET['building'];
+    $idBuilding = $_POST['idBuilding'];
     $nameBuilding = $_POST['nameBuilding'];
     $addressBuilding = $_POST['addressBuilding'];
     $phoneBuilding = $_POST['phoneBuilding'];
@@ -44,26 +44,25 @@ if (!isset($_REQUEST['action'])){
                     new MESSAGE("building id is mandatory", $back );
                 }
 
+                $buildingid = $_GET['building'];
+
                 if (!isset($_SESSION['LOGIN'])){
                     new MESSAGE("Not in session. Editing buildings requires login", $back );
                 }
 
-                $buildingid = $_GET["building"];
-                $building = new BUILDING_Model($buildingid,"","","","");
-                $buildingEdit = $building->findByIdBuilding();
-
                 if (isset($_POST["submit"])) { 
                     $buildingEdit = get_data_form();
-                    $consult = $buildingEdit->updateBuilding();
+                    $consult = $buildingEdit->updateBuilding($buildingid);
+                    
                     if($consult){
-                        $buildings = $building->showAllBuilding();
-                        $message=(sprintf($strings["Building \"%s\" successfully updated."], $buildingid));
+                        $buildings = $buildingEdit->showAllBuilding();
+                        $message=(sprintf($strings["Building \"%s\" successfully updated."], $buildingEdit->getIdBuilding()));
                         new BUILDING_SHOWALL($buildings, '', $message);
                     } else {
                         new MESSAGE($answer, $back);
                     }
                 } else {
-                    $building = new BUILDING_Model($_GET['building'],'','','','');
+                    $building = new BUILDING_Model($buildingid,'','','','');
                     $values = $building->FillInBuilding();
                     new BUILDING_EDIT($values, '../index.php');
                 }
@@ -78,7 +77,7 @@ if (!isset($_REQUEST['action'])){
 
             if(comprobarPermisos("DELETE", $function)){
 
-                if (!isset($_GET['building'])){
+                if (!isset($_POST['building'])){
                     new MESSAGE("building id is mandatory", $back );
                 }
 
@@ -86,10 +85,10 @@ if (!isset($_REQUEST['action'])){
                     new MESSAGE("Not in session. Deleting buildings requires login", $back );
                 }
 
-                $buildingid = $_GET["building"];
+                $buildingid = $_POST["building"];
                 $building = new BUILDING_Model($buildingid,"","","","");
                 $buildingDelete = $building->findByIdBuilding();
-                // var_dump($buildingDelete);
+                var_dump($buildingid);
 
                 if ($buildingDelete != 'true') {
                     new MESSAGE("No such building with this id", $back );

@@ -1,6 +1,9 @@
 <?php
 
 include '../model/BUILDING_Model.php';
+include '../model/FLOOR_Model.php';
+include '../view/FLOOR_SHOWALL_View.php';
+include '../view/FLOOR_EDIT_View.php';
 include '../view/MESSAGE_View.php';
 include '../core/ACL.php';
 
@@ -13,14 +16,15 @@ include '../locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
 
 function get_data_form() {
 
-    // $idBuilding = $_GET['building'];
-    // $nameBuilding = $_POST['nameBuilding'];
-    // $addressBuilding = $_POST['addressBuilding'];
-    // $phoneBuilding = $_POST['phoneBuilding'];
-    // $responsibleBuilding = $_POST['responsibleBuilding'];
+    $idBuilding = $_POST['idBuilding'];
+    $idFloor = $_POST['idFloor'];
+    $nameFloor = $_POST['nameFloor'];
+    $planeFloor = $_POST['planFloor'];
+    $surfaceBuildingFloor = $_POST['surfaceBuildingFloor'];
+    $surfaceUsefulFloor = $_POST['surfaceUsefulFloor'];
    
-    // $building = new BUILDING_Model($idBuilding, $nameBuilding, $addressBuilding, $phoneBuilding, $responsibleBuilding);
-    // return $building;
+    $floor = new FLOOR_Model($idBuilding, $idFloor, $nameFloor, $planeFloor, $surfaceBuildingFloor, $surfaceUsefulFloor);
+    return $floor;
 }
 
 
@@ -35,72 +39,74 @@ if (!isset($_REQUEST['action'])){
 
         case  $strings['Edit']:
 
-			// if(comprobarPermisos('EDIT',$function)){
+			if(comprobarPermisos('EDIT', $function)){
 
-            //     if (!isset($_GET['building'])){
-            //         new MESSAGE("building id is mandatory", $back );
-            //     }
+                if (!isset($_GET['building'])){
+                    new MESSAGE("building id is mandatory", $back );
+                }
 
-            //     if (!isset($_SESSION['LOGIN'])){
-            //         new MESSAGE("Not in session. Editing buildings requires login", $back );
-            //     }
+                if (!isset($_GET['floor'])){
+                    new MESSAGE("floor id is mandatory", $back );
+                }
 
-            //     $buildingid = $_GET["building"];
-            //     $building = new BUILDING_Model($buildingid,"","","","");
-            //     $buildingEdit = $building->findByIdBuilding();
+                if (!isset($_SESSION['LOGIN'])){
+                    new MESSAGE("Not in session. Editing buildings requires login", $back );
+                }
 
-            //     if (isset($_POST["submit"])) { 
-            //         $buildingEdit = get_data_form();
-            //         $consult = $buildingEdit->updateBuilding();
-            //         if($consult){
-            //             $buildings = $building->showAllBuilding();
-            //             $message=(sprintf($strings["Building \"%s\" successfully updated."], $buildingid));
-            //             new BUILDING_SHOWALL($buildings, '', $message);
-            //         } else {
-            //             new MESSAGE($answer, $back);
-            //         }
-            //     } else {
-            //         $building = new BUILDING_Model($_GET['building'],'','','','');
-            //         $values = $building->FillInBuilding();
-            //         new BUILDING_EDIT($values, '../index.php');
-            //     }
-            // }else{
-            //     new MESSAGE("No tienes los permisos necesarios",'../index.php');
-            // }		
+                $buildingid = $_GET["building"];
+                $floorid = $_GET['floor'];
+
+                if (isset($_POST["submit"])) { 
+                    $floorEdit = get_data_form();
+                    $consult = $floorEdit->updateFloor($buildingid, $floorid);
+                    if($consult){
+                        $floors = $floorEdit->showAllFloors();
+                        $message=(sprintf($strings["Floor \"%s\" successfully updated."], $floorid));
+                        new FLOOR_SHOWALL($floors, '', $message);
+                    } else {
+                        new MESSAGE($answer, $back);
+                    }
+                } else {
+                    $floor = new FLOOR_Model($buildingid, $floorid,'','','','');
+                    $values = $floor->FillInFloor();
+                    new FLOOR_EDIT($values);
+                }
+            }else{
+                new MESSAGE("No tienes los permisos necesarios",'../index.php');
+            }		
                 break;
 
 
 
         case  $strings['Delete']:
 
-            // if(comprobarPermisos("DELETE", $function)){
+            if(comprobarPermisos("DELETE", $function)){
 
-            //     if (!isset($_GET['building'])){
-            //         new MESSAGE("building id is mandatory", $back );
-            //     }
+                if (!isset($_GET['building'])){
+                    new MESSAGE("building id is mandatory", $back );
+                }
 
-            //     if (!isset($_SESSION['LOGIN'])){
-            //         new MESSAGE("Not in session. Deleting buildings requires login", $back );
-            //     }
+                if (!isset($_SESSION['LOGIN'])){
+                    new MESSAGE("Not in session. Deleting buildings requires login", $back );
+                }
 
-            //     $buildingid = $_GET["building"];
-            //     $building = new BUILDING_Model($buildingid,"","","","");
-            //     $buildingDelete = $building->findByIdBuilding();
-            //     // var_dump($buildingDelete);
+                $buildingid = $_GET["building"];
+                $building = new BUILDING_Model($buildingid,"","","","");
+                $buildingDelete = $building->findByIdBuilding();
 
-            //     if ($buildingDelete != 'true') {
-            //         new MESSAGE("No such building with this id", $back );
-            //     }
+                if ($buildingDelete != 'true') {
+                    new MESSAGE("No such building with this id", $back );
+                }
 
-            //     $answer = $building->deleteBuilding($buildingid);
-            //     if($answer === 'true'){
-            //     new BUILDING_SHOWALL($buildings, '../index.php');
-            //     } else {
-            //         new MESSAGE($answer, $back );
-            //     }
-            // }else{
-            //     new MESSAGE("No tienes los permisos necesarios",'../index.php');
-            // }		
+                $answer = $building->deleteBuilding($buildingid);
+                if($answer === 'true'){
+                new BUILDING_SHOWALL($buildings, '../index.php');
+                } else {
+                    new MESSAGE($answer, $back );
+                }
+            }else{
+                new MESSAGE("No tienes los permisos necesarios",'../index.php');
+            }		
          break;
     
 
@@ -108,7 +114,7 @@ if (!isset($_REQUEST['action'])){
                     
             if(comprobarPermisos('SHOWALL', $function)){
                 if(isset($_GET['building'])){
-                $floor = new FLOOR_Model('','','','', $_GET['building']);
+                $floor = new FLOOR_Model($_GET['building'],'','','','','');
                 $floors = $floor->showAllFloors();
                 $message='';
                 new FLOOR_SHOWALL($floors, '../index.php', $message);

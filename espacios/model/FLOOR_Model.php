@@ -23,12 +23,13 @@ function __construct($FLOOR_idBuilding, $FLOOR_idFloor, $FLOOR_nameFloor, $FLOOR
 
 function ConectarBD() {
     $this->mysqli = new mysqli("localhost", "root", "", "espacios");
+    $this->mysqli->set_charset("utf8");
     if ($this->mysqli->connect_errno) {
         echo "Fallo al conectar a MySQL: (" . $this->mysqli->connect_errno . ") " . $this->mysqli->connect_error;
     }
 }
 
-function showAllFloor() {
+function showAllFloors() {
     $this->ConectarBD();
     $sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->FLOOR_idBuilding'" ;
     if (!($resultado = $this->mysqli->query($sql))) {
@@ -42,4 +43,29 @@ function showAllFloor() {
         }
         return $toret;
     }
+}
+
+
+function FillInFloor() {
+    $this->ConectarBD();
+    $sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->FLOOR_idBuilding' AND idFloor = '$this->FLOOR_idFloor'";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        return 'Error en la consulta sobre la base de datos';
+    } else {
+        $result = $resultado->fetch_array();
+        return $result;
+    }
+}
+
+function updateFloor($idBuilding, $idFloor) {
+    $this->ConectarBD();
+    $sql = "UPDATE FLOOR SET idFloor = '$this->FLOOR_idFloor', nameFloor = '$this->FLOOR_nameFloor', planFloor = '$this->FLOOR_planFloor', surfaceBuildingFloor = '$this->FLOOR_surfaceBuildingFloor', surfaceUsefulFloor = '$this->FLOOR_surfaceUsefulFloor' WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor'";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        return 'Error en la consulta sobre la base de datos.';
+    } else {
+        return true;
+    }
+}
+
+
 }

@@ -88,10 +88,10 @@ CREATE TABLE IF NOT EXISTS FLOOR(
   idFloor char(2) COLLATE utf8_spanish_ci NOT NULL,
   nameFloor varchar(25) COLLATE utf8_spanish_ci NOT NULL,
   planFloor varchar(500) COLLATE utf8_spanish_ci DEFAULT '../img/floor.jpg',
-  surfaceBuildingFloor decimal(5,2) NOT NULL,
-  surfaceUsefulFloor decimal(5,2) NOT NULL,
+  surfaceBuildingFloor decimal(10,2) NOT NULL,
+  surfaceUsefulFloor decimal(10,2) NOT NULL,
   PRIMARY KEY(idFloor ,idBuilding),
-  FOREIGN KEY (idBuilding) REFERENCES BUILDING (idBuilding) ON DELETE CASCADE
+  FOREIGN KEY (idBuilding) REFERENCES BUILDING (idBuilding) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8  COLLATE=utf8_spanish_ci;
 
 CREATE TABLE IF NOT EXISTS SPACE(
@@ -99,10 +99,10 @@ CREATE TABLE IF NOT EXISTS SPACE(
   idFloor char(2) COLLATE utf8_spanish_ci NOT NULL,
   idSpace char(5) COLLATE utf8_spanish_ci NOT NULL,
   nameSpace varchar(225) COLLATE utf8_spanish_ci NOT NULL,
-  surfaceSpace decimal(7,2) NOT NULL,
+  surfaceSpace decimal(10,2) NOT NULL,
   numberInventorySpace varchar(10) DEFAULT '',
   PRIMARY KEY(idFloor ,idBuilding,idSpace),
-  FOREIGN KEY (idBuilding) REFERENCES BUILDING (idBuilding)  ON DELETE CASCADE,
+  FOREIGN KEY (idBuilding) REFERENCES BUILDING (idBuilding)  ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (idFloor) REFERENCES FLOOR (idFloor)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8  COLLATE=utf8_spanish_ci;
 
@@ -157,11 +157,11 @@ INSERT INTO BUILDING (idBuilding, nameBuilding, addressBuilding, phoneBuilding, 
 ('OSBI0', 'Biblioteca Universitaria Rosalía de Castro', 'Camino Seara B 4', 988387192, 'NO SE SABE');
 
 INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES
-('OSBI0', '04', 'Planta 04', 215.20, 181.25),
-('OSBI0', '03', 'Planta 03', 214.80, 179.60),
-('OSBI0', '02', 'Planta 02', 215.20, 181.25),
-('OSBI0', '01', 'Planta 01', 818.30, 486.60),
-('OSBI0', '00', 'Planta 00', 1895.80, 1428.75),
+('OSBI0', '04', 'Carta Planta', 215.20, 181.25),
+('OSBI0', '03', 'Terceira Planta', 214.80, 179.60),
+('OSBI0', '02', 'Segunda Planta', 215.20, 181.25),
+('OSBI0', '01', 'Primeira Planta', 818.30, 486.60),
+('OSBI0', '00', 'Planta Baixa', 1895.80, 1428.75),
 ('OSBI0', 'S1', 'Soto 01', 1800.40, 894.20),
 ('OSBI0', 'S2', 'Soto 02', 1338.40, 1226.70);
 

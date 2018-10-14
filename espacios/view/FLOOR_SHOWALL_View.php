@@ -1,12 +1,12 @@
 <?php
 
-class BUILDING_SHOWALL{
-    private $buildings;
+class FLOOR_SHOWALL{
+    private $floors;
     private $back;
     private $popMessage;
 
-    function __construct($buildings, $back, $message) {
-        $this->buildings = $buildings;
+    function __construct($floors, $back, $message) {
+        $this->floors = $floors;
         $this->back = $back;
 
         if(empty($message)){
@@ -18,7 +18,7 @@ class BUILDING_SHOWALL{
 
     function render() {
         include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
-        $listTitles = array('idBuilding', 'nameBuilding', 'addressBuilding', 'phoneBuilding', 'responsibleBuilding');
+        $listTitles = array('idBuilding', 'nameFloor', 'planFloor', 'surfaceBuildingFloor', 'surfaceUsefulFloor');
         ?> 
 
       <?php include 'header.php' ?>
@@ -33,9 +33,12 @@ class BUILDING_SHOWALL{
     <div class="container">
       <div class="row center-row">
         <div class="col-lg-12 center-block">
-          <div id="subtitle">
-            <h1><?php echo $strings['Buildings'] ?></h1>
+          <div id="subtitleView">
+            <h1><?php echo $strings['nameBuilding']; echo " "; echo $_GET['building']; ?></h1>
             </div>
+            <div id="subsubtitle">
+				<?php echo "Información sobre las plantas del edificio" ?>
+                </div>
               <div class="col-lg-12 center-block2">
                 <table id="dataTable" class="table text-center">
                   <thead>
@@ -47,14 +50,14 @@ class BUILDING_SHOWALL{
                       </tr>
                       </thead>
                       <tbody>
-                      <?php for ($j = 0; $j < count($this->buildings); $j++) {
+                      <?php for ($j = 0; $j < count($this->floors); $j++) {
                                     echo "<tr>";
-                                    foreach ($this->buildings [$j] as $key => $value) {
+                                    foreach ($this->floors [$j] as $key => $value) {
                                         for ($i = 0; $i < count($listTitles); $i++) {
                                             if ($key === $listTitles[$i]) {
                                                 echo "<td>";
                                                 if ($key === 'idBuilding') {?>
-                                            <a title="<?php echo $strings['Show']?>" href='BUILDING_Controller.php?action=<?php echo $strings['Show']?>&building=<?php echo $this->buildings[$j]['idBuilding']?>'><?php echo $value?></a>                
+                                                <a title="<?php echo $strings['Show']?>" href='FLOOR_Controller.php?action=<?php echo $strings['Show']?>&building=<?php echo $this->floors[$j]['idBuilding']?>&floor=<?php echo $this->floors[$j]['idFloor']?>'> <?php echo $this->floors[$j]['idBuilding'].$this->floors[$j]['idFloor']?></a> 
                                            <?php }else {
                                             echo $value;
                                         }
@@ -64,9 +67,9 @@ class BUILDING_SHOWALL{
                             } 
                             ?>
                             <td>
-                                <a href="FLOOR_Controller.php?&building=<?php echo $this->buildings[$j]['idBuilding']?>">
-                                <span title="<?php echo $strings['Show Floors']?>" class="btn btn-success btn-sm fa fa-plus"></a>
-                                <a href="BUILDING_Controller.php?action=<?php echo $strings['Edit']?>&building=<?php echo $this->buildings[$j]['idBuilding']?>">
+                                <a href="SPACE_Controller.php?&building=<?php echo $this->floors[$j]['idBuilding']?>&floor=<?php echo $this->floors[$j]['idFloor']?>">
+                                <span title="<?php echo $strings['Show Space']?>" class="btn btn-success btn-sm fa fa-plus"></a>
+                                <a href="FLOOR_Controller.php?action=<?php echo $strings['Edit']?>&building=<?php echo $this->floors[$j]['idBuilding']?>&floor=<?php echo $this->floors[$j]['idFloor']?>">
                                 <span title="<?php echo $strings['Edit Building']?>" class="btn btn-primary btn-sm fa fa-pencil"></a>
                                     <i title="<?php echo $strings['Delete Building']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#confirm-submit"></i>
                                     <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -76,11 +79,11 @@ class BUILDING_SHOWALL{
                                                     <?php echo $strings["Attention"]?>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <?php echo $strings["Are you sure you want to delete this building?"]?><br/> <br>
-                                                    <b><strong><?php echo $strings["The information that this building has will be lost"]?></strong></b>
+                                                    <?php echo $strings["Are you sure you want to delete this floor?"]?><br/> <br>
+                                                    <b><strong><?php echo $strings["The information that this floor has will be lost"]?></strong></b>
                                                 </div>
-                                                <form method="POST" action="BUILDING_Controller.php?action=<?= htmlentities($strings['Delete'])?>">
-                                                    <input type="hidden" name="building" value=<?php echo $this->buildings[$j]['idBuilding']?>>
+                                                <form method="POST" action="BUILDING_Controller.php?action=<?= htmlentities($strings['Delete'])?>&building=<?= htmlentities($this->floors[$j]['idBuilding'])?>&floor=<?php echo $this->floors[$j]['idFloor']?>">
+                                                    <input type="hidden" name="building" value=<?php echo $this->floors[$j]['idBuilding']?>>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $strings["Cancel"]?></button>
                                                         <button type="submit" name="submit" id="submit" class="btn btn-success success"><?php echo $strings["Ok"]?></a>

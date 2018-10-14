@@ -24,7 +24,7 @@ class BUILDING_EDIT{
 				<form method="POST" action="BUILDING_Controller.php?action=<?php echo $strings['Edit']?>&building=<?php echo $this->building['idBuilding']?>">
                 <div id="optionalInput">
                     	<div class="inputWithIconLogin inputIconBg">
-                        	<input type="text" placeholder="<?php echo $this->building['idBuilding']?>" readonly>
+                        	<input type="text" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?=$this->building['idBuilding']?>">
                         	<i class="fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
                    		 </div>
 					</div>
