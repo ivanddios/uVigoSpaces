@@ -2,12 +2,12 @@
 
 class BUILDING_Model {
 
-	var $BUILDING_idBuilding;
-	var $BUILDING_name;
-	var $BUILDING_address;
-	var $BUILDING_phone;
-	var $BUILDING_responsible;
-	var $mysqli;
+	private $BUILDING_idBuilding;
+	private $BUILDING_name;
+	private $BUILDING_address;
+	private $BUILDING_phone;
+	private $BUILDING_responsible;
+	private $mysqli;
 
 
 function __construct($BUILDING_idBuilding, $BUILDING_name, $BUILDING_address, $BUILDING_phone, $BUILDING_responsible)
@@ -26,7 +26,7 @@ function ConectarBD() {
     }
 }
 
-function index() {
+function showAllBuilding() {
     $this->ConectarBD();
     $sql = "SELECT * FROM BUILDING";
     if (!($resultado = $this->mysqli->query($sql))) {
@@ -44,18 +44,18 @@ function index() {
 
 
 
-function findbyId() {
+function findbyIdBuilding() {
 	$this->ConectarBD();
-	$sql = "SELECT * FROM BUILDING WHERE idBuilding = '" . $this->BUILDING_idBuilding . "'";
+	$sql = "SELECT * FROM BUILDING WHERE idBuilding = ' $this->BUILDING_idBuilding'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows == 1) {
-			return true;
+		return true;
 	} else {
 		return "No exist any building with this id";
 	}
 }
 
-function delete() {
+function deleteBuilding() {
     $this->ConectarBD();
     $sql = "DELETE FROM BUILDING WHERE idBuilding ='$this->BUILDING_idBuilding'";
     if (!($resultado = $this->mysqli->query($sql))) {
@@ -65,18 +65,25 @@ function delete() {
     }
 }
 
-// public function findAll() {
-//     $this->ConectarBD();
-//     $stmt = $this->msqli->query("SELECT DISTINCT * FROM BUILDING");
-//     $building_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+function FillInBuilding() {
+    $this->ConectarBD();
+    $sql = "SELECT * FROM BUILDING WHERE idBuilding = '$this->BUILDING_idBuilding'";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        return 'Error en la consulta sobre la base de datos';
+    } else {
+        $result = $resultado->fetch_array();
+        return $result;
+    }
+}
 
-//     $buildings = array();
-
-//     foreach ($building_db as $building) {
-//         array_push($buildings, new Building($building["idBuilding"], $building["nameBuilding"],  $building["addressBuilding"], $building['phoneBuilding'],));
-//     }
-
-//     return $polls;
-// }
+function updateBuilding() {
+    $this->ConectarBD();
+    $sql = "UPDATE building SET nameBuilding = '$this->BUILDING_name', addressBuilding = '$this->BUILDING_address', phoneBuilding = '$this->BUILDING_phone', responsibleBuilding = '$this->BUILDING_responsible' WHERE idBuilding = '$this->BUILDING_idBuilding'";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        return 'Error en la consulta sobre la base de datos.';
+    } else {
+        return true;
+    }
+}
 
 }

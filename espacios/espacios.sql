@@ -126,19 +126,30 @@ INSERT INTO ACTION (idAction, nameAction, descripAction) VALUES
 
 
 INSERT INTO FUNCTIONALITY(idFunction, nameFunction, descripFunction) VALUES 
-('1', 'BUILDING', 'Building Controller');
+('1', 'BUILDING', 'Building Controller'),
+('2', 'FLOOR', 'Floor Controller');
 
 INSERT INTO ACTION_FUNCTIONALITY (idAction, idFunction) VALUES
 ('1', '1'),
 ('2', '1'),
 ('3', '1'),
-('4', '1');
+('4', '1'),
+/*FLOOOR*/
+('1', '2'),
+('2', '2'),
+('3', '2'),
+('4', '2');
 
 INSERT INTO PERMISSION (idGroup, idFunction, idAction) VALUES
 ('1', '1', '1'),
 ('1', '1', '2'),
 ('1', '1', '3'),
-('1', '1', '4');
+('1', '1', '4'),
+/*FLOOR*/
+('1', '2', '1'),
+('1', '2', '2'),
+('1', '2', '3'),
+('1', '2', '4');
 
 
 
