@@ -36,7 +36,7 @@
     <!-- HEADER -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light">
-            <a title="Home" class="navbar-brand" href="">
+            <a title="Home" class="navbar-brand" href="../index.php">
                 <img height="38" src="../img/logo.png" alt="logo universidade de vigo"/>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -47,7 +47,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?controller=polls&action=add">Edificios</a>
+                        <a class="nav-link" href="../index.php">Edificios</a>
                     </li>
                 </ul>
                 <div class="nav-item dropdown">

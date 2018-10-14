@@ -68,7 +68,7 @@ class FLOOR_SHOWALL{
                             ?>
                             <td>
                                 <a href="SPACE_Controller.php?&building=<?php echo $this->floors[$j]['idBuilding']?>&floor=<?php echo $this->floors[$j]['idFloor']?>">
-                                <span title="<?php echo $strings['Show Space']?>" class="btn btn-success btn-sm fa fa-plus"></a>
+                                <span title="<?php echo $strings['Show Space']?>" class="btn btn-success btn-sm fa fa-cube"></a>
                                 <a href="FLOOR_Controller.php?action=<?php echo $strings['Edit']?>&building=<?php echo $this->floors[$j]['idBuilding']?>&floor=<?php echo $this->floors[$j]['idFloor']?>">
                                 <span title="<?php echo $strings['Edit Building']?>" class="btn btn-primary btn-sm fa fa-pencil"></a>
                                     <i title="<?php echo $strings['Delete Building']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#confirm-submit"></i>

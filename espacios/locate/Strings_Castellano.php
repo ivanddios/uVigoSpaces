@@ -45,5 +45,7 @@ $strings = array(
 "What is the constructed surface?" => "¿Cuál es la superficie construída?",
 "What is the useful surface?" => "¿Cuál es la superficie útil?",
 "Floor \"%s\" successfully updated." => "La planta \"%s\" se ha modificado con éxito",
+
+"Show Space" => "Ver Espacio"
 )
 ?>

@@ -37,6 +37,8 @@ class BUILDING_SHOWALL{
             <h1><?php echo $strings['Buildings'] ?></h1>
             </div>
               <div class="col-lg-12 center-block2">
+              <a href="BUILDING_Controller.php?&action=<?php echo $strings['Add']?>">
+                <span title="<?php echo $strings['Add Building']?>" class="btn btn-success btn-sm fa fa-plus"></a>
                 <table id="dataTable" class="table text-center">
                   <thead>
                       <tr>
@@ -65,7 +67,7 @@ class BUILDING_SHOWALL{
                             ?>
                             <td>
                                 <a href="FLOOR_Controller.php?&building=<?php echo $this->buildings[$j]['idBuilding']?>">
-                                <span title="<?php echo $strings['Show Floors']?>" class="btn btn-success btn-sm fa fa-plus"></a>
+                                <span title="<?php echo $strings['Show Floors']?>" class="btn btn-success btn-sm fa fa-building"></a>
                                 <a href="BUILDING_Controller.php?action=<?php echo $strings['Edit']?>&building=<?php echo $this->buildings[$j]['idBuilding']?>">
                                 <span title="<?php echo $strings['Edit Building']?>" class="btn btn-primary btn-sm fa fa-pencil"></a>
                                     <i title="<?php echo $strings['Delete Building']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#confirm-submit"></i>

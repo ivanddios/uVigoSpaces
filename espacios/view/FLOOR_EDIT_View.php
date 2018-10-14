@@ -21,6 +21,7 @@ class FLOOR_EDIT{
 			<div class="col-lg-12 center-block2">
 				<form method="POST" action="FLOOR_Controller.php?action=<?php echo $strings['Edit']?>&building=<?php echo $this->floor['idBuilding']?>&floor=<?php echo $this->floor['idFloor']?>">
                 <div id="optionalInput">
+						<label><?php echo $strings['idBuilding']; ?></label>
                     	<div class="inputWithIconLogin inputIconBg">
                         	<input type="text" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?=$this->floor['idBuilding']?>" readonly>
                         	<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
@@ -39,13 +40,6 @@ class FLOOR_EDIT{
 						</div>
 					</div>
 
-                    <div id="optionalInput">
-						<div class="inputWithIconLogin inputIconBg">
-							<input type="text" name="planFloor" placeholder="<?= $strings['Is there a plan for this floor?']?> " value="<?=$this->floor['planFloor']?>">
-							<i class="fa  fa-picture-o fa-lg fa-fw" aria-hidden="true"></i>
-						</div>
-					</div>
-
 					<div id="optionalInput">
 						<div class="inputWithIconLogin inputIconBg">
 							<input type="text" name="surfaceBuildingFloor" placeholder="<?= $strings['What is the constructed surface?']?>" value="<?=$this->floor['surfaceBuildingFloor']?>">
@@ -58,6 +52,14 @@ class FLOOR_EDIT{
 							<i class="fa fa-area-chart fa-lg fa-fw" aria-hidden="true"></i>
 						</div>
 					</div>
+
+                    <div id="optionalInput">
+						<div class="inputWithIconLogin inputIconBg">
+							<a target='_blank' href='<?php echo $this->floor['planFloor']; ?>'><img src='<?php echo $this->floor['planFloor']; ?>' width="250" height="250"></a>
+							<input type="file" name="planFloor" accept="image/*" value="<?=$this->floor['planFloor']?>">
+						</div>
+					</div>
+
 					<button type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
 				</form>
 				<a href="FLOOR_Controller.php?building=<?php echo $this->floor['idBuilding']?>"><?= $strings["Back"] ?></a>
