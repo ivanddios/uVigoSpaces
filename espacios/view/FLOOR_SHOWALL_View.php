@@ -18,7 +18,7 @@ class FLOOR_SHOWALL{
 
     function render() {
         include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
-        $listTitles = array('idBuilding', 'nameFloor', 'planFloor', 'surfaceBuildingFloor', 'surfaceUsefulFloor');
+        $listTitles = array('idBuilding', 'nameFloor', 'planeFloor', 'surfaceBuildingFloor', 'surfaceUsefulFloor');
         ?> 
 
       <?php include 'header.php' ?>
@@ -40,6 +40,8 @@ class FLOOR_SHOWALL{
 				<?php echo "Información sobre las plantas del edificio" ?>
                 </div>
               <div class="col-lg-12 center-block2">
+                    <a href="FLOOR_Controller.php?&action=<?php echo $strings['Add']?>&building=<?php echo $_GET['building']?>">
+                    <span title="<?php echo $strings['Add Floor']?>" class="btn btn-success btn-sm fa fa-plus"></a>
                 <table id="dataTable" class="table text-center">
                   <thead>
                       <tr>

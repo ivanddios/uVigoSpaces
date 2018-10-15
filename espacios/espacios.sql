@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS FLOOR(
   idBuilding char(5) COLLATE utf8_spanish_ci NOT NULL,
   idFloor char(2) COLLATE utf8_spanish_ci NOT NULL,
   nameFloor varchar(25) COLLATE utf8_spanish_ci NOT NULL,
-  planFloor varchar(500) COLLATE utf8_spanish_ci DEFAULT '../img/floor.jpg',
+  planeFloor varchar(500) COLLATE utf8_spanish_ci,
   surfaceBuildingFloor decimal(10,2) NOT NULL,
   surfaceUsefulFloor decimal(10,2) NOT NULL,
   PRIMARY KEY(idFloor ,idBuilding),

@@ -55,8 +55,8 @@ class FLOOR_EDIT{
 
                     <div id="optionalInput">
 						<div class="inputWithIconLogin inputIconBg">
-							<a target='_blank' href='<?php echo $this->floor['planFloor']; ?>'><img src='<?php echo $this->floor['planFloor']; ?>' width="250" height="250"></a>
-							<input type="file" name="planFloor" accept="image/*" value="<?=$this->floor['planFloor']?>">
+							<a target='_blank' href='<?php echo $this->floor['planeFloor']; ?>'><img src='<?php echo $this->floor['planeFloor']; ?>' width="250" height="250"></a>
+							<input type="file" name="planeFloor" accept="image/*" value="<?=$this->floor['planeFloor']?>">
 						</div>
 					</div>
 

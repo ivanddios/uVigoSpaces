@@ -46,8 +46,6 @@ function showAllBuilding() {
     }
 }
 
-
-
 function findbyIdBuilding() {
 	$this->ConectarBD();
 	$sql = "SELECT * FROM BUILDING WHERE idBuilding = '$this->BUILDING_idBuilding'";
@@ -58,6 +56,17 @@ function findbyIdBuilding() {
 		return "No exist any building with this id";
 	}
 }
+
+function insertBuilding() {
+    $this->ConectarBD();
+    $sql = "INSERT INTO BUILDING (idBuilding, nameBuilding, addressBuilding, phoneBuilding, responsibleBuilding) VALUES ('$this->BUILDING_idBuilding', '$this->BUILDING_name', '$this->BUILDING_address', '$this->BUILDING_phone', '$this->BUILDING_responsible')";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        return 'Error en la consulta sobre la base de datos.';
+    } else {
+        return true;
+    }
+}
+
 
 function deleteBuilding() {
     $this->ConectarBD();
@@ -82,7 +91,6 @@ function FillInBuilding() {
 
 function updateBuilding($idBuilding) {
     $this->ConectarBD();
-    var_dump($this->BUILDING_idBuilding);
     $sql = "UPDATE BUILDING SET idBuilding = '$this->BUILDING_idBuilding', nameBuilding = '$this->BUILDING_name', addressBuilding = '$this->BUILDING_address', phoneBuilding = '$this->BUILDING_phone', responsibleBuilding = '$this->BUILDING_responsible' WHERE idBuilding = '$idBuilding'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error en la consulta sobre la base de datos.';

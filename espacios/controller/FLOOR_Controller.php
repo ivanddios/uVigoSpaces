@@ -4,6 +4,7 @@ include '../model/BUILDING_Model.php';
 include '../model/FLOOR_Model.php';
 include '../view/FLOOR_SHOWALL_View.php';
 include '../view/FLOOR_EDIT_View.php';
+include '../view/FLOOR_ADD_View.php';
 include '../view/MESSAGE_View.php';
 include '../core/ACL.php';
 
@@ -19,7 +20,13 @@ function get_data_form() {
     $idBuilding = $_POST['idBuilding'];
     $idFloor = $_POST['idFloor'];
     $nameFloor = $_POST['nameFloor'];
-    $planeFloor = $_POST['planFloor'];
+
+    if (isset($_FILES['planeFloor']['name']) && ($_FILES['planeFloor']['name'] !== '')) {
+        $planeFloor = '../Documents/Buildings/' . $POST['idBuilding'] . '/Plane/' . $_FILES['planeFloor']['name'];
+    } else {
+        $planeFloor = '';
+    }
+
     $surfaceBuildingFloor = $_POST['surfaceBuildingFloor'];
     $surfaceUsefulFloor = $_POST['surfaceUsefulFloor'];
    
@@ -36,6 +43,42 @@ if (!isset($_REQUEST['action'])){
 }
 
 	Switch ($_REQUEST['action']){
+
+        case  $strings['Add']:
+
+        if(comprobarPermisos('ADD',$function)){
+
+            if (!isset($_GET['building'])){
+                new MESSAGE("building id is mandatory", $back );
+            }
+            
+            $building = $_GET['building'];
+
+            if (!isset($_SESSION['LOGIN'])){
+                new MESSAGE("Not in session. Add floor requires login", $back );
+            }
+
+            if (isset($_POST["submit"])) { 
+                $floorAdd = get_data_form();
+                $consult = $floorAdd->insertFloor();
+                
+                if($consult){
+                    $floors = $floorAdd->showAllFloors();
+                    $message=(sprintf($strings["Floor \"%s\" successfully added."], $floorAdd->getIdBuilding().$floorAdd->getIdFloor()));
+                    new FLOOR_SHOWALL($floors, '', $message);
+                } else {
+                    new MESSAGE($answer, $back);
+                }
+            } else {
+                new FLOOR_ADD($building);
+            }
+        }else{
+            new MESSAGE("No tienes los permisos necesarios",'../index.php');
+        }		
+           
+        break;
+
+
 
         case  $strings['Edit']:
 

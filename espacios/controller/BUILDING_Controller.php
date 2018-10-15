@@ -4,6 +4,7 @@ include '../model/BUILDING_Model.php';
 include '../view/MESSAGE_View.php';
 include '../view/BUILDING_SHOWALL_View.php';
 include '../view/BUILDING_EDIT_View.php';
+include '../view/BUILDING_ADD_View.php';
 include '../core/ACL.php';
 
 if(!isset($_SESSION)){
@@ -34,6 +35,35 @@ if (!isset($_REQUEST['action'])){
 }
 
 	Switch ($_REQUEST['action']){
+
+
+        case  $strings['Add']:
+
+			if(comprobarPermisos('ADD',$function)){
+
+                if (!isset($_SESSION['LOGIN'])){
+                    new MESSAGE("Not in session. Add building requires login", $back );
+                }
+
+                if (isset($_POST["submit"])) { 
+                    $buildingAdd = get_data_form();
+                    $consult = $buildingAdd->insertBuilding();
+                    
+                    if($consult){
+                        $buildings = $buildingAdd->showAllBuilding();
+                        $message=(sprintf($strings["Building \"%s\" successfully added."], $buildingAdd->getIdBuilding()));
+                        new BUILDING_SHOWALL($buildings, '', $message);
+                    } else {
+                        new MESSAGE($answer, $back);
+                    }
+                } else {
+                    new BUILDING_ADD();
+                }
+            }else{
+                new MESSAGE("No tienes los permisos necesarios",'../index.php');
+            }		
+               
+        break;
 
 
         case  $strings['Edit']:
@@ -68,9 +98,9 @@ if (!isset($_REQUEST['action'])){
                 }
             }else{
                 new MESSAGE("No tienes los permisos necesarios",'../index.php');
-            }		
-                break;
+            }
 
+        break;
 
 
         case  $strings['Delete']:
@@ -117,7 +147,7 @@ if (!isset($_REQUEST['action'])){
                 new MESSAGE("No tienes los permisos necesarios",'../index.php');
             }
             
-         break;
+        break;
 }
 
 

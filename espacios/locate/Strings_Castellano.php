@@ -29,11 +29,13 @@ $strings = array(
 "Show Floors" => "Ver plantas",
 "Edit Building" => "Editar Edificio",
 "Delete Building" => "Eliminar Edificio",
+"Add Building" => "Añadir Edificio",
+"Building \"%s\" successfully added." => "El edificio \"%s\" se ha añadido con éxito",
 
 "idBuildingidFloor" => "Identificador",
 "idFloor" => "Identificador",
 "nameFloor" => "Nombre",
-"planFloor" => "Plano",
+"planeFloor" => "Plano",
 "surfaceBuildingFloor" => "Sup. Construida",
 "surfaceUsefulFloor" => "Sup. Útil",
 "Show Spaces" => "Ver Espacios",
@@ -45,7 +47,9 @@ $strings = array(
 "What is the constructed surface?" => "¿Cuál es la superficie construída?",
 "What is the useful surface?" => "¿Cuál es la superficie útil?",
 "Floor \"%s\" successfully updated." => "La planta \"%s\" se ha modificado con éxito",
+"Add Floor" => "Añadir Planta",
+"Floor \"%s\" successfully added." => "La planta \"%s\" se ha añadido con éxito",
 
-"Show Space" => "Ver Espacio"
+"Show Space" => "Ver Espacio",
 )
 ?>

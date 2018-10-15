@@ -243,6 +243,10 @@ border-radius:4px 0 0 4px;
     line-height: 0.84em;
 }
 
+.fa-fw {
+	width: 1.6em;
+}
+
 
 #inputLogin{
 
