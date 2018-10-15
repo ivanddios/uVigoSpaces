@@ -88,24 +88,27 @@ if (!isset($_REQUEST['action'])){
                     new MESSAGE("building id is mandatory", $back );
                 }
 
+                $buildingid = $_GET["building"];
+
                 if (!isset($_GET['floor'])){
                     new MESSAGE("floor id is mandatory", $back );
                 }
 
+                $floorid = $_GET['floor'];
+
                 if (!isset($_SESSION['LOGIN'])){
                     new MESSAGE("Not in session. Editing buildings requires login", $back );
                 }
-
-                $buildingid = $_GET["building"];
-                $floorid = $_GET['floor'];
+            
 
                 if (isset($_POST["submit"])) { 
                     $floorEdit = get_data_form();
                     $consult = $floorEdit->updateFloor($buildingid, $floorid);
                     if($consult){
-                        $floors = $floorEdit->showAllFloors();
-                        $message=(sprintf($strings["Floor \"%s\" successfully updated."], $floorid));
-                        new FLOOR_SHOWALL($floors, '', $message);
+                        //$floors = $floorEdit->showAllFloors();
+                        $_SESSION['popMessage'] = (sprintf($strings["Floor \"%s\" successfully updated."], $floorid));
+                        //new FLOOR_SHOWALL($floors);
+                        header("Location: FLOOR_Controller.php?building=$buildingid");
                     } else {
                         new MESSAGE($answer, $back);
                     }
@@ -128,22 +131,30 @@ if (!isset($_REQUEST['action'])){
                 if (!isset($_GET['building'])){
                     new MESSAGE("building id is mandatory", $back );
                 }
+                $buildingid = $_GET["building"];
+
+                if (!isset($_GET['floor'])){
+                    new MESSAGE("floor id is mandatory", $back );
+                }
+                $floorid = $_GET["floor"];
 
                 if (!isset($_SESSION['LOGIN'])){
-                    new MESSAGE("Not in session. Deleting buildings requires login", $back );
+                    new MESSAGE("Not in session. Deleting floors requires login", $back );
                 }
 
-                $buildingid = $_GET["building"];
-                $building = new BUILDING_Model($buildingid,"","","","");
-                $buildingDelete = $building->findByIdBuilding();
+                $floor = new FLOOR_Model($buildingid, $floorid, "","","","");
+                $floorDelete = $floor->findFloor();
 
-                if ($buildingDelete != 'true') {
-                    new MESSAGE("No such building with this id", $back );
+                if ($floorDelete != 'true') {
+                    new MESSAGE("No such floor with this id", $back );
                 }
 
-                $answer = $building->deleteBuilding($buildingid);
-                if($answer === 'true'){
-                new BUILDING_SHOWALL($buildings, '../index.php');
+                $answer = $floor->deleteFloor($buildingid, $floorid);
+                if($answer){ 
+                    //$floors = $floor->showAllFloors();
+                    //new FLOOR_SHOWALL($floors, '../index.php', $answer);
+                    $_SESSION['popMessage'] = (sprintf($strings["Floor \"%s\" successfully deleted."], $floorid));
+                    header("Location: FLOOR_Controller.php?building=$buildingid");
                 } else {
                     new MESSAGE($answer, $back );
                 }
@@ -159,8 +170,7 @@ if (!isset($_REQUEST['action'])){
                 if(isset($_GET['building'])){
                 $floor = new FLOOR_Model($_GET['building'],'','','','','');
                 $floors = $floor->showAllFloors();
-                $message='';
-                new FLOOR_SHOWALL($floors, '../index.php', $message);
+                new FLOOR_SHOWALL($floors);
                 } else {
                     new MESSAGE("Building id is mandatory",'../index.php');
                 }

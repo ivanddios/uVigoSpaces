@@ -25,6 +25,7 @@ public function getIdBuilding(){
 
 function ConectarBD() {
     $this->mysqli = new mysqli("localhost", "root", "", "espacios");
+    $acentos = $this->mysqli->query("SET NAMES 'utf8'");
     if ($this->mysqli->connect_errno) {
         echo "Fallo al conectar a MySQL: (" . $this->mysqli->connect_errno . ") " . $this->mysqli->connect_error;
     }
@@ -46,7 +47,7 @@ function showAllBuilding() {
     }
 }
 
-function findbyIdBuilding() {
+function findBuilding() {
 	$this->ConectarBD();
 	$sql = "SELECT * FROM BUILDING WHERE idBuilding = '$this->BUILDING_idBuilding'";
 	$result = $this->mysqli->query($sql);

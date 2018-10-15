@@ -85,16 +85,17 @@ if (!isset($_REQUEST['action'])){
                     $consult = $buildingEdit->updateBuilding($buildingid);
                     
                     if($consult){
-                        $buildings = $buildingEdit->showAllBuilding();
-                        $message=(sprintf($strings["Building \"%s\" successfully updated."], $buildingEdit->getIdBuilding()));
-                        new BUILDING_SHOWALL($buildings, '', $message);
+                       // $buildings = $buildingEdit->showAllBuilding();
+                       //new BUILDING_SHOWALL($buildings, '', $message);
+                        $_SESSION['popMessage']=(sprintf($strings["Building \"%s\" successfully updated."], $buildingid));
+                        header("Location: BUILDING_Controller.php");                     
                     } else {
                         new MESSAGE($answer, $back);
                     }
                 } else {
                     $building = new BUILDING_Model($buildingid,'','','','');
                     $values = $building->FillInBuilding();
-                    new BUILDING_EDIT($values, '../index.php');
+                    new BUILDING_EDIT($values);
                 }
             }else{
                 new MESSAGE("No tienes los permisos necesarios",'../index.php');
@@ -111,24 +112,27 @@ if (!isset($_REQUEST['action'])){
                     new MESSAGE("building id is mandatory", $back );
                 }
 
+                $buildingid = $_POST["building"];
+
                 if (!isset($_SESSION['LOGIN'])){
                     new MESSAGE("Not in session. Deleting buildings requires login", $back );
                 }
 
-                $buildingid = $_POST["building"];
                 $building = new BUILDING_Model($buildingid,"","","","");
-                $buildingDelete = $building->findByIdBuilding();
-                var_dump($buildingid);
+                $buildingDelete = $building->findBuilding();
 
                 if ($buildingDelete != 'true') {
                     new MESSAGE("No such building with this id", $back );
                 }
 
                 $answer = $building->deleteBuilding($buildingid);
-                if($answer === 'true'){
-                new BUILDING_SHOWALL($buildings, '../index.php');
+                if($answer){
+                    //$buildings = $building->showAllBuilding();
+                    //new BUILDING_SHOWALL($buildings, '../index.php');
+                    $_SESSION['popMessage'] = (sprintf($strings["Building \"%s\" successfully deleted."], $buildingid));
+                    header("Location: BUILDING_Controller.php");
                 } else {
-                    new MESSAGE($answer, $back );
+                    new MESSAGE($answer, $back);
                 }
             }else{
                 new MESSAGE("No tienes los permisos necesarios",'../index.php');
@@ -141,8 +145,7 @@ if (!isset($_REQUEST['action'])){
             if(comprobarPermisos('SHOWALL', $function)){
                 $building = new BUILDING_Model('','','','','');
                 $buildings = $building->showAllBuilding();
-                $message='';
-                new BUILDING_SHOWALL($buildings, '../index.php', $message);
+                new BUILDING_SHOWALL($buildings);
             }else{
                 new MESSAGE("No tienes los permisos necesarios",'../index.php');
             }

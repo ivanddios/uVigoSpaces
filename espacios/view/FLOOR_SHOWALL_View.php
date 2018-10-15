@@ -2,16 +2,14 @@
 
 class FLOOR_SHOWALL{
     private $floors;
-    private $back;
     private $popMessage;
 
-    function __construct($floors, $back, $message) {
+    function __construct($floors) {
         $this->floors = $floors;
-        $this->back = $back;
 
-        if(empty($message)){
-            $this->popMessage='';
-        }else $this->popMessage= $message;
+        if(empty($_SESSION['popMessage'])){
+            $this->popMessage = '';
+        }else $this->popMessage = $_SESSION['popMessage'];
 
         $this->render();
     }
@@ -26,7 +24,7 @@ class FLOOR_SHOWALL{
      <?php if (!empty($this->popMessage)){ ?>
             <div class="alert alert-success text-center" id="success-alert" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<?php echo $this->popMessage?>
+			<?php echo $this->popMessage; $_SESSION['popMessage'] = '';?>
             </div>
     <?php } ?>
 
@@ -40,8 +38,6 @@ class FLOOR_SHOWALL{
 				<?php echo "Información sobre las plantas del edificio" ?>
                 </div>
               <div class="col-lg-12 center-block2">
-                    <a href="FLOOR_Controller.php?&action=<?php echo $strings['Add']?>&building=<?php echo $_GET['building']?>">
-                    <span title="<?php echo $strings['Add Floor']?>" class="btn btn-success btn-sm fa fa-plus"></a>
                 <table id="dataTable" class="table text-center">
                   <thead>
                       <tr>
@@ -49,6 +45,8 @@ class FLOOR_SHOWALL{
                           foreach ($listTitles as $title): ?>
                             <th scope="col"><?=$strings[$title]?></th>
                           <?php endforeach; ?>
+                          <th scope="col"> <a href="FLOOR_Controller.php?&action=<?php echo $strings['Add']?>&building=<?php echo $_GET['building']?>">
+                                             <span title="<?php echo $strings['Add Floor']?>" class="btn btn-success btn-sm fa fa-plus"></a></th>
                       </tr>
                       </thead>
                       <tbody>
@@ -84,7 +82,7 @@ class FLOOR_SHOWALL{
                                                     <?php echo $strings["Are you sure you want to delete this floor?"]?><br/> <br>
                                                     <b><strong><?php echo $strings["The information that this floor has will be lost"]?></strong></b>
                                                 </div>
-                                                <form method="POST" action="BUILDING_Controller.php?action=<?= htmlentities($strings['Delete'])?>&building=<?= htmlentities($this->floors[$j]['idBuilding'])?>&floor=<?php echo $this->floors[$j]['idFloor']?>">
+                                                <form method="POST" action="FLOOR_Controller.php?action=<?= htmlentities($strings['Delete'])?>&building=<?= htmlentities($this->floors[$j]['idBuilding'])?>&floor=<?php echo $this->floors[$j]['idFloor']?>">
                                                     <input type="hidden" name="building" value=<?php echo $this->floors[$j]['idBuilding']?>>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $strings["Cancel"]?></button>

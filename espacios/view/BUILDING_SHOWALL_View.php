@@ -2,16 +2,14 @@
 
 class BUILDING_SHOWALL{
     private $buildings;
-    private $back;
     private $popMessage;
 
-    function __construct($buildings, $back, $message) {
+    function __construct($buildings) {
         $this->buildings = $buildings;
-        $this->back = $back;
 
-        if(empty($message)){
-            $this->popMessage='';
-        }else $this->popMessage= $message;
+        if(empty($_SESSION['popMessage'])){
+            $this->popMessage = '';
+        }else $this->popMessage = $_SESSION['popMessage'];
 
         $this->render();
     }
@@ -22,13 +20,13 @@ class BUILDING_SHOWALL{
         ?> 
 
       <?php include 'header.php' ?>
-      <main>
-     <?php if (!empty($this->popMessage)){ ?>
+
+      <?php if (!empty($this->popMessage)){ ?>
             <div class="alert alert-success text-center" id="success-alert" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<?php echo $this->popMessage?>
+			<?php echo $this->popMessage; $_SESSION['popMessage'] = '';?>
             </div>
-    <?php } ?>
+    <?php  } ?>
 
     <div class="container">
       <div class="row center-row">
@@ -37,8 +35,6 @@ class BUILDING_SHOWALL{
             <h1><?php echo $strings['Buildings'] ?></h1>
             </div>
               <div class="col-lg-12 center-block2">
-              <a href="BUILDING_Controller.php?&action=<?php echo $strings['Add']?>">
-                <span title="<?php echo $strings['Add Building']?>" class="btn btn-success btn-sm fa fa-plus"></a>
                 <table id="dataTable" class="table text-center">
                   <thead>
                       <tr>
@@ -46,6 +42,8 @@ class BUILDING_SHOWALL{
                           foreach ($listTitles as $title): ?>
                             <th scope="col"><?=$strings[$title]?></th>
                           <?php endforeach; ?>
+                          <th scope="col"><a href="BUILDING_Controller.php?&action=<?php echo $strings['Add']?>">
+                             <span title="<?php echo $strings['Add Building']?>" class="btn btn-success btn-sm fa fa-plus"></a></th>
                       </tr>
                       </thead>
                       <tbody>
@@ -66,7 +64,7 @@ class BUILDING_SHOWALL{
                             } 
                             ?>
                             <td>
-                                <a href="FLOOR_Controller.php?&building=<?php echo $this->buildings[$j]['idBuilding']?>">
+                                <a href="FLOOR_Controller.php?&building=<?= htmlentities($this->buildings[$j]['idBuilding'])?>">
                                 <span title="<?php echo $strings['Show Floors']?>" class="btn btn-success btn-sm fa fa-building"></a>
                                 <a href="BUILDING_Controller.php?action=<?php echo $strings['Edit']?>&building=<?php echo $this->buildings[$j]['idBuilding']?>">
                                 <span title="<?php echo $strings['Edit Building']?>" class="btn btn-primary btn-sm fa fa-pencil"></a>

@@ -34,7 +34,7 @@ public function getIdFloor(){
 
 function ConectarBD() {
     $this->mysqli = new mysqli("localhost", "root", "", "espacios");
-    $this->mysqli->set_charset("utf8");
+    $acentos = $this->mysqli->query("SET NAMES 'utf8'");
     if ($this->mysqli->connect_errno) {
         echo "Fallo al conectar a MySQL: (" . $this->mysqli->connect_errno . ") " . $this->mysqli->connect_error;
     }
@@ -56,6 +56,17 @@ function showAllFloors() {
     }
 }
 
+
+function findFloor() {
+	$this->ConectarBD();
+	$sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->FLOOR_idBuilding' AND idFloor = '$this->FLOOR_idFloor'";
+	$result = $this->mysqli->query($sql);
+	if ($result->num_rows == 1) {
+		return true;
+	} else {
+		return "No exist any floor with this id";
+	}
+}
 
 function FillInFloor() {
     $this->ConectarBD();
@@ -88,5 +99,14 @@ function updateFloor($idBuilding, $idFloor) {
     }
 }
 
+function deleteFloor($idBuilding, $idFloor) {
+    $this->ConectarBD();
+    $sql = "DELETE FROM FLOOR WHERE idBuilding ='$idBuilding' AND idFloor = '$idFloor'";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        return 'Error en la consulta sobre la base de datos.';
+    } else {
+        return true;
+    }
+}
 
 }

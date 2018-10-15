@@ -5,9 +5,10 @@ class Login{
     function __construct(){	
         $this->render();
     }
+
+
     function render(){ ?>
         
-
 <!DOCTYPE html>
     <html>
         <head>

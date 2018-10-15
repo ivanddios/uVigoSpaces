@@ -1,13 +1,8 @@
--- DROP DATABASE IF EXISTS `espacios`;
--- CREATE DATABASE IF NOT EXISTS `espacios` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
--- USE `espacios`;
--- CREATE USER 'espacios'@'localhost' IDENTIFIED BY `espacio`;
--- GRANT ALL PRIVILEGES ON * . * TO `espacios`@'localhost';
--- FLUSH PRIVILEGES;
-
 DROP DATABASE IF EXISTS espacios;
 CREATE DATABASE IF NOT EXISTS espacios;
 USE espacios;
+GRANT ALL PRIVILEGES ON * . * TO 'root'@'localhost';
+FLUSH PRIVILEGES;
 
 CREATE TABLE IF NOT EXISTS USER(
   username varchar(25) COLLATE utf8_spanish_ci NOT NULL,
@@ -103,7 +98,7 @@ CREATE TABLE IF NOT EXISTS SPACE(
   numberInventorySpace varchar(10) DEFAULT '',
   PRIMARY KEY(idFloor ,idBuilding,idSpace),
   FOREIGN KEY (idBuilding) REFERENCES BUILDING (idBuilding)  ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (idFloor) REFERENCES FLOOR (idFloor)
+  FOREIGN KEY (idFloor) REFERENCES FLOOR (idFloor) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8  COLLATE=utf8_spanish_ci;
 
 
@@ -157,13 +152,13 @@ INSERT INTO BUILDING (idBuilding, nameBuilding, addressBuilding, phoneBuilding, 
 ('OSBI0', 'Biblioteca Universitaria Rosalía de Castro', 'Camino Seara B 4', 988387192, 'NO SE SABE');
 
 INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES
-('OSBI0', '04', 'Carta Planta', 215.20, 181.25),
+('OSBI0', '04', 'Cuarta Planta', 215.20, 181.25),
 ('OSBI0', '03', 'Terceira Planta', 214.80, 179.60),
 ('OSBI0', '02', 'Segunda Planta', 215.20, 181.25),
 ('OSBI0', '01', 'Primeira Planta', 818.30, 486.60),
 ('OSBI0', '00', 'Planta Baixa', 1895.80, 1428.75),
-('OSBI0', 'S1', 'Soto 01', 1800.40, 894.20),
-('OSBI0', 'S2', 'Soto 02', 1338.40, 1226.70);
+('OSBI0', 'S1', 'Soto -1', 1800.40, 894.20),
+('OSBI0', 'S2', 'Soto -2', 1338.40, 1226.70);
 
 INSERT INTO SPACE (idBuilding, idFloor, idSpace, nameSpace, surfaceSpace, numberInventorySpace) VALUES
 ('OSBI0', '04', '00001', 'Escaleiras', 13.80, ''),

@@ -2,11 +2,9 @@
 
 class BUILDING_EDIT{
     private $building;
-    private $back;
 
-    function __construct($building, $back) {
+    function __construct($building) {
         $this->building = $building;
-        $this->back = $back;
         $this->render();
     }
     

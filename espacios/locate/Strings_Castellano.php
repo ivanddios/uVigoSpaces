@@ -31,6 +31,7 @@ $strings = array(
 "Delete Building" => "Eliminar Edificio",
 "Add Building" => "Añadir Edificio",
 "Building \"%s\" successfully added." => "El edificio \"%s\" se ha añadido con éxito",
+"Building \"%s\" successfully deleted." => "El edificio \"%s\" se ha eliminado con éxito",
 
 "idBuildingidFloor" => "Identificador",
 "idFloor" => "Identificador",
@@ -49,6 +50,7 @@ $strings = array(
 "Floor \"%s\" successfully updated." => "La planta \"%s\" se ha modificado con éxito",
 "Add Floor" => "Añadir Planta",
 "Floor \"%s\" successfully added." => "La planta \"%s\" se ha añadido con éxito",
+"Floor \"%s\" successfully deleted." => "La planta \"%s\" se ha eliminado con éxito",
 
 "Show Space" => "Ver Espacio",
 )
