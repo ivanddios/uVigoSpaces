@@ -24,7 +24,7 @@ class BUILDING_SHOWALL{
       <?php if (!empty($this->popMessage)){ ?>
             <div class="alert alert-success text-center" id="success-alert" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<?php echo $this->popMessage; $_SESSION['popMessage'] = '';?>
+			<?php echo $this->popMessage; unset($_SESSION['popMessage']);?>
             </div>
     <?php  } ?>
 
