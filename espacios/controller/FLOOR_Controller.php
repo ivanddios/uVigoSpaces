@@ -57,7 +57,7 @@ if (!isset($_REQUEST['action'])){
 
             if (isset($_POST["submit"])) { 
                 $floorAdd = get_data_form();
-                $consult = $floorAdd->insertFloor();
+                $consult = $floorAdd->addFloor();
                 
                 if($consult){
                     $floors = $floorAdd->showAllFloors();
@@ -96,6 +96,7 @@ if (!isset($_REQUEST['action'])){
                 if (isset($_POST["submit"])) { 
                     $floorEdit = get_data_form();
                     
+                    ////////////////////////////////////////METER EN UNA FUNCIÓN////////////////////////////////////////////////////////////
                     $dirPlane = '../documents/'.$floorEdit->getIdBuilding().'/'.$floorEdit->getIdBuilding().$floorEdit->getIdFloor().'/';
                     if ($_FILES['planeFloor']['name'] !== '') {
                         if (!file_exists($dirPlane)) {
@@ -105,8 +106,7 @@ if (!isset($_REQUEST['action'])){
                         $link = $floorEdit->findLinkPlane($buildingid, $floorid);
                         unlink($link);
                     }
-
-
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                     $consult = $floorEdit->updateFloor($buildingid, $floorid);
                     if($consult){
@@ -117,7 +117,7 @@ if (!isset($_REQUEST['action'])){
                     }
                 } else {
                     $floor = new FLOOR_Model($buildingid, $floorid,'','','','');
-                    $values = $floor->FillInFloor();
+                    $values = $floor->fillInFloor();
                     new FLOOR_EDIT($values);
                 }
             }else{

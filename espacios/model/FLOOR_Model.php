@@ -72,7 +72,14 @@ function findFloor() {
 	}
 }
 
-function FillInFloor() {
+function findLinkPlane($idBuilding, $idFloor) {
+    $this->ConectarBD();
+    $sql = "SELECT planeFloor FROM floor WHERE idBuilding='$idBuilding' AND idFloor = '$idFloor'";
+    $result = $this->mysqli->query($sql)->fetch_array();
+    return $result['planeFloor'];
+}
+
+function fillInFloor() {
     $this->ConectarBD();
     $sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->FLOOR_idBuilding' AND idFloor = '$this->FLOOR_idFloor'";
     if (!($resultado = $this->mysqli->query($sql))) {
@@ -83,7 +90,7 @@ function FillInFloor() {
     }
 }
 
-function insertFloor() {
+function addFloor() {
     $this->ConectarBD();
     $sql = "INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES ('$this->FLOOR_idBuilding', '$this->FLOOR_idFloor', '$this->FLOOR_nameFloor', '$this->FLOOR_planeFloor', '$this->FLOOR_surfaceBuildingFloor', '$this->FLOOR_surfaceUsefulFloor')";
     if (!($resultado = $this->mysqli->query($sql))) {
@@ -114,11 +121,6 @@ function deleteFloor($idBuilding, $idFloor) {
 }
 
 
-function findLinkPlane($idBuilding, $idFloor) {
-    $this->ConectarBD();
-    $sql = "SELECT planeFloor FROM floor WHERE idBuilding='$idBuilding' AND idFloor = '$idFloor'";
-    $result = $this->mysqli->query($sql)->fetch_array();
-    return $result['planeFloor'];
-}
+
 
 }

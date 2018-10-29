@@ -1,11 +1,10 @@
 <?php
 //CADENAS UTILIZADAS EN CASTELLANO
 $strings = array(
-"Edit" => "Editar",
-"Add"=> "Insertar",
-"Show" => "Show",
+"Edit" => "edit",
+"Add"=> "add",
+"Show" => "show",
 "Delete" => "Eliminar",
-"Show" => "Ver",
 "Buildings" => "Edificios",
 "idBuilding" => "Identificador",
 "nameBuilding" => "Edificio",
@@ -17,6 +16,7 @@ $strings = array(
 "The information that this building has will be lost" => "La información que tiene este edificio se perderá",
 "Cancel" => "Cancelar",
 "Ok" => "Ok",
+"Datas of the new building" => "Datos del nuevo edificio",
 "Do you want to change something?" => "¿Quieres modificar alguna información del edificio?",
 "Save" => "Guardar",
 "Back" => "Volver",
@@ -40,6 +40,7 @@ $strings = array(
 "surfaceBuildingFloor" => "Sup. Construida",
 "surfaceUsefulFloor" => "Sup. Útil",
 "Show Spaces" => "Ver Espacios",
+"Data of the new building's floor" => "Datos del nuevo piso del edificio",
 "Are you sure you want to delete this floor?" => "Está seguro de querer eliminar esta planta?",
 "The information that this floor has will be lost" => "La información que tiene esta planta se perderá",
 "What is the identifier of this floor?" => "¿Cuál es el identificador de la planta?",
