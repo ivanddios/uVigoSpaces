@@ -151,14 +151,14 @@ INSERT INTO PERMISSION (idGroup, idFunction, idAction) VALUES
 INSERT INTO BUILDING (idBuilding, nameBuilding, addressBuilding, phoneBuilding, responsibleBuilding) VALUES
 ('OSBI0', 'Biblioteca Universitaria Rosalía de Castro', 'Camino Seara B 4', 988387192, 'NO SE SABE');
 
-INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES
-('OSBI0', '04', 'Cuarta Planta', 215.20, 181.25),
-('OSBI0', '03', 'Terceira Planta', 214.80, 179.60),
-('OSBI0', '02', 'Segunda Planta', 215.20, 181.25),
-('OSBI0', '01', 'Primeira Planta', 818.30, 486.60),
-('OSBI0', '00', 'Planta Baixa', 1895.80, 1428.75),
-('OSBI0', 'S1', 'Soto -1', 1800.40, 894.20),
-('OSBI0', 'S2', 'Soto -2', 1338.40, 1226.70);
+INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES
+('OSBI0', '04', 'Cuarta Planta', '', 215.20, 181.25),
+('OSBI0', '03', 'Terceira Planta', 's', 214.80, 179.60),
+('OSBI0', '02', 'Segunda Planta', 's', 215.20, 181.25),
+('OSBI0', '01', 'Primeira Planta', 's', 818.30, 486.60),
+('OSBI0', '00', 'Planta Baixa', "../document/OSBI0/OSBI000/OSBI000.jpg", 1895.80, 1428.75),
+('OSBI0', 'S1', 'Soto -1', 's', 1800.40, 894.20),
+('OSBI0', 'S2', 'Soto -2', 's', 1338.40, 1226.70);
 
 INSERT INTO SPACE (idBuilding, idFloor, idSpace, nameSpace, surfaceSpace, numberInventorySpace) VALUES
 ('OSBI0', '04', '00001', 'Escaleiras', 13.80, ''),

@@ -22,7 +22,7 @@ function get_data_form() {
     $nameFloor = $_POST['nameFloor'];
 
     if (isset($_FILES['planeFloor']['name']) && ($_FILES['planeFloor']['name'] !== '')) {
-        $planeFloor = '../Documents/Buildings/' . $POST['idBuilding'] . '/Plane/' . $_FILES['planeFloor']['name'];
+        $planeFloor = '../document/'.$idBuilding.'/'.$idBuilding.$idFloor.'/'.$_FILES['planeFloor']['name'];
     } else {
         $planeFloor = '';
     }
@@ -45,13 +45,10 @@ if (!isset($_REQUEST['action'])){
 	Switch ($_REQUEST['action']){
 
         case  $strings['Add']:
-
         if(comprobarPermisos('ADD',$function)){
-
             if (!isset($_GET['building'])){
                 new MESSAGE("building id is mandatory", $back );
             }
-            
             $building = $_GET['building'];
 
             if (!isset($_SESSION['LOGIN'])){
@@ -81,33 +78,39 @@ if (!isset($_REQUEST['action'])){
 
 
         case  $strings['Edit']:
-
 			if(comprobarPermisos('EDIT', $function)){
-
                 if (!isset($_GET['building'])){
                     new MESSAGE("building id is mandatory", $back );
                 }
-
                 $buildingid = $_GET["building"];
 
                 if (!isset($_GET['floor'])){
                     new MESSAGE("floor id is mandatory", $back );
                 }
-
                 $floorid = $_GET['floor'];
 
                 if (!isset($_SESSION['LOGIN'])){
                     new MESSAGE("Not in session. Editing buildings requires login", $back );
                 }
             
-
                 if (isset($_POST["submit"])) { 
                     $floorEdit = get_data_form();
+                    
+                    $dirPlane = '../documents/'.$floorEdit->getIdBuilding().'/'.$floorEdit->getIdBuilding().$floorEdit->getIdFloor().'/';
+                    if ($_FILES['planeFloor']['name'] !== '') {
+                        if (!file_exists($dirPlane)) {
+                            mkdir($dirPlane, 0777, true);
+                        }
+                        move_uploaded_file($_FILES['planeFloor']['tmp_name'],$floorEdit->getPlaneFloor());
+                        $link = $floorEdit->findLinkPlane($buildingid, $floorid);
+                        unlink($link);
+                    }
+
+
+
                     $consult = $floorEdit->updateFloor($buildingid, $floorid);
                     if($consult){
-                        //$floors = $floorEdit->showAllFloors();
                         $_SESSION['popMessage'] = (sprintf($strings["Floor \"%s\" successfully updated."], $floorid));
-                        //new FLOOR_SHOWALL($floors);
                         header("Location: FLOOR_Controller.php?building=$buildingid");
                     } else {
                         new MESSAGE($answer, $back);
@@ -120,14 +123,12 @@ if (!isset($_REQUEST['action'])){
             }else{
                 new MESSAGE("No tienes los permisos necesarios",'../index.php');
             }		
-                break;
-
-
+               
+        break;
 
         case  $strings['Delete']:
 
             if(comprobarPermisos("DELETE", $function)){
-
                 if (!isset($_GET['building'])){
                     new MESSAGE("building id is mandatory", $back );
                 }

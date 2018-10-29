@@ -19,7 +19,7 @@ class FLOOR_EDIT{
 				<?=htmlentities($strings["Do you want to change something?"])?>
 			</div>
 			<div class="col-lg-12 center-block2">
-				<form method="POST" action="FLOOR_Controller.php?action=<?php echo $strings['Edit']?>&building=<?php echo $this->floor['idBuilding']?>&floor=<?php echo $this->floor['idFloor']?>">
+				<form method="POST" action="FLOOR_Controller.php?action=<?php echo $strings['Edit']?>&building=<?php echo $this->floor['idBuilding']?>&floor=<?php echo $this->floor['idFloor']?>" enctype="multipart/form-data">
                 <div id="optionalInput">
 						<label><?php echo $strings['idBuilding']; ?></label>
                     	<div class="inputWithIconLogin inputIconBg">

@@ -31,6 +31,10 @@ public function getIdFloor(){
     return $this->FLOOR_idFloor;
 }
 
+public function getPlaneFloor(){
+    return $this->FLOOR_planeFloor;
+}
+
 
 function ConectarBD() {
     $this->mysqli = new mysqli("localhost", "root", "", "espacios");
@@ -107,6 +111,14 @@ function deleteFloor($idBuilding, $idFloor) {
     } else {
         return true;
     }
+}
+
+
+function findLinkPlane($idBuilding, $idFloor) {
+    $this->ConectarBD();
+    $sql = "SELECT planeFloor FROM floor WHERE idBuilding='$idBuilding' AND idFloor = '$idFloor'";
+    $result = $this->mysqli->query($sql)->fetch_array();
+    return $result['planeFloor'];
 }
 
 }
