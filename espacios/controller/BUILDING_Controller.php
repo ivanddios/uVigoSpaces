@@ -4,6 +4,7 @@ include '../model/BUILDING_Model.php';
 include '../view/MESSAGE_View.php';
 include '../view/BUILDING_SHOWALL_View.php';
 include '../view/BUILDING_EDIT_View.php';
+include '../view/BUILDING_SHOW_View.php';
 include '../view/BUILDING_ADD_View.php';
 include '../core/ACL.php';
 
@@ -102,6 +103,34 @@ if (!isset($_REQUEST['action'])){
             }
 
         break;
+
+
+
+        case  $strings['Show']:
+
+        if(comprobarPermisos('SHOW',$function)){
+
+            if (!isset($_GET['building'])){
+                new MESSAGE("building id is mandatory", $back );
+            }
+
+            $buildingid = $_GET['building'];
+
+            if (!isset($_SESSION['LOGIN'])){
+                new MESSAGE("Not in session. Editing buildings requires login", $back );
+            }
+
+                $building = new BUILDING_Model($buildingid,'','','','');
+                $values = $building->FillInBuilding();
+                new BUILDING_SHOW($values);
+
+        }else{
+            new MESSAGE("No tienes los permisos necesarios",'../index.php');
+        }
+
+    break;
+
+
 
 
         case  $strings['Delete']:

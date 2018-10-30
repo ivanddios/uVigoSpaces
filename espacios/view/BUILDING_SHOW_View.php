@@ -1,6 +1,6 @@
 <?php
 
-class BUILDING_EDIT{
+class BUILDING_SHOW{
     private $building;
 
     function __construct($building) {
@@ -16,38 +16,35 @@ class BUILDING_EDIT{
 			<div class="row center-row">
 				<div class="col-lg-6 center-block">
 					<div id="titleView">
-						<?=htmlentities($strings["Do you want to change something?"])?>
+						<?=$this->building['nameBuilding']?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form method="POST" action="BUILDING_Controller.php?action=<?php echo $strings['Edit']?>&building=<?php echo $this->building['idBuilding']?>">
 							<div id="group-form">
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?=$this->building['idBuilding']?>">
+									<input type="text" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?=$this->building['idBuilding']?>" readonly>
 									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="nameBuilding" placeholder="<?= $strings['What building is it?']?>"  value="<?=$this->building['nameBuilding']?>">
+									<input type="text" name="nameBuilding" placeholder="<?= $strings['What building is it?']?>"  value="<?=$this->building['nameBuilding']?>" readonly>
 									<i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="addressBuilding" placeholder="<?= $strings['What is your postal address?']?>" value="<?=$this->building['addressBuilding']?>">
+									<input type="text" name="addressBuilding" placeholder="<?= $strings['What is your postal address?']?>" value="<?=$this->building['addressBuilding']?>" readonly>
 									<i class="fa fa-map-marker fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="phoneBuilding" placeholder="<?= $strings['What is your phone?']?> " value="<?=$this->building['phoneBuilding']?>">
+									<input type="text" name="phoneBuilding" placeholder="<?= $strings['What is your phone?']?> " value="<?=$this->building['phoneBuilding']?>" readonly>
 									<i class="fa fa-phone fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="responsibleBuilding" placeholder="<?= $strings['Who is the responsible?']?>" value="<?=$this->building['responsibleBuilding']?>">
+									<input type="text" name="responsibleBuilding" placeholder="<?= $strings['Who is the responsible?']?>" value="<?=$this->building['responsibleBuilding']?>" readonly>
 									<i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 							</div>
-							<button type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
-						</form>
 						<a href="../index.php?"><?= $strings["Back"] ?></a>
 					</div>
 				</div>

@@ -117,7 +117,8 @@ INSERT INTO ACTION (idAction, nameAction, descripAction) VALUES
 ('1', 'SHOWALL', 'SHOWALL'),
 ('2', 'ADD', 'ADD'),
 ('3', 'EDIT', 'EDIT'),
-('4', 'DELETE', 'DELETE');
+('4', 'DELETE', 'DELETE'),
+('5', 'SHOW', 'SHOW');
 
 
 INSERT INTO FUNCTIONALITY(idFunction, nameFunction, descripFunction) VALUES 
@@ -129,22 +130,26 @@ INSERT INTO ACTION_FUNCTIONALITY (idAction, idFunction) VALUES
 ('2', '1'),
 ('3', '1'),
 ('4', '1'),
+('5', '1'),
 /*FLOOOR*/
 ('1', '2'),
 ('2', '2'),
 ('3', '2'),
-('4', '2');
+('4', '2'),
+('5', '2');
 
 INSERT INTO PERMISSION (idGroup, idFunction, idAction) VALUES
 ('1', '1', '1'),
 ('1', '1', '2'),
 ('1', '1', '3'),
 ('1', '1', '4'),
+('1', '1', '5'),
 /*FLOOR*/
 ('1', '2', '1'),
 ('1', '2', '2'),
 ('1', '2', '3'),
-('1', '2', '4');
+('1', '2', '4'),
+('1', '2', '5');
 
 
 
@@ -153,12 +158,12 @@ INSERT INTO BUILDING (idBuilding, nameBuilding, addressBuilding, phoneBuilding, 
 
 INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES
 ('OSBI0', '04', 'Cuarta Planta', '', 215.20, 181.25),
-('OSBI0', '03', 'Terceira Planta', ' ', 214.80, 179.60),
-('OSBI0', '02', 'Segunda Planta', ' ', 215.20, 181.25),
-('OSBI0', '01', 'Primeira Planta', ' ', 818.30, 486.60),
-('OSBI0', '00', 'Planta Baixa', "../document/OSBI0/OSBI000/OSBI000.jpg", 1895.80, 1428.75),
-('OSBI0', 'S1', 'Soto -1', ' ', 1800.40, 894.20),
-('OSBI0', 'S2', 'Soto -2', ' ', 1338.40, 1226.70);
+('OSBI0', '03', 'Terceira Planta', '', 214.80, 179.60),
+('OSBI0', '02', 'Segunda Planta', '', 215.20, 181.25),
+('OSBI0', '01', 'Primeira Planta', '', 818.30, 486.60),
+('OSBI0', '00', 'Planta Baixa', "../document/OSBI0/OSBI000/ProfilePhoto.jpg", 1895.80, 1428.75),
+('OSBI0', 'S1', 'Soto -1', '', 1800.40, 894.20),
+('OSBI0', 'S2', 'Soto -2', '', 1338.40, 1226.70);
 
 INSERT INTO SPACE (idBuilding, idFloor, idSpace, nameSpace, surfaceSpace, numberInventorySpace) VALUES
 ('OSBI0', '04', '00001', 'Escaleiras', 13.80, ''),

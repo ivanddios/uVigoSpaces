@@ -58,7 +58,11 @@ class FLOOR_SHOWALL{
                                                         <?php if ($key === 'idBuilding'): ?>
                                                             <a title="<?php echo $strings['Show']?>" href='FLOOR_Controller.php?action=<?php echo $strings['Show']?>&building=<?php echo $this->floors[$j]['idBuilding']?>&floor=<?php echo $this->floors[$j]['idFloor']?>'> <?php echo $this->floors[$j]['idBuilding'].$this->floors[$j]['idFloor']?></a> 
                                                         <?php elseif($key === 'planeFloor'): ?>
-                                                            <a href="<?php echo $this->floors[$j]['planeFloor']?>" target="_blank"><img src="<?php echo $this->floors[$j]['planeFloor']?>" alt="plane" class="logo"></a> 
+                                                            <?php if($value === ''): ?>
+                                                                <img src="../img/noPlane.png" width="25px" height="25px">
+                                                            <?php else: ?>
+                                                                <a href="<?php echo $this->floors[$j]['planeFloor']?>" target="_blank"><img src="<?php echo $this->floors[$j]['planeFloor']?>" alt="plane" class="logo"></a>
+                                                            <?php endif; ?>   
                                                         <?php elseif($key === 'surfaceBuildingFloor' || $key === 'surfaceUsefulFloor'): ?>
                                                             <?=$value . ' m²'?>
                                                         <?php else:

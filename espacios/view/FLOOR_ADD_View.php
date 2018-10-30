@@ -20,7 +20,7 @@ class FLOOR_ADD{
 						<?=htmlentities($strings["Data of the new building's floor"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form method="POST" action="FLOOR_Controller.php?action=<?php echo $strings['Add']?>&building=<?php echo $this->building?>">
+						<form method="POST" action="FLOOR_Controller.php?action=<?php echo $strings['Add']?>&building=<?php echo $this->building?>" enctype="multipart/form-data">
 							<div id="group-form">
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?php echo $this->building?>" readonly>

@@ -104,7 +104,7 @@ function fillInFloor() {
 
 function addFloor() {
     $this->ConectarBD();
-    $sql = "INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES ('$this->FLOOR_idBuilding', '$this->FLOOR_idFloor', '$this->FLOOR_nameFloor', '$this->FLOOR_planeFloor', '$this->FLOOR_surfaceBuildingFloor', '$this->FLOOR_surfaceUsefulFloor')";
+    $sql = "INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES ('$this->FLOOR_idBuilding', '$this->FLOOR_idFloor', '$this->FLOOR_nameFloor', '$this->FLOOR_planeFloor', $this->FLOOR_surfaceBuildingFloor, $this->FLOOR_surfaceUsefulFloor)";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error en la consulta sobre la base de datos.';
     } else {

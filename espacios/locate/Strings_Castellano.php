@@ -53,6 +53,6 @@ $strings = array(
 "Floor \"%s\" successfully added." => "La planta \"%s\" se ha añadido con éxito",
 "Floor \"%s\" successfully deleted." => "La planta \"%s\" se ha eliminado con éxito",
 
-"Show Space" => "Ver Espacio",
+"Show Space" => "Ver Espacio"
 )
 ?>
