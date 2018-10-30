@@ -68,8 +68,8 @@ class BUILDING_SHOWALL{
                                                 <span title="<?php echo $strings['Show Floors']?>" class="btn btn-success btn-sm fa fa-building"></span></a>
                                             <a href="BUILDING_Controller.php?action=<?php echo $strings['Edit']?>&building=<?php echo $this->buildings[$j]['idBuilding']?>">
                                                 <span title="<?php echo $strings['Edit Building']?>" class="btn btn-primary btn-sm fa fa-pencil"></span></a>
-                                            <i title="<?php echo $strings['Delete Building']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#confirm-submit"></i>
-                                            <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <i title="<?php echo $strings['Delete Building']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->buildings[$j]['idBuilding']?>"></i>
+                                            <div id="item-<?= $this->buildings[$j]['idBuilding']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">

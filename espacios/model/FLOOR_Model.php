@@ -31,6 +31,10 @@ public function getIdFloor(){
     return $this->FLOOR_idFloor;
 }
 
+public function getNameFloor(){
+    return $this->FLOOR_nameFloor;
+}
+
 public function getPlaneFloor(){
     return $this->FLOOR_planeFloor;
 }
@@ -61,7 +65,7 @@ function showAllFloors() {
 }
 
 
-function findFloor() {
+function existsFloor() {
 	$this->ConectarBD();
 	$sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->FLOOR_idBuilding' AND idFloor = '$this->FLOOR_idFloor'";
 	$result = $this->mysqli->query($sql);
@@ -70,6 +74,14 @@ function findFloor() {
 	} else {
 		return "No exist any floor with this id";
 	}
+}
+
+
+function findNameFloor() {
+    $this->ConectarBD();
+    $sql = "SELECT nameFloor FROM floor WHERE idBuilding='$this->FLOOR_idBuilding' AND idFloor = '$this->FLOOR_idFloor'";
+    $result = $this->mysqli->query($sql)->fetch_array();
+    return $result['nameFloor'];
 }
 
 function findLinkPlane($idBuilding, $idFloor) {
@@ -110,9 +122,9 @@ function updateFloor($idBuilding, $idFloor) {
     }
 }
 
-function deleteFloor($idBuilding, $idFloor) {
+function deleteFloor() {
     $this->ConectarBD();
-    $sql = "DELETE FROM FLOOR WHERE idBuilding ='$idBuilding' AND idFloor = '$idFloor'";
+    $sql = "DELETE FROM FLOOR WHERE idBuilding ='$this->FLOOR_idBuilding' AND idFloor = '$this->FLOOR_idFloor'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error en la consulta sobre la base de datos.';
     } else {
