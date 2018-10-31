@@ -18,8 +18,16 @@ class BUILDING_SHOWALL{
         include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
         $listTitles = array('idBuilding', 'nameBuilding', 'addressBuilding', 'phoneBuilding', 'responsibleBuilding');
         ?> 
-
-        <?php include 'header.php' ?>
+        <?php 
+        ////////////////////////////////////////////////////
+        ob_start();
+        include 'header.php';
+        $buffer = ob_get_contents();
+        ob_end_clean();
+        $buffer=str_replace("%TITLE%",$strings['Buildings'],$buffer);
+        echo $buffer;
+         ////////////////////////////////////////////////////
+        ?>
 
         <?php if (!empty($this->popMessage)): ?>
             <div class="alert alert-success text-center" id="success-alert" role="alert">
@@ -54,7 +62,7 @@ class BUILDING_SHOWALL{
                                                 if ($key === $listTitles[$i]) : ?>
                                                     <td>
                                                     <?php if ($key === 'idBuilding') {?>
-                                                        <a title="<?php echo $strings['Show']?>" href='BUILDING_Controller.php?action=<?php echo $strings['Show']?>&building=<?php echo $this->buildings[$j]['idBuilding']?>'><?php echo $value?></a>                
+                                                        <a title="<?php echo $strings['Show Building']?>" href='BUILDING_Controller.php?action=<?php echo $strings['Show']?>&building=<?php echo $this->buildings[$j]['idBuilding']?>'><?php echo $value?></a>                
                                                     <?php }else {
                                                         echo $value;
                                                     } ?>
@@ -68,7 +76,9 @@ class BUILDING_SHOWALL{
                                                 <span title="<?php echo $strings['Show Floors']?>" class="btn btn-success btn-sm fa fa-building"></span></a>
                                             <a href="BUILDING_Controller.php?action=<?php echo $strings['Edit']?>&building=<?php echo $this->buildings[$j]['idBuilding']?>">
                                                 <span title="<?php echo $strings['Edit Building']?>" class="btn btn-primary btn-sm fa fa-pencil"></span></a>
+
                                             <i title="<?php echo $strings['Delete Building']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->buildings[$j]['idBuilding']?>"></i>
+                                            
                                             <div id="item-<?= $this->buildings[$j]['idBuilding']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">

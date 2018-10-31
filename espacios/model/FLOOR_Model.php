@@ -2,41 +2,41 @@
 
 class FLOOR_Model {
 
-    private $FLOOR_idBuilding;
-	private $FLOOR_idFloor;
-	private $FLOOR_nameFloor;
-	private $FLOOR_planeFloor;
-	private $FLOOR_surfaceBuildingFloor;
-    private $FLOOR_surfaceUsefulFloor;
+    private $idBuilding;
+	private $idFloor;
+	private $nameFLoor;
+	private $planeFloor;
+	private $surfaceFloor;
+    private $usefulFloor;
 	private $mysqli;
 
 
-function __construct($FLOOR_idBuilding, $FLOOR_idFloor, $FLOOR_nameFloor, $FLOOR_planeFloor, $FLOOR_surfaceBuildingFloor, $FLOOR_surfaceUsefulFloor)
+function __construct($idBuilding=NULL, $idFloor=NULL, $nameFloor=NULL, $planeFloor=NULL, $surfaceFloor=NULL, $usefulFloor=NULL)
 {
-    $this->FLOOR_idBuilding =  $FLOOR_idBuilding; 
-    $this->FLOOR_idFloor = $FLOOR_idFloor;
-	$this->FLOOR_nameFloor = $FLOOR_nameFloor;
-	$this->FLOOR_planeFloor = $FLOOR_planeFloor;
-	$this->FLOOR_surfaceBuildingFloor = $FLOOR_surfaceBuildingFloor;
-	$this->FLOOR_surfaceUsefulFloor =  $FLOOR_surfaceUsefulFloor;
+    $this->idBuilding =  $idBuilding; 
+    $this->idFloor = $idFloor;
+	$this->nameFloor = $nameFloor;
+	$this->planeFloor = $planeFloor;
+	$this->surfaceFloor = $surfaceFloor;
+	$this->usefulFloor =  $usefulFloor;
 }
 
 
 
 public function getIdBuilding(){
-    return $this->FLOOR_idBuilding;
+    return $this->idBuilding;
 }
 
 public function getIdFloor(){
-    return $this->FLOOR_idFloor;
+    return $this->idFloor;
 }
 
 public function getNameFloor(){
-    return $this->FLOOR_nameFloor;
+    return $this->nameFloor;
 }
 
 public function getPlaneFloor(){
-    return $this->FLOOR_planeFloor;
+    return $this->planeFloor;
 }
 
 
@@ -50,7 +50,7 @@ function ConectarBD() {
 
 function showAllFloors() {
     $this->ConectarBD();
-    $sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->FLOOR_idBuilding'" ;
+    $sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->idBuilding'" ;
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error en la consulta sobre la base de datos.';
     } else {
@@ -67,7 +67,7 @@ function showAllFloors() {
 
 function existsFloor() {
 	$this->ConectarBD();
-	$sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->FLOOR_idBuilding' AND idFloor = '$this->FLOOR_idFloor'";
+	$sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows == 1) {
 		return true;
@@ -77,9 +77,9 @@ function existsFloor() {
 }
 
 
-function findNameFloor() {
+function findFloorName() {
     $this->ConectarBD();
-    $sql = "SELECT nameFloor FROM floor WHERE idBuilding='$this->FLOOR_idBuilding' AND idFloor = '$this->FLOOR_idFloor'";
+    $sql = "SELECT nameFloor FROM floor WHERE idBuilding='$this->idBuilding' AND idFloor = '$this->idFloor'";
     $result = $this->mysqli->query($sql)->fetch_array();
     return $result['nameFloor'];
 }
@@ -93,7 +93,7 @@ function findLinkPlane($idBuilding, $idFloor) {
 
 function fillInFloor() {
     $this->ConectarBD();
-    $sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->FLOOR_idBuilding' AND idFloor = '$this->FLOOR_idFloor'";
+    $sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error en la consulta sobre la base de datos';
     } else {
@@ -104,7 +104,7 @@ function fillInFloor() {
 
 function addFloor() {
     $this->ConectarBD();
-    $sql = "INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES ('$this->FLOOR_idBuilding', '$this->FLOOR_idFloor', '$this->FLOOR_nameFloor', '$this->FLOOR_planeFloor', $this->FLOOR_surfaceBuildingFloor, $this->FLOOR_surfaceUsefulFloor)";
+    $sql = "INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES ('$this->idBuilding', '$this->idFloor', '$this->nameFloor', '$this->planeFloor', $this->surfaceFloor, $this->usefulFloor)";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error en la consulta sobre la base de datos.';
     } else {
@@ -114,7 +114,7 @@ function addFloor() {
 
 function updateFloor($idBuilding, $idFloor) {
     $this->ConectarBD();
-    $sql = "UPDATE FLOOR SET idFloor = '$this->FLOOR_idFloor', nameFloor = '$this->FLOOR_nameFloor', planeFloor = '$this->FLOOR_planeFloor', surfaceBuildingFloor = '$this->FLOOR_surfaceBuildingFloor', surfaceUsefulFloor = '$this->FLOOR_surfaceUsefulFloor' WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor'";
+    $sql = "UPDATE FLOOR SET idFloor = '$this->idFloor', nameFloor = '$this->idName', planeFloor = '$this->planeFloor', surfaceBuildingFloor = '$this->surfaceFloor', surfaceUsefulFloor = '$this->usefulFloor' WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error en la consulta sobre la base de datos.';
     } else {
@@ -124,7 +124,7 @@ function updateFloor($idBuilding, $idFloor) {
 
 function deleteFloor() {
     $this->ConectarBD();
-    $sql = "DELETE FROM FLOOR WHERE idBuilding ='$this->FLOOR_idBuilding' AND idFloor = '$this->FLOOR_idFloor'";
+    $sql = "DELETE FROM FLOOR WHERE idBuilding ='$this->idBuilding' AND idFloor = '$this->idFloor'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error en la consulta sobre la base de datos.';
     } else {

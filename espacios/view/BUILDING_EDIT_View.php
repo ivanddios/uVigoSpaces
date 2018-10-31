@@ -9,8 +9,17 @@ class BUILDING_EDIT{
     }
     
     function render() {
-        include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';  
-        include 'header.php' ?>
+		include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';  
+		
+        ////////////////////////////////////////////////////
+		ob_start();
+		include 'header.php';
+		$buffer = ob_get_contents();
+		ob_end_clean();
+		$buffer=str_replace("%TITLE%",$strings['Edit Building'],$buffer);
+		echo $buffer;
+		////////////////////////////////////////////////////
+		?>
 
 		<div class="container">
 			<div class="row center-row">

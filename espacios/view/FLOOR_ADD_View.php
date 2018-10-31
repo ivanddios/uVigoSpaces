@@ -11,7 +11,17 @@ class FLOOR_ADD{
     
     function render() {
         include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';  
-        include 'header.php' ?>
+		
+		
+		////////////////////////////////////////////////////
+		ob_start();
+		include 'header.php';
+		$buffer = ob_get_contents();
+		ob_end_clean();
+		$buffer=str_replace("%TITLE%",$strings['Add Floor'],$buffer);
+		echo $buffer;
+		////////////////////////////////////////////////////
+		?>
 
 		<div class="container">
 			<div class="row center-row">
@@ -20,10 +30,10 @@ class FLOOR_ADD{
 						<?=htmlentities($strings["Data of the new building's floor"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form method="POST" action="FLOOR_Controller.php?action=<?php echo $strings['Add']?>&building=<?php echo $this->building?>" enctype="multipart/form-data">
+						<form method="POST" action="FLOOR_Controller.php?action=<?= $strings['Add']?>&building=<?= $this->building?>" enctype="multipart/form-data">
 							<div id="group-form">
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?php echo $this->building?>" readonly>
+									<input type="text" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?= $this->building?>" readonly>
 									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
@@ -52,7 +62,7 @@ class FLOOR_ADD{
 							</div>	
 							<button type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
 						</form>
-						<a href="../index.php?"><?= $strings["Back"] ?></a>
+						<a href="../index.php?FLOOR_Controller.php?building="<?= $this->building?>><?= $strings["Back"] ?></a>
 					</div>
 				</div>
 			</div>

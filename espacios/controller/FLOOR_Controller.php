@@ -1,17 +1,17 @@
 <?php
 
+require_once(__DIR__."..\..\core\ViewManager.php");
 include '../model/BUILDING_Model.php';
 include '../model/FLOOR_Model.php';
 include '../view/FLOOR_SHOWALL_View.php';
 include '../view/FLOOR_EDIT_View.php';
 include '../view/FLOOR_ADD_View.php';
 include '../view/FLOOR_SHOW_View.php';
-include '../view/MESSAGE_View.php';
 include '../core/ACL.php';
 
-if(!isset($_SESSION)){
-    session_start();
-}
+$function = "FLOOR";
+$back = 'FLOOR_Controller.php';
+$view = new ViewManager();
 
 include '../locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
 
@@ -21,11 +21,12 @@ function get_data_form() {
     $idBuilding = $_POST['idBuilding'];
     $idFloor = $_POST['idFloor'];
     $nameFloor = $_POST['nameFloor'];
+    
 
     if (isset($_FILES['planeFloor']['name']) && ($_FILES['planeFloor']['name'] !== '')) {
         $planeFloor = '../document/'.$idBuilding.'/'.$idBuilding.$idFloor.'/'.$_FILES['planeFloor']['name'];
     } else {
-        $planeFloor = '';
+        $planeFloor = $_POST['planeFloorOriginal'];
     }
 
     $surfaceBuildingFloor = $_POST['surfaceBuildingFloor'];
@@ -36,193 +37,221 @@ function get_data_form() {
 }
 
 
-$function = "FLOOR";
-$back = 'FLOOR_Controller.php';
+
 
 if (!isset($_REQUEST['action'])){
 	$_REQUEST['action'] = '';
 }
 
-	Switch ($_REQUEST['action']){
+Switch ($_REQUEST['action']){
 
-        case  $strings['Add']:
+    case  $strings['Add']:
 
-        if(comprobarPermisos('ADD',$function)){
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Add floors requires login."]);
+            $view->redirect("USER_Controller.php", "index");
+        }
 
-            if (!isset($_SESSION['LOGIN'])){
-                new MESSAGE("Not in session. Add floor requires login", $back );
-            }
+        if(!checkRol('ADD', $function)){
+            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        }
 
-            if (!isset($_GET['building'])){
-                new MESSAGE("building id is mandatory", $back );
-            }
-            $building = $_GET['building'];
+        if (!isset($_GET['building'])){
+            $view->setFlashDanger($strings["Building is mandatory"]);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        }
+        $building = $_GET['building'];
 
-            if (isset($_POST["submit"])) { 
-                $floorAdd = get_data_form();
+        if (isset($_POST["submit"])) { 
+            $floorAdd = get_data_form();
 
-                    ////////////////////////////////////////METER EN UNA FUNCIÓN////////////////////////////////////////////////////////////
-                    $dirPlane = '../document/'.$floorAdd->getIdBuilding().'/'.$floorAdd->getIdBuilding().$floorAdd->getIdFloor().'/';
-                    if ($_FILES['planeFloor']['name'] !== '') {
-                        if (!file_exists($dirPlane)) {
-                            mkdir($dirPlane, 0777, true);
-                        }
-                        move_uploaded_file($_FILES['planeFloor']['tmp_name'],$floorAdd->getPlaneFloor());
-                    }
-                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-                $consult = $floorAdd->addFloor();
-                
-                if($consult){
-                    $floors = $floorAdd->showAllFloors();
-                    $message=(sprintf($strings["Floor \"%s\" successfully added."], $floorAdd->getNameFloor()));
-                    new FLOOR_SHOWALL($floors, '', $message);
-                } else {
-                    new MESSAGE($answer, $back);
+            ////////////////////////////////////////METER EN UNA FUNCIÓN////////////////////////////////////////////////////////////
+            $dirPlane = '../document/'.$floorAdd->getIdBuilding().'/'.$floorAdd->getIdBuilding().$floorAdd->getIdFloor().'/';
+            if ($_FILES['planeFloor']['name'] !== '') {
+                if (!file_exists($dirPlane)) {
+                    mkdir($dirPlane, 0777, true);
                 }
+                move_uploaded_file($_FILES['planeFloor']['tmp_name'],$floorAdd->getPlaneFloor());
+            }
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            $consult = $floorAdd->addFloor(); 
+            if($consult){
+                // $floors = $floorAdd->showAllFloors();
+                // $message=(sprintf($strings["Floor \"%s\" successfully added."], $floorAdd->getNameFloor()));
+                // new FLOOR_SHOWALL($floors, '', $message);
+                $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully added."], $floorAdd->getNameFloor());
+                $view->setFlashSuccess($flashMessageSuccess);
+                $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
             } else {
-                new FLOOR_ADD($building);
+                $view->setFlashDanger($strings[$consult]);
+                $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
             }
-        }else{
-            new MESSAGE("No tienes los permisos necesarios",'../index.php');
-        }		
-           
-        break;
-
-
-
-        case  $strings['Edit']:
-			if(comprobarPermisos('EDIT', $function)){
-                
-                if (!isset($_SESSION['LOGIN'])){
-                    new MESSAGE("Not in session. Editing buildings requires login", $back );
-                }
-
-                if (!isset($_GET['building'])){
-                    new MESSAGE("building id is mandatory", $back );
-                }
-                $buildingid = $_GET["building"];
-
-                if (!isset($_GET['floor'])){
-                    new MESSAGE("floor id is mandatory", $back );
-                }
-                $floorid = $_GET['floor'];
-
-                if (isset($_POST["submit"])) { 
-                    $floorEdit = get_data_form();
-                    
-                    ////////////////////////////////////////METER EN UNA FUNCIÓN////////////////////////////////////////////////////////////
-                    $dirPlane = '../document/'.$floorEdit->getIdBuilding().'/'.$floorEdit->getIdBuilding().$floorEdit->getIdFloor().'/';
-                    if ($_FILES['planeFloor']['name'] !== '') {
-                        if (!file_exists($dirPlane)) {
-                            mkdir($dirPlane, 0777, true);
-                        }
-                        move_uploaded_file($_FILES['planeFloor']['tmp_name'],$floorEdit->getPlaneFloor());
-                        $link = $floorEdit->findLinkPlane($buildingid, $floorid);
-                        unlink($link);
-                    }
-                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                    $consult = $floorEdit->updateFloor($buildingid, $floorid);
-                    if($consult){
-                        $_SESSION['popMessage'] = (sprintf($strings["Floor \"%s\" successfully updated."], $floorEdit->getNameFloor()));
-                        header("Location: FLOOR_Controller.php?building=$buildingid");
-                    } else {
-                        new MESSAGE($answer, $back);
-                    }
-                } else {
-                    $floor = new FLOOR_Model($buildingid, $floorid,'','','','');
-                    $values = $floor->fillInFloor();
-                    new FLOOR_EDIT($values);
-                }
-            }else{
-                new MESSAGE("No tienes los permisos necesarios",'../index.php');
-            }		
-               
-        break;
-
-
-        case  $strings['Show']:
-            if(comprobarPermisos('SHOW', $function)){
-            
-            if (!isset($_SESSION['LOGIN'])){
-                new MESSAGE("Not in session. Editing buildings requires login", $back );
-            }
-
-            if (!isset($_GET['building'])){
-                new MESSAGE("building id is mandatory", $back );
-            }
-            $buildingid = $_GET["building"];
-
-            if (!isset($_GET['floor'])){
-                new MESSAGE("floor id is mandatory", $back );
-            }
-            $floorid = $_GET['floor'];
-
-            $floor = new FLOOR_Model($buildingid, $floorid,'','','','');
-            $values = $floor->fillInFloor();
-            new FLOOR_SHOW($values);
-        }else{
-            new MESSAGE("No tienes los permisos necesarios",'../index.php');
-        }		
-           
+        } else {
+            new FLOOR_ADD($building);
+        }
+ 
     break;
 
 
-        case  $strings['Delete']:
 
-            if(comprobarPermisos("DELETE", $function)){
+    case  $strings['Edit']:
 
-                if (!isset($_SESSION['LOGIN'])){
-                    new MESSAGE("Not in session. Deleting floors requires login", $back );
-                }
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Show the floors requires login"]);
+            $view->redirect("USER_Controller.php", "index");
+        }
 
-                if (!isset($_GET['building']) && !isset($_GET['floor'])){
-                    new MESSAGE("building id and floor id is mandatory", $back );
-                }
-                $floor = new FLOOR_Model($_GET["building"], $_GET["floor"], "","","","");
+		if(!checkRol('EDIT', $function)){
+            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        }
                 
-                if (!$floor->existsFloor()) {
-                    new MESSAGE("No such floor with this id", $back );
-                }
+        if (!isset($_GET['building'])){
+            $view->setFlashDanger($strings["Building is mandatory"]);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        }
+        $buildingid = $_GET["building"];
 
-                //////////////////////////////////////////////////////////////////////////////////////
-                $link = $floor->findLinkPlane($floor->getIdBuilding(), $floor->getIdFloor());
-                unlink($link); 
-                rmdir('../document/'.$floor->getIdBuilding().'/'.$floor->getIdBuilding().$floor->getIdFloor());
-                /////////////////////////////////////////////////////////////////////////////////////
-                $floorName = $floor->findNameFloor();
-                if($floor->deleteFloor()){
+        if (!isset($_GET['floor'])){
+            $view->setFlashDanger($strings["Floor is mandatory"]);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        }
+        $floorid = $_GET['floor'];
 
-                    $_SESSION['popMessage'] = (sprintf($strings["Floor \"%s\" successfully deleted."], $floorName));
-                    header("Location: FLOOR_Controller.php?building=".$_GET['building']);
-                } else {
-                    new MESSAGE($answer, $back );
+        if (isset($_POST["submit"])) { 
+            $floorEdit = get_data_form();
+                    
+            ////////////////////////////////////////METER EN UNA FUNCIÓN////////////////////////////////////////////////////////////
+            $dirPlane = '../document/'.$floorEdit->getIdBuilding().'/'.$floorEdit->getIdBuilding().$floorEdit->getIdFloor().'/';
+            if ($_FILES['planeFloor']['name'] !== '') {
+                if (!file_exists($dirPlane)) {
+                    mkdir($dirPlane, 0777, true);
                 }
-            }else{
-                new MESSAGE("No tienes los permisos necesarios",'../index.php');
-            }		
-         break;
+                move_uploaded_file($_FILES['planeFloor']['tmp_name'],$floorEdit->getPlaneFloor());
+                $link = $floorEdit->findLinkPlane($buildingid, $floorid);
+                unlink($link);
+            }
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            $consult = $floorEdit->updateFloor($buildingid, $floorid);
+            if($consult){
+                $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully updated."], $floorEdit->getNameFloor());
+                $view->setFlashSuccess($flashMessageSuccess);
+                $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+            } else {
+                $view->setFlashDanger($strings[$consult]);
+                $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+            }
+        } else {
+            $floor = new FLOOR_Model($buildingid, $floorid,'','','','');
+            $values = $floor->fillInFloor();
+            new FLOOR_EDIT($values);
+        }
+
+    break;
+
+
+    case  $strings['Show']:
+
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Show the floors requires login"]);
+             $view->redirect("USER_Controller.php", "index");
+        }
+
+        if(!checkRol('EDIT', $function)){
+            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        }
+             
+        if (!isset($_GET['building'])){
+            $view->setFlashDanger($strings["Building is mandatory"]);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        }
+        $buildingid = $_GET["building"];
+
+        if (!isset($_GET['floor'])){
+            $view->setFlashDanger($strings["Floor is mandatory"]);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        }
+        $floorid = $_GET['floor'];
+
+        $floor = new FLOOR_Model($buildingid, $floorid,'','','','');
+        $values = $floor->fillInFloor();
+        new FLOOR_SHOW($values);
+         
+    break;
+
+
+    case  $strings['Delete']:
+
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Show the floors requires login"]);
+            $view->redirect("USER_Controller.php", "index");
+        }
+
+        if(!checkRol('DELETE', $function)){
+            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        }
+
+        if (!isset($_GET['building']) && !isset($_GET['floor'])){
+            $view->setFlashDanger($strings["Building is mandatory"]);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        }
+                
+        $floor = new FLOOR_Model($_GET["building"], $_GET["floor"], "","","","");
+                
+        if (!$floor->existsFloor()) {
+            $view->setFlashDanger($strings["No exist floor to delete"]);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////
+        $link = $floor->findLinkPlane($floor->getIdBuilding(), $floor->getIdFloor());
+        unlink($link); 
+        rmdir('../document/'.$floor->getIdBuilding().'/'.$floor->getIdBuilding().$floor->getIdFloor());
+        /////////////////////////////////////////////////////////////////////////////////////
+
+        $floorName = $floor->findNameFloor();
+        $consult = $floor->deleteFloor();
+        if($consult){
+            $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully deleted."], $floorName);
+            $view->setFlashSuccess($flashMessageSuccess);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        } else {
+            $view->setFlashDanger($strings[$consult]);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        }
+
+    break;
     
 
-        default:
+    default:
                     
-            if(comprobarPermisos('SHOWALL', $function)){
-                if(isset($_GET['building'])){
-                $floor = new FLOOR_Model($_GET['building'],'','','','','');
-                $floors = $floor->showAllFloors();
-                new FLOOR_SHOWALL($floors);
-                } else {
-                    new MESSAGE("Building id is mandatory",'../index.php');
-                }
-            }else{
-                new MESSAGE("No tienes los permisos necesarios",'../index.php');
-            }
-            
-         break;
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Show the floors requires login"]);
+            $view->redirect("USER_Controller.php", "");
+        }
+
+        if(!checkRol('SHOWALL', $function)){
+            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+
+        if(isset($_GET['building'])){
+            $floor = new FLOOR_Model($_GET['building']);
+            $building = new BUILDING_Model($_GET['building']);
+            $buildingName = $building->findBuildingName();
+            $floors = $floor->showAllFloors();
+            new FLOOR_SHOWALL($floors, $buildingName);
+        } else {
+            $view->setFlashDanger($strings["Building is mandatory"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+               
+    break;
 }
-
-
 
 ?>

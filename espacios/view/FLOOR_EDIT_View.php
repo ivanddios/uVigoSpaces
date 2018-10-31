@@ -9,8 +9,17 @@ class FLOOR_EDIT{
     }
     
     function render() {
-        include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';  
-        include 'header.php' ?>
+		include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
+		  
+        ////////////////////////////////////////////////////
+		ob_start();
+		include 'header.php';
+		$buffer = ob_get_contents();
+		ob_end_clean();
+		$buffer=str_replace("%TITLE%",$strings['Edit Floor'],$buffer);
+		echo $buffer;
+		////////////////////////////////////////////////////
+		?>
 
 		<div class="container">
 			<div class="row center-row">
@@ -53,8 +62,9 @@ class FLOOR_EDIT{
 
 								<label><?php echo $strings['planeFloor']; ?></label>
 								<div class="inputWithIcon inputIconBg">
-									<a target='_blank' href='<?php echo $this->floor['planeFloor']; ?>'><img src='<?php echo $this->floor['planeFloor']; ?>' width="250" height="250"></a>
-									<input type="file" name="planeFloor" accept="image/*" value="<?=$this->floor['planeFloor']?>">
+									<a target='_blank' href='<?php echo $this->floor['planeFloor']; ?>'><img src='<?= $this->floor['planeFloor']; ?>' width="250" height="250"></a>
+									<input type="file" name="planeFloor" accept="image/*">
+									<input type="hidden" name="planeFloorOriginal" value="<?=$this->floor['planeFloor']?>">
 								</div>
 							</div>
 							<button type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>

@@ -1,7 +1,7 @@
 <?php
 include_once '../Model/USER_Model.php';
 
-function comprobarPermisos($action, $funcion){
+function checkRol($action, $funcion){
 	$permisos = $_SESSION['PERMISSIONS'];
 	$band = false;
 	for($i=0; $i<count($permisos);$i++){

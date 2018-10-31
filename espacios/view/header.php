@@ -4,13 +4,19 @@
 	// if (!isset($_SESSION['idioma'])) {
 	// 	$_SESSION['idioma'] = 'SPANISH';
 	// }
-	//include '../Locales/Strings_' . $_SESSION['idioma'] . '.php';
+    //include '../Locales/Strings_' . $_SESSION['idioma'] . '.php';
+
+    require_once(__DIR__."..\..\core\ViewManager.php");
+    $this->view = new ViewManager();
+    include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
+    $this->flashMessageSuccess = $this->view->popFlashSuccess("successMessage");
+    $this->flashMessageDanger = $this->view->popFlashDanger("dangerMessage");
 ?>
 
 <!DOCTYPE html>
     <html lang="es">
         <head>
-            <title>Login</title>
+            <title>%TITLE%</title>
             <link rel="shortcut icon" href="../img/favicon.png"/>
             <meta charset="utf-8"/>
             <!-- Fonts -->
@@ -61,3 +67,15 @@
                     </div>
                 </nav>
             </header>
+
+            <?php if (!empty($this->flashMessageSuccess)): ?>
+                <div class="alert alert-success text-center" id="success-alert" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <?= $this->flashMessageSuccess; ?>
+                </div>
+            <?php elseif(!empty($this->flashMessageDanger)): ?>
+                <div class="alert alert-danger text-center" id="danger-alert" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <?= $this->flashMessageDanger; ?>
+                </div>            
+            <?php endif; ?>

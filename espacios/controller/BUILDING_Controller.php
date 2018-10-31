@@ -1,19 +1,18 @@
 <?php
 
+require_once(__DIR__."..\..\core\ViewManager.php");
 include '../model/BUILDING_Model.php';
-include '../view/MESSAGE_View.php';
 include '../view/BUILDING_SHOWALL_View.php';
 include '../view/BUILDING_EDIT_View.php';
 include '../view/BUILDING_SHOW_View.php';
 include '../view/BUILDING_ADD_View.php';
 include '../core/ACL.php';
 
-if(!isset($_SESSION)){
-    session_start();
-}
+$function = "BUILDING";
+$back = 'BUILDING_Controller.php';
+$view = new ViewManager();
 
 include '../locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
-
 
 function get_data_form() {
 
@@ -28,160 +27,160 @@ function get_data_form() {
 }
 
 
-$function = "BUILDING";
-$back = 'BUILDING_Controller.php';
-
-if (!isset($_REQUEST['action'])){
-	$_REQUEST['action'] = '';
+if (!isset($_GET['action'])){
+	$_GET['action'] = '';
 }
 
-	Switch ($_REQUEST['action']){
+Switch ($_GET['action']){
 
+    case  $strings['Add']:
 
-        case  $strings['Add']:
-
-			if(comprobarPermisos('ADD',$function)){
-
-                if (!isset($_SESSION['LOGIN'])){
-                    new MESSAGE("Not in session. Add building requires login", $back );
-                }
-
-                if (isset($_POST["submit"])) { 
-                    $buildingAdd = get_data_form();
-                    $consult = $buildingAdd->insertBuilding();
-                    
-                    if($consult){
-                        $buildings = $buildingAdd->showAllBuilding();
-                        $message=(sprintf($strings["Building \"%s\" successfully added."], $buildingAdd->getIdBuilding()));
-                        new BUILDING_SHOWALL($buildings, '', $message);
-                    } else {
-                        new MESSAGE($answer, $back);
-                    }
-                } else {
-                    new BUILDING_ADD();
-                }
-            }else{
-                new MESSAGE("No tienes los permisos necesarios",'../index.php');
-            }		
-               
-        break;
-
-
-        case  $strings['Edit']:
-
-			if(comprobarPermisos('EDIT',$function)){
-
-                if (!isset($_GET['building'])){
-                    new MESSAGE("building id is mandatory", $back );
-                }
-
-                $buildingid = $_GET['building'];
-
-                if (!isset($_SESSION['LOGIN'])){
-                    new MESSAGE("Not in session. Editing buildings requires login", $back );
-                }
-
-                if (isset($_POST["submit"])) { 
-                    $buildingEdit = get_data_form();
-                    $consult = $buildingEdit->updateBuilding($buildingid);
-                    
-                    if($consult){
-                       // $buildings = $buildingEdit->showAllBuilding();
-                       //new BUILDING_SHOWALL($buildings, '', $message);
-                        $_SESSION['popMessage']=(sprintf($strings["Building \"%s\" successfully updated."], $buildingid));
-                        header("Location: BUILDING_Controller.php");                     
-                    } else {
-                        new MESSAGE($answer, $back);
-                    }
-                } else {
-                    $building = new BUILDING_Model($buildingid,'','','','');
-                    $values = $building->FillInBuilding();
-                    new BUILDING_EDIT($values);
-                }
-            }else{
-                new MESSAGE("No tienes los permisos necesarios",'../index.php');
-            }
-
-        break;
-
-
-
-        case  $strings['Show']:
-
-        if(comprobarPermisos('SHOW',$function)){
-
-            if (!isset($_GET['building'])){
-                new MESSAGE("building id is mandatory", $back );
-            }
-
-            $buildingid = $_GET['building'];
-
-            if (!isset($_SESSION['LOGIN'])){
-                new MESSAGE("Not in session. Editing buildings requires login", $back );
-            }
-
-                $building = new BUILDING_Model($buildingid,'','','','');
-                $values = $building->FillInBuilding();
-                new BUILDING_SHOW($values);
-
-        }else{
-            new MESSAGE("No tienes los permisos necesarios",'../index.php');
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Add floors requires login."]);
+            $view->redirect("USER_Controller.php", "");
         }
 
+        if(!checkRol('ADD', $function)){
+            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+
+        if (isset($_POST["submit"])) { 
+            $buildingAdd = get_data_form();
+            $consult = $buildingAdd->addBuilding();
+            
+            if($consult){
+                // $buildings = $buildingAdd->showAllBuilding();
+                // $message=(sprintf($strings["Building \"%s\" successfully added."], $buildingAdd->getIdBuilding()));
+                // new BUILDING_SHOWALL($buildings, '', $message);
+                $flashMessageSuccess = sprintf($strings["Building \"%s\" successfully added."], $buildingAdd->getNameBuilding());
+                $view->setFlashSuccess($flashMessageSuccess);
+                $view->redirect("BUILDING_Controller.php", "");
+            } else {
+                $view->setFlashDanger($strings[$consult]);
+                $view->redirect("BUILDING_Controller.php", "");
+            }
+        } else {
+            new BUILDING_ADD();
+        }
+           	       
+    break;
+
+
+    case  $strings['Edit']:
+
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Edit floors requires login."]);
+            $view->redirect("USER_Controller.php", "");
+        }
+
+        if(!checkRol('EDIT', $function)){
+            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+
+        if (!isset($_GET['building'])){
+            $view->setFlashDanger($strings["Building id is mandatory"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+        $buildingid = $_GET['building'];
+
+        if (isset($_POST["submit"])) { 
+            $buildingEdit = get_data_form();
+            $consult = $buildingEdit->updateBuilding($buildingid);
+            if($consult){
+                $flashMessageSuccess = sprintf($strings["Building \"%s\" successfully updated."], $buildingEdit->getNameBuilding());
+                $view->setFlashSuccess($flashMessageSuccess);
+                $view->redirect("BUILDING_Controller.php", "");     
+            } else {
+                $view->setFlashDanger($strings[$consult]);
+                $view->redirect("BUILDING_Controller.php", "");
+            }
+        } else {
+            $building = new BUILDING_Model($buildingid,'','','','');
+            $values = $building->fillInBuilding();
+            new BUILDING_EDIT($values);
+        }
+            
     break;
 
 
 
+    case  $strings['Show']:
 
-        case  $strings['Delete']:
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Show floors requires login."]);
+            $view->redirect("USER_Controller.php", "");
+        }
 
-            if(comprobarPermisos("DELETE", $function)){
+        if(!checkRol('SHOW', $function)){
+            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
 
-                if (!isset($_POST['building'])){
-                    new MESSAGE("building id is mandatory", $back );
-                }
+        if (!isset($_GET['building'])){
+            $view->setFlashDanger($strings["Building id is mandatory"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+        $buildingid = $_GET['building'];
 
-                $buildingid = $_POST["building"];
+        $building = new BUILDING_Model($buildingid,'','','','');
+        $values = $building->fillInBuilding();
+        new BUILDING_SHOW($values);
 
-                if (!isset($_SESSION['LOGIN'])){
-                    new MESSAGE("Not in session. Deleting buildings requires login", $back );
-                }
+    break;
 
-                $building = new BUILDING_Model($buildingid,"","","","");
-                $buildingDelete = $building->findBuilding();
 
-                if ($buildingDelete != 'true') {
-                    new MESSAGE("No such building with this id", $back );
-                }
+    case  $strings['Delete']:
 
-                $answer = $building->deleteBuilding($buildingid);
-                if($answer){
-                    //$buildings = $building->showAllBuilding();
-                    //new BUILDING_SHOWALL($buildings, '../index.php');
-                    $_SESSION['popMessage'] = (sprintf($strings["Building \"%s\" successfully deleted."], $buildingid));
-                    header("Location: BUILDING_Controller.php");
-                } else {
-                    new MESSAGE($answer, $back);
-                }
-            }else{
-                new MESSAGE("No tienes los permisos necesarios",'../index.php');
-            }		
-         break;
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Delete floors requires login."]);
+            $view->redirect("USER_Controller.php", "");
+        }
+
+        if(!checkRol('DELETE', $function)){
+            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+
+        if (!isset($_GET['building'])){
+            $view->setFlashDanger($strings["Building id is mandatory"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+        $buildingid = $_GET['building'];
+
+        $building = new BUILDING_Model($buildingid,"","","","");
+        $buildingDelete = $building->findBuilding();
+
+        if ($buildingDelete != 'true') {
+            $view->setFlashDanger($strings["No such building with this id"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+
+        $consult = $building->deleteBuilding($buildingid);
+        if($consult){
+            $flashMessageSuccess = sprintf($strings["Building \"%s\" successfully deleted."], $buildingEdit->getNameBuilding());
+            $view->setFlashSuccess($flashMessageSuccess);
+            $view->redirect("BUILDING_Controller.php", "");     
+        } else {
+            $view->setFlashDanger($strings[$consult]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+            	
+    break;
     
 
-        default:
+    default:
 
-            if(comprobarPermisos('SHOWALL', $function)){
-                $building = new BUILDING_Model('','','','','');
-                $buildings = $building->showAllBuilding();
-                new BUILDING_SHOWALL($buildings);
-            }else{
-                new MESSAGE("No tienes los permisos necesarios",'../index.php');
-            }
+        if(!checkRol('SHOWALL', $function)){
+            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+        $building = new BUILDING_Model();
+        $buildings = $building->showAllBuilding();
+        new BUILDING_SHOWALL($buildings);
             
-        break;
+    break;
 }
-
-
 
 ?>

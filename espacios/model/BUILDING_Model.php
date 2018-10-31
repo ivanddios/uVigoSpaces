@@ -2,26 +2,31 @@
 
 class BUILDING_Model {
 
-	private $BUILDING_idBuilding;
-	private $BUILDING_name;
-	private $BUILDING_address;
-	private $BUILDING_phone;
-	private $BUILDING_responsible;
+	private $idBuilding;
+	private $nameBuilding;
+	private $addressBuilding;
+	private $phoneBuilding;
+	private $responsibleBuilding;
 	private $mysqli;
 
 
-function __construct($BUILDING_idBuilding, $BUILDING_name, $BUILDING_address, $BUILDING_phone, $BUILDING_responsible)
+function __construct($idBuilding=NULL, $nameBuilding=NULL, $addressBuilding=NULL, $phoneBuilding=NULL, $responsibleBuilding=NULL)
 {
-    $this->BUILDING_idBuilding =  $BUILDING_idBuilding; 
-	$this->BUILDING_name = $BUILDING_name;
-	$this->BUILDING_address = $BUILDING_address;
-	$this->BUILDING_phone = $BUILDING_phone;
-	$this->BUILDING_responsible =  $BUILDING_responsible;
+    $this->idBuilding =  $idBuilding; 
+	$this->nameBuilding = $nameBuilding;
+	$this->addressBuilding = $addressBuilding;
+	$this->phoneBuilding = $phoneBuilding;
+	$this->responsibleBuilding =  $responsibleBuilding;
 }
 
 public function getIdBuilding(){
-    return $this->BUILDING_idBuilding;
+    return $this->idBuilding;
 }
+
+public function getNameBuilding(){
+    return $this->nameBuilding;
+}
+
 
 function ConectarBD() {
     $this->mysqli = new mysqli("localhost", "root", "", "espacios");
@@ -49,7 +54,7 @@ function showAllBuilding() {
 
 function findBuilding() {
 	$this->ConectarBD();
-	$sql = "SELECT * FROM BUILDING WHERE idBuilding = '$this->BUILDING_idBuilding'";
+	$sql = "SELECT * FROM BUILDING WHERE idBuilding = '$this->idBuilding'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows == 1) {
 		return true;
@@ -58,9 +63,9 @@ function findBuilding() {
 	}
 }
 
-function insertBuilding() {
+function addBuilding() {
     $this->ConectarBD();
-    $sql = "INSERT INTO BUILDING (idBuilding, nameBuilding, addressBuilding, phoneBuilding, responsibleBuilding) VALUES ('$this->BUILDING_idBuilding', '$this->BUILDING_name', '$this->BUILDING_address', '$this->BUILDING_phone', '$this->BUILDING_responsible')";
+    $sql = "INSERT INTO BUILDING (idBuilding, nameBuilding, addressBuilding, phoneBuilding, responsibleBuilding) VALUES ('$this->idBuilding', '$this->nameBuilding', '$this->addressBuilding', '$this->phoneBuilding', '$this->responsibleBuilding')";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error en la consulta sobre la base de datos.';
     } else {
@@ -71,7 +76,7 @@ function insertBuilding() {
 
 function deleteBuilding() {
     $this->ConectarBD();
-    $sql = "DELETE FROM BUILDING WHERE idBuilding ='$this->BUILDING_idBuilding'";
+    $sql = "DELETE FROM BUILDING WHERE idBuilding ='$this->idBuilding'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error en la consulta sobre la base de datos.';
     } else {
@@ -79,9 +84,9 @@ function deleteBuilding() {
     }
 }
 
-function FillInBuilding() {
+function fillInBuilding() {
     $this->ConectarBD();
-    $sql = "SELECT * FROM BUILDING WHERE idBuilding = '$this->BUILDING_idBuilding'";
+    $sql = "SELECT * FROM BUILDING WHERE idBuilding = '$this->idBuilding'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error en la consulta sobre la base de datos';
     } else {
@@ -92,12 +97,20 @@ function FillInBuilding() {
 
 function updateBuilding($idBuilding) {
     $this->ConectarBD();
-    $sql = "UPDATE BUILDING SET idBuilding = '$this->BUILDING_idBuilding', nameBuilding = '$this->BUILDING_name', addressBuilding = '$this->BUILDING_address', phoneBuilding = '$this->BUILDING_phone', responsibleBuilding = '$this->BUILDING_responsible' WHERE idBuilding = '$idBuilding'";
+    $sql = "UPDATE BUILDING SET idBuilding = '$this->idBuilding', nameBuilding = '$this->nameBuilding', addressBuilding = '$this->addressBuilding', phoneBuilding = '$this->phoneBuilding', responsibleBuilding = '$this->responsibleBuilding' WHERE idBuilding = '$idBuilding'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error en la consulta sobre la base de datos.';
     } else {
         return true;
     }
+}
+
+
+function findBuildingName() {
+    $this->ConectarBD();
+    $sql = "SELECT nameBuilding FROM BUILDING WHERE idBuilding='$this->idBuilding'";
+    $result = $this->mysqli->query($sql)->fetch_array();
+    return $result['nameBuilding'];
 }
 
 }

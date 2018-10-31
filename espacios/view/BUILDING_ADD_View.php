@@ -9,7 +9,17 @@ class BUILDING_ADD{
     function render() {
 		include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';  
 		
-        include 'header.php' ?>
+
+        ////////////////////////////////////////////////////
+        ob_start();
+        include 'header.php';
+        $buffer = ob_get_contents();
+        ob_end_clean();
+        $buffer=str_replace("%TITLE%",$strings['Add Building'],$buffer);
+        echo $buffer;
+		////////////////////////////////////////////////////
+		 
+        ?>
 		<div class="container">
 			<div class="row center-row">
 				<div class="col-lg-6 center-block">
@@ -46,7 +56,7 @@ class BUILDING_ADD{
 							</div>
 							<button type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
 						</form>
-						<a href="../index.php?"><?= $strings["Back"] ?></a>
+						<a href="../index.php"><?= $strings["Back"] ?></a>
 					</div>
 				</div>
 			</div>

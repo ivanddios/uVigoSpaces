@@ -20,8 +20,8 @@ if (!isset($POST['action'])){
 	Switch ($POST['action']){
 
 		case "logout":
-		session_destroy();
-		header('Location:../index.php');
+			session_destroy();
+			header('Location:../index.php');
 		break;	
 
 		default:
