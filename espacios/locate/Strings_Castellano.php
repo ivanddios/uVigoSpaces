@@ -3,7 +3,7 @@
 $strings = array(
 "Edit" => "edit",
 "Add"=> "add",
-"Show" => "show",
+"Show" => "Ver",
 "Delete" => "Eliminar",
 "Building" => "Edificio: ",
 "Buildings" => "Edificios",

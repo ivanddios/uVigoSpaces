@@ -44,7 +44,7 @@ class FLOOR_SHOWALL{
                                                 if ($key === $listTitles[$i]): ?>
                                                     <td>
                                                         <?php if ($key === 'idBuilding'): ?>
-                                                            <a title="<?= $strings['Show']?>" href='FLOOR_Controller.php?action=<?= $strings['Show Floor']?>&building=<?= $this->floors[$j]['idBuilding']?>&floor=<?= $this->floors[$j]['idFloor']?>'> <?= $this->floors[$j]['idBuilding'].$this->floors[$j]['idFloor']?></a> 
+                                                            <a title="<?= $strings['Show']?>" href='FLOOR_Controller.php?action=<?= $strings['Show']?>&building=<?= $this->floors[$j]['idBuilding']?>&floor=<?= $this->floors[$j]['idFloor']?>'> <?= $this->floors[$j]['idBuilding'].$this->floors[$j]['idFloor']?></a> 
                                                         <?php elseif($key === 'planeFloor'): ?>
                                                             <?php if($value === ''): ?>
                                                                 <img src="../img/noPlane.png" width="25px" height="25px">

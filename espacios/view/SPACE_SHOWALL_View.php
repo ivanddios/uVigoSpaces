@@ -41,27 +41,27 @@ class SPACE_SHOWALL{
 
                             <tbody>
                                 <?php for ($j = 0; $j < count($this->spaces); $j++): ?>
-                                    <tr>
+                                    <tr id="<?=$this->spaces[$j]['idSpace']?>">
                                         <?php foreach ($this->spaces [$j] as $key => $value):
                                             for ($i = 0; $i < count($listTitles); $i++):
                                                 if ($key === $listTitles[$i]): ?>
                                                     <?php if($key === 'idBuilding'): ?>
-                                                        <td id="item-idSpace">
-                                                        <a title="<?= $strings['Show']?>" href='SPACE_Controller.php?action=<?= $strings['Show']?>&building=<?= $this->spaces[$j]['idBuilding']?>&floor=<?= $this->spaces[$j]['idFloor']?>&space=<?= $this->spaces[$j]['idSpace']?>'> <?= $this->spaces[$j]['idBuilding'].$this->spaces[$j]['idFloor'].$this->spaces[$j]['idSpace']?></a>    
-                                                    <?php elseif ($key === 'nameBuilding'): ?>
-                                                        <td id="item-nameSpace"> 
+                                                        <td id="item-idSpace-<?=$j?>">
+                                                        <a title="<?=$strings['Show']?>" href='SPACE_Controller.php?action=<?= $strings['Show']?>&building=<?= $this->spaces[$j]['idBuilding']?>&floor=<?= $this->spaces[$j]['idFloor']?>&space=<?= $this->spaces[$j]['idSpace']?>'> <?= $this->spaces[$j]['idBuilding'].$this->spaces[$j]['idFloor'].$this->spaces[$j]['idSpace']?></a>    
+                                                    <?php elseif ($key === 'nameSpace'): ?>
+                                                        <td id="item-nameSpace-<?=$j?>"> 
                                                         <?= $value; ?>
                                                     <?php elseif($key === 'surfaceSpace'): ?>
-                                                            <td id="item-surfaceSpace">
+                                                            <td id="item-surfaceSpace-<?=$j?>" class="surface">
                                                             <?=$value . ' m²'?>
                                                     <?php else:?>
-                                                           <td id="item-numberInvetorySpace">
-                                                           <?= $value; 
+                                                           <td id="item-numberInventorySpace-<?=$j?>" class="numberInventory">
+                                                           <?=$value; 
                                                         endif; ?>
                                                     </td> 
                                                 <?php endif;
-                                            endfor;
-                                        endforeach; ?>
+                                            endfor; ?>
+                                        <?php endforeach; ?>
                                         <td>
                                             <a href="SPACE_Controller.php?action=<?php echo $strings['Edit']?>&building=<?= $this->spaces[$j]['idBuilding']?>&floor=<?= $this->spaces[$j]['idFloor']?>&space=<?= $this->spaces[$j]['idSpace']?>">
                                                 <span title="<?= $strings['Edit Space']?>" class="btn btn-primary btn-sm fa fa-pencil"></span></a>
@@ -88,12 +88,14 @@ class SPACE_SHOWALL{
                                         </td>
                                     </tr>
                                 <?php endfor; ?>
+                               
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
+        <script>validateNumberInventoryAndSurface();</script>
 
     <?php
     include 'footer.php';  

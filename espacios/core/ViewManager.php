@@ -44,7 +44,11 @@ class ViewManager {
 	public function __construct() {
 		if (session_status() == PHP_SESSION_NONE) {
 			session_start();
-        }
+		}
+		
+		if(!isset($_SESSION['LANGUAGE'])){
+			$_SESSION['LANGUAGE'] = 'Castellano';
+		}
 
 		ob_start();
 	}
