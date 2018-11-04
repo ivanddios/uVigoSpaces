@@ -9,7 +9,6 @@ include '../view/BUILDING_ADD_View.php';
 include '../core/ACL.php';
 
 $function = "BUILDING";
-$back = 'BUILDING_Controller.php';
 $view = new ViewManager();
 
 include '../locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
@@ -41,25 +40,26 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('ADD', $function)){
-            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php", "");
         }
 
         if (isset($_POST["submit"])) { 
             $buildingAdd = get_data_form();
-            $consult = $buildingAdd->addBuilding();
-            
-            if($consult){
-                // $buildings = $buildingAdd->showAllBuilding();
-                // $message=(sprintf($strings["Building \"%s\" successfully added."], $buildingAdd->getIdBuilding()));
-                // new BUILDING_SHOWALL($buildings, '', $message);
+
+            try{
+                $buildingAdd->checkIsValidForAdd_Update(); 
+                $buildingAdd->addBuilding();
                 $flashMessageSuccess = sprintf($strings["Building \"%s\" successfully added."], $buildingAdd->getNameBuilding());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("BUILDING_Controller.php", "");
-            } else {
-                $view->setFlashDanger($strings[$consult]);
-                $view->redirect("BUILDING_Controller.php", "");
+                $view->redirect("BUILDING_Controller.php", "index");
+
+            }catch(Exception $errors) {
+                $view->setFlashDanger($strings[$errors->getMessage()]);
+                $view->redirect("BUILDING_Controller.php", "add");
+
             }
+                
         } else {
             new BUILDING_ADD();
         }
@@ -75,7 +75,7 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('EDIT', $function)){
-            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php", "");
         }
 
@@ -87,17 +87,20 @@ Switch ($_GET['action']){
 
         if (isset($_POST["submit"])) { 
             $buildingEdit = get_data_form();
-            $consult = $buildingEdit->updateBuilding($buildingid);
-            if($consult){
+
+            try{
+                $buildingEdit->checkIsValidForAdd_Update(); 
+                $buildingEdit->updateBuilding($buildingid);
                 $flashMessageSuccess = sprintf($strings["Building \"%s\" successfully updated."], $buildingEdit->getNameBuilding());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("BUILDING_Controller.php", "");     
-            } else {
-                $view->setFlashDanger($strings[$consult]);
-                $view->redirect("BUILDING_Controller.php", "");
+                $view->redirect("BUILDING_Controller.php", "");   
+
+            }catch(Exception $errors) {
+                $view->setFlashDanger($strings[$errors->getMessage()]);
+                $view->redirect("BUILDING_Controller.php", "edit");
             }
         } else {
-            $building = new BUILDING_Model($buildingid,'','','','');
+            $building = new BUILDING_Model($buildingid);
             $values = $building->fillInBuilding();
             new BUILDING_EDIT($values);
         }
@@ -114,7 +117,7 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('SHOW', $function)){
-            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php", "");
         }
 
@@ -124,7 +127,7 @@ Switch ($_GET['action']){
         }
         $buildingid = $_GET['building'];
 
-        $building = new BUILDING_Model($buildingid,'','','','');
+        $building = new BUILDING_Model($buildingid);
         $values = $building->fillInBuilding();
         new BUILDING_SHOW($values);
 
@@ -139,17 +142,17 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('DELETE', $function)){
-            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php", "");
         }
 
-        if (!isset($_GET['building'])){
+        if (!isset($_POST['building'])){
             $view->setFlashDanger($strings["Building id is mandatory"]);
             $view->redirect("BUILDING_Controller.php", "");
         }
-        $buildingid = $_GET['building'];
+        $buildingid = $_POST['building'];
 
-        $building = new BUILDING_Model($buildingid,"","","","");
+        $building = new BUILDING_Model($buildingid);
         $buildingDelete = $building->findBuilding();
 
         if ($buildingDelete != 'true') {
@@ -157,13 +160,13 @@ Switch ($_GET['action']){
             $view->redirect("BUILDING_Controller.php", "");
         }
 
-        $consult = $building->deleteBuilding($buildingid);
-        if($consult){
-            $flashMessageSuccess = sprintf($strings["Building \"%s\" successfully deleted."], $buildingEdit->getNameBuilding());
+        try{
+            $building->deleteBuilding($buildingid);
+            $flashMessageSuccess = sprintf($strings["Building \"%s\" successfully deleted."], $building->getNameBuilding());
             $view->setFlashSuccess($flashMessageSuccess);
             $view->redirect("BUILDING_Controller.php", "");     
-        } else {
-            $view->setFlashDanger($strings[$consult]);
+        }catch(Exception $errors) {
+            $view->setFlashDanger($strings[$errors->getMessage()]);
             $view->redirect("BUILDING_Controller.php", "");
         }
             	
@@ -173,7 +176,7 @@ Switch ($_GET['action']){
     default:
 
         if(!checkRol('SHOWALL', $function)){
-            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php", "");
         }
         $building = new BUILDING_Model();

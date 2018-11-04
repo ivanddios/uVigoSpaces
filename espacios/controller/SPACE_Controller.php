@@ -5,13 +5,12 @@ include '../model/SPACE_Model.php';
 include '../model/BUILDING_Model.php';
 include '../model/FLOOR_Model.php';
 include '../view/SPACE_SHOWALL_View.php';
-// include '../view/SPACE_EDIT_View.php';
-// include '../view/SPACE_ADD_View.php';
-// include '../view/SPACE_SHOW_View.php';
+include '../view/SPACE_EDIT_View.php';
+include '../view/SPACE_ADD_View.php';
+include '../view/SPACE_SHOW_View.php';
 include '../core/ACL.php';
 
-$function = "FLOOR";
-$back = 'FLOOR_Controller.php';
+$function = "SPACE";
 $view = new ViewManager();
 
 include '../locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
@@ -21,23 +20,14 @@ function get_data_form() {
 
     $idBuilding = $_POST['idBuilding'];
     $idFloor = $_POST['idFloor'];
-    $nameFloor = $_POST['nameFloor'];
-    
-
-    if (isset($_FILES['planeFloor']['name']) && ($_FILES['planeFloor']['name'] !== '')) {
-        $planeFloor = '../document/'.$idBuilding.'/'.$idBuilding.$idFloor.'/'.$_FILES['planeFloor']['name'];
-    } else {
-        $planeFloor = $_POST['planeFloorOriginal'];
-    }
-
-    $surfaceBuildingFloor = $_POST['surfaceBuildingFloor'];
-    $surfaceUsefulFloor = $_POST['surfaceUsefulFloor'];
+    $idSpace = $_POST['idSpace'];
+    $nameSpace = $_POST['nameSpace'];
+    $surfaceSpace = $_POST['surfaceSpace'];
+    $numInventorySpace = $_POST['numberInventorySpace'];
    
-    $floor = new FLOOR_Model($idBuilding, $idFloor, $nameFloor, $planeFloor, $surfaceBuildingFloor, $surfaceUsefulFloor);
-    return $floor;
+    $space = new SPACE_Model($idBuilding, $idFloor, $idSpace, $nameSpace, $surfaceSpace, $numInventorySpace);
+    return $space;
 }
-
-
 
 
 if (!isset($_REQUEST['action'])){
@@ -46,187 +36,154 @@ if (!isset($_REQUEST['action'])){
 
 Switch ($_REQUEST['action']){
 
-    // case  $strings['Add']:
+    case  $strings['Add']:
 
-    //     if (!isset($_SESSION['LOGIN'])){
-    //         $view->setFlashDanger($strings["Not in session. Add floors requires login."]);
-    //         $view->redirect("USER_Controller.php", "index");
-    //     }
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Add space requires login."]);
+            $view->redirect("USER_Controller.php", "");
+        } 
 
-    //     if(!checkRol('ADD', $function)){
-    //         $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
-    //         $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-    //     }
+        if(!isset($_GET['building']) && !isset($_GET['floor'])){
+            $view->setFlashDanger($strings["Building and floor id is mandatory"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+        $buildingid = $_GET['building'];
+        $floorid = $_GET['floor'];
 
-    //     if (!isset($_GET['building'])){
-    //         $view->setFlashDanger($strings["Building is mandatory"]);
-    //         $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-    //     }
-    //     $building = $_GET['building'];
+        if(!checkRol('ADD', $function)){
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+        }
 
-    //     if (isset($_POST["submit"])) { 
-    //         $floorAdd = get_data_form();
-
-    //         ////////////////////////////////////////METER EN UNA FUNCIÓN////////////////////////////////////////////////////////////
-    //         $dirPlane = '../document/'.$floorAdd->getIdBuilding().'/'.$floorAdd->getIdBuilding().$floorAdd->getIdFloor().'/';
-    //         if ($_FILES['planeFloor']['name'] !== '') {
-    //             if (!file_exists($dirPlane)) {
-    //                 mkdir($dirPlane, 0777, true);
-    //             }
-    //             move_uploaded_file($_FILES['planeFloor']['tmp_name'],$floorAdd->getPlaneFloor());
-    //         }
-    //         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    //         $consult = $floorAdd->addFloor(); 
-    //         if($consult){
-    //             // $floors = $floorAdd->showAllFloors();
-    //             // $message=(sprintf($strings["Floor \"%s\" successfully added."], $floorAdd->getNameFloor()));
-    //             // new FLOOR_SHOWALL($floors, '', $message);
-    //             $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully added."], $floorAdd->getNameFloor());
-    //             $view->setFlashSuccess($flashMessageSuccess);
-    //             $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-    //         } else {
-    //             $view->setFlashDanger($strings[$consult]);
-    //             $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-    //         }
-    //     } else {
-    //         new FLOOR_ADD($building);
-    //     }
+        if (isset($_POST["submit"])) { 
+            $spaceAdd = get_data_form();
+            $consult = $spaceAdd->addSpace(); 
+            if($consult){
+                var_dump($consult);
+                $flashMessageSuccess = sprintf($strings["Space \"%s\" successfully added."], $spaceAdd->getNameSpace());
+                $view->setFlashSuccess($flashMessageSuccess);
+                $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+            } else {
+                $view->setFlashDanger($strings[$consult]);
+                $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+            }
+        } else {
+            new SPACE_ADD($buildingid, $floorid);
+        }
  
-    // break;
+    break;
 
 
 
-    // case  $strings['Edit']:
+    case  $strings['Edit']:
 
-    //     if (!isset($_SESSION['LOGIN'])){
-    //         $view->setFlashDanger($strings["Not in session. Show the floors requires login"]);
-    //         $view->redirect("USER_Controller.php", "index");
-    //     }
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Edit spaces requires login"]);
+            $view->redirect("USER_Controller.php", "index");
+        }
 
-	// 	if(!checkRol('EDIT', $function)){
-    //         $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
-    //         $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-    //     }
+		if(!checkRol('EDIT', $function)){
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+        }
                 
-    //     if (!isset($_GET['building'])){
-    //         $view->setFlashDanger($strings["Building is mandatory"]);
-    //         $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-    //     }
-    //     $buildingid = $_GET["building"];
+        if (!isset($_GET['building']) && !isset($_GET['floor']) && !isset($_GET['space'])){
+            $view->setFlashDanger($strings["Building, floor and space id are mandatory"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
 
-    //     if (!isset($_GET['floor'])){
-    //         $view->setFlashDanger($strings["Floor is mandatory"]);
-    //         $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-    //     }
-    //     $floorid = $_GET['floor'];
+        $buildingid = $_GET["building"];
+        $floorid = $_GET['floor'];
+        $spaceid = $_GET['space'];
 
-    //     if (isset($_POST["submit"])) { 
-    //         $floorEdit = get_data_form();
-                    
-    //         ////////////////////////////////////////METER EN UNA FUNCIÓN////////////////////////////////////////////////////////////
-    //         $dirPlane = '../document/'.$floorEdit->getIdBuilding().'/'.$floorEdit->getIdBuilding().$floorEdit->getIdFloor().'/';
-    //         if ($_FILES['planeFloor']['name'] !== '') {
-    //             if (!file_exists($dirPlane)) {
-    //                 mkdir($dirPlane, 0777, true);
-    //             }
-    //             move_uploaded_file($_FILES['planeFloor']['tmp_name'],$floorEdit->getPlaneFloor());
-    //             $link = $floorEdit->findLinkPlane($buildingid, $floorid);
-    //             unlink($link);
-    //         }
-    //         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if (isset($_POST["submit"])) { 
+            $spaceEdit = get_data_form();
 
-    //         $consult = $floorEdit->updateFloor($buildingid, $floorid);
-    //         if($consult){
-    //             $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully updated."], $floorEdit->getNameFloor());
-    //             $view->setFlashSuccess($flashMessageSuccess);
-    //             $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-    //         } else {
-    //             $view->setFlashDanger($strings[$consult]);
-    //             $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-    //         }
-    //     } else {
-    //         $floor = new FLOOR_Model($buildingid, $floorid,'','','','');
-    //         $values = $floor->fillInFloor();
-    //         new FLOOR_EDIT($values);
-    //     }
+            $consult = $spaceEdit->updateSpace($buildingid, $floorid, $spaceid);
+            var_dump($consult);
+            if($consult){
+                $flashMessageSuccess = sprintf($strings["Space \"%s\" successfully updated."], $spaceEdit->getNameSpace());
+                $view->setFlashSuccess($flashMessageSuccess);
+                $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+            } else {
+                $view->setFlashDanger($strings[$consult]);
+                $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+                var_dump("NO)");
+            }
+        } else {
+            $space = new SPACE_Model($buildingid, $floorid, $spaceid);
+            $values = $space->fillInSpace();
+            new SPACE_EDIT($values);
+        }
 
-    // break;
+    break;
 
 
-    // case  $strings['Show']:
+    case  $strings['Show']:
 
-    //     if (!isset($_SESSION['LOGIN'])){
-    //         $view->setFlashDanger($strings["Not in session. Show the floors requires login"]);
-    //          $view->redirect("USER_Controller.php", "index");
-    //     }
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Show the space requires login"]);
+             $view->redirect("USER_Controller.php", "index");
+        }
 
-    //     if(!checkRol('EDIT', $function)){
-    //         $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
-    //         $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-    //     }
+        if(!checkRol('SHOW', $function)){
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+        }
              
-    //     if (!isset($_GET['building'])){
-    //         $view->setFlashDanger($strings["Building is mandatory"]);
-    //         $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-    //     }
-    //     $buildingid = $_GET["building"];
+        if (!isset($_GET['building']) && !isset($_GET['floor']) && !isset($_GET['space'])){
+            $view->setFlashDanger($strings["Building, floor and space id are mandatory"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+        $buildingid = $_GET["building"];
+        $floorid = $_GET['floor'];
+        $spaceid = $_GET['space'];
 
-    //     if (!isset($_GET['floor'])){
-    //         $view->setFlashDanger($strings["Floor is mandatory"]);
-    //         $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-    //     }
-    //     $floorid = $_GET['floor'];
-
-    //     $floor = new FLOOR_Model($buildingid, $floorid,'','','','');
-    //     $values = $floor->fillInFloor();
-    //     new FLOOR_SHOW($values);
+        $space = new SPACE_Model($buildingid, $floorid, $spaceid);
+        $values = $space->fillInSpace();
+        new SPACE_SHOW($values);
          
-    // break;
+    break;
 
 
-    // case  $strings['Delete']:
+    case  $strings['Delete']:
 
-    //     if (!isset($_SESSION['LOGIN'])){
-    //         $view->setFlashDanger($strings["Not in session. Show the floors requires login"]);
-    //         $view->redirect("USER_Controller.php", "index");
-    //     }
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Delete spaces requires login"]);
+            $view->redirect("USER_Controller.php", "index");
+        }
 
-    //     if(!checkRol('DELETE', $function)){
-    //         $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
-    //         $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-    //     }
+        if(!checkRol('DELETE', $function)){
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+        }
 
-    //     if (!isset($_GET['building']) && !isset($_GET['floor'])){
-    //         $view->setFlashDanger($strings["Building is mandatory"]);
-    //         $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-    //     }
+        if (!isset($_GET['building']) && !isset($_GET['floor']) && !isset($_GET['space'])){
+            $view->setFlashDanger($strings["Building, floor and space id are mandatory"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+        $buildingid = $_GET["building"];
+        $floorid = $_GET['floor'];
+        $spaceid = $_GET['space'];
+
+        $space = new SPACE_Model($buildingid, $floorid, $spaceid);
                 
-    //     $floor = new FLOOR_Model($_GET["building"], $_GET["floor"], "","","","");
-                
-    //     if (!$floor->existsFloor()) {
-    //         $view->setFlashDanger($strings["No exist floor to delete"]);
-    //         $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-    //     }
+        if (!$space->existsSpace()) {
+            $view->setFlashDanger($strings["No exist space to delete"]);
+            $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+        }
 
-    //     //////////////////////////////////////////////////////////////////////////////////////
-    //     $link = $floor->findLinkPlane($floor->getIdBuilding(), $floor->getIdFloor());
-    //     unlink($link); 
-    //     rmdir('../document/'.$floor->getIdBuilding().'/'.$floor->getIdBuilding().$floor->getIdFloor());
-    //     /////////////////////////////////////////////////////////////////////////////////////
+        $consult = $space->deleteSpace();
+        if($consult){
+            $flashMessageSuccess = sprintf($strings["Space \"%s\" successfully deleted."], $buildingid.$floorid.$spaceid);
+            $view->setFlashSuccess($flashMessageSuccess);
+            $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+        } else {
+            $view->setFlashDanger($strings[$consult]);
+            $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+        }
 
-    //     $floorName = $floor->findNameFloor();
-    //     $consult = $floor->deleteFloor();
-    //     if($consult){
-    //         $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully deleted."], $floorName);
-    //         $view->setFlashSuccess($flashMessageSuccess);
-    //         $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-    //     } else {
-    //         $view->setFlashDanger($strings[$consult]);
-    //         $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-    //     }
-
-    // break;
+    break;
     
 
     default:
@@ -237,12 +194,12 @@ Switch ($_REQUEST['action']){
         }
 
         if(!checkRol('SHOWALL', $function)){
-            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php", "");
         }
 
         if(isset($_GET['building']) && isset($_GET['floor'])){
-            $spaces = new SPACE_Model($_GET['building'],$_GET['floor'],'','','','');
+            $spaces = new SPACE_Model($_GET['building'],$_GET['floor']);
             $spaces = $spaces->showAllSpaces();
 
             $building = new BUILDING_Model($_GET['building']);

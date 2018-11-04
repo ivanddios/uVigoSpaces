@@ -63,7 +63,7 @@ class FLOOR_SHOWALL{
                                         <td>
                                             <a href="SPACE_Controller.php?&building=<?= $this->floors[$j]['idBuilding']?>&floor=<?= $this->floors[$j]['idFloor']?>">
                                                 <span title="<?= $strings['Show Space']?>" class="btn btn-success btn-sm fa fa-cube"></span></a>
-                                            <a href="FLOOR_Controller.php?action=<?php echo $strings['Edit']?>&building=<?= $this->floors[$j]['idBuilding']?>&floor=<?= $this->floors[$j]['idFloor']?>">
+                                            <a href="FLOOR_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->floors[$j]['idBuilding']?>&floor=<?= $this->floors[$j]['idFloor']?>">
                                                 <span title="<?= $strings['Edit Building']?>" class="btn btn-primary btn-sm fa fa-pencil"></span></a>
                                             <i title="<?= $strings['Delete Building']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?=$this->floors[$j]['idFloor']?>"></i>
                                             <div id="item-<?=$this->floors[$j]['idFloor']?>" class="modal fade"  tabindex="-1" role="dialog" aria-hidden="true">
@@ -73,7 +73,7 @@ class FLOOR_SHOWALL{
                                                             <?= $strings["Attention"]?>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <?= $strings["Are you sure you want to delete this floor?"]?><br/> <br>
+                                                            <?= sprintf($strings["Are you sure you want to delete the floor \"%s\"?"], $this->floors[$j]['nameFloor'])?><br><br>
                                                             <b><strong><?= $strings["The information that this floor has will be lost"]?></strong></b>
                                                         </div>
                                                         <div class="modal-footer">

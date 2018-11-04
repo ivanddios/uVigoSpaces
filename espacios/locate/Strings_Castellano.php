@@ -12,8 +12,9 @@ $strings = array(
 "addressBuilding" => "Dirección",
 "phoneBuilding" => "Teléfono",
 "responsibleBuilding" => "Responsable",
+"You do not have the necessary permits" => "No tienes los permisos necesarios",
 "Attention" => "Atención",
-"Are you sure you want to delete this building?" => "Está seguro de querer eliminar este edificio?",
+"Are you sure you want to delete the building \"%s\" ?" => "¿Está seguro de querer eliminar el edificio \"%s\" ?",
 "The information that this building has will be lost" => "La información que tiene este edificio se perderá",
 "Cancel" => "Cancelar",
 "Ok" => "Ok",
@@ -46,7 +47,7 @@ $strings = array(
 "surfaceUsefulFloor" => "Sup. Útil",
 "Show Spaces" => "Ver Espacios",
 "Data of the new building's floor" => "Datos del nuevo piso del edificio",
-"Are you sure you want to delete this floor?" => "Está seguro de querer eliminar esta planta?",
+"Are you sure you want to delete the floor \"%s\"?" => "¿Está seguro de querer eliminar la planta \"%s\"?",
 "The information that this floor has will be lost" => "La información que tiene esta planta se perderá",
 "What is the identifier of this floor?" => "¿Cuál es el identificador de la planta?",
 "What floor is it?" => "¿Qué planta es?",
@@ -56,7 +57,7 @@ $strings = array(
 "Floor \"%s\" successfully updated." => "La planta \"%s\" se ha modificado con éxito",
 "Add Floor" => "Añadir Planta",
 "Edit Floor" => "Editar Planta",
-"Show Floor" => "Ver Planta",
+"Show Floors" => "Ver Plantas",
 "Floor \"%s\" successfully added." => "La planta \"%s\" se ha añadido con éxito",
 "Floor \"%s\" successfully deleted." => "La planta \"%s\" se ha eliminado con éxito",
 
@@ -71,6 +72,40 @@ $strings = array(
 "Edit Space" => "Editar Espacio",
 "Delete Space" => "Eliminar Espacio",
 "Show Space" => "Ver Espacio",
+"Data of the new space" => "Datos del nuevo espacio",
+"What is the identifier of this space?" => "¿Cuál es el identificador del nuevo espacio?",
+"What space is it?" => "¿Qué espacio es?",
+"What is the number inventory?" => "¿Cuál es su número de inventario?",
+"What is the surface of space?" => "¿Cuál es la superficie del espacio?",
+"Space \"%s\" successfully added." => "El espacio \"%s\" se ha añadido con éxito",
+"Space \"%s\" successfully updated." => "El espacio \"%s\" se ha actualizado con éxito",
+"Building, floor and space id are mandatory" => "El id del edificio, la planta y el espacio son obligatorios",
+"Building and floor id is mandatory" => "El id del edificio y la planta son obligatorios",
+"No exist space to delete" => "No existe el espacio a eliminar",
+"Space \"%s\" successfully deleted." => "El espacio \"%s\" se ha eliminado con éxito",
+"Are you sure you want to delete the space \"%s\" ?" => "¿Está seguro de querer eliminar el espacio \"%s\" ?",
+"The information that this space has will be lost" => "La información que tiene este espacio se perderá",
 
+
+
+//BD
+"Error in the query on the database" => "Error en la consulta sobre la base de datos",
+
+
+//VALIDATES
+"Building id is mandatory" => "El identificador del edificio es obligatorio",
+"Building id can not be that long" =>"El identificador del edificio es demasiado largo",
+"Building id is invalid. Example: OSBI0" => "El identificador es inválido. Por ejemplo: OSBI0",
+"There is already a building with that id" => "Ya existe un edificio con ese id",
+"Building name is mandatory" => "El nombre del edificio es obligatorio",
+"Building name can not be that long" => "El nombre del edificio es demasiado largo",
+"Building name is invalid. Try again!" => "El formato del nombre del edificio es incorrecto. Pruebe otra vez!",
+"Building address is mandatory" => "La dirección del edificio es obligatoria",
+"Building address can not be that long" => "La dirección del edificio es demasiado larga",
+"Building address is invalid. Try again!" => "El formato de la dirección del edificio es incorrecta",
+"Building phone is incorrect. Example: 666777888" => "El teléfono del edificio es incorrecto. Ejemplo: 666777888",
+"Building phone is invalid. Example: 666777888" => "El teléfono es inválido. Ejemplo: 666777888",
+"Building responsible name can not be that long" => "El nombre del responsable del edificio es demasiado largo",
+"Building responsible name is invalid. Try again!" => "El nombre del responsable del edificio es inválido. Pruebe otra vez"
 )
 ?>

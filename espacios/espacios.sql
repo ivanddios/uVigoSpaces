@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS BUILDING(
   idBuilding char(5) COLLATE utf8_spanish_ci NOT NULL,
   nameBuilding varchar(225) COLLATE utf8_spanish_ci NOT NULL,
   addressBuilding varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  phoneBuilding int(15) DEFAULT NULL,
+  phoneBuilding int(9) DEFAULT NULL,
   responsibleBuilding varchar(25) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY(idBuilding)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8  COLLATE=utf8_spanish_ci;
@@ -94,8 +94,8 @@ CREATE TABLE IF NOT EXISTS SPACE(
   idFloor char(2) COLLATE utf8_spanish_ci NOT NULL,
   idSpace char(5) COLLATE utf8_spanish_ci NOT NULL,
   nameSpace varchar(225) COLLATE utf8_spanish_ci NOT NULL,
-  surfaceSpace decimal(10,2) NOT NULL,
-  numberInventorySpace varchar(10) DEFAULT '######',
+  surfaceSpace decimal(10,2) DEFAULT 0.00,
+  numberInventorySpace varchar(10) DEFAULT "######",
   PRIMARY KEY(idFloor ,idBuilding,idSpace),
   FOREIGN KEY (idBuilding) REFERENCES BUILDING (idBuilding)  ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (idFloor) REFERENCES FLOOR (idFloor) ON DELETE CASCADE ON UPDATE CASCADE
@@ -123,7 +123,8 @@ INSERT INTO ACTION (idAction, nameAction, descripAction) VALUES
 
 INSERT INTO FUNCTIONALITY(idFunction, nameFunction, descripFunction) VALUES 
 ('1', 'BUILDING', 'Building Controller'),
-('2', 'FLOOR', 'Floor Controller');
+('2', 'FLOOR', 'Floor Controller'),
+('3', 'SPACE', 'Space Controller');
 
 INSERT INTO ACTION_FUNCTIONALITY (idAction, idFunction) VALUES
 ('1', '1'),
@@ -136,7 +137,13 @@ INSERT INTO ACTION_FUNCTIONALITY (idAction, idFunction) VALUES
 ('2', '2'),
 ('3', '2'),
 ('4', '2'),
-('5', '2');
+('5', '2'),
+/*SPACE*/
+('1', '3'),
+('2', '3'),
+('3', '3'),
+('4', '3'),
+('5', '3');
 
 INSERT INTO PERMISSION (idGroup, idFunction, idAction) VALUES
 ('1', '1', '1'),
@@ -149,7 +156,13 @@ INSERT INTO PERMISSION (idGroup, idFunction, idAction) VALUES
 ('1', '2', '2'),
 ('1', '2', '3'),
 ('1', '2', '4'),
-('1', '2', '5');
+('1', '2', '5'),
+/*SPACE*/
+('1', '3', '1'),
+('1', '3', '2'),
+('1', '3', '3'),
+('1', '3', '4'),
+('1', '3', '5');
 
 
 
@@ -161,7 +174,7 @@ INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFl
 ('OSBI0', '03', 'Terceira Planta', '', 214.80, 179.60),
 ('OSBI0', '02', 'Segunda Planta', '', 215.20, 181.25),
 ('OSBI0', '01', 'Primeira Planta', '', 818.30, 486.60),
-('OSBI0', '00', 'Planta Baixa', "../document/OSBI0/OSBI000/ProfilePhoto.jpg", 1895.80, 1428.75),
+('OSBI0', '00', 'Planta Baixa', "../document/OSBI0/OSBI000/plano-2018.jpg", 1895.80, 1428.75),
 ('OSBI0', 'S1', 'Soto -1', '', 1800.40, 894.20),
 ('OSBI0', 'S2', 'Soto -2', '', 1338.40, 1226.70);
 

@@ -73,8 +73,8 @@ class SPACE_SHOWALL{
                                                             <?= $strings["Attention"]?>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <?= $strings["Are you sure you want to delete this space?"]?><br/> <br>
-                                                            <b><strong><?= $strings["The information that this soace has will be lost"]?></strong></b>
+                                                            <?= sprintf($strings["Are you sure you want to delete the space \"%s\" ?"], $this->spaces[$j]['idBuilding'].$this->spaces[$j]['idFloor'].$this->spaces[$j]['idSpace'])?><br/> <br>
+                                                            <b><strong><?= $strings["The information that this space has will be lost"]?></strong></b>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <form method="POST" action="SPACE_Controller.php?action=<?= htmlentities($strings['Delete'])?>&building=<?= htmlentities($this->spaces[$j]['idBuilding'])?>&floor=<?= $this->spaces[$j]['idFloor']?>&space=<?= $this->spaces[$j]['idSpace']?>">

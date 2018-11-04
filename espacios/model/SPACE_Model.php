@@ -3,19 +3,26 @@
 class SPACE_Model {
 
     private $idBuilding;
-	private $idFloor;
+    private $idFloor;
+    private $idSpace;
 	private $nameSpace;
 	private $surfaceSpace;
 	private $numberInventorySpace;
 	private $mysqli;
 
-function __construct($idBuilding=NULL, $idFloor=NULL, $nameSpace=NULL, $surfaceSpace=NULL, $numberInventorySpace=NULL, $FLOOR_surfaceUsefulFloor=NULL)
+function __construct($idBuilding=NULL, $idFloor=NULL, $idSpace=NULL, $nameSpace=NULL, $surfaceSpace=NULL, $numberInventorySpace=NULL)
 {
     $this->idBuilding =  $idBuilding; 
     $this->idFloor = $idFloor;
+    $this->idSpace = $idSpace;
 	$this->nameSpace = $nameSpace;
-	$this->surfaceSpace = $surfaceSpace;
-	$this->numberInventorySpace = $numberInventorySpace;
+    $this->surfaceSpace = $surfaceSpace;
+
+    if(empty($numberInventorySpace)){
+        $this->numberInventorySpace = "######";
+    } else {
+    $this->numberInventorySpace = $numberInventorySpace;
+    }
 }
 
 
@@ -28,7 +35,11 @@ public function getIdFloor(){
     return $this->idFloor;
 }
 
-public function getNameFloor(){
+public function getIdSpace(){
+    return $this->idSpace;
+}
+
+public function getNameSpace(){
     return $this->nameSpace;
 }
 
@@ -36,17 +47,17 @@ public function getNameFloor(){
 
 function ConectarBD() {
     $this->mysqli = new mysqli("localhost", "root", "", "espacios");
-    $acentos = $this->mysqli->query("SET NAMES 'utf8'");
+    $acentos = $this->mysqli->query("set names 'utf8'");
     if ($this->mysqli->connect_errno) {
-        echo "Fallo al conectar a MySQL: (" . $this->mysqli->connect_errno . ") " . $this->mysqli->connect_error;
+        echo "Error to conect with MySQL: (" . $this->mysqli->connect_errno . ") " . $this->mysqli->connect_error;
     }
 }
 
 function showAllSpaces() {
     $this->ConectarBD();
-    $sql = "SELECT * FROM SPACE WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'" ;
+    $sql = "SELECT * FROM space WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'" ;
     if (!($resultado = $this->mysqli->query($sql))) {
-        return 'Error en la consulta sobre la base de datos.';
+        return 'Error in the query on the database';
     } else {
         $toret = array();
         $i = 0;
@@ -59,72 +70,72 @@ function showAllSpaces() {
 }
 
 
-// function existsFloor() {
-// 	$this->ConectarBD();
-// 	$sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'";
-// 	$result = $this->mysqli->query($sql);
-// 	if ($result->num_rows == 1) {
-// 		return true;
-// 	} else {
-// 		return "No exist any floor with this id";
-// 	}
-// }
+function existsSpace() {
+	$this->ConectarBD();
+	$sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
+	$result = $this->mysqli->query($sql);
+	if ($result->num_rows == 1) {
+		return true;
+	} else {
+		return 'Error in the query on the database';
+	}
+}
 
 
-// function findNameFloor() {
-//     $this->ConectarBD();
-//     $sql = "SELECT nameFloor FROM floor WHERE idBuilding='$this->idBuilding' AND idFloor = '$this->idFloor'";
-//     $result = $this->mysqli->query($sql)->fetch_array();
-//     return $result['nameFloor'];
-// }
+function findNameSpace() {
+    $this->ConectarBD();
+    $sql = "SELECT nameSpace FROM space WHERE idBuilding='$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
+    $result = $this->mysqli->query($sql)->fetch_array();
+    return $result['nameSpace'];
+}
 
-// function findLinkPlane($idBuilding, $idFloor) {
-//     $this->ConectarBD();
-//     $sql = "SELECT planeFloor FROM floor WHERE idBuilding='$idBuilding' AND idFloor = '$idFloor'";
-//     $result = $this->mysqli->query($sql)->fetch_array();
-//     return $result['planeFloor'];
-// }
 
-// function fillInFloor() {
-//     $this->ConectarBD();
-//     $sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'";
-//     if (!($resultado = $this->mysqli->query($sql))) {
-//         return 'Error en la consulta sobre la base de datos';
-//     } else {
-//         $result = $resultado->fetch_array();
-//         return $result;
-//     }
-// }
+function fillInSpace() {
+    $this->ConectarBD();
+    $sql = "SELECT * FROM space WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        return 'Error in the query on the database';
+    } else {
+        $result = $resultado->fetch_array();
+        return $result;
+    }
+}
 
-// function addFloor() {
-//     $this->ConectarBD();
-//     $sql = "INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES ('$this->idBuilding', '$this->idFloor', '$this->nameSpace', '$this->surfaceSpace', $this->numberInventorySpace, $this->FLOOR_surfaceUsefulFloor)";
-//     if (!($resultado = $this->mysqli->query($sql))) {
-//         return 'Error en la consulta sobre la base de datos.';
-//     } else {
-//         return true;
-//     }
-// }
+function addSpace() {
+    $this->ConectarBD();
+    $sql = "INSERT INTO space (idBuilding, idFloor, idSpace, nameSpace, surfaceSpace, numberInventorySpace) VALUES ('$this->idBuilding', '$this->idFloor', '$this->idSpace', '$this->nameSpace', $this->surfaceSpace, '$this->numberInventorySpace')";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        return 'Error in the query on the database';
+    } else {
+        return true;
+    }
+}
 
-// function updateFloor($idBuilding, $idFloor) {
-//     $this->ConectarBD();
-//     $sql = "UPDATE FLOOR SET idFloor = '$this->idFloor', nameFloor = '$this->nameSpace', planeFloor = '$this->surfaceSpace', surfaceBuildingFloor = '$this->numberInventorySpace', surfaceUsefulFloor = '$this->FLOOR_surfaceUsefulFloor' WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor'";
-//     if (!($resultado = $this->mysqli->query($sql))) {
-//         return 'Error en la consulta sobre la base de datos.';
-//     } else {
-//         return true;
-//     }
-// }
+function updateSpace($idBuilding, $idFloor, $idSpace) {
+    $this->ConectarBD();
+    var_dump($this->idBuilding);
+    var_dump($this->idFloor);
+    var_dump($this->idSpace);
+    var_dump($this->nameSpace);
+    var_dump($this->surfaceSpace);
+    var_dump($this->numberInventorySpace);
+    $sql = "UPDATE space SET idSpace = '$this->idSpace', nameSpace = '$this->nameSpace', surfaceSpace = $this->surfaceSpace, numberInventorySpace = '$this->numberInventorySpace' WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor' AND idSpace = '$idSpace'";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        return 'Error in the query on the database';
+    } else {
+        return true;
+    }
+}
 
-// function deleteFloor() {
-//     $this->ConectarBD();
-//     $sql = "DELETE FROM FLOOR WHERE idBuilding ='$this->idBuilding' AND idFloor = '$this->idFloor'";
-//     if (!($resultado = $this->mysqli->query($sql))) {
-//         return 'Error en la consulta sobre la base de datos.';
-//     } else {
-//         return true;
-//     }
-// }
+function deleteSpace() {
+    $this->ConectarBD();
+    $sql = "DELETE FROM space WHERE idBuilding ='$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        return 'Error in the query on the database';
+    } else {
+        return true;
+    }
+}
 
 
 

@@ -29,42 +29,42 @@ class FLOOR_SHOW{
 					</div>
 					<div class="col-lg-12 center-block-content">
 							<div id="group-form">
-								<label><?php echo $strings['idBuilding']; ?></label>
+								<label><?= $strings['idBuilding']; ?></label>
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?=$this->floor['idBuilding']?>" readonly>
 									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 										
-								<label><?php echo $strings['idFloor']; ?></label>	
+								<label><?= $strings['idFloor']; ?></label>	
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" name="idFloor" placeholder="<?= $strings['What is the identifier of this floor?']?>"  value="<?=$this->floor['idFloor']?>" readonly>
 									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
-								<label><?php echo $strings['nameFloor']; ?></label>	
+								<label><?= $strings['nameFloor']; ?></label>	
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" name="nameFloor" placeholder="<?= $strings['What floor is it?']?>" value="<?=$this->floor['nameFloor']?>" readonly>
 									<i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
-								<label><?php echo $strings['surfaceBuildingFloor']; ?></label>	
+								<label><?= $strings['surfaceBuildingFloor']; ?></label>	
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" name="surfaceBuildingFloor" placeholder="<?= $strings['What is the constructed surface?']?>" value="<?=$this->floor['surfaceBuildingFloor']?> m²" readonly>
 									<i class="fa fa-area-chart fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
-								<label><?php echo $strings['surfaceUsefulFloor']; ?></label>
+								<label><?= $strings['surfaceUsefulFloor']; ?></label>
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" name="surfaceUsefulFloor" placeholder="<?= $strings['What is the useful surface?']?>" value="<?=$this->floor['surfaceUsefulFloor']?> m²" readonly>
 									<i class="fa fa-area-chart fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
-								<label><?php echo $strings['planeFloor']; ?></label>
+								<label><?= $strings['planeFloor']; ?></label>
 								<div class="inputWithIcon inputIconBg">
-									<a target='_blank' href='<?php echo $this->floor['planeFloor']; ?>'><img src='<?php echo $this->floor['planeFloor']; ?>' class="viewPlane"></a>
+									<a target='_blank' href='<?= $this->floor['planeFloor']; ?>'><img src='<?= $this->floor['planeFloor']; ?>' class="viewPlane"></a>
 								</div>
 							</div>
-						<a href="FLOOR_Controller.php?building=<?php echo $this->floor['idBuilding']?>"><?= $strings["Back"] ?></a>
+						<a href="FLOOR_Controller.php?building=<?= $this->floor['idBuilding']?>"><?= $strings["Back"] ?></a>
 					</div>
 				</div>
 			</div>

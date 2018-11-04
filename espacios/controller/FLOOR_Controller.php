@@ -10,7 +10,6 @@ include '../view/FLOOR_SHOW_View.php';
 include '../core/ACL.php';
 
 $function = "FLOOR";
-$back = 'FLOOR_Controller.php';
 $view = new ViewManager();
 
 include '../locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
@@ -52,16 +51,16 @@ Switch ($_REQUEST['action']){
             $view->redirect("USER_Controller.php", "index");
         }
 
-        if(!checkRol('ADD', $function)){
-            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
-            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-        }
-
         if (!isset($_GET['building'])){
             $view->setFlashDanger($strings["Building is mandatory"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+        $buildingid = $_GET['building'];
+
+        if(!checkRol('ADD', $function)){
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
             $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
         }
-        $building = $_GET['building'];
 
         if (isset($_POST["submit"])) { 
             $floorAdd = get_data_form();
@@ -78,18 +77,15 @@ Switch ($_REQUEST['action']){
 
             $consult = $floorAdd->addFloor(); 
             if($consult){
-                // $floors = $floorAdd->showAllFloors();
-                // $message=(sprintf($strings["Floor \"%s\" successfully added."], $floorAdd->getNameFloor()));
-                // new FLOOR_SHOWALL($floors, '', $message);
                 $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully added."], $floorAdd->getNameFloor());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+                $view->redirect("FLOOR_Controller.php", "index&building=", $floorAdd->getIdFloor());
             } else {
                 $view->setFlashDanger($strings[$consult]);
                 $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
             }
         } else {
-            new FLOOR_ADD($building);
+            new FLOOR_ADD($buildingid);
         }
  
     break;
@@ -103,23 +99,19 @@ Switch ($_REQUEST['action']){
             $view->redirect("USER_Controller.php", "index");
         }
 
-		if(!checkRol('EDIT', $function)){
-            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
-            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-        }
-                
-        if (!isset($_GET['building'])){
-            $view->setFlashDanger($strings["Building is mandatory"]);
-            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        if (!isset($_GET['building']) && !isset($_GET['floor'])){
+            $view->setFlashDanger($strings["Building and floor id is mandatory"]);
+            $view->redirect("BUILDING_Controller.php", "");
         }
         $buildingid = $_GET["building"];
-
-        if (!isset($_GET['floor'])){
-            $view->setFlashDanger($strings["Floor is mandatory"]);
-            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-        }
         $floorid = $_GET['floor'];
 
+		if(!checkRol('EDIT', $function)){
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        }
+
+        
         if (isset($_POST["submit"])) { 
             $floorEdit = get_data_form();
                     
@@ -139,13 +131,13 @@ Switch ($_REQUEST['action']){
             if($consult){
                 $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully updated."], $floorEdit->getNameFloor());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+                $view->redirect("FLOOR_Controller.php", "index&building=", $floorEdit->getIdFloor());
             } else {
                 $view->setFlashDanger($strings[$consult]);
                 $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
             }
         } else {
-            $floor = new FLOOR_Model($buildingid, $floorid,'','','','');
+            $floor = new FLOOR_Model($buildingid, $floorid);
             $values = $floor->fillInFloor();
             new FLOOR_EDIT($values);
         }
@@ -160,24 +152,19 @@ Switch ($_REQUEST['action']){
              $view->redirect("USER_Controller.php", "index");
         }
 
-        if(!checkRol('EDIT', $function)){
-            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
-            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-        }
-             
-        if (!isset($_GET['building'])){
-            $view->setFlashDanger($strings["Building is mandatory"]);
-            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        if (!isset($_GET['building']) && !isset($_GET['floor'])){
+            $view->setFlashDanger($strings["Building and floor id is mandatory"]);
+            $view->redirect("BUILDING_Controller.php", "");
         }
         $buildingid = $_GET["building"];
-
-        if (!isset($_GET['floor'])){
-            $view->setFlashDanger($strings["Floor is mandatory"]);
-            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-        }
         $floorid = $_GET['floor'];
 
-        $floor = new FLOOR_Model($buildingid, $floorid,'','','','');
+        if(!checkRol('EDIT', $function)){
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        }
+        
+        $floor = new FLOOR_Model($buildingid, $floorid);
         $values = $floor->fillInFloor();
         new FLOOR_SHOW($values);
          
@@ -191,17 +178,18 @@ Switch ($_REQUEST['action']){
             $view->redirect("USER_Controller.php", "index");
         }
 
-        if(!checkRol('DELETE', $function)){
-            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
-            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-        }
-
         if (!isset($_GET['building']) && !isset($_GET['floor'])){
             $view->setFlashDanger($strings["Building is mandatory"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+        $buildingid = $_GET['building'];
+        $floorid = $_GET['floor'];
+
+        if(!checkRol('DELETE', $function)){
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
             $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
         }
-                
-        $floor = new FLOOR_Model($_GET["building"], $_GET["floor"], "","","","");
+        $floor = new FLOOR_Model($buildingid, $floorid);
                 
         if (!$floor->existsFloor()) {
             $view->setFlashDanger($strings["No exist floor to delete"]);
@@ -219,7 +207,7 @@ Switch ($_REQUEST['action']){
         if($consult){
             $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully deleted."], $floorName);
             $view->setFlashSuccess($flashMessageSuccess);
-            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $floor->getIdFloor());
         } else {
             $view->setFlashDanger($strings[$consult]);
             $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
@@ -236,7 +224,7 @@ Switch ($_REQUEST['action']){
         }
 
         if(!checkRol('SHOWALL', $function)){
-            $view->setFlashDanger($strings["No tienes los permisos necesarios"]);
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php", "");
         }
 
