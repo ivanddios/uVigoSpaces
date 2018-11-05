@@ -29,10 +29,10 @@ class BUILDING_EDIT{
 						<?=htmlentities($strings["Do you want to change something?"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form method="POST" action="BUILDING_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->building['idBuilding']?>">
+						<form method="POST" action="BUILDING_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->building['idBuilding']?>" onchange="validateBuilding();">
 							<div id="group-form">
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="idBuilding" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?=$this->building['idBuilding']?>" onblur="checkBuildingId(this.id)">
+									<input type="text" id="idBuilding" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?=$this->building['idBuilding']?>" readonly onblur="checkBuildingId(this.id)">
 									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 

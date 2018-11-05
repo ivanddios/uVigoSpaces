@@ -1,7 +1,7 @@
 
 function checkBuildingId(buildingId){
     
-    var expr = /[A-Z0-9]/; 
+    var expr = /^[A-Z]{4}[0-9]$/; 
     var idBuilding = document.getElementById(buildingId).value;
     
     if (expr.test(idBuilding) && idBuilding.length > 0 && idBuilding.length < 6){ 
@@ -44,15 +44,61 @@ function checkNumPhone(phoneId){
     }
 }
 
-
-function addBuilding() {
+function checkFloorId(floorId){
     
-    if(checkBuildingId("idBuilding") && checkText("nameBuilding") && checkText("addressBuilding") && checkNumPhone("phoneBuilding") && checkText("responsibleBuilding")){ //Comprueba que todos los campos del formulario han sido rellenados correctamente
+    var expr = /^[0-9A-Z]{2}$/; 
+    var idFloor = document.getElementById(floorId).value;
+    
+    if (expr.test(idFloor) && idFloor.length > 0 && idFloor.length < 3){ 
+        document.getElementById(floorId).style.borderColor="green";
+        return true;
+    }
+    else{ 
+        document.getElementById(floorId).style.borderColor="red";
+        return false;
+    }
+}
+
+
+
+function checkSurface(surfaceId){
+    
+    var expr =/^[0-9]{1,8}([.][0-9]{1,2}){0,1}?$/;
+    var surface = document.getElementById(surfaceId).value;
+    
+    if (expr.test(surface) && surface.length < 12 && surface <= 99999999.99){ 
+        document.getElementById(surfaceId).style.borderColor="green";
+        return true;
+    }
+    else{ 
+        document.getElementById(surfaceId).style.borderColor="red";
+        return false;
+    }
+}
+
+
+function validateBuilding() {
+    
+    if(checkBuildingId("idBuilding") && checkText("nameBuilding") && checkText("addressBuilding") && checkNumPhone("phoneBuilding") && checkText("responsibleBuilding")) {
         document.getElementsByName("submit")[0].disabled = false;
-        document.getElementById("error").style.display = "none";
+        // document.getElementById("error").style.display = "none";
     }else{
         document.getElementsByName("submit")[0].disabled = true;
-        document.getElementsByName("error")[0].style.display = "block";
+        // document.getElementsByName("error")[0].style.display = "block";
+        return false;
+    }
+             
+}
+
+
+function validateFloor() {
+    
+    if(checkBuildingId("idBuilding") && checkFloorId("idFloor") && checkText("nameFloor") && checkSurface("surfaceBuildingFloor") && checkSurface("surfaceUsefulFloor")) { 
+        document.getElementsByName("submit")[0].disabled = false;
+        // document.getElementById("error").style.display = "none";
+    }else{
+        document.getElementsByName("submit")[0].disabled = true;
+        // document.getElementsByName("error")[0].style.display = "block";
         return false;
     }
              

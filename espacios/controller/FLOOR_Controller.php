@@ -119,25 +119,25 @@ Switch ($_REQUEST['action']){
             
             try{
                 $floorEdit->checkIsValid(); 
-            ////////////////////////////////////////METER EN UNA FUNCIÓN////////////////////////////////////////////////////////////
-            $dirPlane = '../document/'.$floorEdit->getIdBuilding().'/'.$floorEdit->getIdBuilding().$floorEdit->getIdFloor().'/';
-            if ($_FILES['planeFloor']['name'] !== '') {
-                if (!file_exists($dirPlane)) {
-                    mkdir($dirPlane, 0777, true);
+                ////////////////////////////////////////METER EN UNA FUNCIÓN////////////////////////////////////////////////////////////
+                $dirPlane = '../document/'.$floorEdit->getIdBuilding().'/'.$floorEdit->getIdBuilding().$floorEdit->getIdFloor().'/';
+                if ($_FILES['planeFloor']['name'] !== '') {
+                    if (!file_exists($dirPlane)) {
+                        mkdir($dirPlane, 0777, true);
+                    }
+                    move_uploaded_file($_FILES['planeFloor']['tmp_name'],$floorEdit->getPlaneFloor());
+                    $link = $floorEdit->findLinkPlane($buildingid, $floorid);
+                    unlink($link);
                 }
-                move_uploaded_file($_FILES['planeFloor']['tmp_name'],$floorEdit->getPlaneFloor());
-                $link = $floorEdit->findLinkPlane($buildingid, $floorid);
-                unlink($link);
-            }
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            $floorEdit->updateFloor($buildingid, $floorid);
-            $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully updated."], $floorEdit->getNameFloor());
-            $view->setFlashSuccess($flashMessageSuccess);
-            $view->redirect("FLOOR_Controller.php", "index&building=", $floorEdit->getIdFloor());
+                $floorEdit->updateFloor($buildingid, $floorid);
+                $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully updated."], $floorEdit->getNameFloor());
+                $view->setFlashSuccess($flashMessageSuccess);
+                $view->redirect("FLOOR_Controller.php", "index&building=", $floorEdit->getIdBuilding());
             }catch(Exception $errors) {
-                $view->setFlashDanger($strings[$errors->getMessage()]);
-                $view->redirect("FLOOR_Controller.php", "add&building=", $buildingid);
+                    $view->setFlashDanger($strings[$errors->getMessage()]);
+                    $view->redirect("FLOOR_Controller.php", "edit&building=$buildingid&floor=", $floorid);
             }
         } else {
             $floor = new FLOOR_Model($buildingid, $floorid);
@@ -194,7 +194,7 @@ Switch ($_REQUEST['action']){
         }
         $floor = new FLOOR_Model($buildingid, $floorid);
                 
-        if (!$floor->existsFloor()) {
+        if ($floor->existsFloor()) {
             $view->setFlashDanger($strings["No exist floor to delete"]);
             $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
         }

@@ -18,6 +18,7 @@ class FLOOR_EDIT{
 		ob_end_clean();
 		$buffer=str_replace("%TITLE%",$strings['Edit Floor'],$buffer);
 		echo $buffer;
+		?> <script src="../js/validates.js"></script><?php
 		////////////////////////////////////////////////////
 		?>
 
@@ -28,31 +29,31 @@ class FLOOR_EDIT{
 						<?=htmlentities($strings["Do you want to change something?"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form method="POST" action="FLOOR_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->floor['idBuilding']?>&floor=<?= $this->floor['idFloor']?>" enctype="multipart/form-data">
+						<form method="POST" action="FLOOR_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->floor['idBuilding']?>&floor=<?= $this->floor['idFloor']?>" enctype="multipart/form-data" onchange="validateFloor()">
 							<div id="group-form">
 								
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?=$this->floor['idBuilding']?>" readonly>
+									<input type="text" id="idBuilding" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?=$this->floor['idBuilding']?>" readonly onblur="checkBuildingId(this.id)">
 									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 											
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="idFloor" placeholder="<?= $strings['What is the identifier of this floor?']?>"  value="<?=$this->floor['idFloor']?>">
+									<input type="text" id="idFloor" name="idFloor" placeholder="<?= $strings['What is the identifier of this floor?']?>"  value="<?=$this->floor['idFloor']?>" onblur="checkFloorId(this.id)">
 									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 	
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="nameFloor" placeholder="<?= $strings['What floor is it?']?>" value="<?=$this->floor['nameFloor']?>">
+									<input type="text" id="nameFloor" name="nameFloor" placeholder="<?= $strings['What floor is it?']?>" value="<?=$this->floor['nameFloor']?>" onblur="checkText(this.id)">
 									<i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="surfaceBuildingFloor" placeholder="<?= $strings['What is the constructed surface?']?>" value="<?=$this->floor['surfaceBuildingFloor']?>">
+									<input type="text" id="surfaceBuildingFloor" name="surfaceBuildingFloor" placeholder="<?= $strings['What is the constructed surface?']?>" value="<?=$this->floor['surfaceBuildingFloor']?>" onblur="checkSurface(this.id)">
 									<i class="fa fa-area-chart fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="surfaceUsefulFloor" placeholder="<?= $strings['What is the useful surface?']?>" value="<?=$this->floor['surfaceUsefulFloor']?>">
+									<input type="text" id="surfaceUsefulFloor" name="surfaceUsefulFloor" placeholder="<?= $strings['What is the useful surface?']?>" value="<?=$this->floor['surfaceUsefulFloor']?>" onblur="checkSurface(this.id)">
 									<i class="fa fa-area-chart fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 

@@ -151,18 +151,16 @@ Switch ($_GET['action']){
             $view->redirect("BUILDING_Controller.php", "");
         }
         $buildingid = $_POST['building'];
+        $buildingDelete = new BUILDING_Model($buildingid);
 
-        $building = new BUILDING_Model($buildingid);
-        $buildingDelete = $building->findBuilding();
-
-        if ($buildingDelete != 'true') {
+        if (!$buildingDelete->findBuilding()) {
             $view->setFlashDanger($strings["No such building with this id"]);
             $view->redirect("BUILDING_Controller.php", "");
         }
 
         try{
-            $building->deleteBuilding($buildingid);
-            $flashMessageSuccess = sprintf($strings["Building \"%s\" successfully deleted."], $building->getNameBuilding());
+            $buildingDelete->deleteBuilding();
+            $flashMessageSuccess = sprintf($strings["Building \"%s\" successfully deleted."], $buildingid);
             $view->setFlashSuccess($flashMessageSuccess);
             $view->redirect("BUILDING_Controller.php", "");     
         }catch(Exception $errors) {
