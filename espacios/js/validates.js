@@ -48,9 +48,11 @@ function checkNumPhone(phoneId){
 function addBuilding() {
     
     if(checkBuildingId("idBuilding") && checkText("nameBuilding") && checkText("addressBuilding") && checkNumPhone("phoneBuilding") && checkText("responsibleBuilding")){ //Comprueba que todos los campos del formulario han sido rellenados correctamente
-       return true;
+        document.getElementsByName("submit")[0].disabled = false;
+        document.getElementById("error").style.display = "none";
     }else{
-        document.getElementById("error").style.display = "block";
+        document.getElementsByName("submit")[0].disabled = true;
+        document.getElementsByName("error")[0].style.display = "block";
         return false;
     }
              

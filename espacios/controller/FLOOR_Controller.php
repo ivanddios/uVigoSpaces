@@ -21,15 +21,14 @@ function get_data_form() {
     $idFloor = $_POST['idFloor'];
     $nameFloor = $_POST['nameFloor'];
     
-
     if (isset($_FILES['planeFloor']['name']) && ($_FILES['planeFloor']['name'] !== '')) {
         $planeFloor = '../document/'.$idBuilding.'/'.$idBuilding.$idFloor.'/'.$_FILES['planeFloor']['name'];
     } else {
         $planeFloor = $_POST['planeFloorOriginal'];
     }
 
-    $surfaceBuildingFloor = $_POST['surfaceBuildingFloor'];
-    $surfaceUsefulFloor = $_POST['surfaceUsefulFloor'];
+    $surfaceBuildingFloor =  $_POST['surfaceBuildingFloor'];
+    $surfaceUsefulFloor =  $_POST['surfaceUsefulFloor'];
    
     $floor = new FLOOR_Model($idBuilding, $idFloor, $nameFloor, $planeFloor, $surfaceBuildingFloor, $surfaceUsefulFloor);
     return $floor;
@@ -64,26 +63,29 @@ Switch ($_REQUEST['action']){
 
         if (isset($_POST["submit"])) { 
             $floorAdd = get_data_form();
+            try{
+                $floorAdd->checkIsValid(); 
 
-            ////////////////////////////////////////METER EN UNA FUNCIÓN////////////////////////////////////////////////////////////
-            $dirPlane = '../document/'.$floorAdd->getIdBuilding().'/'.$floorAdd->getIdBuilding().$floorAdd->getIdFloor().'/';
-            if ($_FILES['planeFloor']['name'] !== '') {
-                if (!file_exists($dirPlane)) {
-                    mkdir($dirPlane, 0777, true);
+                ////////////////////////////////////////METER EN UNA FUNCIÓN////////////////////////////////////////////////////////////
+                $dirPlane = '../document/'.$floorAdd->getIdBuilding().'/'.$floorAdd->getIdBuilding().$floorAdd->getIdFloor().'/';
+                if ($_FILES['planeFloor']['name'] !== '') {
+                    if (!file_exists($dirPlane)) {
+                        mkdir($dirPlane, 0777, true);
+                    }
+                    move_uploaded_file($_FILES['planeFloor']['tmp_name'], $floorAdd->getPlaneFloor());
                 }
-                move_uploaded_file($_FILES['planeFloor']['tmp_name'],$floorAdd->getPlaneFloor());
-            }
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            $consult = $floorAdd->addFloor(); 
-            if($consult){
+                $floorAdd->addFloor(); 
                 $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully added."], $floorAdd->getNameFloor());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("FLOOR_Controller.php", "index&building=", $floorAdd->getIdFloor());
-            } else {
-                $view->setFlashDanger($strings[$consult]);
-                $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+                $view->redirect("FLOOR_Controller.php", "index&building=", $floorAdd->getIdBuilding());
+
+            }catch(Exception $errors) {
+                $view->setFlashDanger($strings[$errors->getMessage()]);
+                $view->redirect("FLOOR_Controller.php", "add&building=", $buildingid);
             }
+
         } else {
             new FLOOR_ADD($buildingid);
         }
@@ -114,7 +116,9 @@ Switch ($_REQUEST['action']){
         
         if (isset($_POST["submit"])) { 
             $floorEdit = get_data_form();
-                    
+            
+            try{
+                $floorEdit->checkIsValid(); 
             ////////////////////////////////////////METER EN UNA FUNCIÓN////////////////////////////////////////////////////////////
             $dirPlane = '../document/'.$floorEdit->getIdBuilding().'/'.$floorEdit->getIdBuilding().$floorEdit->getIdFloor().'/';
             if ($_FILES['planeFloor']['name'] !== '') {
@@ -127,14 +131,13 @@ Switch ($_REQUEST['action']){
             }
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            $consult = $floorEdit->updateFloor($buildingid, $floorid);
-            if($consult){
-                $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully updated."], $floorEdit->getNameFloor());
-                $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("FLOOR_Controller.php", "index&building=", $floorEdit->getIdFloor());
-            } else {
-                $view->setFlashDanger($strings[$consult]);
-                $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+            $floorEdit->updateFloor($buildingid, $floorid);
+            $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully updated."], $floorEdit->getNameFloor());
+            $view->setFlashSuccess($flashMessageSuccess);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $floorEdit->getIdFloor());
+            }catch(Exception $errors) {
+                $view->setFlashDanger($strings[$errors->getMessage()]);
+                $view->redirect("FLOOR_Controller.php", "add&building=", $buildingid);
             }
         } else {
             $floor = new FLOOR_Model($buildingid, $floorid);

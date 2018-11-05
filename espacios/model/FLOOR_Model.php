@@ -6,19 +6,19 @@ class FLOOR_Model {
 	private $idFloor;
 	private $nameFLoor;
 	private $planeFloor;
-	private $surfaceFloor;
-    private $usefulFloor;
+	private $surfaceBuildingFloor;
+    private $surfaceUsefulFloor;
 	private $mysqli;
 
 
-function __construct($idBuilding=NULL, $idFloor=NULL, $nameFloor=NULL, $planeFloor=NULL, $surfaceFloor=NULL, $usefulFloor=NULL)
+function __construct($idBuilding=NULL, $idFloor=NULL, $nameFloor=NULL, $planeFloor=NULL, $surfaceBuildingFloor=NULL, $surfaceUsefulFloor=NULL)
 {
     $this->idBuilding =  $idBuilding; 
     $this->idFloor = $idFloor;
 	$this->nameFloor = $nameFloor;
 	$this->planeFloor = $planeFloor;
-	$this->surfaceFloor = $surfaceFloor;
-	$this->usefulFloor =  $usefulFloor;
+	$this->surfaceBuildingFloor = $surfaceBuildingFloor;
+	$this->surfaceUsefulFloor =  $surfaceUsefulFloor;
 }
 
 
@@ -40,6 +40,25 @@ public function getPlaneFloor(){
 }
 
 
+public function getSurfaceBuildingFloor(){
+    return $this->surfaceBuildingFloor;
+}
+
+
+public function getSurfaceUsefulFloor(){
+    return $this->surfaceUsefulFloor;
+}
+
+public function setSurfaceBuildingFloor($surfaceBuildingFloor) {
+    $this->surfaceBuildingFloor = $surfaceBuildingFloor;
+}
+
+public function setSurfaceUsefulFloor($surfaceUsefulFloor) {
+    $this->surfaceUsefulFloor = $surfaceUsefulFloor;
+}
+
+
+
 function ConectarBD() {
     $this->mysqli = new mysqli("localhost", "root", "", "espacios");
     $acentos = $this->mysqli->query("SET NAMES 'utf8'");
@@ -49,16 +68,16 @@ function ConectarBD() {
 }
 
 
-function existsFloor() {
-	$this->ConectarBD();
-	$sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'";
-	$result = $this->mysqli->query($sql);
-	if ($result->num_rows == 1) {
-		return true;
-	} else {
-		return 'Error in the query on the database';
-	}
-}
+// function existsFloor() {
+// 	$this->ConectarBD();
+// 	$sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'";
+// 	$result = $this->mysqli->query($sql);
+// 	if ($result->num_rows == 1) {
+// 		return true;
+// 	} else {
+// 		return 'Error in the query on the database';
+// 	}
+// }
 
 
 function findFloorName() {
@@ -88,7 +107,7 @@ function fillInFloor() {
 
 function addFloor() {
     $this->ConectarBD();
-    $sql = "INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES ('$this->idBuilding', '$this->idFloor', '$this->nameFloor', '$this->planeFloor', $this->surfaceFloor, $this->usefulFloor)";
+    $sql = "INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES ('$this->idBuilding', '$this->idFloor', '$this->nameFloor', '$this->planeFloor', $this->surfaceBuildingFloor, $this->surfaceUsefulFloor)";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -98,7 +117,7 @@ function addFloor() {
 
 function updateFloor($idBuilding, $idFloor) {
     $this->ConectarBD();
-    $sql = "UPDATE FLOOR SET idFloor = '$this->idFloor', nameFloor = '$this->nameFloor', planeFloor = '$this->planeFloor', surfaceBuildingFloor = '$this->surfaceFloor', surfaceUsefulFloor = '$this->usefulFloor' WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor'";
+    $sql = "UPDATE FLOOR SET idFloor = '$this->idFloor', nameFloor = '$this->nameFloor', planeFloor = '$this->planeFloor', surfaceBuildingFloor = '$this->surfaceBuildingFloor', surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -133,6 +152,65 @@ function showAllFloors() {
     }
 }
 
+
+
+public function existsFloor($idBuilding, $idFloor) {
+	$this->ConectarBD();
+	$sql = "SELECT * FROM floor WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor'";
+	$result = $this->mysqli->query($sql);
+	if ($result->num_rows == 1) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
+
+public function checkIsValid() {
+
+    $errors = array();
+
+    if (!preg_match('/^[0-9]{1,8}([.][0-9]{1,2}){0,1}?$/', $this->surfaceUsefulFloor)) {
+        $this->setSurfaceUsefulFloor(0.0);
+    }
+
+    if (!preg_match('/^[0-9]{1,8}([.][0-9]{1,2}){0,1}?$/', $this->surfaceBuildingFloor)) {
+        $this->setSurfaceBuildingFloor(0.0);
+    }
+
+    if (strlen(trim($this->idBuilding)) == 0 ) {
+        $errors= "Building id is mandatory";
+    }else if (strlen(trim($this->idBuilding)) > 6 ) {
+        $errors = "Building id can not be that long";
+    }else if(!preg_match('/[A-Z0-9]/', $this->idBuilding)){
+        $errors = "Building id is invalid. Example: OSBI0";
+    }elseif (strlen(trim($this->idFloor)) == 0 ) {
+        $errors= "Floor id is mandatory";
+    }else if (strlen(trim($this->idFloor)) > 2 ) {
+        $errors = "Floor id can not be that long";
+    }else if(!preg_match('/[A-Z0-9]/', $this->idFloor)){
+        $errors = "Floor id is invalid. Example: 00,S1";
+    }elseif($this->existsFloor($this->idBuilding, $this->idFloor)){
+        $errors = "There is already a floor with that id in this building";
+    }else if (strlen(trim($this->nameFloor)) == 0 ) {
+        $errors= "Floor name is mandatory";
+    }else if (strlen(trim($this->nameFloor)) > 225 ) {
+        $errors = "Floor name can not be that long";
+    }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameFloor)){
+        $errors = "Floor name is invalid. Try again!";
+    }else if (strlen(trim($this->surfaceBuildingFloor)) > 99999999.99) {
+        $errors = "Floor surface can not be that long";
+    }else if (strlen(trim($this->surfaceUsefulFloor)) > 99999999.99) {
+        $errors = "Floor useful surface can not be that long";
+    }else if($this->getSurfaceUsefulFloor() > $this->getSurfaceBuildingFloor()){
+        $errors = "The usable surface can not be greater than the building surface.";
+    }
+
+    if (sizeof($errors) > 0){
+        throw new Exception($errors);
+    }
+}
 
 
 

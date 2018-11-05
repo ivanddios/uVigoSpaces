@@ -93,6 +93,7 @@ $strings = array(
 
 
 //VALIDATES
+//BUILDING
 "Building id is mandatory" => "El identificador del edificio es obligatorio",
 "Building id can not be that long" =>"El identificador del edificio es demasiado largo",
 "Building id is invalid. Example: OSBI0" => "El identificador es inválido. Por ejemplo: OSBI0",
@@ -106,6 +107,21 @@ $strings = array(
 "Building phone is incorrect. Example: 666777888" => "El teléfono del edificio es incorrecto. Ejemplo: 666777888",
 "Building phone is invalid. Example: 666777888" => "El teléfono es inválido. Ejemplo: 666777888",
 "Building responsible name can not be that long" => "El nombre del responsable del edificio es demasiado largo",
-"Building responsible name is invalid. Try again!" => "El nombre del responsable del edificio es inválido. Pruebe otra vez"
+"Building responsible name is invalid. Try again!" => "El nombre del responsable del edificio es inválido. Pruebe otra vez",
+
+
+
+//FLOOR
+"Floor id is mandatory" => "El identificador de la planta es obligatorio",
+"Floor id can not be that long" => "El identificador de la planta es demasiado largo. Por ejemplo: 00, S1 ",
+"Floor id is invalid. Example: 00,S1" => "El identificador es inválido. Por ejemplo: 00,S1",
+"There is already a floor with that id in this building" => "Ya existe una planta con ese id en este edificio",
+"Floor name is mandatory" => "El nombre de la planta es obligatorio",
+"Floor name can not be that long" => "El nombre de la planta no puede ser tan largo",
+"Floor name is invalid. Try again!" => "El nombre es inválido. Pruebe otra vez!",
+"Floor surface can not be that long" => "La superficie de la planta no puede ser tan grande",
+"Floor useful surface can not be that long" => "La superficie útil de la planta no puede ser tan grande",
+"The usable surface can not be greater than the building surface." => "La superficie útil de la planta no puede ser mayor que la superficie de la misma",
+
 )
 ?>

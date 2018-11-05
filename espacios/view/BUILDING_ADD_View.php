@@ -30,7 +30,7 @@ class BUILDING_ADD{
 						<?=htmlentities($strings["Datas of the new building"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form method="POST" action="BUILDING_Controller.php?action=<?= $strings['Add']?>" onsubmit="return addBuilding();">
+						<form method="POST" action="BUILDING_Controller.php?action=<?= $strings['Add']?>" onblur="addBuilding();">
 							<div id="group-form">
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" id="idBuilding" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" onblur="checkBuildingId(this.id)">
@@ -60,12 +60,12 @@ class BUILDING_ADD{
 							</div>
 
 							<div id="group-form">
-								<button type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
+								<button type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>
 
-								<!-- <div id="error" class="alert alert-danger alert-dismissable" >
-									<strong>¡Error!</strong> Revisa los campos del formulario.  
-								</div> -->
-							</div>
+							<!-- <div id="error" name="error" class="alert alert-danger alert-dismissable" style="display:none">
+								<strong>¡Error!</strong> Revisa los campos del formulario.  
+							</div> -->
+							</div> 
 						</form>
 						<a href="../index.php"><?= $strings["Back"] ?></a>
 					</div>
