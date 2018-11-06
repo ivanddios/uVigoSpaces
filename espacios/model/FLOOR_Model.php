@@ -96,7 +96,7 @@ function findLinkPlane($idBuilding, $idFloor) {
 
 function fillInFloor() {
     $this->ConectarBD();
-    $sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'";
+    $sql = "SELECT * FROM floor WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -107,7 +107,7 @@ function fillInFloor() {
 
 function addFloor() {
     $this->ConectarBD();
-    $sql = "INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES ('$this->idBuilding', '$this->idFloor', '$this->nameFloor', '$this->planeFloor', $this->surfaceBuildingFloor, $this->surfaceUsefulFloor)";
+    $sql = "INSERT INTO floor (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES ('$this->idBuilding', '$this->idFloor', '$this->nameFloor', '$this->planeFloor', $this->surfaceBuildingFloor, $this->surfaceUsefulFloor)";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -127,7 +127,7 @@ function updateFloor($idBuilding, $idFloor) {
 
 function deleteFloor() {
     $this->ConectarBD();
-    $sql = "DELETE FROM FLOOR WHERE idBuilding ='$this->idBuilding' AND idFloor = '$this->idFloor'";
+    $sql = "DELETE FROM floor WHERE idBuilding ='$this->idBuilding' AND idFloor = '$this->idFloor'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -138,7 +138,7 @@ function deleteFloor() {
 
 function showAllFloors() {
     $this->ConectarBD();
-    $sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->idBuilding'";
+    $sql = "SELECT * FROM floor WHERE idBuilding = '$this->idBuilding'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -154,9 +154,9 @@ function showAllFloors() {
 
 
 
-public function existsFloor($idBuilding, $idFloor) {
+public function existsFloor() {
 	$this->ConectarBD();
-	$sql = "SELECT * FROM floor WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor'";
+	$sql = "SELECT * FROM floor WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows == 1) {
 		return true;
@@ -167,7 +167,7 @@ public function existsFloor($idBuilding, $idFloor) {
 
 
 
-public function checkIsValid() {
+public function checkIsValidForAdd() {
 
     $errors = array();
 
@@ -192,6 +192,67 @@ public function checkIsValid() {
     }else if(!preg_match('/[A-Z0-9]/', $this->idFloor)){
         $errors = "Floor id is invalid. Example: 00,S1";
     }elseif($this->existsFloor($this->idBuilding, $this->idFloor)){
+        $errors = "There is already a floor with that id in this building";
+    }else if (strlen(trim($this->nameFloor)) == 0 ) {
+        $errors= "Floor name is mandatory";
+    }else if (strlen(trim($this->nameFloor)) > 225 ) {
+        $errors = "Floor name can not be that long";
+    }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameFloor)){
+        $errors = "Floor name is invalid. Try again!";
+    }else if (strlen(trim($this->surfaceBuildingFloor)) > 99999999.99) {
+        $errors = "Floor surface can not be that long";
+    }else if (strlen(trim($this->surfaceUsefulFloor)) > 99999999.99) {
+        $errors = "Floor useful surface can not be that long";
+    }else if($this->getSurfaceUsefulFloor() > $this->getSurfaceBuildingFloor()){
+        $errors = "The usable surface can not be greater than the building surface.";
+    }
+
+    if (sizeof($errors) > 0){
+        throw new Exception($errors);
+    }
+}
+
+
+
+
+
+public function existsFloorToEdit($idFloor) {
+	$this->ConectarBD();
+	$sql = "SELECT * FROM floor WHERE (idFloor, idBuilding) NOT IN (SELECT idFloor, idBuilding FROM floor WHERE idBuilding='$this->idBuilding' AND idFloor='$idFloor') AND idBuilding='$this->idBuilding' AND idFloor='$this->idFloor'";
+	$result = $this->mysqli->query($sql);
+	if ($result->num_rows >= 1) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+public function checkIsValidForEdit($idFloor) {
+
+    $errors = array();
+
+    if (!preg_match('/^[0-9]{1,8}([.][0-9]{1,2}){0,1}?$/', $this->surfaceUsefulFloor)) {
+        $this->setSurfaceUsefulFloor(0.0);
+    }
+
+    if (!preg_match('/^[0-9]{1,8}([.][0-9]{1,2}){0,1}?$/', $this->surfaceBuildingFloor)) {
+        $this->setSurfaceBuildingFloor(0.0);
+    }
+
+
+    if (strlen(trim($this->idBuilding)) == 0 ) {
+        $errors= "Building id is mandatory";
+    }else if (strlen(trim($this->idBuilding)) > 6 ) {
+        $errors = "Building id can not be that long";
+    }else if(!preg_match('/[A-Z0-9]/', $this->idBuilding)){
+        $errors = "Building id is invalid. Example: OSBI0";
+    }elseif (strlen(trim($this->idFloor)) == 0 ) {
+        $errors= "Floor id is mandatory";
+    }else if (strlen(trim($this->idFloor)) > 2 ) {
+        $errors = "Floor id can not be that long";
+    }else if(!preg_match('/[A-Z0-9]/', $this->idFloor)){
+        $errors = "Floor id is invalid. Example: 00,S1";
+    }elseif($this->existsFloorToEdit($idFloor)){
         $errors = "There is already a floor with that id in this building";
     }else if (strlen(trim($this->nameFloor)) == 0 ) {
         $errors= "Floor name is mandatory";

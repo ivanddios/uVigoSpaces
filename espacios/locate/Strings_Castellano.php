@@ -123,5 +123,16 @@ $strings = array(
 "Floor useful surface can not be that long" => "La superficie útil de la planta no puede ser tan grande",
 "The usable surface can not be greater than the building surface." => "La superficie útil de la planta no puede ser mayor que la superficie de la misma",
 
+
+//SPACE
+"Space id is mandatory" => "El id del espacio es obligatorio",
+"Space id can not be that long" => "El id del espacio es demasiado largo. Ejemplo: 000007",
+"Space id is invalid. Example: 000011" => "El id es inválido. Ejemplo: 000011",
+"There is already a space with that id in this floor" => "Ya existe un espacio en esta planta con ese id",
+"Space name is mandatory" => "El nombre del espacio es obligatorio",
+"Space name can not be that long" => "El nombre del espacio es demasiado largo",
+"Space name is invalid. Try again!" => "El nombre del espacio es inválido. Prueba otra vez!",
+"Space surface can not be that long" => "La superficie del espacio es demasiado grande"
+
 )
 ?>

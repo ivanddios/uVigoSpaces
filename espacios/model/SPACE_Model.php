@@ -43,6 +43,13 @@ public function getNameSpace(){
     return $this->nameSpace;
 }
 
+public function setSurfaceSpace($surfaceSpace) {
+    $this->surfaceSpace = $surfaceSpace;
+}
+
+public function setNumberInventorySpace($numberInventorySpace) {
+    $this->numberInventorySpace = $numberInventorySpace;
+}
 
 
 function ConectarBD() {
@@ -70,16 +77,7 @@ function showAllSpaces() {
 }
 
 
-function existsSpace() {
-	$this->ConectarBD();
-	$sql = "SELECT * FROM FLOOR WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
-	$result = $this->mysqli->query($sql);
-	if ($result->num_rows == 1) {
-		return true;
-	} else {
-		return 'Error in the query on the database';
-	}
-}
+
 
 
 function findNameSpace() {
@@ -103,6 +101,12 @@ function fillInSpace() {
 
 function addSpace() {
     $this->ConectarBD();
+    var_dump($this->idBuilding);
+    var_dump($this->idFloor);
+    var_dump($this->idSpace);
+    var_dump($this->nameSpace);
+    var_dump($this->surfaceSpace);
+    var_dump($this->numberInventorySpace);
     $sql = "INSERT INTO space (idBuilding, idFloor, idSpace, nameSpace, surfaceSpace, numberInventorySpace) VALUES ('$this->idBuilding', '$this->idFloor', '$this->idSpace', '$this->nameSpace', $this->surfaceSpace, '$this->numberInventorySpace')";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
@@ -137,6 +141,126 @@ function deleteSpace() {
     }
 }
 
+
+public function existsSpace() {
+	$this->ConectarBD();
+	$sql = "SELECT * FROM space WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor' AND idSPace = '$this->idSpace'";
+	$result = $this->mysqli->query($sql);
+	if ($result->num_rows == 1) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
+
+public function checkIsValidForAdd() {
+
+    $errors = array();
+
+    if (!preg_match('/^[0-9]{1,8}([.][0-9]{1,2}){0,1}?$/', $this->surfaceSpace)) {
+        $this->setSurfaceSpace(0.0);
+    }
+
+    if (!preg_match('/^([0-9]{6}|[#]{6})$/', $this->numberInventorySpace)) {
+        $this->setNumberInventorySpace("######");
+    }
+
+    if (strlen(trim($this->idBuilding)) == 0 ) {
+        $errors= "Building id is mandatory";
+    }else if (strlen(trim($this->idBuilding)) > 6 ) {
+        $errors = "Building id can not be that long";
+    }else if(!preg_match('/[A-Z0-9]/', $this->idBuilding)){
+        $errors = "Building id is invalid. Example: OSBI0";
+    }elseif (strlen(trim($this->idFloor)) == 0 ) {
+        $errors= "Floor id is mandatory";
+    }else if (strlen(trim($this->idFloor)) > 2 ) {
+        $errors = "Floor id can not be that long";
+    }else if(!preg_match('/[A-Z0-9]/', $this->idFloor)){
+        $errors = "Floor id is invalid. Example: 00,S1";
+    }elseif (strlen(trim($this->idSpace)) == 0 ) {
+        $errors= "Space id is mandatory";
+    }else if (strlen(trim($this->idSpace)) > 6 ) {
+        $errors = "Space id can not be that long";
+    }else if(!preg_match('/^[0-9]{5}$/', $this->idSpace)){
+        $errors = "Space id is invalid. Example: 000011";
+    }elseif($this->existsSpace()){
+        $errors = "There is already a space with that id in this floor";
+    }else if (strlen(trim($this->nameSpace)) == 0 ) {
+        $errors= "Space name is mandatory";
+    }else if (strlen(trim($this->nameSpace)) > 225 ) {
+        $errors = "Space name can not be that long";
+    }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameSpace)){
+        $errors = "Space name is invalid. Try again!";
+    }else if (strlen(trim($this->surfaceSpace)) > 99999999.99) {
+        $errors = "Space surface can not be that long";
+    }
+    if (sizeof($errors) > 0){
+        throw new Exception($errors);
+    }
+}
+
+
+
+public function existsSpaceToEdit($idSpace) {
+	$this->ConectarBD();
+	$sql = "SELECT * FROM space WHERE (idBuilding, idFloor, idSpace) 
+    NOT IN (SELECT idBuilding, idFloor, idSpace FROM space WHERE idBuilding='$this->idBuilding' AND idFloor='$this->idFloor' AND idSpace='$idSpace') 
+    AND idBuilding='$this->idBuilding' AND idFloor='$this->idFloor' AND idSpace='$this->idSpace'";
+	$result = $this->mysqli->query($sql);
+	if ($result->num_rows >= 1) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+public function checkIsValidForEdit($idSpace) {
+
+    $errors = array();
+
+    if (!preg_match('/^[0-9]{1,8}([.][0-9]{1,2}){0,1}?$/', $this->surfaceSpace)) {
+        $this->setSurfaceSpace(0.0);
+    }
+
+    if (!preg_match('/^([0-9]{6}|[#]{6})$/', $this->numberInventorySpace)) {
+        $this->setNumberInventorySpace("######");
+    }
+
+    if (strlen(trim($this->idBuilding)) == 0 ) {
+        $errors= "Building id is mandatory";
+    }else if (strlen(trim($this->idBuilding)) > 6 ) {
+        $errors = "Building id can not be that long";
+    }else if(!preg_match('/[A-Z0-9]/', $this->idBuilding)){
+        $errors = "Building id is invalid. Example: OSBI0";
+    }elseif (strlen(trim($this->idFloor)) == 0 ) {
+        $errors= "Floor id is mandatory";
+    }else if (strlen(trim($this->idFloor)) > 2 ) {
+        $errors = "Floor id can not be that long";
+    }else if(!preg_match('/[A-Z0-9]/', $this->idFloor)){
+        $errors = "Floor id is invalid. Example: 00,S1";
+    }elseif (strlen(trim($this->idSpace)) == 0 ) {
+        $errors= "Space id is mandatory";
+    }else if (strlen(trim($this->idSpace)) > 6 ) {
+        $errors = "Space id can not be that long";
+    }else if(!preg_match('/^[0-9]{5}$/', $this->idSpace)){
+        $errors = "Space id is invalid. Example: 000011";
+    }elseif($this->existsSpaceToEdit($idSpace)){
+        $errors = "There is already a space with that id in this floor";
+    }else if (strlen(trim($this->nameSpace)) == 0 ) {
+        $errors= "Space name is mandatory";
+    }else if (strlen(trim($this->nameSpace)) > 225 ) {
+        $errors = "Space name can not be that long";
+    }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameSpace)){
+        $errors = "Space name is invalid. Try again!";
+    }else if (strlen(trim($this->surfaceSpace)) > 99999999.99) {
+        $errors = "Space surface can not be that long";
+    }
+    if (sizeof($errors) > 0){
+        throw new Exception($errors);
+    }
+}
 
 
 

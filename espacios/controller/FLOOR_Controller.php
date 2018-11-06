@@ -64,7 +64,7 @@ Switch ($_REQUEST['action']){
         if (isset($_POST["submit"])) { 
             $floorAdd = get_data_form();
             try{
-                $floorAdd->checkIsValid(); 
+                $floorAdd->checkIsValidForAdd(); 
 
                 ////////////////////////////////////////METER EN UNA FUNCIÓN////////////////////////////////////////////////////////////
                 $dirPlane = '../document/'.$floorAdd->getIdBuilding().'/'.$floorAdd->getIdBuilding().$floorAdd->getIdFloor().'/';
@@ -118,7 +118,7 @@ Switch ($_REQUEST['action']){
             $floorEdit = get_data_form();
             
             try{
-                $floorEdit->checkIsValid(); 
+                $floorEdit->checkIsValidForEdit($floorid); 
                 ////////////////////////////////////////METER EN UNA FUNCIÓN////////////////////////////////////////////////////////////
                 $dirPlane = '../document/'.$floorEdit->getIdBuilding().'/'.$floorEdit->getIdBuilding().$floorEdit->getIdFloor().'/';
                 if ($_FILES['planeFloor']['name'] !== '') {
@@ -194,27 +194,21 @@ Switch ($_REQUEST['action']){
         }
         $floor = new FLOOR_Model($buildingid, $floorid);
                 
-        if ($floor->existsFloor()) {
+        if (!$floor->existsFloor()) {
             $view->setFlashDanger($strings["No exist floor to delete"]);
             $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
         }
 
-        //////////////////////////////////////////////////////////////////////////////////////
-        $link = $floor->findLinkPlane($floor->getIdBuilding(), $floor->getIdFloor());
-        unlink($link); 
-        rmdir('../document/'.$floor->getIdBuilding().'/'.$floor->getIdBuilding().$floor->getIdFloor());
-        /////////////////////////////////////////////////////////////////////////////////////
-
-        $floorName = $floor->findNameFloor();
-        $consult = $floor->deleteFloor();
-        if($consult){
-            $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully deleted."], $floorName);
+        try{
+            rmdir('../document/'.$floor->getIdBuilding().'/'.$floor->getIdBuilding().$floor->getIdFloor());
+            $floor->deleteFloor();
+            $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully deleted."], $buildingid.$floorid);
             $view->setFlashSuccess($flashMessageSuccess);
-            $view->redirect("FLOOR_Controller.php", "index&building=", $floor->getIdFloor());
-        } else {
-            $view->setFlashDanger($strings[$consult]);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $floor->getIdBuilding());
+        }catch(Exception $errors) {
+            $view->setFlashDanger($strings[$errors->getMessage()]);
             $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-        }
+    }
 
     break;
     

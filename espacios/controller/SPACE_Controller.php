@@ -57,16 +57,19 @@ Switch ($_REQUEST['action']){
 
         if (isset($_POST["submit"])) { 
             $spaceAdd = get_data_form();
-            $consult = $spaceAdd->addSpace(); 
-            if($consult){
-                var_dump($consult);
+            
+            try{
+                $spaceAdd->checkIsValidForAdd();
+                $consult = $spaceAdd->addSpace(); 
+               
                 $flashMessageSuccess = sprintf($strings["Space \"%s\" successfully added."], $spaceAdd->getNameSpace());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
-            } else {
-                $view->setFlashDanger($strings[$consult]);
+            }catch(Exception $errors) {
+                $view->setFlashDanger($strings[$errors->getMessage()]);
                 $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
-            }
+            }   
+
         } else {
             new SPACE_ADD($buildingid, $floorid);
         }
@@ -98,18 +101,18 @@ Switch ($_REQUEST['action']){
 
         if (isset($_POST["submit"])) { 
             $spaceEdit = get_data_form();
-
-            $consult = $spaceEdit->updateSpace($buildingid, $floorid, $spaceid);
-            var_dump($consult);
-            if($consult){
+            
+            try{
+                $spaceEdit->checkIsValidForEdit($spaceid);
+                $spaceEdit->updateSpace($buildingid, $floorid, $spaceid);
                 $flashMessageSuccess = sprintf($strings["Space \"%s\" successfully updated."], $spaceEdit->getNameSpace());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
-            } else {
-                $view->setFlashDanger($strings[$consult]);
-                $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
-                var_dump("NO)");
+            }catch(Exception $errors) {
+                $view->setFlashDanger($strings[$errors->getMessage()]);
+                $view->redirect("SPACE_Controller.php", "edit&building=".$buildingid."&floor=".$floorid, "&space=".$spaceid);
             }
+
         } else {
             $space = new SPACE_Model($buildingid, $floorid, $spaceid);
             $values = $space->fillInSpace();
@@ -173,13 +176,13 @@ Switch ($_REQUEST['action']){
             $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
         }
 
-        $consult = $space->deleteSpace();
-        if($consult){
+        try{
+            $space->deleteSpace();
             $flashMessageSuccess = sprintf($strings["Space \"%s\" successfully deleted."], $buildingid.$floorid.$spaceid);
             $view->setFlashSuccess($flashMessageSuccess);
             $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
-        } else {
-            $view->setFlashDanger($strings[$consult]);
+        }catch(Exception $errors) {
+            $view->setFlashDanger($strings[$errors->getMessage()]);
             $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
         }
 
