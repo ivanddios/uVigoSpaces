@@ -54,6 +54,39 @@ class SPACE_SHOW{
 									<i class="fa fa-barcode fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 							</div>	
+
+
+							<!-- <a id="test">
+										<img src='<?= $this->floor['planeFloor']; ?>' usemap="#planetmap"  onmousemove="showCoords(event)">>
+									</a> -->
+									 <!-- <map name="planetmap">
+										<area shape="poly"  coords="128,75,129,97,198,96,199,77" href="triangulo.html" />
+										<area shape="default" nohref="nohref" /> 
+									</map> -->
+
+							<!-- <script>
+								$(function() {
+									$("#coords").click(function(e) {
+									var offset = $(this).offset();
+									var relativeX = (e.pageX - offset.left);
+									var relativeY = (e.pageY - offset.top);
+									alert(relativeX+':'+relativeY);
+									$(".position").val("afaf");
+									});
+								});
+							</script> -->
+							<p id="demo"></p>
+
+							<script>
+    function showCoords(event) {
+        var x = event.clientX;
+        var y = event.clientY;
+        var coords = "X coords: " + x + ", Y coords: " + y;
+        document.getElementById("demo").innerHTML = coords;
+    }
+</script>
+
+
 						<a href="SPACE_Controller.php?building=<?=$this->space['idBuilding']?>&floor=<?=$this->space['idFloor']?>"><?= $strings["Back"] ?></a>
 					</div>
 				</div>

@@ -63,6 +63,7 @@ class FLOOR_SHOW{
 								<div class="inputWithIcon inputIconBg">
 									<a target='_blank' href='<?= $this->floor['planeFloor']; ?>'><img src='<?= $this->floor['planeFloor']; ?>' class="viewPlane"></a>
 								</div>
+								
 							</div>
 						<a href="FLOOR_Controller.php?building=<?= $this->floor['idBuilding']?>"><?= $strings["Back"] ?></a>
 					</div>
