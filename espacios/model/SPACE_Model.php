@@ -154,6 +154,13 @@ public function existsSpace() {
 }
 
 
+public function findPlane() {
+	$this->ConectarBD();
+	$sql = "SELECT planeFloor FROM floor WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'";
+	$result = $this->mysqli->query($sql)->fetch_array();
+    return $result['planeFloor'];
+}
+
 
 public function checkIsValidForAdd() {
 

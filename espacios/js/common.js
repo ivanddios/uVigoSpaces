@@ -25,3 +25,12 @@ function validateNumberInventoryAndSurface(){
         }
     }
 }
+
+
+
+function selectCoords(event) {
+    var x = event.clientX;
+    var y = event.clientY;
+    var coords = "X coords: " + x + ", Y coords: " + y + "\n";
+    document.getElementById("demo").innerText += coords;
+}

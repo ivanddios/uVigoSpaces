@@ -43,6 +43,7 @@ $strings = array(
 "idFloor" => "Identificador",
 "nameFloor" => "Piso",
 "planeFloor" => "Plano",
+"Plane" => "Plane",
 "surfaceBuildingFloor" => "Sup. Construida",
 "surfaceUsefulFloor" => "Sup. Útil",
 "Show Spaces" => "Ver Espacios",
