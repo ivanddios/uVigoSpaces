@@ -160,32 +160,54 @@ function validateFloor() {
 }
 
 
-function validateSpace() {
+// function validateNumberInventoryAndSurface(){
+//     tdInventory = document.getElementsByClassName('numberInventory');
+//     tdSurface = document.getElementsByClassName('surface');
+
+//     for(var i=0; i<tdInventory.length; i++){
+//         if(tdInventory[i].innerText == "######	"){
+//            // document.getElementById(tdInventory[i].id).parentNode.setAttribute("class", "numberInventory table-warning"); //Modified the class of div
+//             document.getElementById(tdInventory[i].id).setAttribute("class", "numberInventory table-warning"); //Modified the class of div
+//         }
+//     }
+
+//     console.log(tdSurface[0].innerText);
+//     for(var i=0; i<tdSurface.length; i++){
+//         if(tdSurface[i].innerText == "0.00 m²	"){
+//             //document.getElementById(tdSurface[i].id).parentNode.setAttribute("class", "numberInventory table-danger"); //Modified the class of div
+//             document.getElementById(tdSurface[i].id).setAttribute("class", "surface table-danger"); //Modified the class of div
+//         }
+//     }
+// }
+
+
+
+// function validateSpace() {
     
-    if(checkSpaceId("idSpace") && checkText("nameSpace")) { 
-        //var surface = document.getElementById("surfaceSpace").value;
-        //var numInventory = document.getElementById("numberInventorySpace").value;
-        //document.getElementsByName("submit")[0].disabled = false;
+//     if(checkSpaceId("idSpace") && checkText("nameSpace")) { 
+//         //var surface = document.getElementById("surfaceSpace").value;
+//         //var numInventory = document.getElementById("numberInventorySpace").value;
+//         //document.getElementsByName("submit")[0].disabled = false;
         
-        // if(surface.length > 0){
-        //     if(checkSurfaceSpace("surfaceSpace")){
-        //         document.getElementsByName("submit")[0].disabled = false;
-        //     }
-        // }
+//         // if(surface.length > 0){
+//         //     if(checkSurfaceSpace("surfaceSpace")){
+//         //         document.getElementsByName("submit")[0].disabled = false;
+//         //     }
+//         // }
 
-        // if(numInventory.length > 0){
-        //     if(checkNumberInventory("numberInventorySpace")){
-        //         document.getElementsByName("submit")[0].disabled = false;
-        //     }
-        // }
+//         // if(numInventory.length > 0){
+//         //     if(checkNumberInventory("numberInventorySpace")){
+//         //         document.getElementsByName("submit")[0].disabled = false;
+//         //     }
+//         // }
 
-        document.getElementsByName("submit")[0].disabled = false;
-        // document.getElementById("error").style.display = "none";
-    }else{
-        document.getElementsByName("submit")[0].disabled = true;
-        // document.getElementsByName("error")[0].style.display = "block";
-        return false;
-    }
+//         document.getElementsByName("submit")[0].disabled = false;
+//         // document.getElementById("error").style.display = "none";
+//     }else{
+//         document.getElementsByName("submit")[0].disabled = true;
+//         // document.getElementsByName("error")[0].style.display = "block";
+//         return false;
+//     }
              
-}
+// }
 

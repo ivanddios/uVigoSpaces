@@ -96,6 +96,7 @@ CREATE TABLE IF NOT EXISTS SPACE(
   nameSpace varchar(225) COLLATE utf8_spanish_ci NOT NULL,
   surfaceSpace decimal(10,2) DEFAULT 0.00,
   numberInventorySpace varchar(10) DEFAULT "######",
+  coordsPlane varchar(225),
   PRIMARY KEY(idFloor ,idBuilding,idSpace),
   FOREIGN KEY (idBuilding) REFERENCES BUILDING (idBuilding)  ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (idFloor) REFERENCES FLOOR (idFloor) ON DELETE CASCADE ON UPDATE CASCADE
@@ -178,92 +179,92 @@ INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFl
 ('OSBI0', 'S1', 'Soto -1', '', 1800.40, 894.20),
 ('OSBI0', 'S2', 'Soto -2', '', 1338.40, 1226.70);
 
-INSERT INTO SPACE (idBuilding, idFloor, idSpace, nameSpace, surfaceSpace, numberInventorySpace) VALUES
-('OSBI0', '04', '00001', 'Escaleiras', 13.80, '######'),
-('OSBI0', '04', '00002', 'Pasillo', 28.30, '######'),
-('OSBI0', '04', '00003', 'Ascensor', 00.00, '######'),  /* NO HAY DATOS*/
-('OSBI0', '04', '00005', 'Baño mulleres', 5.20, '######'), /* 5.20 o 5.28 */
-('OSBI0', '04', '00006', 'Sala de usos múltiples', 133.90, '003743'),
+INSERT INTO SPACE (idBuilding, idFloor, idSpace, nameSpace, surfaceSpace, numberInventorySpace, coordsPlane) VALUES
+('OSBI0', '04', '00001', 'Escaleiras', 13.80, '######',''),
+('OSBI0', '04', '00002', 'Pasillo', 28.30, '######',''),
+('OSBI0', '04', '00003', 'Ascensor', 00.00, '######',''), /* NO HAY DATOS*/
+('OSBI0', '04', '00005', 'Baño mulleres', 5.20, '######',''), /* 5.20 o 5.28 */
+('OSBI0', '04', '00006', 'Sala de usos múltiples', 133.90, '003743',''),
 
-('OSBI0', '03', '00001', 'Escaleiras', 13.80, '######'),
-('OSBI0', '03', '00002', 'Pasillo', 23.00, '######'),
-('OSBI0', '03', '00003', 'Ascensor', 00.00 , '######'), /* NO HAY DATOS*/
-('OSBI0', '03', '00005', 'Baño homes', 5.20, '######'), /* 5.20 o 5.28 */
-('OSBI0', '03', '00006', 'Sala de informática', 137.65, '003744'),
+('OSBI0', '03', '00001', 'Escaleiras', 13.80, '######',''),
+('OSBI0', '03', '00002', 'Pasillo', 23.00, '######',''),
+('OSBI0', '03', '00003', 'Ascensor', 00.00 , '######',''), /* NO HAY DATOS*/
+('OSBI0', '03', '00005', 'Baño homes', 5.20, '######',''), /* 5.20 o 5.28 */
+('OSBI0', '03', '00006', 'Sala de informática', 137.65, '003744',''),
 
-('OSBI0', '02', '00001', 'Escaleiras', 13.80, '######'),
-('OSBI0', '02', '00002', 'Pasillo', 24.95, '######'),
-('OSBI0', '02', '00003', 'Ascensor', 00.00 , '######'), /* NO HAY DATOS*/
-('OSBI0', '02', '00005', 'Baño mulleres', 5.20, '######'), /* 5.20 o 5.28 */
-('OSBI0', '02', '00006', 'Sala de audiovisuais', 137.30, '003745'),
+('OSBI0', '02', '00001', 'Escaleiras', 13.80, '######',''),
+('OSBI0', '02', '00002', 'Pasillo', 24.95, '######',''),
+('OSBI0', '02', '00003', 'Ascensor', 00.00 , '######',''), /* NO HAY DATOS*/
+('OSBI0', '02', '00005', 'Baño mulleres', 5.20, '######',''), /* 5.20 o 5.28 */
+('OSBI0', '02', '00006', 'Sala de audiovisuais', 137.30, '003745',''),
 
-('OSBI0', '00', '00001', 'Escaleiras', 00.00, '######'), /* NO HAY DATOS*/
-('OSBI0', '00', '00002', 'Pasillo', 00.00, '######'), /* NO HAY DATOS*/
-('OSBI0', '00', '00003', 'Aseos', 00.00, '######'),/* NOS FALTA ESTA SUP*/
-('OSBI0', '00', '00004', 'Aseos', 00.00, '######'), /* NOS FALTA ESTA SUP*/
-('OSBI0', '00', '00005', 'Pasillo', 24.55,'######'), 
-('OSBI0', '00', '00007', 'Ascensor', 00.00, '######'), /* NO HAY DATOS*/
-('OSBI0', '00', '00008', 'Escaleiras', 00.00, '######'), /* NO HAY DATOS*/
-('OSBI0', '00', '00009', 'Grupo electróxeno', 11.50, '006743'),
-('OSBI0', '00', '00010', 'Cadro Xeral', 5.65, '006744'),
-('OSBI0', '00', '00011', 'Centro de transformación', 16.60, '006745'),
-('OSBI0', '00', '00012', 'Alxibe', 9.50, '006746'),
-('OSBI0', '00', '00013', 'Grupo de presión', 9.65, '006747'),
-('OSBI0', '00', '00014', 'Sala de máquinas', 75.80, '006748'),
-('OSBI0', '00', '00015', 'Pasillo', 34.45,'######'),
-('OSBI0', '00', '00016', 'Pasillo', 127.15, '######'),
-('OSBI0', '00', '00017', 'Pasillo', 00.00,'######'), /* NO ESTA EN EL PLANO*/
-('OSBI0', '00', '00018', 'Depósito aberto', 90.15, '######'),
-('OSBI0', '00', '00019', 'Sala de lectura', 273.15, '003754'),
-('OSBI0', '00', '00020', 'Zona de prensa', 22.75,'######'),
-('OSBI0', '00', '00021', 'Escaleiras', 12.35, '######'),
-('OSBI0', '00', '00023', 'Ascensor', 00.00,'######'), /* NO HAY DATOS*/
-('OSBI0', '00', '00026', 'Escaleiras', 00.00,'######'), /* NO HAY DATOS*/
-('OSBI0', '00', '00027', 'Ascensor', 00.00,'######'), /* NO HAY DATOS*/
-('OSBI0', '00', '00028', 'Despacho de préstamos e devolucións', 53.10, '######'),
-('OSBI0', '00', '00029', 'Sala de traballo', 16.60, '003752'),
-('OSBI0', '00', '00030', 'Depósito TEBS', 15.20, '######'),
-('OSBI0', '00', '00031', 'Pasillo', 00, '######'), /* PROBLEMA CON EL INVENTARIO Y SUP */
-('OSBI0', '00', '00032', 'Pasillo', 00, '######'), /* PROBLEMA CON EL INVENTARIO Y SUP */
-('OSBI0', '00', '00033', 'Despacho de Referencias', 19.40, '003751'), 
-('OSBI0', '00', '00034', 'Pasillo', 00, '######'), /* PROBLEMA CON EL INVENTARIO Y SUP */
-('OSBI0', '00', '00035', 'Pasillo', 00, '######'), /* PROBLEMA CON EL INVENTARIO Y SUP */
-('OSBI0', '00', '00036', 'Recepción', 18.70, '006728'), 
-('OSBI0', '00', '00037', 'Baños', 31.85, '######'), 
-('OSBI0', '00', '00038', 'Escaleiras', 00, '######'), /* PROBLEMA CON EL INVENTARIO Y SUP */
-('OSBI0', '00', '00039', 'Sala de Referencias', 113.50, '003750'),
+('OSBI0', '00', '00001', 'Escaleiras', 00.00, '######',''), /* NO HAY DATOS*/
+('OSBI0', '00', '00002', 'Pasillo', 00.00, '######',''), /* NO HAY DATOS*/
+('OSBI0', '00', '00003', 'Aseos', 00.00, '######',''),/* NOS FALTA ESTA SUP*/
+('OSBI0', '00', '00004', 'Aseos', 00.00, '######',''), /* NOS FALTA ESTA SUP*/
+('OSBI0', '00', '00005', 'Pasillo', 24.55,'######',''), 
+('OSBI0', '00', '00007', 'Ascensor', 00.00, '######',''), /* NO HAY DATOS*/
+('OSBI0', '00', '00008', 'Escaleiras', 00.00, '######',''), /* NO HAY DATOS*/
+('OSBI0', '00', '00009', 'Grupo electróxeno', 11.50, '006743',''),
+('OSBI0', '00', '00010', 'Cadro Xeral', 5.65, '006744',''),
+('OSBI0', '00', '00011', 'Centro de transformación', 16.60, '006745',''),
+('OSBI0', '00', '00012', 'Alxibe', 9.50, '006746',''),
+('OSBI0', '00', '00013', 'Grupo de presión', 9.65, '006747',''),
+('OSBI0', '00', '00014', 'Sala de máquinas', 75.80, '006748',''),
+('OSBI0', '00', '00015', 'Pasillo', 34.45,'######',''),
+('OSBI0', '00', '00016', 'Pasillo', 127.15, '######',''),
+('OSBI0', '00', '00017', 'Pasillo', 00.00,'######',''), /* NO ESTA EN EL PLANO*/
+('OSBI0', '00', '00018', 'Depósito aberto', 90.15, '######',''),
+('OSBI0', '00', '00019', 'Sala de lectura', 273.15, '003754',''),
+('OSBI0', '00', '00020', 'Zona de prensa', 22.75,'######',''),
+('OSBI0', '00', '00021', 'Escaleiras', 12.35, '######',''),
+('OSBI0', '00', '00023', 'Ascensor', 00.00,'######',''), /* NO HAY DATOS*/
+('OSBI0', '00', '00026', 'Escaleiras', 00.00,'######',''), /* NO HAY DATOS*/
+('OSBI0', '00', '00027', 'Ascensor', 00.00,'######',''), /* NO HAY DATOS*/
+('OSBI0', '00', '00028', 'Despacho de préstamos e devolucións', 53.10, '######',''),
+('OSBI0', '00', '00029', 'Sala de traballo', 16.60, '003752',''),
+('OSBI0', '00', '00030', 'Depósito TEBS', 15.20, '######',''),
+('OSBI0', '00', '00031', 'Pasillo', 00, '######',''), /* PROBLEMA CON EL INVENTARIO Y SUP */
+('OSBI0', '00', '00032', 'Pasillo', 00, '######',''), /* PROBLEMA CON EL INVENTARIO Y SUP */
+('OSBI0', '00', '00033', 'Despacho de Referencias', 19.40, '003751',''),
+('OSBI0', '00', '00034', 'Pasillo', 00, '######',''), /* PROBLEMA CON EL INVENTARIO Y SUP */
+('OSBI0', '00', '00035', 'Pasillo', 00, '######',''), /* PROBLEMA CON EL INVENTARIO Y SUP */
+('OSBI0', '00', '00036', 'Recepción', 18.70, '006728',''), 
+('OSBI0', '00', '00037', 'Baños', 31.85, '######',''), 
+('OSBI0', '00', '00038', 'Escaleiras', 00, '######',''), /* PROBLEMA CON EL INVENTARIO Y SUP */
+('OSBI0', '00', '00039', 'Sala de Referencias', 113.50, '003750',''),
 
-('OSBI0', 'S1', '00001', 'Baños', 23.23, '######'), 
-('OSBI0', 'S1', '00002', 'Pasillo', 26.70, '######'), 
-('OSBI0', 'S1', '00004', 'Ascensor', 00.00, '######'), /* NOS FALTA ESTA SUP*/
-('OSBI0', 'S1', '00005', 'Escaleiras', 6.70, '######'), 
-('OSBI0', 'S1', '00006', 'Sala de estudio', 171.00,'006740'), 
-('OSBI0', 'S1', '00007', 'Escaleiras', 00.00, '######'), /* NO HAY DATOS*/
-('OSBI0', 'S1', '00008', 'Escaleiras', 00.00, '######'), /* NO HAY DATOS*/
-('OSBI0', 'S1', '00009', 'Pasillo', 00.00, '######'), /* NO HAY DATOS*/
-('OSBI0', 'S1', '00010', 'Pasillo', 00.00, '######'), /* NO HAY DATOS*/
-('OSBI0', 'S1', '00011', 'Ascensor', 00.00, '######'), /* NO HAY DATOS*/
-('OSBI0', 'S1', '00012', 'Depósito', 291.20, '003749'),
-('OSBI0', 'S1', '00014', 'Almacén limpieza', 14.50, '006738'),
-('OSBI0', 'S1', '00015', 'Almacén biblioteca', 73.95, '006739'),
-('OSBI0', 'S1', '00017', 'Ascensor', 00.00, '######'),
-('OSBI0', 'S1', '00018', 'Pasillo', 64.80, '######'),
-('OSBI0', 'S1', '00019', 'RACK', 25.60, '003748'),
+('OSBI0', 'S1', '00001', 'Baños', 23.23, '######',''), 
+('OSBI0', 'S1', '00002', 'Pasillo', 26.70, '######',''), 
+('OSBI0', 'S1', '00004', 'Ascensor', 00.00, '######',''), /* NOS FALTA ESTA SUP*/
+('OSBI0', 'S1', '00005', 'Escaleiras', 6.70, '######',''), 
+('OSBI0', 'S1', '00006', 'Sala de estudio', 171.00,'006740',''), 
+('OSBI0', 'S1', '00007', 'Escaleiras', 00.00, '######',''), /* NO HAY DATOS*/
+('OSBI0', 'S1', '00008', 'Escaleiras', 00.00, '######',''), /* NO HAY DATOS*/
+('OSBI0', 'S1', '00009', 'Pasillo', 00.00, '######',''), /* NO HAY DATOS*/
+('OSBI0', 'S1', '00010', 'Pasillo', 00.00, '######',''), /* NO HAY DATOS*/
+('OSBI0', 'S1', '00011', 'Ascensor', 00.00, '######',''), /* NO HAY DATOS*/
+('OSBI0', 'S1', '00012', 'Depósito', 291.20, '003749',''),
+('OSBI0', 'S1', '00014', 'Almacén limpieza', 14.50, '006738',''),
+('OSBI0', 'S1', '00015', 'Almacén biblioteca', 73.95, '006739',''),
+('OSBI0', 'S1', '00017', 'Ascensor', 00.00, '######',''),
+('OSBI0', 'S1', '00018', 'Pasillo', 64.80, '######',''),
+('OSBI0', 'S1', '00019', 'RACK', 25.60, '003748',''),
 
-('OSBI0', 'S2', '00001', 'Baños', 23.25, '######'), 
-('OSBI0', 'S2', '00002', 'Pasillo', 30.85, '######'), 
-('OSBI0', 'S2', '00004', 'Ascensor', 00.00, '######'), /* NO HAY DATOS*/ 
-('OSBI0', 'S2', '00005', 'Escaleiras', 00.00, '######'), /* NO HAY DATOS*/ 
-('OSBI0', 'S2', '00006', 'Escaleiras', 00.00,'######'), /* NO HAY DATOS*/
-('OSBI0', 'S2', '00007', 'Vestíbulo', 3.10, '######'), 
-('OSBI0', 'S2', '00008', 'Depósito Hemeroteca', 119.43, '003741'), 
-('OSBI0', 'S2', '00009', 'Hemeroteca', 270.82, '006741'), 
-('OSBI0', 'S2', '00010', 'Deposito aberto', 103.47, '######'), 
-('OSBI0', 'S2', '00011', 'Zona de consulta', 126.74, '######'), 
-('OSBI0', 'S2', '00012', 'Sala de lectura', 314.77, '######'),
-('OSBI0', 'S2', '00013', 'Escaleiras', 00.00, '######'), /* NO HAY DATOS*/
-('OSBI0', 'S2', '00015', 'Ascensor', 00.00, '######'), /* NO HAY DATOS*/
-('OSBI0', 'S2', '00016', 'Pasillo', 41.52, '######'),
-('OSBI0', 'S2', '00017', 'Escaleiras', 00.00, '######'), /* NO HAY DATOS*/
-('OSBI0', 'S2', '00018', 'Sala técnica do ascensor', 18.20, '003747'),
-('OSBI0', 'S2', '00020', 'Escaleiras', 00.00, '######'); /* NO HAY DATOS*/
+('OSBI0', 'S2', '00001', 'Baños', 23.25, '######',''), 
+('OSBI0', 'S2', '00002', 'Pasillo', 30.85, '######',''), 
+('OSBI0', 'S2', '00004', 'Ascensor', 00.00, '######',''), /* NO HAY DATOS*/ 
+('OSBI0', 'S2', '00005', 'Escaleiras', 00.00, '######',''), /* NO HAY DATOS*/ 
+('OSBI0', 'S2', '00006', 'Escaleiras', 00.00,'######',''), /* NO HAY DATOS*/
+('OSBI0', 'S2', '00007', 'Vestíbulo', 3.10, '######',''), 
+('OSBI0', 'S2', '00008', 'Depósito Hemeroteca', 119.43, '003741',''), 
+('OSBI0', 'S2', '00009', 'Hemeroteca', 270.82, '006741',''), 
+('OSBI0', 'S2', '00010', 'Deposito aberto', 103.47, '######',''), 
+('OSBI0', 'S2', '00011', 'Zona de consulta', 126.74, '######',''), 
+('OSBI0', 'S2', '00012', 'Sala de lectura', 314.77, '######',''),
+('OSBI0', 'S2', '00013', 'Escaleiras', 00.00, '######',''), /* NO HAY DATOS*/
+('OSBI0', 'S2', '00015', 'Ascensor', 00.00, '######',''), /* NO HAY DATOS*/
+('OSBI0', 'S2', '00016', 'Pasillo', 41.52, '######',''),
+('OSBI0', 'S2', '00017', 'Escaleiras', 00.00, '######',''), /* NO HAY DATOS*/
+('OSBI0', 'S2', '00018', 'Sala técnica do ascensor', 18.20, '003747',''),
+('OSBI0', 'S2', '00020', 'Escaleiras', 00.00, '######',''); /* NO HAY DATOS*/
