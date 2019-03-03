@@ -25,8 +25,9 @@ function get_data_form() {
     $nameSpace = $_POST['nameSpace'];
     $surfaceSpace = $_POST['surfaceSpace'];
     $numInventorySpace = $_POST['numberInventorySpace'];
+    $coordsPlane = $_POST['coordsSpace'];
    
-    $space = new SPACE_Model($idBuilding, $idFloor, $idSpace, $nameSpace, $surfaceSpace, $numInventorySpace);
+    $space = new SPACE_Model($idBuilding, $idFloor, $idSpace, $nameSpace, $surfaceSpace, $numInventorySpace, $coordsPlane);
     return $space;
 }
 
@@ -48,9 +49,10 @@ Switch ($_REQUEST['action']){
             $view->setFlashDanger($strings["Building and floor id is mandatory"]);
             $view->redirect("BUILDING_Controller.php", "");
         }
+        ////////////////////////////////////////
         $buildingid = $_GET['building'];
         $floorid = $_GET['floor'];
-
+        //////////////////////////////////////////
         if(!checkRol('ADD', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
             $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
@@ -61,11 +63,10 @@ Switch ($_REQUEST['action']){
             
             try{
                 $spaceAdd->checkIsValidForAdd();
-                $consult = $spaceAdd->addSpace(); 
-               
+                $spaceAdd->addSpace(); 
                 $flashMessageSuccess = sprintf($strings["Space \"%s\" successfully added."], $spaceAdd->getNameSpace());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+                $view->redirect("SPACE_Controller.php", "Plane&building=".$buildingid, "&floor=".$floorid."&space=".$spaceAdd->getIdSpace());
             }catch(Exception $errors) {
                 $view->setFlashDanger($strings[$errors->getMessage()]);
                 $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
@@ -95,11 +96,11 @@ Switch ($_REQUEST['action']){
             $view->setFlashDanger($strings["Building, floor and space id are mandatory"]);
             $view->redirect("BUILDING_Controller.php", "");
         }
-
+//////////////////////////////////////////////
         $buildingid = $_GET["building"];
         $floorid = $_GET['floor'];
         $spaceid = $_GET['space'];
-
+/////////////////////////////////////////////
         if (isset($_POST["submit"])) { 
             $spaceEdit = get_data_form();
             
@@ -139,9 +140,12 @@ Switch ($_REQUEST['action']){
             $view->setFlashDanger($strings["Building, floor and space id are mandatory"]);
             $view->redirect("BUILDING_Controller.php", "");
         }
+
+        /////////////////////////////////////////
         $buildingid = $_GET["building"];
         $floorid = $_GET['floor'];
         $spaceid = $_GET['space'];
+        //////////////////////////////////////////////////
 
         $space = new SPACE_Model($buildingid, $floorid, $spaceid);
         $values = $space->fillInSpace();
@@ -166,10 +170,12 @@ Switch ($_REQUEST['action']){
             $view->setFlashDanger($strings["Building, floor and space id are mandatory"]);
             $view->redirect("BUILDING_Controller.php", "");
         }
+
+        ///////////////////////////////
         $buildingid = $_GET["building"];
         $floorid = $_GET['floor'];
         $spaceid = $_GET['space'];
-
+        /////////////////////////////////////
         $space = new SPACE_Model($buildingid, $floorid, $spaceid);
                 
         if (!$space->existsSpace()) {
@@ -202,18 +208,18 @@ Switch ($_REQUEST['action']){
         $view->setFlashDanger($strings["Building and floor id is mandatory"]);
         $view->redirect("BUILDING_Controller.php", "");
     }
+
+    /////////////////////////////////
     $buildingid = $_GET['building'];
     $floorid = $_GET['floor'];
-
+    $spaceid = $_GET['space'];
+    ////////////////////////////////////
     if (isset($_POST["submit"])) { 
-        $spaceAdd = get_data_form();
+        $spacePlane = get_data_form();
         
         try{
-            $spaceAdd->checkIsValidForAdd();
-            $consult = $spaceAdd->addSpace(); 
-           
-            $flashMessageSuccess = sprintf($strings["Space \"%s\" successfully added."], $spaceAdd->getNameSpace());
-            $view->setFlashSuccess($flashMessageSuccess);
+            $spacePlane->addCoords(); 
+            $view->setFlashSuccess($strings["Plane successfully updated"]);
             $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
         }catch(Exception $errors) {
             $view->setFlashDanger($strings[$errors->getMessage()]);
@@ -221,9 +227,10 @@ Switch ($_REQUEST['action']){
         }   
 
     } else {
-            $space = new SPACE_Model($buildingid, $floorid, null);
-            $values = $space->findPlane();
-            new SPACE_PLANE($values);
+            $space = new SPACE_Model($buildingid, $floorid, $spaceid);
+            $spaceValues = $space->fillInSpace();
+            $floorPlane = $space->findPlane();
+            new SPACE_PLANE($spaceValues, $floorPlane);
     }
 
 break;

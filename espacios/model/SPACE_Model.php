@@ -7,16 +7,18 @@ class SPACE_Model {
     private $idSpace;
 	private $nameSpace;
 	private $surfaceSpace;
-	private $numberInventorySpace;
+    private $numberInventorySpace;
+    private $coordsPlane;
 	private $mysqli;
 
-function __construct($idBuilding=NULL, $idFloor=NULL, $idSpace=NULL, $nameSpace=NULL, $surfaceSpace=NULL, $numberInventorySpace=NULL)
+function __construct($idBuilding=NULL, $idFloor=NULL, $idSpace=NULL, $nameSpace=NULL, $surfaceSpace=NULL, $numberInventorySpace=NULL, $coordsPlane=NULL)
 {
     $this->idBuilding =  $idBuilding; 
     $this->idFloor = $idFloor;
     $this->idSpace = $idSpace;
 	$this->nameSpace = $nameSpace;
     $this->surfaceSpace = $surfaceSpace;
+    $this->coordsPlane = $coordsPlane;
 
     if(empty($numberInventorySpace)){
         $this->numberInventorySpace = "######";
@@ -101,12 +103,12 @@ function fillInSpace() {
 
 function addSpace() {
     $this->ConectarBD();
-    var_dump($this->idBuilding);
-    var_dump($this->idFloor);
-    var_dump($this->idSpace);
-    var_dump($this->nameSpace);
-    var_dump($this->surfaceSpace);
-    var_dump($this->numberInventorySpace);
+    // var_dump($this->idBuilding);
+    // var_dump($this->idFloor);
+    // var_dump($this->idSpace);
+    // var_dump($this->nameSpace);
+    // var_dump($this->surfaceSpace);
+    // var_dump($this->numberInventorySpace);
     $sql = "INSERT INTO space (idBuilding, idFloor, idSpace, nameSpace, surfaceSpace, numberInventorySpace) VALUES ('$this->idBuilding', '$this->idFloor', '$this->idSpace', '$this->nameSpace', $this->surfaceSpace, '$this->numberInventorySpace')";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
@@ -115,14 +117,33 @@ function addSpace() {
     }
 }
 
+
+function addCoords() {
+    $this->ConectarBD();
+    // var_dump($this->idBuilding);
+    // var_dump($this->idFloor);
+    // var_dump($this->idSpace);
+    // var_dump($this->nameSpace);
+    // var_dump($this->surfaceSpace);
+    var_dump($this->coordsPlane);
+    $sql = "UPDATE space SET coordsPlane = '$this->coordsPlane' WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        return 'Error in the query on the database';
+    } else {
+        var_dump($resultado);
+        return true;
+    }
+}
+
+
 function updateSpace($idBuilding, $idFloor, $idSpace) {
     $this->ConectarBD();
-    var_dump($this->idBuilding);
-    var_dump($this->idFloor);
-    var_dump($this->idSpace);
-    var_dump($this->nameSpace);
-    var_dump($this->surfaceSpace);
-    var_dump($this->numberInventorySpace);
+    // var_dump($this->idBuilding);
+    // var_dump($this->idFloor);
+    // var_dump($this->idSpace);
+    // var_dump($this->nameSpace);
+    // var_dump($this->surfaceSpace);
+    // var_dump($this->numberInventorySpace);
     $sql = "UPDATE space SET idSpace = '$this->idSpace', nameSpace = '$this->nameSpace', surfaceSpace = $this->surfaceSpace, numberInventorySpace = '$this->numberInventorySpace' WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor' AND idSpace = '$idSpace'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
@@ -153,6 +174,19 @@ public function existsSpace() {
 	}
 }
 
+public function existsSpaceToEdit($idSpace) {
+	$this->ConectarBD();
+	$sql = "SELECT * FROM space WHERE (idBuilding, idFloor, idSpace) 
+    NOT IN (SELECT idBuilding, idFloor, idSpace FROM space WHERE idBuilding='$this->idBuilding' AND idFloor='$this->idFloor' AND idSpace='$idSpace') 
+    AND idBuilding='$this->idBuilding' AND idFloor='$this->idFloor' AND idSpace='$this->idSpace'";
+	$result = $this->mysqli->query($sql);
+	if ($result->num_rows >= 1) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 
 public function findPlane() {
 	$this->ConectarBD();
@@ -161,6 +195,10 @@ public function findPlane() {
     return $result['planeFloor'];
 }
 
+
+
+
+//SERVER VALIDATION
 
 public function checkIsValidForAdd() {
 
@@ -206,21 +244,6 @@ public function checkIsValidForAdd() {
     if (sizeof($errors) > 0){
         throw new Exception($errors);
     }
-}
-
-
-
-public function existsSpaceToEdit($idSpace) {
-	$this->ConectarBD();
-	$sql = "SELECT * FROM space WHERE (idBuilding, idFloor, idSpace) 
-    NOT IN (SELECT idBuilding, idFloor, idSpace FROM space WHERE idBuilding='$this->idBuilding' AND idFloor='$this->idFloor' AND idSpace='$idSpace') 
-    AND idBuilding='$this->idBuilding' AND idFloor='$this->idFloor' AND idSpace='$this->idSpace'";
-	$result = $this->mysqli->query($sql);
-	if ($result->num_rows >= 1) {
-		return true;
-	} else {
-		return false;
-	}
 }
 
 public function checkIsValidForEdit($idSpace) {

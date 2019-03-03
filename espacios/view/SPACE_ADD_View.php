@@ -23,7 +23,8 @@ class SPACE_ADD{
 		$buffer=str_replace("%TITLE%",$strings['Add Floor'],$buffer);
 		echo $buffer;
 
-		?> <script src="../js/validates.js"></script><?php
+		//
+		//  <script src="../js/validates.js"></script><?php
 		////////////////////////////////////////////////////
 		?>
 
@@ -65,7 +66,7 @@ class SPACE_ADD{
 								</div>
 
 							</div>	
-							<button type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>
+							<button type="submit" name="submit" class="btn-dark" ><?= $strings["Save"]?></button>
 						</form>
 						<a href="SPACE_Controller.php?building=<?= $this->building?>&floor=<?= $this->floor?>"><?= $strings["Back"] ?></a>
 					</div>

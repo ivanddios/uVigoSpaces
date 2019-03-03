@@ -36,7 +36,7 @@ class SPACE_SHOWALL{
                                         <th scope="col"><?=$strings[$title]?></th>
                                     <?php endforeach; ?>
                                     <th scope="col"><a href="SPACE_Controller.php?&action=<?= $strings['Add']?>&building=<?= $_GET['building']?>&floor=<?= $_GET['floor']?>"><span title="<?= $strings['Add Space']?>" class="btn btn-success btn-sm fa fa-plus"></span></a></th>
-                                    <th scope="col"><a href="SPACE_Controller.php?&action=<?= $strings['Plane']?>&building=<?= $_GET['building']?>&floor=<?= $_GET['floor']?>"><span title="<?= $strings['Add Space']?>" class="btn btn-success btn-sm fa fa-plus"></span></a></th>
+                                    <!-- <th scope="col"><a href="SPACE_Controller.php?&action=<?= $strings['Plane']?>&building=<?= $_GET['building']?>&floor=<?= $_GET['floor']?>"><span title="<?= $strings['Add Space']?>" class="btn btn-success btn-sm fa fa-plus"></span></a></th> -->
                                 </tr>
                             </thead>
 

@@ -133,7 +133,9 @@ $strings = array(
 "Space name is mandatory" => "El nombre del espacio es obligatorio",
 "Space name can not be that long" => "El nombre del espacio es demasiado largo",
 "Space name is invalid. Try again!" => "El nombre del espacio es inválido. Prueba otra vez!",
-"Space surface can not be that long" => "La superficie del espacio es demasiado grande"
-
+"Space surface can not be that long" => "La superficie del espacio es demasiado grande",
+"Select Space" => "Selecciona el espacio",
+"Clear" => "Eliminar",
+"Plane successfully updated" => "Plano correctamente actualizado"
 )
 ?>
