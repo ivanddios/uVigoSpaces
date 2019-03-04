@@ -29,13 +29,9 @@ class SPACE_SHOW{
 					</div>
 					<div class="col-lg-12 center-block-content">
                         <div id="group-form">
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" placeholder="<?= $this->space['idBuilding'].$this->space['idFloor']?>" readonly>
-									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="idSpace" placeholder="<?= $strings['What is the identifier of this space?']?>" value="<?=$this->space['idSpace']?>" readonly>
+									<input type="text" name="idSpace" placeholder="<?= $strings['What is the identifier of this space?']?>" value="<?= $this->space['idBuilding'].$this->space['idFloor'].$this->space['idSpace']?>" readonly>
 									<i class="fa fa-cube fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
@@ -54,39 +50,7 @@ class SPACE_SHOW{
 									<i class="fa fa-barcode fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 							</div>	
-
-
-							<!-- <a id="test">
-										<img src='<?= $this->floor['planeFloor']; ?>' usemap="#planetmap"  onmousemove="showCoords(event)">>
-									</a> -->
-									 <!-- <map name="planetmap">
-										<area shape="poly"  coords="128,75,129,97,198,96,199,77" href="triangulo.html" />
-										<area shape="default" nohref="nohref" /> 
-									</map> -->
-
-							<!-- <script>
-								$(function() {
-									$("#coords").click(function(e) {
-									var offset = $(this).offset();
-									var relativeX = (e.pageX - offset.left);
-									var relativeY = (e.pageY - offset.top);
-									alert(relativeX+':'+relativeY);
-									$(".position").val("afaf");
-									});
-								});
-							</script> -->
-							<p id="demo"></p>
-
-							<script>
-    function showCoords(event) {
-        var x = event.clientX;
-        var y = event.clientY;
-        var coords = "X coords: " + x + ", Y coords: " + y;
-        document.getElementById("demo").innerHTML = coords;
-    }
-</script>
-
-
+							
 						<a href="SPACE_Controller.php?building=<?=$this->space['idBuilding']?>&floor=<?=$this->space['idFloor']?>"><?= $strings["Back"] ?></a>
 					</div>
 				</div>

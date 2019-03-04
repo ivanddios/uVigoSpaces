@@ -16,7 +16,7 @@ class BUILDING_SHOWALL{
 
     function render() {
         include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
-        $listTitles = array('idBuilding', 'nameBuilding', 'addressBuilding', 'phoneBuilding', 'responsibleBuilding');
+        $listTitles = array('idBuilding', 'nameBuilding', 'addressBuilding', 'phoneBuilding');
         ?> 
         <?php 
         ////////////////////////////////////////////////////

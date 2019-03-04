@@ -1,8 +1,8 @@
 <?php
 //CADENAS UTILIZADAS EN CASTELLANO
 $strings = array(
-"Edit" => "edit",
-"Add"=> "add",
+"Edit" => "Editar",
+"Add"=> "Añadir",
 "Show" => "Ver",
 "Delete" => "Eliminar",
 "Building" => "Edificio: ",
@@ -11,7 +11,6 @@ $strings = array(
 "nameBuilding" => "Edificio ",
 "addressBuilding" => "Dirección",
 "phoneBuilding" => "Teléfono",
-"responsibleBuilding" => "Responsable",
 "You do not have the necessary permits" => "No tienes los permisos necesarios",
 "Attention" => "Atención",
 "Are you sure you want to delete the building \"%s\" ?" => "¿Está seguro de querer eliminar el edificio \"%s\" ?",
@@ -19,7 +18,7 @@ $strings = array(
 "Cancel" => "Cancelar",
 "Ok" => "Ok",
 "Datas of the new building" => "Datos del nuevo edificio",
-"Do you want to change something?" => "¿Quieres modificar alguna información del edificio?",
+"Do you want to change something?" => "¿Quieres modificar alguna información?",
 "Save" => "Guardar",
 "Back" => "Volver",
 "What is the identifier of this building?" => "¿Cuál es el identificador de este edificio?",
@@ -61,6 +60,7 @@ $strings = array(
 "Show Floors" => "Ver Plantas",
 "Floor \"%s\" successfully added." => "La planta \"%s\" se ha añadido con éxito",
 "Floor \"%s\" successfully deleted." => "La planta \"%s\" se ha eliminado con éxito",
+"Show Plane" => "Ver Plano",
 
 "Spaces" => "Espacios",
 "idSpace" => "Identificador",

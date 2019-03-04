@@ -19,9 +19,8 @@ function get_data_form() {
     $nameBuilding = $_POST['nameBuilding'];
     $addressBuilding = $_POST['addressBuilding'];
     $phoneBuilding = $_POST['phoneBuilding'];
-    $responsibleBuilding = $_POST['responsibleBuilding'];
    
-    $building = new BUILDING_Model($idBuilding, $nameBuilding, $addressBuilding, $phoneBuilding, $responsibleBuilding);
+    $building = new BUILDING_Model($idBuilding, $nameBuilding, $addressBuilding, $phoneBuilding);
     return $building;
 }
 

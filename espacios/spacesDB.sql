@@ -74,7 +74,6 @@ CREATE TABLE IF NOT EXISTS BUILDING(
   nameBuilding varchar(225) COLLATE utf8_spanish_ci NOT NULL,
   addressBuilding varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   phoneBuilding int(9) DEFAULT NULL,
-  responsibleBuilding varchar(25) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY(idBuilding)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8  COLLATE=utf8_spanish_ci;
 
@@ -167,8 +166,8 @@ INSERT INTO PERMISSION (idGroup, idFunction, idAction) VALUES
 
 
 
-INSERT INTO BUILDING (idBuilding, nameBuilding, addressBuilding, phoneBuilding, responsibleBuilding) VALUES
-('OSBI0', 'Biblioteca Universitaria Rosalía de Castro', 'Camino Seara B 4', 988387192, 'NO SE SABE');
+INSERT INTO BUILDING (idBuilding, nameBuilding, addressBuilding, phoneBuilding) VALUES
+('OSBI0', 'Biblioteca Universitaria Rosalía de Castro', 'Camino Seara B 4', 988387192);
 
 INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES
 ('OSBI0', '04', 'Cuarta Planta', '', 215.20, 181.25),

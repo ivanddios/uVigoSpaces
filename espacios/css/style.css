@@ -261,8 +261,9 @@ p{
 }
 
 .viewPlane{
-	width: 600px;
-	height: 600px;
+	margin-left: 30%;
+	width: 200px;
+	height: 200px;
 }
 
 .divImg{

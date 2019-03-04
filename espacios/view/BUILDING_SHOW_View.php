@@ -48,11 +48,7 @@ class BUILDING_SHOW{
 									<input type="text" name="phoneBuilding" placeholder="<?= $strings['What is your phone?']?> " value="<?=$this->building['phoneBuilding']?>" readonly>
 									<i class="fa fa-phone fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
-
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="responsibleBuilding" placeholder="<?= $strings['Who is the responsible?']?>" value="<?=$this->building['responsibleBuilding']?>" readonly>
-									<i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
+								
 							</div>
 						<a href="../index.php?"><?= $strings["Back"] ?></a>
 					</div>

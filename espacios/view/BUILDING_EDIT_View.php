@@ -50,11 +50,6 @@ class BUILDING_EDIT{
 									<input type="text" id="phoneBuilding" name="phoneBuilding" placeholder="<?= $strings['What is your phone?']?> " value="<?=$this->building['phoneBuilding']?>" onblur="checkNumPhone(this.id)">
 									<i class="fa fa-phone fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
-
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="responsibleBuilding" name="responsibleBuilding" placeholder="<?= $strings['Who is the responsible?']?>" value="<?=$this->building['responsibleBuilding']?>" onblur="checkText(this.id)">
-									<i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
 							</div>
 							<button type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
 						</form>

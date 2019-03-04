@@ -37,7 +37,6 @@ class BUILDING_ADD{
 									<i class="fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
-
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" id="nameBuilding" name="nameBuilding" placeholder="<?= $strings['What building is it?']?>" onblur="checkText(this.id)">
 									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
@@ -53,18 +52,10 @@ class BUILDING_ADD{
 									<i class="fa fa-phone fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="responsibleBuilding" name="responsibleBuilding" placeholder="<?= $strings['Who is the responsible?']?>" onblur="checkText(this.id)">
-									<i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
 							</div>
 
 							<div id="group-form">
 								<button type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>
-
-							<!-- <div id="error" name="error" class="alert alert-danger alert-dismissable" style="display:none">
-								<strong>¡Error!</strong> Revisa los campos del formulario.  
-							</div> -->
 							</div> 
 						</form>
 						<a href="../index.php"><?= $strings["Back"] ?></a>

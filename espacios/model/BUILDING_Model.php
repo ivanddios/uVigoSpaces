@@ -6,17 +6,15 @@ class BUILDING_Model {
 	private $nameBuilding;
 	private $addressBuilding;
 	private $phoneBuilding;
-	private $responsibleBuilding;
 	private $mysqli;
 
 
-function __construct($idBuilding=NULL, $nameBuilding=NULL, $addressBuilding=NULL, $phoneBuilding=NULL, $responsibleBuilding=NULL)
+function __construct($idBuilding=NULL, $nameBuilding=NULL, $addressBuilding=NULL, $phoneBuilding=NULL)
 {
     $this->idBuilding =  $idBuilding; 
 	$this->nameBuilding = $nameBuilding;
 	$this->addressBuilding = $addressBuilding;
 	$this->phoneBuilding = $phoneBuilding;
-	$this->responsibleBuilding =  $responsibleBuilding;
 }
 
 public function getIdBuilding(){
@@ -66,7 +64,7 @@ function findBuilding() {
 
 function addBuilding() {
     $this->ConectarBD();
-    $sql = "INSERT INTO building (idBuilding, nameBuilding, addressBuilding, phoneBuilding, responsibleBuilding) VALUES ('$this->idBuilding', '$this->nameBuilding', '$this->addressBuilding', '$this->phoneBuilding', '$this->responsibleBuilding')";
+    $sql = "INSERT INTO building (idBuilding, nameBuilding, addressBuilding, phoneBuilding) VALUES ('$this->idBuilding', '$this->nameBuilding', '$this->addressBuilding', '$this->phoneBuilding')";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -98,7 +96,7 @@ function fillInBuilding() {
 
 function updateBuilding($idBuilding) {
     $this->ConectarBD();
-    $sql = "UPDATE building SET idBuilding = '$this->idBuilding', nameBuilding = '$this->nameBuilding', addressBuilding = '$this->addressBuilding', phoneBuilding = '$this->phoneBuilding', responsibleBuilding = '$this->responsibleBuilding' WHERE idBuilding = '$idBuilding'";
+    $sql = "UPDATE building SET idBuilding = '$this->idBuilding', nameBuilding = '$this->nameBuilding', addressBuilding = '$this->addressBuilding', phoneBuilding = '$this->phoneBuilding' WHERE idBuilding = '$idBuilding'";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -155,10 +153,6 @@ public function checkIsValidForAdd_Update() {
         $errors= "Building phone is incorrect. Example: 666777888";
     }else if(!preg_match('/^[9|6|7][0-9]{8}$/', $this->phoneBuilding)){
         $errors = "Building phone format is invalid. Example: 666777888";
-    }else if (strlen(trim($this->responsibleBuilding)) > 225 ) {
-        $errors = "Building responsible name can not be that long";
-    }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->responsibleBuilding)){
-        $errors = "Building responsible name is invalid. Try again!";
     }
 
     if (sizeof($errors) > 0){

@@ -3,10 +3,12 @@
 require_once(__DIR__."..\..\core\ViewManager.php");
 include '../model/BUILDING_Model.php';
 include '../model/FLOOR_Model.php';
+include '../model/SPACE_Model.php';
 include '../view/FLOOR_SHOWALL_View.php';
 include '../view/FLOOR_EDIT_View.php';
 include '../view/FLOOR_ADD_View.php';
 include '../view/FLOOR_SHOW_View.php';
+include '../view/FLOOR_SHOW_PLANE_View.php';
 include '../core/ACL.php';
 
 $function = "FLOOR";
@@ -210,6 +212,34 @@ Switch ($_REQUEST['action']){
             $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
     }
 
+    break;
+
+    case  $strings['Show Plane']:
+
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Show the floors requires login"]);
+            $view->redirect("USER_Controller.php", "index");
+        }
+
+        if (!isset($_GET['building']) && !isset($_GET['floor'])){
+            $view->setFlashDanger($strings["Building and floor id is mandatory"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+        $buildingid = $_GET["building"];
+        $floorid = $_GET['floor'];
+
+        if(!checkRol('SHOW', $function)){
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        }
+        
+        $space = new SPACE_Model($buildingid, $floorid);
+        $spacesDB = $space->showAllSpaces();
+        
+        $floor = new FLOOR_Model($buildingid, $floorid);
+        $planeFloor = $floor->findLinkPlane($buildingid, $floorid);
+        new FLOOR_SHOW_PLANE($planeFloor, $spacesDB);
+        
     break;
     
 

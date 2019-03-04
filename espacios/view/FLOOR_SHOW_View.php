@@ -31,16 +31,10 @@ class FLOOR_SHOW{
 							<div id="group-form">
 								<label><?= $strings['idBuilding']; ?></label>
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?=$this->floor['idBuilding']?>" readonly>
+									<input type="text" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?=$this->floor['idBuilding']?><?=$this->floor['idFloor']?>" readonly>
 									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
-										
-								<label><?= $strings['idFloor']; ?></label>	
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="idFloor" placeholder="<?= $strings['What is the identifier of this floor?']?>"  value="<?=$this->floor['idFloor']?>" readonly>
-									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
-
+									
 								<label><?= $strings['nameFloor']; ?></label>	
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" name="nameFloor" placeholder="<?= $strings['What floor is it?']?>" value="<?=$this->floor['nameFloor']?>" readonly>
@@ -61,7 +55,7 @@ class FLOOR_SHOW{
 
 								<label><?= $strings['planeFloor']; ?></label>
 								<div class="inputWithIcon inputIconBg">
-									<a target='_blank' href='<?= $this->floor['planeFloor']; ?>'><img src='<?= $this->floor['planeFloor']; ?>' class="viewPlane"></a>
+									<a target='_blank' href="FLOOR_Controller.php?action=<?= $strings['Show Plane']?>&building=<?= $this->floor['idBuilding']?>&floor=<?= $this->floor['idFloor']?>"><img src='<?= $this->floor['planeFloor']; ?>' class="viewPlane"></a>
 								</div>
 								
 							</div>

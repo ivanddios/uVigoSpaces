@@ -6,7 +6,6 @@
 // });
 
 
-
 function map(srcImage) {
     
     var canvas = document.getElementById("canvas"),
