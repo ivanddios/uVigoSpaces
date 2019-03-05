@@ -136,6 +136,7 @@ $strings = array(
 "Space surface can not be that long" => "La superficie del espacio es demasiado grande",
 "Select Space" => "Selecciona el espacio",
 "Clear" => "Eliminar",
-"Plane successfully updated" => "Plano correctamente actualizado"
+"Plane successfully updated" => "Plano correctamente actualizado",
+"Select the space in the plane" => "Selecciona el espacio en el plano"
 )
 ?>

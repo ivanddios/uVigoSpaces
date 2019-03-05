@@ -182,3 +182,4 @@ function map(srcImage) {
 //     // ctx.clearRect(0, 0, canvas.width, canvas.height); //Eliminamos los puntos de referencia del plano
 // });
 // });
+

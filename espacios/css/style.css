@@ -223,6 +223,17 @@ input[type=text],[type=password]{
 	
 }
 
+.btn-dark-Plane{
+	padding:8px;
+	font-size:14px;
+	background-color:#eeee;
+	color:#000;
+	border:none;
+	border-bottom:3px solid #19e6;
+	border-radius:2px;
+
+	
+}
 
 .loginButton {
     width: 102%;
@@ -331,4 +342,9 @@ ul.social-network li a {
     height: 32px;
 	margin-top: 4px;
 	font-size:14px;
+}
+
+#canvas{
+	margin-top:3%;
+	margin-bottom:3%;
 }
