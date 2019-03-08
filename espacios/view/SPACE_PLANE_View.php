@@ -84,16 +84,9 @@ class SPACE_PLANE{
 									<input  type="hidden" name="idSpace" value="<?=$this->space['idSpace']?>" readonly>
 									<input  type="hidden" id="coordsSpace" name="coordsSpace">
 									<div class="fixed">
-										<!-- <button id="Clear"><?= $strings["Clear"] ?></button> -->
-										<button type="button" class="btn btn-primary"><i class="fa fa-trash" aria-hidden="true"></i>  Delete</button>
-
-										<a class="btn icon-btn btn-success" href="#">
-											<span class="glyphicon glyphicon-plus"></span> Add
-										</a>
-
-										<!-- <button type="submit" name="submit"><?= $strings["Save"]?></button>   -->
+										<button type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>  Delete</button>
+										<button type="button" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i>  Add</button>
 									</div>
-								 
 								</form> 		 
 							</div>	
 					<?php
