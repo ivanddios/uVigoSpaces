@@ -24,24 +24,30 @@ function map(srcImage) {
             canvas.width = this.width;
             canvas.height = this.height;
             canvas.style.background = "url(" + srcImage + ")";
-            //ctx.drawImage(image,0,0);
+           // ctx.drawImage(image,0,0);
         };
     };
 
-        //Obtenemos las coordenads del mouse por cada click
     function selectCoords(event) {
         return {
             x: event.offsetX,
             y: event.offsetY
+           
         };
     }
 
+
+
     $("#canvas").mousedown(function (event) {
-        var pos = selectCoords(event); //Obtenemos las coordenads del raton cada vez que se clicka
-        if (isInitialPoint(pos)) { //Si coincide con las que marcan el punto inicial cerramos el poligono
+        var pos = selectCoords(event);
+        if (isInitialPoint(pos)) { 
             polyLines.push(storedLines);
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            showCenter(storedLines);
             storedLines = [];
-            ctx.clearRect(0, 0, canvas.width, canvas.height); //Eliminamos los puntos de referencia del plano
+            //storedLines.push(showCenter(storedLines));
+            //drawPoint();
             for(var i=0; i<polyLines.length; i++){
                 fillPolyline(polyLines[i]);
             }
@@ -96,6 +102,26 @@ function map(srcImage) {
         ctx.fill();
        // ctx.addHitRegion({'id': 'The First Button', 'cursor': 'pointer'});
         ctx.stroke();
+    }
+
+
+    function showCenter(lines) {
+        var auxXMax = 0, auxXMin=Number.MAX_VALUE, auxYMax= 0, auxYMin=Number.MAX_VALUE, X=0, Y=0;
+        console.log(lines);
+        for (var i = 0; i < (lines.length-1); i++) {
+            auxXMax = Math.max(auxXMax, lines[i].x);
+            auxXMin = Math.min(auxXMin, lines[i].x);
+
+            auxYMax = Math.max(auxYMax, lines[i].y);
+            auxYMin = Math.min(auxYMin, lines[i].y);
+            
+        }
+        X = auxXMax - (auxXMax - auxXMin)/2;
+        Y = auxYMax - (auxYMax - auxYMin)/2;
+        // return {
+        //     x: X,
+        //     y: Y
+        // };
     }
 
 

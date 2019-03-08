@@ -29,7 +29,7 @@ class FLOOR_SHOW_PLANE{
 					<div id="titleView">
 						<?=htmlentities($strings["Data of the new space"])?>
 						
-						<img src="<?= $this->floor?>" alt="Espacios" usemap="#spaces"/>
+						<img src="<?= $this->floor?>" class ="viewPlane" alt="Espacios" usemap="#spaces"/>
 						<map name="spaces">
 						<?php for($i=0; $i<count($this->spaces); $i++){ 
 											if($this->spaces[$i]['coordsPlane'] != '') { ?>

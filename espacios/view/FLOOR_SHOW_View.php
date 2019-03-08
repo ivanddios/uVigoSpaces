@@ -55,7 +55,7 @@ class FLOOR_SHOW{
 
 								<label><?= $strings['planeFloor']; ?></label>
 								<div class="inputWithIcon inputIconBg">
-									<a target='_blank' href="FLOOR_Controller.php?action=<?= $strings['Show Plane']?>&building=<?= $this->floor['idBuilding']?>&floor=<?= $this->floor['idFloor']?>"><img src='<?= $this->floor['planeFloor']; ?>' class="viewPlane"></a>
+									<a target='_blank' href="FLOOR_Controller.php?action=<?= $strings['Show Plane']?>&building=<?= $this->floor['idBuilding']?>&floor=<?= $this->floor['idFloor']?>"><img src='<?= $this->floor['planeFloor']; ?>' class="avatarPlane"></a>
 								</div>
 								
 							</div>

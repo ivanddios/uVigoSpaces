@@ -77,15 +77,23 @@ class SPACE_PLANE{
 							<div id="titleView">
 								<?=htmlentities($strings["Select the space in the plane"])?>
 								<canvas id="canvas"></canvas>
-								<div id="clearButtons">
-									<button id="Clear"><?= $strings["Clear"] ?></button>
-								</div>
+								
 								<form method="POST" action="SPACE_Controller.php?action=<?= $strings['Plane']?>&building=<?= $this->space['idBuilding']?>&floor=<?= $this->space['idFloor']?>&space=<?= $this->space['idSpace']?>">
 									<input  type="hidden" name="idBuilding" value="<?=$this->space['idBuilding']?>" readonly>
 									<input  type="hidden"name="idFloor" value="<?=$this->space['idFloor']?>" readonly>
 									<input  type="hidden" name="idSpace" value="<?=$this->space['idSpace']?>" readonly>
 									<input  type="hidden" id="coordsSpace" name="coordsSpace">
-									<button type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>   
+									<div class="fixed">
+										<!-- <button id="Clear"><?= $strings["Clear"] ?></button> -->
+										<button type="button" class="btn btn-primary"><i class="fa fa-trash" aria-hidden="true"></i>  Delete</button>
+
+										<a class="btn icon-btn btn-success" href="#">
+											<span class="glyphicon glyphicon-plus"></span> Add
+										</a>
+
+										<!-- <button type="submit" name="submit"><?= $strings["Save"]?></button>   -->
+									</div>
+								 
 								</form> 		 
 							</div>	
 					<?php
