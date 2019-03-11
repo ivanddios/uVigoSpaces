@@ -43,26 +43,33 @@ function map(srcImage) {
 
 
     $("#canvas").mousedown(function (event) {
-        var pos = selectCoords(event);
-        if (isInitialPoint(pos)) { 
-            polyLines.push(storedLines);
+        switch (event.which) {
+            case 1:
+                var pos = selectCoords(event);
+                if (isInitialPoint(pos)) { 
+                    polyLines.push(storedLines);
+                    
+                    //ctx.clearRect(0, 0, canvas.width, canvas.height); 
+                    showCenter(storedLines);
+                    storedLines = [];
+                    //storedLines.push(showCenter(storedLines));
+                    //drawPoint();
+                    for(var i=0; i<polyLines.length; i++){
+                        fillPolyline(polyLines[i]);
+                    }
+                }
+                else
+                {
+                    inputCoords.value = inputCoords.value + ' ' + pos.x + ' ' + pos.y;
+                    storedLines.push(pos);
+                    //drawPoint();
+                    drawPointv2(pos);
+                }
+            break;
             
-            //ctx.clearRect(0, 0, canvas.width, canvas.height); 
-            showCenter(storedLines);
-            storedLines = [];
-            //storedLines.push(showCenter(storedLines));
-            //drawPoint();
-            for(var i=0; i<polyLines.length; i++){
-                fillPolyline(polyLines[i]);
-            }
-        }
-        else
-        {
-            inputCoords.value = inputCoords.value + ' ' + pos.x + ' ' + pos.y;
-            storedLines.push(pos);
-            //drawPoint();
-            drawPointv2(pos);
-        }
+            default:
+            break;
+    }
     });
 
     function drawPoint() {
