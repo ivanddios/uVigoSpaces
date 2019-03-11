@@ -38,7 +38,11 @@
         </head>
 
 
-        <body>
+        <?php  if (strpos($_SERVER['REQUEST_URI'],'Plane')) { ?>
+            <body onload = "map('<?= $this->plane ?>')"> 
+        <?php } else { ?>
+            <body>
+        <?php } ?>
             <!-- HEADER -->
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light">

@@ -7,7 +7,7 @@ body {
 	line-height:1.6em;
 	color:#000;
 	background-color:white;
-	overflow-x:hidden; 
+	/* overflow-x:hidden;  */
 }
 
 /* HEADER -> NAVBAR */
@@ -278,18 +278,17 @@ p{
 	height: 200px;
 }
 
-.fixed
+#planeButtons
 {
 	position: fixed;
-	top: 120px;
+	top: 45%;
 	margin-left: 3%;
 }
 
-.divImg{
-	margin-left: auto;
-    margin-right: auto;
-    display: block;
-}
+#planeButtons li{
+	list-style:none;
+	}
+
 
 /* FOOTER */
 

@@ -127,6 +127,7 @@ Switch ($_REQUEST['action']){
                     if (!file_exists($dirPlane)) {
                         mkdir($dirPlane, 0777, true);
                     }
+                   
                     move_uploaded_file($_FILES['planeFloor']['tmp_name'],$floorEdit->getPlaneFloor());
                     $link = $floorEdit->findLinkPlane($buildingid, $floorid);
                     unlink($link);

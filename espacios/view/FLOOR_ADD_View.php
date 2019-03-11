@@ -60,6 +60,7 @@ class FLOOR_ADD{
 								</div>
 								
 								<div class="inputWithIcon inputIconBg">
+									<!-- <input type="hidden" name="MAX_FILE_SIZE" value="40000" /> -->
 									<input type="file" name="planeFloor" accept="image/*">
 								</div>
 							</div>	

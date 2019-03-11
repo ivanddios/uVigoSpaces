@@ -20,11 +20,15 @@ function map(srcImage) {
     function loadImage() {
         var image = new Image();
         image.src = srcImage;
+       
         image.onload = function(){
-            canvas.width = this.width;
-            canvas.height = this.height;
-            canvas.style.background = "url(" + srcImage + ")";
-           // ctx.drawImage(image,0,0);
+            //image.style.width = document.body.clientWidth;
+            canvas.width = document.body.clientWidth;
+            canvas.height = (this.height/this.width)*document.body.clientWidth;
+            //canvas.style.background = "url(" + srcImage + ")";
+            //ctx.drawImage(image,0,0);
+          
+            ctx.drawImage(image, 0, 0, document.body.clientWidth, (this.height/this.width)*document.body.clientWidth); 
         };
     };
 
@@ -43,7 +47,7 @@ function map(srcImage) {
         if (isInitialPoint(pos)) { 
             polyLines.push(storedLines);
             
-            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            //ctx.clearRect(0, 0, canvas.width, canvas.height); 
             showCenter(storedLines);
             storedLines = [];
             //storedLines.push(showCenter(storedLines));
@@ -56,7 +60,8 @@ function map(srcImage) {
         {
             inputCoords.value = inputCoords.value + ' ' + pos.x + ' ' + pos.y;
             storedLines.push(pos);
-            drawPoint();
+            //drawPoint();
+            drawPointv2(pos);
         }
     });
 
@@ -66,14 +71,38 @@ function map(srcImage) {
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(storedLines[0].x, storedLines[0].y);
-            for(var i=0; i<storedLines.length; ++i) {
-                ctx.fillRect(storedLines[i].x - radius/2, storedLines[i].y - radius/2, radius, radius);
+            ctx.strokeRect(storedLines[0].x - radius/2, storedLines[0].y - radius/2, radius, radius);
+            ctx.fillRect(storedLines[0].x - radius/2, storedLines[0].y - radius/2, radius, radius);
+            for(var i=1; i<storedLines.length; ++i) {
                 ctx.strokeRect(storedLines[i].x - radius/2, storedLines[i].y - radius/2, radius, radius);
-                ctx.lineTo(storedLines[i].x,storedLines[i].y);
+                ctx.fillRect(storedLines[i].x - radius/2, storedLines[i].y - radius/2, radius, radius);
+                ctx.moveTo(storedLines[i].x, storedLines[i].y);
+                ctx.lineTo(storedLines[i-1].x,storedLines[i-1].y);
             }       
             ctx.stroke();
             ctx.fill();
     };
+
+    function drawPointv2(newPoint) {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+        ctx.strokeStyle = "#4F95EA";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        if(storedLines.length == 1){
+            ctx.moveTo(newPoint.x, newPoint.y);
+            ctx.strokeRect(newPoint.x - radius/2, newPoint.y - radius/2, radius, radius);
+            ctx.fillRect(newPoint.x - radius/2, newPoint.y - radius/2, radius, radius);
+        } else {
+            ctx.moveTo(storedLines[storedLines.length - 2].x, storedLines[storedLines.length - 2].y);
+            ctx.strokeRect(newPoint.x - radius/2, newPoint.y - radius/2, radius, radius);
+            ctx.fillRect(newPoint.x - radius/2, newPoint.y - radius/2, radius, radius);
+            ctx.lineTo(newPoint.x,newPoint.y);
+        
+        }
+
+        ctx.stroke();
+        ctx.fill();
+};
 
 
     function isInitialPoint(position) {
@@ -127,7 +156,7 @@ function map(srcImage) {
 
 
 
-    $("#Clear").click(function () {
+    $("#clearButton").click(function () {
          polyLines = [];
          storedLines = [];
          inputCoords.value = "";
