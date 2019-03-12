@@ -61,6 +61,7 @@ $strings = array(
 "Floor \"%s\" successfully added." => "La planta \"%s\" se ha añadido con éxito",
 "Floor \"%s\" successfully deleted." => "La planta \"%s\" se ha eliminado con éxito",
 "Show Plane" => "Ver Plano",
+"ShowPlane" => "ShowPlane",
 
 "Spaces" => "Espacios",
 "idSpace" => "Identificador",
@@ -137,6 +138,7 @@ $strings = array(
 "Select Space" => "Selecciona el espacio",
 "Clear" => "Eliminar",
 "Plane successfully updated" => "Plano correctamente actualizado",
-"Select the space in the plane" => "Selecciona el espacio en el plano"
+"Select the space in the plane" => "Selecciona el espacio en el plano haciendo click en sus vértices",
+"View Space" => "Ver Espacio"
 )
 ?>

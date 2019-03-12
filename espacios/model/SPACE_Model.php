@@ -78,15 +78,18 @@ function showAllSpaces() {
     }
 }
 
-
-
-
-
 function findNameSpace() {
     $this->ConectarBD();
     $sql = "SELECT nameSpace FROM space WHERE idBuilding='$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
     $result = $this->mysqli->query($sql)->fetch_array();
     return $result['nameSpace'];
+}
+
+function findCoordsSpace() {
+    $this->ConectarBD();
+    $sql = "SELECT coordsPlane FROM space WHERE idBuilding='$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
+    $result = $this->mysqli->query($sql)->fetch_array();
+    return $result['coordsPlane'];
 }
 
 
@@ -103,12 +106,6 @@ function fillInSpace() {
 
 function addSpace() {
     $this->ConectarBD();
-    // var_dump($this->idBuilding);
-    // var_dump($this->idFloor);
-    // var_dump($this->idSpace);
-    // var_dump($this->nameSpace);
-    // var_dump($this->surfaceSpace);
-    // var_dump($this->numberInventorySpace);
     $sql = "INSERT INTO space (idBuilding, idFloor, idSpace, nameSpace, surfaceSpace, numberInventorySpace) VALUES ('$this->idBuilding', '$this->idFloor', '$this->idSpace', '$this->nameSpace', $this->surfaceSpace, '$this->numberInventorySpace')";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
@@ -120,12 +117,6 @@ function addSpace() {
 
 function addCoords() {
     $this->ConectarBD();
-    // var_dump($this->idBuilding);
-    // var_dump($this->idFloor);
-    // var_dump($this->idSpace);
-    // var_dump($this->nameSpace);
-    // var_dump($this->surfaceSpace);
-    var_dump($this->coordsPlane);
     $sql = "UPDATE space SET coordsPlane = '$this->coordsPlane' WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
@@ -138,12 +129,6 @@ function addCoords() {
 
 function updateSpace($idBuilding, $idFloor, $idSpace) {
     $this->ConectarBD();
-    // var_dump($this->idBuilding);
-    // var_dump($this->idFloor);
-    // var_dump($this->idSpace);
-    // var_dump($this->nameSpace);
-    // var_dump($this->surfaceSpace);
-    // var_dump($this->numberInventorySpace);
     $sql = "UPDATE space SET idSpace = '$this->idSpace', nameSpace = '$this->nameSpace', surfaceSpace = $this->surfaceSpace, numberInventorySpace = '$this->numberInventorySpace' WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor' AND idSpace = '$idSpace'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';

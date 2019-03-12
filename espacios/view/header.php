@@ -37,9 +37,11 @@
             <link rel="stylesheet" href="../css/style.css">
         </head>
 
-
-        <?php  if (strpos($_SERVER['REQUEST_URI'],'Plane')) { ?>
-            <body onload = "map('<?= $this->plane ?>')"> 
+       
+        <?php if(strpos($_SERVER['REQUEST_URI'],'ShowPlane')) { ?>
+            <body onload = "viewSpace('<?= $this->coords ?>', '<?= $this->plane ?>')"> 
+        <?php } else if (strpos($_SERVER['REQUEST_URI'],'Plane')) { ?>
+            <body onload = "selectSpace('<?= $this->plane ?>')"> 
         <?php } else { ?>
             <body>
         <?php } ?>

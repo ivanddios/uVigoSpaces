@@ -9,6 +9,7 @@ include '../view/SPACE_EDIT_View.php';
 include '../view/SPACE_ADD_View.php';
 include '../view/SPACE_SHOW_View.php';
 include '../view/SPACE_PLANE_View.php';
+include '../view/SPACE_SHOW_PLANE_View.php';
 include '../core/ACL.php';
 
 $function = "SPACE";
@@ -149,7 +150,8 @@ Switch ($_REQUEST['action']){
 
         $space = new SPACE_Model($buildingid, $floorid, $spaceid);
         $values = $space->fillInSpace();
-        new SPACE_SHOW($values);
+        $floorPlane = $space->findPlane();
+        new SPACE_SHOW($values, $floorPlane);
          
     break;
 
@@ -196,44 +198,69 @@ Switch ($_REQUEST['action']){
     break;
 
 
-
     case  $strings['Plane']:
 
-    if (!isset($_SESSION['LOGIN'])){
-        $view->setFlashDanger($strings["Not in session. Add space requires login."]);
-        $view->redirect("USER_Controller.php", "");
-    } 
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Add space requires login."]);
+            $view->redirect("USER_Controller.php", "");
+        } 
 
-    if(!isset($_GET['building']) && !isset($_GET['floor'])){
-        $view->setFlashDanger($strings["Building and floor id is mandatory"]);
-        $view->redirect("BUILDING_Controller.php", "");
-    }
+        if(!isset($_GET['building']) && !isset($_GET['floor'])){
+            $view->setFlashDanger($strings["Building and floor id is mandatory"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
 
-    /////////////////////////////////
-    $buildingid = $_GET['building'];
-    $floorid = $_GET['floor'];
-    $spaceid = $_GET['space'];
-    ////////////////////////////////////
-    if (isset($_POST["submit"])) { 
-        $spacePlane = get_data_form();
-        
-        try{
-            $spacePlane->addCoords(); 
-            $view->setFlashSuccess($strings["Plane successfully updated"]);
-            $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
-        }catch(Exception $errors) {
-            $view->setFlashDanger($strings[$errors->getMessage()]);
-            $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
-        }   
+        /////////////////////////////////
+        $buildingid = $_GET['building'];
+        $floorid = $_GET['floor'];
+        $spaceid = $_GET['space'];
+        ////////////////////////////////////
 
-    } else {
-            $space = new SPACE_Model($buildingid, $floorid, $spaceid);
-            $spaceValues = $space->fillInSpace();
-            $floorPlane = $space->findPlane();
-            new SPACE_PLANE($spaceValues, $floorPlane);
-    }
+        if (isset($_POST["submit"])) { 
+          
+            $spacePlane = get_data_form();
+            
+            try{
+                $spacePlane->addCoords(); 
+                $view->setFlashSuccess($strings["Plane successfully updated"]);
+                $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+            }catch(Exception $errors) {
+                $view->setFlashDanger($strings[$errors->getMessage()]);
+                $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+            }   
+        } else {
+                $space = new SPACE_Model($buildingid, $floorid, $spaceid);
+                $spaceValues = $space->fillInSpace();
+                $floorPlane = $space->findPlane();
+                new SPACE_PLANE($spaceValues, $floorPlane);
+        }
 
-break;
+    break;
+
+    case  $strings['ShowPlane']:
+
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Add space requires login."]);
+            $view->redirect("USER_Controller.php", "");
+        } 
+
+        if(!isset($_GET['building']) && !isset($_GET['floor'])){
+            $view->setFlashDanger($strings["Building and floor id is mandatory"]);
+            $view->redirect("BUILDING_Controller.php", "");
+        }
+
+        /////////////////////////////////
+        $buildingid = $_GET['building'];
+        $floorid = $_GET['floor'];
+        $spaceid = $_GET['space'];
+        ////////////////////////////////////
+
+        $space = new SPACE_Model($buildingid, $floorid, $spaceid);
+        $coords = $space->findCoordsSpace();
+        $floorPlane = $space->findPlane();
+        new SPACE_SHOW_PLANE($coords, $floorPlane);
+
+    break;
     
 
     default:

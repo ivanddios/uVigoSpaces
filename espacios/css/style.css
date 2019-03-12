@@ -7,7 +7,7 @@ body {
 	line-height:1.6em;
 	color:#000;
 	background-color:white;
-	/* overflow-x:hidden;  */
+	overflow-x:hidden; 
 }
 
 /* HEADER -> NAVBAR */

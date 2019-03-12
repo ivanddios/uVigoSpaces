@@ -170,11 +170,11 @@ INSERT INTO BUILDING (idBuilding, nameBuilding, addressBuilding, phoneBuilding) 
 ('OSBI0', 'Biblioteca Universitaria Rosalía de Castro', 'Camino Seara B 4', 988387192);
 
 INSERT INTO FLOOR (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES
-('OSBI0', '04', 'Cuarta Planta', '', 215.20, 181.25),
-('OSBI0', '03', 'Terceira Planta', '', 214.80, 179.60),
-('OSBI0', '02', 'Segunda Planta', '', 215.20, 181.25),
-('OSBI0', '01', 'Primeira Planta', '', 818.30, 486.60),
-('OSBI0', '00', 'Planta Baixa', "../document/OSBI0/OSBI000/plano-2018.jpg", 1895.80, 1428.75),
+('OSBI0', '04', 'Cuarta Planta', '../document/OSBI0/OSBI004/Segunda, Tercera, Cuarta.jpg', 215.20, 181.25),
+('OSBI0', '03', 'Terceira Planta', '../document/OSBI0/OSBI003/Segunda, Tercera, Cuarta.jpg', 214.80, 179.60),
+('OSBI0', '02', 'Segunda Planta', '../document/OSBI0/OSBI002/Segunda, Tercera, Cuarta.jpg', 215.20, 181.25),
+('OSBI0', '01', 'Primeira Planta', '../document/OSBI0/OSBI001/Primera Planta.jpg', 818.30, 486.60),
+('OSBI0', '00', 'Planta Baixa', "../document/OSBI0/OSBI000/Planta Baja.jpg", 1895.80, 1428.75),
 ('OSBI0', 'S1', 'Soto -1', '', 1800.40, 894.20),
 ('OSBI0', 'S2', 'Soto -2', '', 1338.40, 1226.70);
 

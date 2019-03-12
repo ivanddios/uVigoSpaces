@@ -1,10 +1,12 @@
 <?php
 
 class SPACE_SHOW{
-    private $space;
+		private $space;
+		private $plane;
 
-    function __construct($space) {
-        $this->space = $space;
+    function __construct($space, $plane) {
+				$this->space = $space;
+				$this->plane = $plane;
         $this->render();
     }
     
@@ -49,7 +51,11 @@ class SPACE_SHOW{
 									<input type="text" name="numberInventorySpace" placeholder="<?= $strings['What is the number inventory?']?>" value="<?=$this->space['numberInventorySpace']?>" readonly>
 									<i class="fa fa-barcode fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
-							</div>	
+
+								<div class="inputWithIcon inputIconBg">
+									<a target='_blank' href="SPACE_Controller.php?action=<?= $strings['ShowPlane']?>&building=<?= $this->space['idBuilding']?>&floor=<?= $this->space['idFloor']?>&space=<?= $this->space['idSpace']?>"><img src='<?= $this->plane; ?>' class="avatarPlane"></a>
+								</div>
+							</div>
 							
 						<a href="SPACE_Controller.php?building=<?=$this->space['idBuilding']?>&floor=<?=$this->space['idFloor']?>"><?= $strings["Back"] ?></a>
 					</div>

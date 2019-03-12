@@ -20,7 +20,7 @@ class SPACE_PLANE{
 			include 'header.php';
 			$buffer = ob_get_contents();
 			ob_end_clean();
-			$buffer=str_replace("%TITLE%",$strings['Edit Floor'],$buffer);
+			$buffer=str_replace("%TITLE%",$strings['Select Space'],$buffer);
 			echo $buffer;
 			////////////////////////////////////////////////////
 			?>
@@ -36,8 +36,8 @@ class SPACE_PLANE{
 									<input  type="hidden" id="coordsSpace" name="coordsSpace">
 									<div id="planeButtons">
 										<li>
-											<ul><button type="button" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i><?= $strings['Save']?></button>	</ul>
-											<ul><button id="clearButton" type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i><?= $strings['Delete']?></button>	</ul>
+											<ul><button id="saveButton" type="submit" name="submit" class="btn btn-success" disabled><i class="fa fa-plus" aria-hidden="true"></i><?= $strings['Save']?></button></ul>
+											<ul><button id="clearButton" type="button" class="btn btn-danger" disabled><i class="fa fa-trash" aria-hidden="true"></i><?= $strings['Delete']?></button></ul>
 										</li>
 									</div>
 								</form> 		 
