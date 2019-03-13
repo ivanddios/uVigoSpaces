@@ -33,13 +33,16 @@
 
             <!-- Our JS -->
             <script src="../js/common.js"></script>
+            <script src="../js/validates.js"></script>
             <!-- Our CSS -->
             <link rel="stylesheet" href="../css/style.css">
         </head>
 
        
         <?php if(strpos($_SERVER['REQUEST_URI'],'ShowPlane')) { ?>
-            <body onload = "viewSpace('<?= $this->coords ?>', '<?= $this->plane ?>')"> 
+            <body onload = "viewSpace('<?= $this->coords ?>','<?= $this->plane ?>')"> 
+        <?php }else if (strpos($_SERVER['REQUEST_URI'],'EditPlane')) { ?>
+            <body onload = "editSpace('<?= $this->space['coordsPlane'] ?>','<?= $this->plane ?>')"> 
         <?php } else if (strpos($_SERVER['REQUEST_URI'],'Plane')) { ?>
             <body onload = "selectSpace('<?= $this->plane ?>')"> 
         <?php } else { ?>

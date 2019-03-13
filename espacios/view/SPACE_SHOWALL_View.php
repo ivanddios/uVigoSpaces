@@ -29,6 +29,10 @@ class SPACE_SHOWALL{
                         <?= $strings["Information about the building's spaces"] ?>
                     </div>
                     <div class="col-lg-12 center-block-content">
+                        <!-- <div id="group-form">
+                                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+                                <i class="fa fa-search  fa-lg fa-fw" aria-hidden="true"></i>
+                        </div> -->
                         <table id="dataTable" class="table text-center">
                             <thead>
                                 <tr>
@@ -36,7 +40,6 @@ class SPACE_SHOWALL{
                                         <th scope="col"><?=$strings[$title]?></th>
                                     <?php endforeach; ?>
                                     <th scope="col"><a href="SPACE_Controller.php?&action=<?= $strings['Add']?>&building=<?= $_GET['building']?>&floor=<?= $_GET['floor']?>"><span title="<?= $strings['Add Space']?>" class="btn btn-success btn-sm fa fa-plus"></span></a></th>
-                                    <!-- <th scope="col"><a href="SPACE_Controller.php?&action=<?= $strings['Plane']?>&building=<?= $_GET['building']?>&floor=<?= $_GET['floor']?>"><span title="<?= $strings['Add Space']?>" class="btn btn-success btn-sm fa fa-plus"></span></a></th> -->
                                 </tr>
                             </thead>
 
@@ -89,7 +92,6 @@ class SPACE_SHOWALL{
                                         </td>
                                     </tr>
                                 <?php endfor; ?>
-                               
                             </tbody>
                         </table>
                     </div>

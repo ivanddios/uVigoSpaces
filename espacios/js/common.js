@@ -142,7 +142,7 @@ function selectSpace(srcImage) {
     $("#clearButton").click(function () {
          polyLines = [];
          storedLines = [];
-         inputCoords.value = "";
+         inputCoords.value = ' ';
          isThereSpace = false;
          document.getElementById("saveButton").disabled = true;
          document.getElementById("clearButton").disabled = true;
@@ -151,7 +151,6 @@ function selectSpace(srcImage) {
     });
 
 };
-
 
 
 function viewSpace(coordsPlane, srcImage) {
@@ -175,19 +174,16 @@ function viewSpace(coordsPlane, srcImage) {
     };
 
     function convertCoords(coordsPlane){
-        let arrayCoords = coordsPlane.split(" "),
-        spacePointsAux= [],
-        spacePoints;
+        var arrayCoords = coordsPlane.split(","),
+        arrayXYCoords,
+        spacePoints= [];
 
-        for(let i=0; i<arrayCoords.length; i++){
-            if(i%2) {
-                spacePointsAux[i]={x: arrayCoords[i-1], y: arrayCoords[i]};
-            }
+        console.log(arrayCoords);
+        for(var i=0; i<arrayCoords.length; i++){
+            arrayXYCoords = (""+arrayCoords[i]).split(" ");
+            spacePoints[i] = {x: arrayXYCoords[0], y: arrayXYCoords[1]};
         }
 
-        spacePoints = spacePointsAux.filter(function (x) {
-            return (x !== (undefined || null || ''));
-        });
 
         return spacePoints;
     };
@@ -206,6 +202,156 @@ function viewSpace(coordsPlane, srcImage) {
         ctx.stroke();
     };
 
+};
+
+
+function editSpace(coordsPlane, srcImage) {
+
+    var canvas = document.getElementById("canvas"),
+        ctx = canvas.getContext("2d")
+        inputCoords = document.getElementById("coordsSpace"),
+        inputCoords.value = coordsPlane;
+        image = new Image(),
+        storedLines = [],
+        polyLines = convertCoords(coordsPlane),
+        isThereSpace = true,
+        radius = 10,
+        loadImageWithSelectSpace();
+        
+
+    function loadImage() {
+            image.src = srcImage;
+            image.onload = function(){
+                canvas.width = document.body.clientWidth;
+                canvas.height = (this.height/this.width)*document.body.clientWidth;
+                ctx.drawImage(image, 0, 0, document.body.clientWidth, (this.height/this.width)*document.body.clientWidth); 
+            };
+        };
+
+    function loadImageWithSelectSpace() {
+        var image = new Image();
+        image.src = srcImage;
+           
+        image.onload = function(){
+            canvas.width = document.body.clientWidth;
+            canvas.height = (this.height/this.width)*document.body.clientWidth;
+            ctx.drawImage(image, 0, 0, document.body.clientWidth, (this.height/this.width)*document.body.clientWidth); 
+            drawPolygon(polyLines);
+        };
+    };
+
+    function convertCoords(coordsPlane){
+        var arrayCoords = coordsPlane.split(","),
+        arrayXYCoords,
+        spacePoints= [];
+
+        for(var i=0; i<arrayCoords.length; i++){
+            arrayXYCoords = (""+arrayCoords[i]).split(" ");
+            spacePoints[i] = {x: arrayXYCoords[0], y: arrayXYCoords[1]};
+        }
+
+        return spacePoints;
+    };
+
+    function drawPoint(position) {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+        ctx.strokeStyle = "#4F95EA";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        if(storedLines.length == 1){
+            ctx.moveTo(position.x, position.y);
+            ctx.strokeRect(position.x - radius/2, position.y - radius/2, radius, radius);
+            ctx.fillRect(position.x - radius/2, position.y - radius/2, radius, radius);
+            document.getElementById("clearButton").disabled = false;
+        } else {
+            ctx.moveTo(storedLines[storedLines.length - 2].x, storedLines[storedLines.length - 2].y);
+            ctx.strokeRect(position.x - radius/2, position.y - radius/2, radius, radius);
+            ctx.fillRect(position.x - radius/2, position.y - radius/2, radius, radius);
+            ctx.lineTo(position.x,position.y);
+        }
+        ctx.stroke();
+        ctx.fill();
+    };
+    
+    function drawPolygon(polyLines) {
+        ctx.fillStyle = "rgba(143, 143, 143, 0.5)";
+        ctx.strokeStyle = "#4F95EA";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(polyLines[0].x, polyLines[0].y);
+        for (var i = 0; i < polyLines.length; i++) {
+            ctx.lineTo(polyLines[i].x, polyLines[i].y);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+    };
+
+    function selectCoords(event) {
+        return {
+            x: event.offsetX,
+            y: event.offsetY
+        };
+    };
+
+
+    $("#canvas").mousedown(function (event) {
+        switch (event.which) {
+            case 1:
+                var position = selectCoords(event);
+                if (isInitialPoint(position)) { 
+                    polyLines.push(storedLines);
+                    storedLines = [];
+                    for(var i=0; i<polyLines.length; i++){
+                        drawPolygon(polyLines[i]);
+                    }
+                    isThereSpace = true;
+                    document.getElementById("saveButton").disabled = false;
+                }
+                else
+                {
+                    if(!isThereSpace){
+                        if(inputCoords.value != ' ' && inputCoords.value != null) {
+                            inputCoords.value = inputCoords.value + ',' + position.x + ' ' + position.y;
+                        } else{
+                            inputCoords.value = position.x + ' ' + position.y;
+                        }
+                        storedLines.push(position);
+                        drawPoint(position);
+                    } //else{
+                    //     alert("You can only select a space");
+                    // }
+                }
+            break;
+            
+            default:
+            break;
+        }
+    });
+
+    function isInitialPoint(position) {
+
+        if(storedLines[0] != null){
+            var start = storedLines[0]
+        }else {
+            var start = {x:0,y:0};
+        }
+            dx = position.x - start.x,
+            dy = position.y - start.y;
+        return (dx * dx + dy * dy < radius * radius)
+    };
+
+
+    $("#clearButton").click(function () {
+        polyLines = [];
+        storedLines = [];
+        inputCoords.value = ' ';
+        isThereSpace = false;
+        document.getElementById("saveButton").disabled = true;
+        document.getElementById("clearButton").disabled = true;
+        ctx.clearRect(0, 0, canvas.width, canvas.height); 
+        loadImage();
+   });
 };
 
 
@@ -269,3 +415,25 @@ function viewSpace(coordsPlane, srcImage) {
 // });
 // });
 
+
+function myFunction() {
+    // Declare variables 
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("dataTable");
+    tr = table.getElementsByTagName("tr");
+  
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      } 
+    }
+  }

@@ -139,6 +139,8 @@ $strings = array(
 "Clear" => "Eliminar",
 "Plane successfully updated" => "Plano correctamente actualizado",
 "Select the space in the plane" => "Selecciona el espacio en el plano haciendo click en sus vértices",
-"View Space" => "Ver Espacio"
+"View Space" => "Ver Espacio",
+"EditPlane" => "EditPlane",
 )
+
 ?>

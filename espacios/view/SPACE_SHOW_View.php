@@ -53,7 +53,7 @@ class SPACE_SHOW{
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<a target='_blank' href="SPACE_Controller.php?action=<?= $strings['ShowPlane']?>&building=<?= $this->space['idBuilding']?>&floor=<?= $this->space['idFloor']?>&space=<?= $this->space['idSpace']?>"><img src='<?= $this->plane; ?>' class="avatarPlane"></a>
+									<a href="SPACE_Controller.php?action=<?= $strings['ShowPlane']?>&building=<?= $this->space['idBuilding']?>&floor=<?= $this->space['idFloor']?>&space=<?= $this->space['idSpace']?>"><img src='<?= $this->plane; ?>' class="avatarPlane"></a>
 								</div>
 							</div>
 							

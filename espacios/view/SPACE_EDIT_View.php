@@ -1,11 +1,15 @@
 <?php
 
 class SPACE_EDIT{
-    private $space;
+	
+	private $space;
+	private $plane;
 
-    function __construct($space) {
-        $this->space = $space;
-        $this->render();
+	function __construct($space, $plane) {
+			$this->space = $space;
+			$this->plane = $plane;
+			
+			$this->render();
     }
     
     function render() {
@@ -56,6 +60,9 @@ class SPACE_EDIT{
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" name="numberInventorySpace" placeholder="<?= $strings['What is the number inventory?']?>" value="<?=$this->space['numberInventorySpace']?>">
 									<i class="fa fa-barcode fa-lg fa-fw" aria-hidden="true"></i>
+								</div>
+								<div class="inputWithIcon inputIconBg">
+									<a href="SPACE_Controller.php?action=<?= $strings['EditPlane']?>&building=<?= $this->space['idBuilding']?>&floor=<?= $this->space['idFloor']?>&space=<?= $this->space['idSpace']?>"><img src='<?= $this->plane; ?>' class="avatarPlane"></a>
 								</div>
 							</div>	
 							<button type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
