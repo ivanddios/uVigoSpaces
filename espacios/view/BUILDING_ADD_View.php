@@ -51,10 +51,6 @@ class BUILDING_ADD{
 									<input type="text" id="phoneBuilding" name="phoneBuilding" placeholder="<?= $strings['What is your phone?']?>" onblur="checkNumPhone(this.id)">
 									<i class="fa fa-phone fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
-
-							</div>
-
-							<div id="group-form">
 								<button type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>
 							</div> 
 						</form>

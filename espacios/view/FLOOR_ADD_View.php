@@ -35,7 +35,7 @@ class FLOOR_ADD{
 						<form method="POST" action="FLOOR_Controller.php?action=<?= $strings['Add']?>&building=<?= $this->building?>" enctype="multipart/form-data" onchange="validateFloor()">
 							<div id="group-form">
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="idBuilding" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?= $this->building?>" readonly onblur="checkBuildingId(this.id)">
+									<input type="text" id="idBuilding" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?= $this->building?>" readonly>
 									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
@@ -61,7 +61,7 @@ class FLOOR_ADD{
 								
 								<div class="inputWithIcon inputIconBg">
 									<!-- <input type="hidden" name="MAX_FILE_SIZE" value="40000" /> -->
-									<input type="file" name="planeFloor" accept="image/*">
+									<input type="file" id="planeFloor" name="planeFloor" accept="image/*" onchange="validateUpdloadFile(this.id)">
 								</div>
 							</div>	
 							<button type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>

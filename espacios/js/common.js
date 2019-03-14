@@ -416,24 +416,29 @@ function editSpace(coordsPlane, srcImage) {
 // });
 
 
-function myFunction() {
-    // Declare variables 
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("dataTable");
-    tr = table.getElementsByTagName("tr");
-  
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+function searchInTable() {
+
+    let filter,
+        tr, 
+        td;
+
+    filter = document.getElementById("searchBox").value.toUpperCase();
+    tr = document.getElementById("dataTable").getElementsByTagName("tr");
+
+    for (let i = 0; i < tr.length; i++) {
+        let found=true, 
+            j=0;
+        while(found && j < tr[i].childElementCount-1){  /* childElementCount - 1 because the last tr's child is a td where are the actions buttons */
+            td = tr[i].getElementsByTagName("td")[j];
+            if (td) {
+                if (td.innerText.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = '';
+                    found = false;
+                } else {
+                    tr[i].style.display = 'none';
+                }
+            } 
+            j++;
         }
-      } 
     }
-  }
+}

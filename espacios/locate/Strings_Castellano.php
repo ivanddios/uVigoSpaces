@@ -5,6 +5,7 @@ $strings = array(
 "Add"=> "Añadir",
 "Show" => "Ver",
 "Delete" => "  Eliminar",
+"Search" => "Buscar",
 "Building" => "Edificio: ",
 "Buildings" => "Edificios",
 "idBuilding" => "Identificador",
