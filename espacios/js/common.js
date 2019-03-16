@@ -6,35 +6,114 @@ $(document).ready(function() {
 });
 
 
+function loadImage(srcImage, ctx) {
+    var image = new Image();
+    image.src = srcImage;
+       
+    image.onload = function(){
+        canvas.width = document.body.clientWidth;
+        canvas.height = (this.height/this.width)*document.body.clientWidth;
+        ctx.drawImage(image, 0, 0, document.body.clientWidth, (this.height/this.width)*document.body.clientWidth); 
+    };
+};
+
+function loadImageWithSelectSpace(srcImage, spacePoints, ctx) {
+    var image = new Image();
+    image.src = srcImage;
+       
+    image.onload = function(){
+        canvas.width = document.body.clientWidth;
+        canvas.height = (this.height/this.width)*document.body.clientWidth;
+        ctx.drawImage(image, 0, 0, document.body.clientWidth, (this.height/this.width)*document.body.clientWidth); 
+        drawPolygon(spacePoints, ctx);
+    };
+};
+
+function resize() {
+
+    var img = document.getElementById('plane');
+    img.height = (img.height/img.width)*document.body.clientWidth;
+};
+
+function selectCoords(event) {
+    return {
+        x: event.offsetX,
+        y: event.offsetY
+    };
+};
+
+function convertCoords(coordsSpace){
+    var arrayCoords = coordsSpace.split(","),
+        arrayXYCoords,
+        spacePoints = [];
+
+    for(var i=0; i<arrayCoords.length; i++){
+        arrayXYCoords = ("" + arrayCoords[i]).split(" ");
+        spacePoints[i] = {x: arrayXYCoords[0], y: arrayXYCoords[1]};
+    }
+
+
+    return spacePoints;
+};
+
+function isInitialPoint(position) {
+
+    let start = {x:0,y:0};
+
+    if(storedLines[0] != null){
+        start = storedLines[0]
+    }
+        dx = position.x - start.x,
+        dy = position.y - start.y;
+    return (dx * dx + dy * dy < radius * radius)
+};
+
+function drawPoint(position, ctx) {
+    ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+    ctx.strokeStyle = "#4F95EA";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    if(storedLines.length == 1){
+        ctx.moveTo(position.x, position.y);
+        ctx.strokeRect(position.x - radius/2, position.y - radius/2, radius, radius);
+        ctx.fillRect(position.x - radius/2, position.y - radius/2, radius, radius);
+        document.getElementById("clearButton").disabled = false;
+    } else {
+        ctx.moveTo(storedLines[storedLines.length - 2].x, storedLines[storedLines.length - 2].y);
+        ctx.strokeRect(position.x - radius/2, position.y - radius/2, radius, radius);
+        ctx.fillRect(position.x - radius/2, position.y - radius/2, radius, radius);
+        ctx.lineTo(position.x,position.y);
+    }
+    ctx.stroke();
+    ctx.fill();
+};
+
+function drawPolygon(polyLines, ctx) {
+    ctx.fillStyle = "rgba(143, 143, 143, 0.5)";
+    ctx.strokeStyle = "#4F95EA";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(polyLines[0].x, polyLines[0].y);
+    for (var i = 0; i < polyLines.length; i++) {
+        ctx.lineTo(polyLines[i].x, polyLines[i].y);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+};
+
 function selectSpace(srcImage) {
     
     var canvas = document.getElementById("canvas"),
-        ctx = canvas.getContext("2d"),
+        ctx = canvas.getContext("2d")
         inputCoords = document.getElementById("coordsSpace"),
+        savedButton =  document.getElementById("saveButton"),
+        clearButton =  document.getElementById("clearButton"),
         storedLines = [],
         polyLines = [],
         isThereSpace = false,
         radius = 10;
-        loadImage();
-
-
-    function loadImage() {
-        var image = new Image();
-        image.src = srcImage;
-       
-        image.onload = function(){
-            canvas.width = document.body.clientWidth;
-            canvas.height = (this.height/this.width)*document.body.clientWidth;
-            ctx.drawImage(image, 0, 0, document.body.clientWidth, (this.height/this.width)*document.body.clientWidth); 
-        };
-    };
-
-    function selectCoords(event) {
-        return {
-            x: event.offsetX,
-            y: event.offsetY
-        };
-    };
+    loadImage(srcImage, ctx);
 
 
     $("#canvas").mousedown(function (event) {
@@ -45,10 +124,10 @@ function selectSpace(srcImage) {
                     polyLines.push(storedLines);
                     storedLines = [];
                     for(var i=0; i<polyLines.length; i++){
-                        drawPolygon(polyLines[i]);
+                        drawPolygon(polyLines[i], ctx);
                     }
                     isThereSpace = true;
-                    document.getElementById("saveButton").disabled = false;
+                    savedButton.disabled = false;
                 }
                 else
                 {
@@ -59,7 +138,7 @@ function selectSpace(srcImage) {
                             inputCoords.value = position.x + ' ' + position.y;
                         }
                         storedLines.push(position);
-                        drawPoint(position);
+                        drawPoint(position, ctx);
                     } //else{
                     //     alert("You can only select a space");
                     // }
@@ -71,229 +150,42 @@ function selectSpace(srcImage) {
         }
     });
 
-    function isInitialPoint(position) {
-
-        if(storedLines[0] != null){
-            var start = storedLines[0]
-        }else {
-            var start = {x:0,y:0};
-        }
-            dx = position.x - start.x,
-            dy = position.y - start.y;
-        return (dx * dx + dy * dy < radius * radius)
-    };
-
-    function drawPoint(position) {
-        ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
-        ctx.strokeStyle = "#4F95EA";
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        if(storedLines.length == 1){
-            ctx.moveTo(position.x, position.y);
-            ctx.strokeRect(position.x - radius/2, position.y - radius/2, radius, radius);
-            ctx.fillRect(position.x - radius/2, position.y - radius/2, radius, radius);
-            document.getElementById("clearButton").disabled = false;
-        } else {
-            ctx.moveTo(storedLines[storedLines.length - 2].x, storedLines[storedLines.length - 2].y);
-            ctx.strokeRect(position.x - radius/2, position.y - radius/2, radius, radius);
-            ctx.fillRect(position.x - radius/2, position.y - radius/2, radius, radius);
-            ctx.lineTo(position.x,position.y);
-        }
-        ctx.stroke();
-        ctx.fill();
-    };
-
-
-    function drawPolygon(lines) {
-        ctx.fillStyle = "rgba(143, 143, 143, 0.5)";
-        ctx.strokeStyle = "#4F95EA";
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(lines[0].x, lines[0].y);
-        for (var i = 0; i < lines.length; i++) {
-            ctx.lineTo(lines[i].x, lines[i].y);
-        }
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-    };
-
-
-    // function showCenter(lines) {
-    //     var auxXMax = 0, auxXMin=Number.MAX_VALUE, auxYMax= 0, auxYMin=Number.MAX_VALUE, X=0, Y=0;
-    //     console.log(lines);
-    //     for (var i = 0; i < (lines.length-1); i++) {
-    //         auxXMax = Math.max(auxXMax, lines[i].x);
-    //         auxXMin = Math.min(auxXMin, lines[i].x);
-
-    //         auxYMax = Math.max(auxYMax, lines[i].y);
-    //         auxYMin = Math.min(auxYMin, lines[i].y);
-            
-    //     }
-    //     X = auxXMax - (auxXMax - auxXMin)/2;
-    //     Y = auxYMax - (auxYMax - auxYMin)/2;
-    //     // return {
-    //     //     x: X,
-    //     //     y: Y
-    //     // };
-    // }
-
 
     $("#clearButton").click(function () {
          polyLines = [];
          storedLines = [];
          inputCoords.value = ' ';
          isThereSpace = false;
-         document.getElementById("saveButton").disabled = true;
-         document.getElementById("clearButton").disabled = true;
+         savedButton.disabled = true;
+         clearButton.disabled = true;
          ctx.clearRect(0, 0, canvas.width, canvas.height); 
-         loadImage();
+         loadImage(srcImage, ctx);
     });
 
 };
 
-
-function viewSpace(coordsPlane, srcImage) {
+function viewSpace(coordsSpace, srcImage) {
 
     var canvas = document.getElementById("canvas"),
         ctx = canvas.getContext("2d")
-        spacePoints = convertCoords(coordsPlane);
-        loadImage();
-
-
-    function loadImage() {
-        var image = new Image();
-        image.src = srcImage;
-           
-        image.onload = function(){
-            canvas.width = document.body.clientWidth;
-            canvas.height = (this.height/this.width)*document.body.clientWidth;
-            ctx.drawImage(image, 0, 0, document.body.clientWidth, (this.height/this.width)*document.body.clientWidth); 
-            drawPolygon(spacePoints);
-        };
-    };
-
-    function convertCoords(coordsPlane){
-        var arrayCoords = coordsPlane.split(","),
-        arrayXYCoords,
-        spacePoints= [];
-
-        console.log(arrayCoords);
-        for(var i=0; i<arrayCoords.length; i++){
-            arrayXYCoords = (""+arrayCoords[i]).split(" ");
-            spacePoints[i] = {x: arrayXYCoords[0], y: arrayXYCoords[1]};
-        }
-
-
-        return spacePoints;
-    };
-
-    function drawPolygon(polyLines) {
-        ctx.fillStyle = "rgba(143, 143, 143, 0.5)";
-        ctx.strokeStyle = "#4F95EA";
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(polyLines[0].x, polyLines[0].y);
-        for (var i = 0; i < polyLines.length; i++) {
-            ctx.lineTo(polyLines[i].x, polyLines[i].y);
-        }
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-    };
-
+        spacePoints = convertCoords(coordsSpace);
+    loadImageWithSelectSpace(srcImage, spacePoints, ctx);
 };
 
-
-function editSpace(coordsPlane, srcImage) {
+function editSpace(coordsSpace, srcImage) {
 
     var canvas = document.getElementById("canvas"),
         ctx = canvas.getContext("2d")
         inputCoords = document.getElementById("coordsSpace"),
-        inputCoords.value = coordsPlane;
-        image = new Image(),
+        inputCoords.value = coordsSpace;
+        savedButton =  document.getElementById("saveButton"),
+        clearButton =  document.getElementById("clearButton"),
         storedLines = [],
-        polyLines = convertCoords(coordsPlane),
+        spacePoints = convertCoords(coordsSpace),
         isThereSpace = true,
-        radius = 10,
-        loadImageWithSelectSpace();
+        radius = 10;
+    loadImageWithSelectSpace(srcImage, spacePoints, ctx);
         
-
-    function loadImage() {
-            image.src = srcImage;
-            image.onload = function(){
-                canvas.width = document.body.clientWidth;
-                canvas.height = (this.height/this.width)*document.body.clientWidth;
-                ctx.drawImage(image, 0, 0, document.body.clientWidth, (this.height/this.width)*document.body.clientWidth); 
-            };
-        };
-
-    function loadImageWithSelectSpace() {
-        var image = new Image();
-        image.src = srcImage;
-           
-        image.onload = function(){
-            canvas.width = document.body.clientWidth;
-            canvas.height = (this.height/this.width)*document.body.clientWidth;
-            ctx.drawImage(image, 0, 0, document.body.clientWidth, (this.height/this.width)*document.body.clientWidth); 
-            drawPolygon(polyLines);
-        };
-    };
-
-    function convertCoords(coordsPlane){
-        var arrayCoords = coordsPlane.split(","),
-        arrayXYCoords,
-        spacePoints= [];
-
-        for(var i=0; i<arrayCoords.length; i++){
-            arrayXYCoords = (""+arrayCoords[i]).split(" ");
-            spacePoints[i] = {x: arrayXYCoords[0], y: arrayXYCoords[1]};
-        }
-
-        return spacePoints;
-    };
-
-    function drawPoint(position) {
-        ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
-        ctx.strokeStyle = "#4F95EA";
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        if(storedLines.length == 1){
-            ctx.moveTo(position.x, position.y);
-            ctx.strokeRect(position.x - radius/2, position.y - radius/2, radius, radius);
-            ctx.fillRect(position.x - radius/2, position.y - radius/2, radius, radius);
-            document.getElementById("clearButton").disabled = false;
-        } else {
-            ctx.moveTo(storedLines[storedLines.length - 2].x, storedLines[storedLines.length - 2].y);
-            ctx.strokeRect(position.x - radius/2, position.y - radius/2, radius, radius);
-            ctx.fillRect(position.x - radius/2, position.y - radius/2, radius, radius);
-            ctx.lineTo(position.x,position.y);
-        }
-        ctx.stroke();
-        ctx.fill();
-    };
-    
-    function drawPolygon(polyLines) {
-        ctx.fillStyle = "rgba(143, 143, 143, 0.5)";
-        ctx.strokeStyle = "#4F95EA";
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(polyLines[0].x, polyLines[0].y);
-        for (var i = 0; i < polyLines.length; i++) {
-            ctx.lineTo(polyLines[i].x, polyLines[i].y);
-        }
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-    };
-
-    function selectCoords(event) {
-        return {
-            x: event.offsetX,
-            y: event.offsetY
-        };
-    };
-
 
     $("#canvas").mousedown(function (event) {
         switch (event.which) {
@@ -303,10 +195,10 @@ function editSpace(coordsPlane, srcImage) {
                     polyLines.push(storedLines);
                     storedLines = [];
                     for(var i=0; i<polyLines.length; i++){
-                        drawPolygon(polyLines[i]);
+                        drawPolygon(polyLines[i], ctx);
                     }
                     isThereSpace = true;
-                    document.getElementById("saveButton").disabled = false;
+                    savedButton.disabled = false;
                 }
                 else
                 {
@@ -317,7 +209,7 @@ function editSpace(coordsPlane, srcImage) {
                             inputCoords.value = position.x + ' ' + position.y;
                         }
                         storedLines.push(position);
-                        drawPoint(position);
+                        drawPoint(position, ctx);
                     } //else{
                     //     alert("You can only select a space");
                     // }
@@ -329,111 +221,33 @@ function editSpace(coordsPlane, srcImage) {
         }
     });
 
-    function isInitialPoint(position) {
-
-        if(storedLines[0] != null){
-            var start = storedLines[0]
-        }else {
-            var start = {x:0,y:0};
-        }
-            dx = position.x - start.x,
-            dy = position.y - start.y;
-        return (dx * dx + dy * dy < radius * radius)
-    };
-
-
     $("#clearButton").click(function () {
         polyLines = [];
         storedLines = [];
         inputCoords.value = ' ';
         isThereSpace = false;
-        document.getElementById("saveButton").disabled = true;
-        document.getElementById("clearButton").disabled = true;
+        savedButton.disabled = true;
+        clearButton.disabled = true;
         ctx.clearRect(0, 0, canvas.width, canvas.height); 
-        loadImage();
-   });
+        loadImage(srcImage,ctx);
+    });
+
 };
-
-
-
-
-// $(function () {
-
-//         var canvas = document.getElementById("canvas"),
-//         inputCoords = document.getElementById("coordsText"),
-//         ctx = canvas.getContext("2d"),
-//         storedLines = [], //Lineas provisionales antes del poligono
-//         polyLines = [],	//Poligono Final
-//         radius = 10; //Radio del circle inicial
-// function fillPolyline(lines) {
-//     ctx.fillStyle = "rgba(143, 143, 143, 0.5)";
-//     ctx.strokeStyle = "#4F95EA";
-//     ctx.lineWidth = 1;
-//     ctx.beginPath();
-//     ctx.moveTo(lines[0].x, lines[0].y);
-//     for (var i = 0; i < lines.length; i++) {
-//         ctx.lineTo(lines[i].x, lines[i].y);
-//     }
-//     ctx.closePath();
-//     ctx.fill();
-//     //ctx.addHitRegion({'id': 'The First Button'});
-//     ctx.stroke();
-// }
-
-// // canvas.onclick = function (event)
-// // {
-// //     if (event.region) {
-// //         //window.location.href = "http://stackoverflow.com";
-        
-// //     }
-// // }
-
-// // canvas.addEventListener('mousemove', function(event) {
-// //     if(event.region) {
-// //       alert('ouch, my eye :(');
-// //     }
-// //   });
-
-
-// $("#clearAll").click(function () {
-
-//     var coords  = "555 1907 761 1906 759 1975 553 1977",
-//         res = coords.split(" "),
-//         result = [];
-
-//     for(var i=0; i<res.length; i=i+2){
-//         result[i/2] = {
-//                         x: res[i],
-//                         y: res[i+1]
-//         };
-//     }
-//     fillPolyline(result);
-
-//     // polyLines = [];
-//     // storedLines = [];
-//     // ctx.clearRect(0, 0, canvas.width, canvas.height); //Eliminamos los puntos de referencia del plano
-// });
-// });
-
 
 function searchInTable() {
 
-    let filter,
-        tr, 
-        td;
-
-    filter = document.getElementById("searchBox").value.toUpperCase();
-    tr = document.getElementById("dataTable").getElementsByTagName("tr");
+    let filter = document.getElementById("searchBox").value.toUpperCase(),
+        tr = document.getElementById("dataTable").getElementsByTagName("tr"); 
 
     for (let i = 0; i < tr.length; i++) {
-        let found=true, 
+        let isFound = true, 
             j=0;
-        while(found && j < tr[i].childElementCount-1){  /* childElementCount - 1 because the last tr's child is a td where are the actions buttons */
-            td = tr[i].getElementsByTagName("td")[j];
+        while(isFound && j < tr[i].childElementCount-1){  /* childElementCount - 1 because the last tr's child is a td where are the actions buttons */
+                let td = tr[i].getElementsByTagName("td")[j];
             if (td) {
                 if (td.innerText.toUpperCase().indexOf(filter) > -1) {
                     tr[i].style.display = '';
-                    found = false;
+                    isFound = false;
                 } else {
                     tr[i].style.display = 'none';
                 }

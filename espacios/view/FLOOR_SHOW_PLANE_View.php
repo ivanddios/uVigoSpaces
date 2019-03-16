@@ -28,12 +28,12 @@ class FLOOR_SHOW_PLANE{
 
 					<div id="titleView">
 						<?=htmlentities($strings["Data of the new space"])?>
-						
-						<img src="<?= $this->floor?>" class ="viewPlane" alt="Espacios" usemap="#spaces"/>
+					
+						<img id="plane" src="<?= $this->floor?>" usemap="#spaces" onload="resize()"/>
 						<map name="spaces">
 						<?php for($i=0; $i<count($this->spaces); $i++){ 
 											if($this->spaces[$i]['coordsPlane'] != '') { ?>
-												<area shape="poly" coords="<?= $this->spaces[$i]['coordsPlane']?>" 
+												<area shape="poly" name="<?= $this->spaces[$i]['nameSpace']?>" coords="<?= $this->spaces[$i]['coordsPlane']?>" 
 												href='SPACE_Controller.php?action=<?= $strings['Show']?>&building=<?= $this->spaces[$i]['idBuilding']?>&floor=<?= $this->spaces[$i]['idFloor']?>&space=<?= $this->spaces[$i]['idSpace']?>' alt="<?= $this->spaces[$i]['nameSpace']?>">
 										<?php	}
 											} ?>
