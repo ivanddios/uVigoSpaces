@@ -144,7 +144,7 @@ Switch ($_REQUEST['action']){
             }
         } else {
             $floor = new FLOOR_Model($buildingid, $floorid);
-            $values = $floor->fillInFloor();
+            $values = $floor->findFloor();
             new FLOOR_EDIT($values);
         }
 
@@ -171,7 +171,7 @@ Switch ($_REQUEST['action']){
         }
         
         $floor = new FLOOR_Model($buildingid, $floorid);
-        $values = $floor->fillInFloor();
+        $values = $floor->findFloor();
         new FLOOR_SHOW($values);
          
     break;
@@ -235,11 +235,13 @@ Switch ($_REQUEST['action']){
         }
         
         $space = new SPACE_Model($buildingid, $floorid);
-        $spacesDB = $space->showAllSpaces();
+        $spacesValues = $space->showAllSpaces();
         
         $floor = new FLOOR_Model($buildingid, $floorid);
         $planeFloor = $floor->findLinkPlane($buildingid, $floorid);
-        new FLOOR_SHOW_PLANE($planeFloor, $spacesDB);
+        $infoFloor = $floor->findInfoFloor();
+
+        new FLOOR_SHOW_PLANE($spacesValues, $planeFloor, $infoFloor);
         
     break;
     

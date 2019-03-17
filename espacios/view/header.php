@@ -39,11 +39,11 @@
         </head>
 
        
-        <?php if(strpos($_SERVER['REQUEST_URI'],'ShowPlane')) { ?>
-            <body onload = "viewSpace('<?= $this->coords ?>','<?= $this->plane ?>')"> 
-        <?php }else if (strpos($_SERVER['REQUEST_URI'],'EditPlane')) { ?>
+        <?php if(strpos($_SERVER['REQUEST_URI'],'ShowSpacePlane')) { ?>
+            <body onload = "viewSpace('<?= $this->space['coordsPlane'] ?>','<?= $this->plane ?>')"> 
+        <?php }else if (strpos($_SERVER['REQUEST_URI'],'EditSpacePlane')) { ?>
             <body onload = "editSpace('<?= $this->space['coordsPlane'] ?>','<?= $this->plane ?>')"> 
-        <?php } else if (strpos($_SERVER['REQUEST_URI'],'Plane')) { ?>
+        <?php } else if (strpos($_SERVER['REQUEST_URI'],'SelectSpacePlane')) { ?>
             <body onload = "selectSpace('<?= $this->plane ?>')"> 
         <?php } else { ?>
             <body>

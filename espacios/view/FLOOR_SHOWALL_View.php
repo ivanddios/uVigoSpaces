@@ -64,7 +64,7 @@ class FLOOR_SHOWALL{
                                         endfor;
                                     endforeach; ?>
                                     <td>
-                                        <a href="SPACE_Controller.php?&building=<?= $this->floors[$j]['idBuilding']?>&floor=<?= $this->floors[$j]['idFloor']?>">
+                                        <a href="SPACE_Controller.php?building=<?= $this->floors[$j]['idBuilding']?>&floor=<?= $this->floors[$j]['idFloor']?>">
                                             <span title="<?= $strings['Show Space']?>" class="btn btn-success btn-sm fa fa-cube"></span></a>
                                         <a href="FLOOR_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->floors[$j]['idBuilding']?>&floor=<?= $this->floors[$j]['idFloor']?>">
                                             <span title="<?= $strings['Edit Building']?>" class="btn btn-primary btn-sm fa fa-pencil"></span></a>

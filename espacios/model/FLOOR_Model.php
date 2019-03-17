@@ -80,6 +80,29 @@ function ConectarBD() {
 // }
 
 
+
+function findFloor() {
+    $this->ConectarBD();
+    $sql = "SELECT * FROM floor WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        return 'Error in the query on the database';
+    } else {
+        $result = $resultado->fetch_array();
+        return $result;
+    }
+}
+
+function findInfoFloor() {
+    $this->ConectarBD();
+    $sql = "SELECT building.nameBuilding, floor.nameFloor, space.nameSpace, space.coordsPlane FROM building, floor, space WHERE  building.idBuilding = floor.idBuilding AND floor.idFloor = space.idFloor AND building.idBuilding = '$this->idBuilding' AND floor.idFloor = '$this->idFloor'";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        return 'Error in the query on the database';
+    } else {
+        $result = $resultado->fetch_array();
+        return $result;
+    }
+}
+
 function findFloorName() {
     $this->ConectarBD();
     $sql = "SELECT nameFloor FROM floor WHERE idBuilding='$this->idBuilding' AND idFloor = '$this->idFloor'";
@@ -94,16 +117,7 @@ function findLinkPlane($idBuilding, $idFloor) {
     return $result['planeFloor'];
 }
 
-function fillInFloor() {
-    $this->ConectarBD();
-    $sql = "SELECT * FROM floor WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'";
-    if (!($resultado = $this->mysqli->query($sql))) {
-        return 'Error in the query on the database';
-    } else {
-        $result = $resultado->fetch_array();
-        return $result;
-    }
-}
+
 
 function addFloor() {
     $this->ConectarBD();

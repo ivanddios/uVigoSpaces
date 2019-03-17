@@ -2,12 +2,14 @@
 
 class FLOOR_SHOW_PLANE{
 
-	private $floor;
 	private $spaces;
+	private $plane;
+	private $floor;
 
-    function __construct($floor, $spaces) {
-		$this->floor = $floor;
+    function __construct($spaces, $plane, $floor) {
 		$this->spaces = $spaces;
+		$this->plane = $plane;
+		$this->floor = $floor;
 		$this->render();
 		
     }
@@ -27,9 +29,9 @@ class FLOOR_SHOW_PLANE{
 				?>
 
 					<div id="titleView">
-						<?=htmlentities($strings["Data of the new space"])?>
-					
-						<img id="plane" src="<?= $this->floor?>" usemap="#spaces" onload="resize()"/>
+						<h3><?= $this->floor['nameBuilding']?><h3>
+						<h4><?= $this->floor['nameFloor']?><h4> 
+						<img id="plane" src="<?= $this->plane?>" usemap="#spaces" onload="resize()"/>
 						<map name="spaces">
 						<?php for($i=0; $i<count($this->spaces); $i++){ 
 											if($this->spaces[$i]['coordsPlane'] != '') { ?>

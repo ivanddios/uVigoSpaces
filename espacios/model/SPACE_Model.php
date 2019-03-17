@@ -78,6 +78,29 @@ function showAllSpaces() {
     }
 }
 
+function findSpace() {
+    $this->ConectarBD();
+    $sql = "SELECT * FROM space WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        return 'Error in the query on the database';
+    } else {
+        $result = $resultado->fetch_array();
+        return $result;
+    }
+}
+
+
+function findInfoSpace() {
+    $this->ConectarBD();
+    $sql = "SELECT building.nameBuilding, floor.nameFloor, space.nameSpace, space.coordsPlane FROM building, floor, space WHERE building.idBuilding = floor.idBuilding AND floor.idFloor = space.idFloor AND building.idBuilding = '$this->idBuilding' AND floor.idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        return 'Error in the query on the database';
+    } else {
+        $result = $resultado->fetch_array();
+        return $result;
+    }
+}
+
 function findNameSpace() {
     $this->ConectarBD();
     $sql = "SELECT nameSpace FROM space WHERE idBuilding='$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
@@ -93,16 +116,9 @@ function findCoordsSpace() {
 }
 
 
-function fillInSpace() {
-    $this->ConectarBD();
-    $sql = "SELECT * FROM space WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
-    if (!($resultado = $this->mysqli->query($sql))) {
-        return 'Error in the query on the database';
-    } else {
-        $result = $resultado->fetch_array();
-        return $result;
-    }
-}
+
+
+
 
 function addSpace() {
     $this->ConectarBD();
