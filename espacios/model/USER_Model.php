@@ -100,7 +100,20 @@ public function existsUser($username) {
 }
 
 
-/* INCOMPLETAS */
+public function letterDNI($dni) {
+    $numero = $dni.substr(0, $dni.length() - 1);
+    $letr = $dni.substr($dni.length() - 1, 1);
+    $numero = $numero % 23;
+    $letra = 'TRWAGMYFPDXBNJZSQVHLCKET';
+    $letra = $letra.substring(numero, numero + 1);
+    if ($letra != $letr.toUpperCase()) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+/* INCOMPLETAS. PROBAR FECHA Y DNI */ 
 public function checkIsValidForAdd_Update() {
 
     $errors = array();
@@ -130,11 +143,15 @@ public function checkIsValidForAdd_Update() {
     }else if (strlen(trim($this->surname)) > 225 ) {
         $errors = "User surname can not be that long";
     }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->surname)){
-        $errors = "User surname is invalid. Try again!";
-    }else if (strlen(trim($this->phoneBuilding)) != 9 ) {
-        $errors= "Building phone is incorrect. Example: 666777888";
-    }else if(!preg_match('/^[9|6|7][0-9]{8}$/', $this->phoneBuilding)){
-        $errors = "Building phone format is invalid. Example: 666777888";
+		$errors = "User surname is invalid. Try again!";
+	}else if (!preg_match('/^\d{8}[a-zA-Z]$/', $this->dni)) {
+		$errors = "User id is invalid. Try again!";
+	}elseif($this->letterDNI($this->dni)){
+		$errors = "User id letter is invalid. Try again!";
+    }else if (strlen(trim($this->phone)) != 9 ) {
+        $errors= "User phone is incorrect. Example: 666777888";
+    }else if(!preg_match('/^[9|6|7][0-9]{8}$/', $this->phone)){
+        $errors = "User phone format is invalid. Example: 666777888";
     }
 
     if (sizeof($errors) > 0){
