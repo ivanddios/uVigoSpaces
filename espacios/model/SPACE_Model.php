@@ -56,7 +56,7 @@ public function setNumberInventorySpace($numberInventorySpace) {
 
 function ConectarBD() {
     $this->mysqli = new mysqli("localhost", "root", "", "espacios");
-    $acentos = $this->mysqli->query("set names 'utf8'");
+    $this->mysqli->query("set names 'utf8'");
     if ($this->mysqli->connect_errno) {
         echo "Error to conect with MySQL: (" . $this->mysqli->connect_errno . ") " . $this->mysqli->connect_error;
     }

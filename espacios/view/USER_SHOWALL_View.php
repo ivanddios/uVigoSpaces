@@ -1,11 +1,11 @@
 <?php
 
-class BUILDING_SHOWALL{
-    private $buildings;
+class USER_SHOWALL{
+    private $users;
     private $popMessage;
 
-    function __construct($buildings) {
-        $this->buildings = $buildings;
+    function __construct($users) {
+        $this->users = $users;
 
         if(empty($_SESSION['popMessage'])){
             $this->popMessage = '';
@@ -16,7 +16,7 @@ class BUILDING_SHOWALL{
 
     function render() {
         include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
-        $listTitles = array('idBuilding', 'nameBuilding', 'addressBuilding', 'phoneBuilding');
+        $listTitles = array('photo', 'username', 'name', 'surname', 'email');
         ?> 
         <?php 
         ////////////////////////////////////////////////////
@@ -24,7 +24,7 @@ class BUILDING_SHOWALL{
         include 'header.php';
         $buffer = ob_get_contents();
         ob_end_clean();
-        $buffer=str_replace("%TITLE%",$strings['Buildings'],$buffer);
+        $buffer=str_replace("%TITLE%",$strings['Users'],$buffer);
         echo $buffer;
          ////////////////////////////////////////////////////
         ?>
@@ -40,7 +40,7 @@ class BUILDING_SHOWALL{
             <div class="row center-row">
                 <div class="col-lg-12 center-block">
                     <div id="titleView">
-                        <h1><?= $strings['Buildings'] ?></h1>
+                        <h1><?= $strings['Users'] ?></h1>
                     </div>
                     <div id="pnlBoxSearch">
                         <input type="text" id="searchBox" onkeyup="searchInTable()" placeholder="<?= $strings["Search"]?>">
@@ -51,10 +51,10 @@ class BUILDING_SHOWALL{
                                 <?php foreach ($listTitles as $title): ?>
                                     <th scope="col"><?=$strings[$title]?></th>
                                 <?php endforeach; ?>
-                                <?php  if(checkRol('ADD', 'BUILDING')): ?>
+                                <?php  if(checkRol('ADD', 'USER')): ?>
                                     <th scope="col">
-                                        <a href="BUILDING_Controller.php?&action=<?= $strings['Add']?>">
-                                            <span title="<?= $strings['Add Building']?>" class="btn btn-success btn-sm fa fa-plus"></span>
+                                        <a href="USER_Controller.php?&action=<?= $strings['Add']?>">
+                                            <span title="<?= $strings['Add User']?>" class="btn btn-success btn-sm fa fa-plus"></span>
                                         </a>
                                     </th>
                                 <?php endif; ?>
@@ -62,16 +62,26 @@ class BUILDING_SHOWALL{
                         </thead>
 
                         <tbody>
-                            <?php for ($j = 0; $j < count($this->buildings); $j++) : ?>
+                            <?php for ($j = 0; $j < count($this->users); $j++) : ?>
                                 <tr>
-                                    <?php foreach ($this->buildings [$j] as $key => $value) :
+                                    <?php foreach ($this->users [$j] as $key => $value) :
                                         for ($i = 0; $i < count($listTitles); $i++):
                                             if ($key === $listTitles[$i]) : ?>
                                                 <td>
-                                                    <?php if ($key === 'idBuilding') {?>
-                                                        <a title="<?= $strings['Show Building']?>" href='BUILDING_Controller.php?action=<?= $strings['Show']?>&building=<?= $this->buildings[$j]['idBuilding']?>'><?= $value?></a>                
-                                                    <?php }else {
-                                                        echo $value;
+                                                    <?php if ($key === 'photo') {
+                                                            if (is_file($value)) {?>
+                                                                <a target='_blank' href='<?= $value?>'>
+                                                                    <img src='<?= $value?>' class='avatarUser'>
+                                                                </a> 
+                                                            <?php } else { ?>
+                                                                <a target='_blank' href="../img/user.jpg">
+                                                                    <img src="../img/notUser.jpg" class='avatarUser'>
+                                                                </a> 
+                                                            <?php } 
+                                                    } elseif ($key === 'username') {?>
+                                                        <a title="<?= $strings['Show User']?>" href='USER_Controller.php?action=<?= $strings['Show']?>&username=<?= $this->users[$j]['username']?>'><?= $value?></a>                
+                                                    <?php }else { ?>
+                                                        <?= $value;
                                                     } ?>
                                                 </td>
                                             <?php endif;
@@ -79,28 +89,25 @@ class BUILDING_SHOWALL{
                                     endforeach;?>
                                         
                                     <td>
-                                        <a href="FLOOR_Controller.php?building=<?= htmlentities($this->buildings[$j]['idBuilding'])?>">
-                                            <span title="<?= $strings['Show Floors']?>" class="btn btn-success btn-sm fa fa-building"></span>
-                                        </a>
-                                        <?php  if(checkRol('EDIT', 'BUILDING')): ?>
-                                            <a href="BUILDING_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->buildings[$j]['idBuilding']?>">
-                                                <span title="<?= $strings['Edit Building']?>" class="btn btn-primary btn-sm fa fa-pencil"></span>
+                                        <?php  if(checkRol('EDIT', 'USER')): ?>
+                                            <a href="USER_Controller.php?action=<?= $strings['Edit']?>&user=<?= $this->users[$j]['username']?>">
+                                                <span title="<?= $strings['Edit User']?>" class="btn btn-primary btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
-                                        <?php  if(checkRol('DELETE', 'BUILDING')): ?>
-                                            <i title="<?= $strings['Delete Building']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->buildings[$j]['idBuilding']?>"></i>
-                                            <div id="item-<?= $this->buildings[$j]['idBuilding']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <?php  if(checkRol('DELETE', 'USER')): ?>
+                                            <i title="<?= $strings['Delete User']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->users[$j]['username']?>"></i>
+                                            <div id="item-<?= $this->users[$j]['username']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <?= $strings["Attention"]?>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <?= sprintf($strings["Are you sure you want to delete the building \"%s\" ?"], $this->buildings[$j]['nameBuilding'] )?>
-                                                            <p><?= $strings["The information that this building has will be lost"]?></p>
+                                                            <?= sprintf($strings["Are you sure you want to delete the user \"%s\" ?"], $this->users[$j]['name'] )?>
+                                                            <p><?= $strings["The information that this user has will be lost"]?></p>
                                                         </div>
-                                                        <form method="POST" action="BUILDING_Controller.php?action=<?= htmlentities($strings['Delete'])?>">
-                                                            <input type="hidden" name="building" value="<?= $this->buildings[$j]['idBuilding']?>">
+                                                        <form method="POST" action="USER_Controller.php?action=<?= htmlentities($strings['Delete'])?>">
+                                                            <input type="hidden" name="user" value="<?= $this->users[$j]['username']?>">
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
                                                                 <button type="submit" name="submit" id="submit" class="btn btn-success success"><?= $strings["Ok"]?></button>

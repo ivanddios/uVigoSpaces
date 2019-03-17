@@ -33,9 +33,10 @@ class SPACE_EDIT{
 					</div>
 					<div class="col-lg-12 center-block-content">
 						<form method="POST" action="SPACE_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->space['idBuilding']?>&floor=<?= $this->space['idFloor']?>&space=<?=$this->space['idSpace']?>">
-                        <div id="group-form">
-                                <input type="hidden" name="idBuilding" value="<?=$this->space['idBuilding']?>" readonly>
-                                <input type="hidden" name="idFloor" value="<?=$this->space['idFloor']?>" readonly>
+							<div id="group-form">
+
+								<input type="hidden" name="idBuilding" value="<?=$this->space['idBuilding']?>" readonly>
+								<input type="hidden" name="idFloor" value="<?=$this->space['idFloor']?>" readonly>
 
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" placeholder="<?= $this->space['idBuilding'].$this->space['idFloor']?>" readonly>
@@ -62,7 +63,7 @@ class SPACE_EDIT{
 									<i class="fa fa-barcode fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 								<div class="inputWithIcon inputIconBg">
-									<a href="SPACE_Controller.php?action=<?= $strings['EditPlane']?>&building=<?= $this->space['idBuilding']?>&floor=<?= $this->space['idFloor']?>&space=<?= $this->space['idSpace']?>"><img src='<?= $this->plane; ?>' class="avatarPlane"></a>
+									<a href="SPACE_Controller.php?action=<?= $strings['EditSpacePlane']?>&building=<?= $this->space['idBuilding']?>&floor=<?= $this->space['idFloor']?>&space=<?= $this->space['idSpace']?>"><img src='<?= $this->plane; ?>' class="avatarPlane"></a>
 								</div>
 							</div>	
 							<button type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>

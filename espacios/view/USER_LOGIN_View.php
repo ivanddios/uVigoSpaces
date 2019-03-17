@@ -66,7 +66,7 @@ class Login{
                                     <a title="Home" class="logoLogin" href="#"><img height="38" src="../img/logo.png" alt="logo universidade de vigo"/></a>
                                 </div>
                                 <div class="col-lg-12 center-block">
-                                    <form method="POST" action="USER_Controller.php">
+                                    <form method="POST" action="USER_Controller.php?action=login">
                                         <div id="inputLogin">
                                             <div class="inputWithIcon inputIconBg">
                                                 <input type="text" name="username" placeholder="Username" required>

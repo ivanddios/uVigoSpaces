@@ -38,7 +38,13 @@ class SPACE_SHOWALL{
                                 <?php foreach ($listTitles as $title): ?>
                                     <th scope="col"><?=$strings[$title]?></th>
                                 <?php endforeach; ?>
-                                <th scope="col"><a href="SPACE_Controller.php?action=<?= $strings['Add']?>&building=<?= $_GET['building']?>&floor=<?= $_GET['floor']?>"><span title="<?= $strings['Add Space']?>" class="btn btn-success btn-sm fa fa-plus"></span></a></th>
+                                <?php  if(checkRol('ADD', 'SPACE')): ?>
+                                    <th scope="col">
+                                        <a href="SPACE_Controller.php?action=<?= $strings['Add']?>&building=<?= $_GET['building']?>&floor=<?= $_GET['floor']?>">
+                                            <span title="<?= $strings['Add Space']?>" class="btn btn-success btn-sm fa fa-plus"></span>
+                                        </a>
+                                    </th>
+                                <?php endif; ?>
                             </tr>
                         </thead>
 
@@ -66,28 +72,33 @@ class SPACE_SHOWALL{
                                         endfor; ?>
                                     <?php endforeach; ?>
                                     <td>
-                                        <a href="SPACE_Controller.php?action=<?php echo $strings['Edit']?>&building=<?= $this->spaces[$j]['idBuilding']?>&floor=<?= $this->spaces[$j]['idFloor']?>&space=<?= $this->spaces[$j]['idSpace']?>">
-                                        <span title="<?= $strings['Edit Space']?>" class="btn btn-primary btn-sm fa fa-pencil"></span></a>
-                                        <i title="<?= $strings['Delete Space']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?=$this->spaces[$j]['idSpace']?>"></i>
-                                        <div id="item-<?=$this->spaces[$j]['idSpace']?>" class="modal fade"  tabindex="-1" role="dialog" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <?= $strings["Attention"]?>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <?= sprintf($strings["Are you sure you want to delete the space \"%s\" ?"], $this->spaces[$j]['idBuilding'].$this->spaces[$j]['idFloor'].$this->spaces[$j]['idSpace'])?><br/> <br>
-                                                        <b><strong><?= $strings["The information that this space has will be lost"]?></strong></b>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <form method="POST" action="SPACE_Controller.php?action=<?= htmlentities($strings['Delete'])?>&building=<?= htmlentities($this->spaces[$j]['idBuilding'])?>&floor=<?= $this->spaces[$j]['idFloor']?>&space=<?= $this->spaces[$j]['idSpace']?>">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
-                                                            <button type="submit" name="submit" class="btn btn-success success"><?= $strings["Ok"]?></button> 
-                                                        </form>
+                                        <?php  if(checkRol('EDIT', 'SPACE')): ?>
+                                            <a href="SPACE_Controller.php?action=<?php echo $strings['Edit']?>&building=<?= $this->spaces[$j]['idBuilding']?>&floor=<?= $this->spaces[$j]['idFloor']?>&space=<?= $this->spaces[$j]['idSpace']?>">
+                                                <span title="<?= $strings['Edit Space']?>" class="btn btn-primary btn-sm fa fa-pencil"></span>
+                                            </a>
+                                        <?php endif; ?>
+                                        <?php  if(checkRol('DELETE', 'SPACE')): ?>
+                                            <i title="<?= $strings['Delete Space']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?=$this->spaces[$j]['idSpace']?>"></i>
+                                            <div id="item-<?=$this->spaces[$j]['idSpace']?>" class="modal fade"  tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <?= $strings["Attention"]?>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <?= sprintf($strings["Are you sure you want to delete the space \"%s\" ?"], $this->spaces[$j]['idBuilding'].$this->spaces[$j]['idFloor'].$this->spaces[$j]['idSpace'])?><br/> <br>
+                                                            <b><strong><?= $strings["The information that this space has will be lost"]?></strong></b>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <form method="POST" action="SPACE_Controller.php?action=<?= htmlentities($strings['Delete'])?>&building=<?= htmlentities($this->spaces[$j]['idBuilding'])?>&floor=<?= $this->spaces[$j]['idFloor']?>&space=<?= $this->spaces[$j]['idSpace']?>">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
+                                                                <button type="submit" name="submit" class="btn btn-success success"><?= $strings["Ok"]?></button> 
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endfor; ?>

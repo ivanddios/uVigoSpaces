@@ -9,6 +9,7 @@
     require_once(__DIR__."..\..\core\ViewManager.php");
     $this->view = new ViewManager();
     include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
+    //include '../core/ACL.php';
     $this->flashMessageSuccess = $this->view->popFlashSuccess("successMessage");
     $this->flashMessageDanger = $this->view->popFlashDanger("dangerMessage");
 ?>
@@ -38,7 +39,6 @@
             <link rel="stylesheet" href="../css/style.css">
         </head>
 
-       
         <?php if(strpos($_SERVER['REQUEST_URI'],'ShowSpacePlane')) { ?>
             <body onload = "viewSpace('<?= $this->space['coordsPlane'] ?>','<?= $this->plane ?>')"> 
         <?php }else if (strpos($_SERVER['REQUEST_URI'],'EditSpacePlane')) { ?>
@@ -48,6 +48,8 @@
         <?php } else { ?>
             <body>
         <?php } ?>
+
+
             <!-- HEADER -->
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light">
@@ -61,16 +63,60 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="../index.php">Edificios</a>
-                            </li>
+                            <?php  if(checkRol('SHOWALL', 'USER')): ?>
+                                <a class="nav-link" href="../controller/USER_CONTROLLER.php"><?=$strings['Users']?></a>
+                            <?php endif; ?>
+                            <a class="nav-link" href="../index.php"><?=$strings['Buildings']?></a>
                         </ul>
+                        <?php if(isset($_SESSION['LOGIN'])): ?>
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Mi Cuenta </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="../controller/USER_Controller.php?action=edit"><?=$strings['MyAccount']?></a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="../controller/USER_Controller.php?action=logout"><?=$strings['LogOut']?></a>
+                                </div>
+                            </div>
+                        <?php else: ?>
+                            <a class="nav-link nav-a" href="../controller/USER_Controller.php?action=login"><?=$strings['Login']?></a>
+                        <?php endif; ?>
+
                         <div class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Mi Cuenta </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="index.php?controller=users&action=edit">Mi Perfil</a>
+                        <a id="navbarDropdownLang" class="nav-link dropdown-toggle nav-a" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <?php if($_SESSION['LANGUAGE'] === 'Castellano') { ?>
+                                <img src="../img/spain.png" alt="lang" class="languageFlag">
+                            <?php } elseif($_SESSION['LANGUAGE'] === 'English') { ?>
+                                <img src="../img/uk.png" alt="lang" class="languageFlag">
+                            <?php } else { ?>
+                                <img src="../img/galician.gif" alt="lang" class="languageFlag">
+                            <?php } ?>
+                        </a>
+                        <div class="dropdown-menu languages" aria-labelledby="navbarDropdownLang">
+                            <?php if($_SESSION['LANGUAGE'] === 'Castellano') { ?>
+                                <a href="">
+                                    <img src="../img/galician.gif" alt="lang" class="languageFlag">
+                                </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="USER_Controller.php?action=logout">Salir</a>
+                                <a href="">
+                                    <img src="../img/uk.png" alt="lang" class="languageFlag">
+                                </a>
+                            <?php } elseif($_SESSION['LANGUAGE'] === 'Galego') { ?>
+                                <a href="">
+                                    <img src="../img/spain.png" alt="lang" class="languageFlag">
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="">
+                                    <img src="../img/uk.png" alt="lang" class="languageFlag">
+                                </a>
+                            <?php } elseif($_SESSION['LANGUAGE'] === 'English') { ?>
+                                <a href="">
+                                    <img src="../img/galician.gif" alt="lang" class="languageFlag">
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="">
+                                    <img src="../img/spain.png" alt="lang" class="languageFlag">
+                                </a>
+                            <?php } ?>
                             </div>
                         </div>
                     </div>
@@ -79,12 +125,16 @@
 
             <?php if (!empty($this->flashMessageSuccess)): ?>
                 <div class="alert alert-success text-center" id="success-alert" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                     <?= $this->flashMessageSuccess; ?>
                 </div>
             <?php elseif(!empty($this->flashMessageDanger)): ?>
                 <div class="alert alert-danger text-center" id="danger-alert" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                     <?= $this->flashMessageDanger; ?>
                 </div>            
             <?php endif; ?>

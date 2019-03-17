@@ -307,15 +307,15 @@ Switch ($_REQUEST['action']){
 
     default:
                     
-        if (!isset($_SESSION['LOGIN'])){
-            $view->setFlashDanger($strings["Not in session. Show the floors requires login"]);
-            $view->redirect("USER_Controller.php", "index");
-        }
+        // if (!isset($_SESSION['LOGIN'])){
+        //     $view->setFlashDanger($strings["Not in session. Show the floors requires login"]);
+        //     $view->redirect("USER_Controller.php", "index");
+        // }
 
-        if(!checkRol('SHOWALL', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("BUILDING_Controller.php", "");
-        }
+        // if(!checkRol('SHOWALL', $function)){
+        //     $view->setFlashDanger($strings["You do not have the necessary permits"]);
+        //     $view->redirect("BUILDING_Controller.php", "");
+        // }
 
         if(isset($_GET['building']) && isset($_GET['floor'])){
             $spaces = new SPACE_Model($_GET['building'],$_GET['floor']);

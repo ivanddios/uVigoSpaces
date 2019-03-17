@@ -110,15 +110,15 @@ Switch ($_GET['action']){
 
     case  $strings['Show']:
 
-        if (!isset($_SESSION['LOGIN'])){
-            $view->setFlashDanger($strings["Not in session. Show floors requires login."]);
-            $view->redirect("USER_Controller.php", "");
-        }
+        // if (!isset($_SESSION['LOGIN'])){
+        //     $view->setFlashDanger($strings["Not in session. Show floors requires login."]);
+        //     $view->redirect("USER_Controller.php", "");
+        // }
 
-        if(!checkRol('SHOW', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("BUILDING_Controller.php", "");
-        }
+        // if(!checkRol('SHOW', $function)){
+        //     $view->setFlashDanger($strings["You do not have the necessary permits"]);
+        //     $view->redirect("BUILDING_Controller.php", "");
+        // }
 
         if (!isset($_GET['building'])){
             $view->setFlashDanger($strings["Building id is mandatory"]);
@@ -172,10 +172,10 @@ Switch ($_GET['action']){
 
     default:
 
-        if(!checkRol('SHOWALL', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("BUILDING_Controller.php", "");
-        }
+        // if(!checkRol('SHOWALL', $function)){
+        //     $view->setFlashDanger($strings["You do not have the necessary permits"]);
+        //     $view->redirect("BUILDING_Controller.php", "");
+        // }
         $building = new BUILDING_Model();
         $buildings = $building->showAllBuilding();
         new BUILDING_SHOWALL($buildings);

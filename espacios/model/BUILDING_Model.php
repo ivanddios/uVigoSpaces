@@ -28,7 +28,7 @@ public function getNameBuilding(){
 
 function ConectarBD() {
     $this->mysqli = new mysqli("localhost", "root", "", "espacios");
-    $acentos = $this->mysqli->query("set names 'utf8'");
+    $this->mysqli->query("set names 'utf8'");
     if ($this->mysqli->connect_errno) {
         echo  "Error to conect with MySQL: (" . $this->mysqli->connect_errno . ") " . $this->mysqli->connect_error;
     }
@@ -139,7 +139,7 @@ public function checkIsValidForAdd_Update() {
         $errors = "There is already a building with that id";
     }else if (strlen(trim($this->nameBuilding)) == 0 ) {
         $errors= "Building name is mandatory";
-    }else if (strlen(trim($this->idBuilding)) > 225 ) {
+    }else if (strlen(trim($this->nameBuilding)) > 225 ) {
         $errors = "Building name can not be that long";
     }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameBuilding)){
         $errors = "Building name is invalid. Try again!";

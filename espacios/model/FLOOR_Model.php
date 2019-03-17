@@ -61,7 +61,7 @@ public function setSurfaceUsefulFloor($surfaceUsefulFloor) {
 
 function ConectarBD() {
     $this->mysqli = new mysqli("localhost", "root", "", "espacios");
-    $acentos = $this->mysqli->query("SET NAMES 'utf8'");
+    $this->mysqli->query("SET NAMES 'utf8'");
     if ($this->mysqli->connect_errno) {
         echo "Error to conect with MySQL: (" . $this->mysqli->connect_errno . ") " . $this->mysqli->connect_error;
     }

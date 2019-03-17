@@ -57,7 +57,7 @@ class SPACE_SHOW{
 								</div>
 							</div>
 							
-						<a href="SPACE_Controller.php?building=<?=$this->space['idBuilding']?>&floor=<?=$this->space['idFloor']?>"><?= $strings["Back"] ?></a>
+						<a href="<?= $_SERVER['HTTP_REFERER'];?>"><?= $strings["Back"] ?></a>
 					</div>
 				</div>
 			</div>

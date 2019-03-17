@@ -18,7 +18,7 @@ class SPACE_EDIT_PLANE{
 		include 'header.php';
 		$buffer = ob_get_contents();
 		ob_end_clean();
-		$buffer=str_replace("%TITLE%",$strings['Select Space'],$buffer);
+		$buffer=str_replace("%TITLE%",$strings['SelectSpace'],$buffer);
 		echo $buffer;
 		////////////////////////////////////////////////////
 		?>
@@ -26,7 +26,7 @@ class SPACE_EDIT_PLANE{
 		<div id="titleView">
 			<?=htmlentities($strings["Select the space in the plane"])?>
 			<canvas id="canvas"></canvas>
-			<form method="POST" action="SPACE_Controller.php?action=<?= $strings['EditPlane']?>&building=<?= $this->space['idBuilding']?>&floor=<?= $this->space['idFloor']?>&space=<?= $this->space['idSpace']?>">
+			<form method="POST" action="SPACE_Controller.php?action=<?= $strings['EditSpacePlane']?>&building=<?= $this->space['idBuilding']?>&floor=<?= $this->space['idFloor']?>&space=<?= $this->space['idSpace']?>">
 				<input  type="hidden" name="idBuilding" value="<?=$this->space['idBuilding']?>" readonly>
 				<input  type="hidden"name="idFloor" value="<?=$this->space['idFloor']?>" readonly>
 				<input  type="hidden" name="idSpace" value="<?=$this->space['idSpace']?>" readonly>
