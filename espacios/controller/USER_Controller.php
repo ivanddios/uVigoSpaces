@@ -17,13 +17,20 @@ $view = new ViewManager();
 
 function get_data_form() {
 
-    // $idBuilding = $_POST['idBuilding'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $name = $_POST['name'];
+    $surname = $_POST['surname'];
+    $dni = $_POST['dni'];
+    $birthdate = $_POST['birthdate'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
     // $nameBuilding = $_POST['nameBuilding'];
     // $addressBuilding = $_POST['addressBuilding'];
     // $phoneBuilding = $_POST['phoneBuilding'];
    
-    // $building = new BUILDING_Model($idBuilding, $nameBuilding, $addressBuilding, $phoneBuilding);
-    // return $building;
+     $user = new USER_Model($username,  $password, $name, $surname, $dni, $birthdate, $email, $phone);
+     return $user;
 }
 
 
@@ -76,15 +83,15 @@ Switch ($_GET['action']){
             $userAdd = get_data_form();
 
             try{
-                $userAdd->checkIsValidForAdd_Update(); 
+                $userAdd->checkIsValidForAdd_Update();
                 $userAdd->addUser();
-                $flashMessageSuccess = sprintf($strings["User \"%s\" successfully added."], $userAdd->getNameUser());
+                $flashMessageSuccess = sprintf($strings["User \"%s\" successfully added."], $userAdd->getUsername());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("USER_Controller.php", "index");
 
             }catch(Exception $errors) {
                 $view->setFlashDanger($strings[$errors->getMessage()]);
-                $view->redirect("USER_Controller.php", "add");
+                $view->redirect("USER_Controller.php", $strings['Add']);
             }
                 
         } else {

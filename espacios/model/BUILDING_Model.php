@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__."..\..\core\ConnectionBD.php");
+
 class BUILDING_Model {
 
 	private $idBuilding;
@@ -14,7 +16,8 @@ function __construct($idBuilding=NULL, $nameBuilding=NULL, $addressBuilding=NULL
     $this->idBuilding =  $idBuilding; 
 	$this->nameBuilding = $nameBuilding;
 	$this->addressBuilding = $addressBuilding;
-	$this->phoneBuilding = $phoneBuilding;
+    $this->phoneBuilding = $phoneBuilding;
+    $this->mysqli = Connection::connectionBD();
 }
 
 public function getIdBuilding(){
@@ -26,17 +29,7 @@ public function getNameBuilding(){
 }
 
 
-function ConectarBD() {
-    $this->mysqli = new mysqli("localhost", "root", "", "espacios");
-    $this->mysqli->query("set names 'utf8'");
-    if ($this->mysqli->connect_errno) {
-        echo  "Error to conect with MySQL: (" . $this->mysqli->connect_errno . ") " . $this->mysqli->connect_error;
-    }
-}
-
-
 function showAllBuilding() {
-    $this->ConectarBD();
     $sql = "SELECT * FROM building";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
@@ -52,7 +45,6 @@ function showAllBuilding() {
 }
 
 function findBuilding() {
-	$this->ConectarBD();
 	$sql = "SELECT * FROM building WHERE idBuilding = '$this->idBuilding'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows == 1) {
@@ -63,7 +55,6 @@ function findBuilding() {
 }
 
 function addBuilding() {
-    $this->ConectarBD();
     $sql = "INSERT INTO building (idBuilding, nameBuilding, addressBuilding, phoneBuilding) VALUES ('$this->idBuilding', '$this->nameBuilding', '$this->addressBuilding', '$this->phoneBuilding')";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
@@ -74,7 +65,6 @@ function addBuilding() {
 
 
 function deleteBuilding() {
-    $this->ConectarBD();
     $sql = "DELETE FROM building WHERE idBuilding ='$this->idBuilding'";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
@@ -84,7 +74,6 @@ function deleteBuilding() {
 }
 
 function fillInBuilding() {
-    $this->ConectarBD();
     $sql = "SELECT * FROM building WHERE idBuilding = '$this->idBuilding'";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
@@ -95,7 +84,6 @@ function fillInBuilding() {
 }
 
 function updateBuilding($idBuilding) {
-    $this->ConectarBD();
     $sql = "UPDATE building SET idBuilding = '$this->idBuilding', nameBuilding = '$this->nameBuilding', addressBuilding = '$this->addressBuilding', phoneBuilding = '$this->phoneBuilding' WHERE idBuilding = '$idBuilding'";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
@@ -106,7 +94,6 @@ function updateBuilding($idBuilding) {
 
 
 function findBuildingName() {
-    $this->ConectarBD();
     $sql = "SELECT nameBuilding FROM building WHERE idBuilding='$this->idBuilding'";
     $result = $this->mysqli->query($sql)->fetch_array();
     return $result['nameBuilding'];
@@ -114,7 +101,6 @@ function findBuildingName() {
 
 
 public function existsBuilding($idBuilding) {
-	$this->ConectarBD();
 	$sql = "SELECT * FROM building WHERE idBuilding = '$idBuilding'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows == 1) {

@@ -1,12 +1,13 @@
 <?php
 
-require_once(__DIR__."..\..\core\ViewManager.php");
-include '../model/BUILDING_Model.php';
-include '../view/BUILDING_SHOWALL_View.php';
-include '../view/BUILDING_EDIT_View.php';
-include '../view/BUILDING_SHOW_View.php';
-include '../view/BUILDING_ADD_View.php';
-include '../core/ACL.php';
+require_once(__DIR__."../../core/ViewManager.php");
+require_once(__DIR__."../../core/ACL.php");
+require_once(__DIR__."../../model/BUILDING_Model.php");
+require_once(__DIR__."../../view/BUILDING_SHOWALL_View.php");
+require_once(__DIR__."../../view/BUILDING_ADD_View.php");
+require_once(__DIR__."../../view/BUILDING_EDIT_View.php");
+require_once(__DIR__."../../view/BUILDING_SHOW_View.php");
+
 
 $function = "BUILDING";
 $view = new ViewManager();

@@ -79,6 +79,15 @@ $strings = array(
 "Edit Space" => "Editar Espacio",
 "Delete Space" => "Eliminar Espacio",
 "Show Space" => "Ver Espacio",
+"SelectSpacePlane" => "SelectSpacePlane",
+"ShowSpacePlane" => "ShowSpacePlane",
+"EditSpacePlane" => "EditSpacePlane",
+"Clear" => "Eliminar",
+"Plane successfully updated" => "Plano correctamente actualizado",
+"Select the space in the plane" => "Selecciona el espacio en el plano haciendo click en sus vértices",
+"ViewSpace" => "Ver Espacio",
+"SelectSpace" => "Seleccionar Espacio",
+"EditSpace" => "Editar Espacio",
 "Data of the new space" => "Datos del nuevo espacio",
 "What is the identifier of this space?" => "¿Cuál es el identificador del nuevo espacio?",
 "What space is it?" => "¿Qué espacio es?",
@@ -169,15 +178,30 @@ $strings = array(
 "Space name can not be that long" => "El nombre del espacio es demasiado largo",
 "Space name is invalid. Try again!" => "El nombre del espacio es inválido. Prueba otra vez!",
 "Space surface can not be that long" => "La superficie del espacio es demasiado grande",
-"SelectSpacePlane" => "SelectSpacePlane",
-"ShowSpacePlane" => "ShowSpacePlane",
-"EditSpacePlane" => "EditSpacePlane",
-"Clear" => "Eliminar",
-"Plane successfully updated" => "Plano correctamente actualizado",
-"Select the space in the plane" => "Selecciona el espacio en el plano haciendo click en sus vértices",
-"ViewSpace" => "Ver Espacio",
-"SelectSpace" => "Seleccionar Espacio",
-"EditSpace" => "Editar Espacio"
+
+
+//USER
+"Username is mandatory" => "El nick de usuario es obligatorio",
+"Username can not be that long" => "El nick de usuario no puede ser tan largo",
+"Username is invalid" => "El nick de usuario es inválido",
+"There is aready a user with that username" => "Ya existe un usuario con ese nick",
+"Password is mandatory" => "La contraseña es obligatoria",
+"Password can not be that long" => "La contraseña no puede ser tan larga",
+"Password is invalid. Try again!" => "La contraseña es inválida. ¡Prueba otra vez!",
+"User name is mandatory" => "El nombre del usuario es obligatorio",
+"User name can not be that long" => "El nombre del usuario no puede ser tan largo",
+"User name is invalid. Try again!" => "El nombre de usuario es inválido. ¡Prueba otra vez!",
+"User surname are mandatory" => "Los apellidos son obligatorios",
+"User surnames can not be that long" => "Los apellidos no pueden ser tan largos",
+"User surnames are invalid. Try again!" => "Los apellidos son inválidos. ¡Prueba otra vez!",
+"User id is invalid. Try again!" => "El DNI es inválido. ¡Prueba otra vez!",
+"User id letter is invalid. Try again!" => "La letra del DNI es inválida. ¡Prueba otra vez!",
+"User phone is incorrect. Example: 666777888" => "El teléfono es inválido. Ejemplo: 666777888",
+"User phone format is invalid. Example: 666777888" => "El formato del teléfono es inválido. Ejemplo: 666777888"
+
+
+
+
 )
 
 ?>

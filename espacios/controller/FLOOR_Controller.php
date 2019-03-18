@@ -1,15 +1,15 @@
 <?php
 
-require_once(__DIR__."..\..\core\ViewManager.php");
-include '../model/BUILDING_Model.php';
-include '../model/FLOOR_Model.php';
-include '../model/SPACE_Model.php';
-include '../view/FLOOR_SHOWALL_View.php';
-include '../view/FLOOR_EDIT_View.php';
-include '../view/FLOOR_ADD_View.php';
-include '../view/FLOOR_SHOW_View.php';
-include '../view/FLOOR_SHOW_PLANE_View.php';
-include '../core/ACL.php';
+require_once(__DIR__."../../core/ViewManager.php");
+require_once(__DIR__."../../core/ACL.php");
+require_once(__DIR__."../../model/BUILDING_Model.php");
+require_once(__DIR__."../../model/FLOOR_Model.php");
+require_once(__DIR__."../../model/SPACE_Model.php");
+require_once(__DIR__."../../view/FLOOR_SHOWALL_View.php");
+require_once(__DIR__."../../view/FLOOR_ADD_View.php");
+require_once(__DIR__."../../view/FLOOR_EDIT_View.php");
+require_once(__DIR__."../../view/FLOOR_SHOW_View.php");
+require_once(__DIR__."../../view/FLOOR_SHOW_PLANE_View.php");
 
 $function = "FLOOR";
 $view = new ViewManager();
@@ -35,8 +35,6 @@ function get_data_form() {
     $floor = new FLOOR_Model($idBuilding, $idFloor, $nameFloor, $planeFloor, $surfaceBuildingFloor, $surfaceUsefulFloor);
     return $floor;
 }
-
-
 
 
 if (!isset($_REQUEST['action'])){
@@ -91,7 +89,7 @@ Switch ($_REQUEST['action']){
         } else {
             new FLOOR_ADD($buildingid);
         }
- 
+        
     break;
 
 

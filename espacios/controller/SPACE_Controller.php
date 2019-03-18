@@ -1,17 +1,17 @@
 <?php
 
-require_once(__DIR__."..\..\core\ViewManager.php");
-include '../model/SPACE_Model.php';
-include '../model/BUILDING_Model.php';
-include '../model/FLOOR_Model.php';
-include '../view/SPACE_SHOWALL_View.php';
-include '../view/SPACE_EDIT_View.php';
-include '../view/SPACE_ADD_View.php';
-include '../view/SPACE_SHOW_View.php';
-include '../view/SPACE_SELECT_PLANE_View.php';
-include '../view/SPACE_SHOW_PLANE_View.php';
-include '../view/SPACE_EDIT_PLANE_View.php';
-include '../core/ACL.php';
+require_once(__DIR__."../../core/ViewManager.php");
+require_once(__DIR__."../../core/ACL.php");
+require_once(__DIR__."../../model/BUILDING_Model.php");
+require_once(__DIR__."../../model/FLOOR_Model.php");
+require_once(__DIR__."../../model/SPACE_Model.php")
+require_once(__DIR__."../../view/SPACE_SHOWALL_View.php");
+require_once(__DIR__."../../view/SPACE_ADD_View.php");
+require_once(__DIR__."../../view/SPACE_EDIT_View.php");
+require_once(__DIR__."../../view/SPACE_SHOW_View.php");
+require_once(__DIR__."../../view/SPACE_SELECT_PLANE_View.php");
+require_once(__DIR__."../../view/SPACE_EDIT_PLANE_View.php");
+require_once(__DIR__."../../view/SPACE_SHOW_PLANE_View.php");
 
 $function = "SPACE";
 $view = new ViewManager();

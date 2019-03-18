@@ -38,6 +38,11 @@ class USER_ADD{
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
+									<input type="password" id="password" name="password" placeholder="<?= $strings['What is the password of this user?']?>" onblur="checkText(this.id)">
+									<i class="fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
+								</div>
+
+								<div class="inputWithIcon inputIconBg">
 									<input type="text" id="name" name="name" placeholder="<?= $strings['What is the name of the user?']?>" onblur="checkText(this.id)">
 									<i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
@@ -71,7 +76,7 @@ class USER_ADD{
 									<input type="file" id="photo" name="photo" accept="image/*" onchange="validateUpdloadFile(this.id)">
                                 </div>
                                 
-								<button type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>
+								<button type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
 							</div> 
 						</form>
 						<a href="../index.php"><?= $strings["Back"] ?></a>

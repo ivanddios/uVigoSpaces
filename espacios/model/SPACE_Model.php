@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__."..\..\core\ConnectionBD.php");
+
 class SPACE_Model {
 
     private $idBuilding;
@@ -19,6 +21,7 @@ function __construct($idBuilding=NULL, $idFloor=NULL, $idSpace=NULL, $nameSpace=
 	$this->nameSpace = $nameSpace;
     $this->surfaceSpace = $surfaceSpace;
     $this->coordsPlane = $coordsPlane;
+    $this->mysqli = Connection::connectionBD();
 
     if(empty($numberInventorySpace)){
         $this->numberInventorySpace = "######";
@@ -54,16 +57,7 @@ public function setNumberInventorySpace($numberInventorySpace) {
 }
 
 
-function ConectarBD() {
-    $this->mysqli = new mysqli("localhost", "root", "", "espacios");
-    $this->mysqli->query("set names 'utf8'");
-    if ($this->mysqli->connect_errno) {
-        echo "Error to conect with MySQL: (" . $this->mysqli->connect_errno . ") " . $this->mysqli->connect_error;
-    }
-}
-
 function showAllSpaces() {
-    $this->ConectarBD();
     $sql = "SELECT * FROM space WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'" ;
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
@@ -79,7 +73,6 @@ function showAllSpaces() {
 }
 
 function findSpace() {
-    $this->ConectarBD();
     $sql = "SELECT * FROM space WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
@@ -91,7 +84,6 @@ function findSpace() {
 
 
 function findInfoSpace() {
-    $this->ConectarBD();
     $sql = "SELECT building.nameBuilding, floor.nameFloor, space.nameSpace, space.coordsPlane FROM building, floor, space WHERE building.idBuilding = floor.idBuilding AND floor.idFloor = space.idFloor AND building.idBuilding = '$this->idBuilding' AND floor.idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
@@ -102,14 +94,12 @@ function findInfoSpace() {
 }
 
 function findNameSpace() {
-    $this->ConectarBD();
     $sql = "SELECT nameSpace FROM space WHERE idBuilding='$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
     $result = $this->mysqli->query($sql)->fetch_array();
     return $result['nameSpace'];
 }
 
 function findCoordsSpace() {
-    $this->ConectarBD();
     $sql = "SELECT coordsPlane FROM space WHERE idBuilding='$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
     $result = $this->mysqli->query($sql)->fetch_array();
     return $result['coordsPlane'];
@@ -121,7 +111,6 @@ function findCoordsSpace() {
 
 
 function addSpace() {
-    $this->ConectarBD();
     $sql = "INSERT INTO space (idBuilding, idFloor, idSpace, nameSpace, surfaceSpace, numberInventorySpace) VALUES ('$this->idBuilding', '$this->idFloor', '$this->idSpace', '$this->nameSpace', $this->surfaceSpace, '$this->numberInventorySpace')";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
@@ -132,7 +121,6 @@ function addSpace() {
 
 
 function addCoords() {
-    $this->ConectarBD();
     $sql = "UPDATE space SET coordsPlane = '$this->coordsPlane' WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
@@ -144,7 +132,6 @@ function addCoords() {
 
 
 function updateSpace($idBuilding, $idFloor, $idSpace) {
-    $this->ConectarBD();
     $sql = "UPDATE space SET idSpace = '$this->idSpace', nameSpace = '$this->nameSpace', surfaceSpace = $this->surfaceSpace, numberInventorySpace = '$this->numberInventorySpace' WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor' AND idSpace = '$idSpace'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
@@ -154,7 +141,6 @@ function updateSpace($idBuilding, $idFloor, $idSpace) {
 }
 
 function deleteSpace() {
-    $this->ConectarBD();
     $sql = "DELETE FROM space WHERE idBuilding ='$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
@@ -165,7 +151,6 @@ function deleteSpace() {
 
 
 public function existsSpace() {
-	$this->ConectarBD();
 	$sql = "SELECT * FROM space WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor' AND idSPace = '$this->idSpace'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows == 1) {
@@ -176,10 +161,9 @@ public function existsSpace() {
 }
 
 public function existsSpaceToEdit($idSpace) {
-	$this->ConectarBD();
 	$sql = "SELECT * FROM space WHERE (idBuilding, idFloor, idSpace) 
-    NOT IN (SELECT idBuilding, idFloor, idSpace FROM space WHERE idBuilding='$this->idBuilding' AND idFloor='$this->idFloor' AND idSpace='$idSpace') 
-    AND idBuilding='$this->idBuilding' AND idFloor='$this->idFloor' AND idSpace='$this->idSpace'";
+            NOT IN (SELECT idBuilding, idFloor, idSpace FROM space WHERE idBuilding='$this->idBuilding' AND idFloor='$this->idFloor' AND idSpace='$idSpace') 
+            AND idBuilding='$this->idBuilding' AND idFloor='$this->idFloor' AND idSpace='$this->idSpace'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows >= 1) {
 		return true;
@@ -190,7 +174,6 @@ public function existsSpaceToEdit($idSpace) {
 
 
 public function findPlane() {
-	$this->ConectarBD();
 	$sql = "SELECT planeFloor FROM floor WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'";
 	$result = $this->mysqli->query($sql)->fetch_array();
     return $result['planeFloor'];

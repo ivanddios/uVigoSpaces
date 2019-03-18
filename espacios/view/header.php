@@ -93,27 +93,27 @@
                         </a>
                         <div class="dropdown-menu languages" aria-labelledby="navbarDropdownLang">
                             <?php if($_SESSION['LANGUAGE'] === 'Castellano') { ?>
-                                <a href="">
+                                <a href="../core/CambioIdioma.php?idioma=Galego">
                                     <img src="../img/galician.gif" alt="lang" class="languageFlag">
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a href="">
+                                <a href="../core/CambioIdioma.php?idioma=English">
                                     <img src="../img/uk.png" alt="lang" class="languageFlag">
                                 </a>
                             <?php } elseif($_SESSION['LANGUAGE'] === 'Galego') { ?>
-                                <a href="">
+                                <a href="../core/CambioIdioma.php?idioma=Castellano">
                                     <img src="../img/spain.png" alt="lang" class="languageFlag">
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a href="">
+                                <a href="../core/CambioIdioma.php?idioma=English">
                                     <img src="../img/uk.png" alt="lang" class="languageFlag">
                                 </a>
                             <?php } elseif($_SESSION['LANGUAGE'] === 'English') { ?>
-                                <a href="">
+                                <a href="../core/CambioIdioma.php?idioma=Galego">
                                     <img src="../img/galician.gif" alt="lang" class="languageFlag">
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a href="">
+                                <a href="../core/CambioIdioma.php?idioma=Castellano">
                                     <img src="../img/spain.png" alt="lang" class="languageFlag">
                                 </a>
                             <?php } ?>
