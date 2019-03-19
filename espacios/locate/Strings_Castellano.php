@@ -124,12 +124,18 @@ $strings = array(
 "Delete User" => "Eliminar usuario",
 "New user" => "Nuevo usuario",
 "What is the username of this user?" => "¿Cuál es el username?",
+"What is the password of this user?" => "¿Cuál es la contraseña del usuario?",
+"Repeat password" => "Vuelva a escribir la contraseña",
 "What is the name of the user?" => "¿Cuál es el nombre del usuario?",
 "What are the user's surnames?" => "¿Cuáles son los apellidos del usuario?",
 'What is your ID?' => "¿Cuál es el DNI del usuario?",
 "What is his birthdate?" => "¿Cuál es la fecha de nacimiento del usuario?",
 "What is his email?" => "¿Cuál es el email del usuario?",
 "What is his phone?" => "¿Cuál es el teléfono del usuario?",
+"PasswordCharacters"=> "Mínimo 8 caracteres",
+"PasswordLowercase"=> "Una minúscula",
+"PasswordUppercase"=> "Una mayúscula",
+"PasswordNumber"=> "Un número",
 
 
 
@@ -194,8 +200,10 @@ $strings = array(
 "User surname are mandatory" => "Los apellidos son obligatorios",
 "User surnames can not be that long" => "Los apellidos no pueden ser tan largos",
 "User surnames are invalid. Try again!" => "Los apellidos son inválidos. ¡Prueba otra vez!",
+"There is aready a user with that dni" => "Ya existe un usuario con ese DNI",
 "User id is invalid. Try again!" => "El DNI es inválido. ¡Prueba otra vez!",
 "User id letter is invalid. Try again!" => "La letra del DNI es inválida. ¡Prueba otra vez!",
+"There is aready a user with that email" => "Ya existe un usuario con ese email",
 "User phone is incorrect. Example: 666777888" => "El teléfono es inválido. Ejemplo: 666777888",
 "User phone format is invalid. Example: 666777888" => "El formato del teléfono es inválido. Ejemplo: 666777888"
 

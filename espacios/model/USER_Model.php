@@ -19,7 +19,7 @@ class USER_Model {
     function __construct($username=null, $password=null, $name=null, $surname=null, $dni=null, $birthdate=null, $email=null, $phone=null, $photo=null)
     {
         $this->username =  $username; 
-        $this->password = md5($password);
+        $this->password = $password;
         $this->name = $name;
         $this->surname = $surname;
         $this->dni = $dni;
@@ -38,6 +38,11 @@ class USER_Model {
     public function getDNI(){
         return $this->dni;
     }
+
+    public function getEmail(){
+        return $this->email;
+    }
+
 
 
 
@@ -92,10 +97,8 @@ class USER_Model {
     }
 
     function addUser() {
-
-       
-
-        $sql = "INSERT INTO user VALUES ('$this->photo', '$this->username', '$this->password', '$this->name', '$this->surname', '$this->dni', '$this->birthdate', '$this->email', '$this->phone')";
+        $passwordBD = md5($this->password);
+        $sql = "INSERT INTO user VALUES ('$this->photo', '$this->username', '$passwordBD', '$this->name', '$this->surname', '$this->dni', '$this->birthdate', '$this->email', '$this->phone')";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
         } else {
@@ -107,6 +110,26 @@ class USER_Model {
 
     function existsUser($username) {
         $sql = "SELECT * FROM user WHERE username = '$username'";
+        $result = $this->mysqli->query($sql);
+        if ($result->num_rows == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function existsDNI($dni) {
+        $sql = "SELECT * FROM user WHERE dni = '$dni'";
+        $result = $this->mysqli->query($sql);
+        if ($result->num_rows == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function existsEmail($email) {
+        $sql = "SELECT * FROM user WHERE email = '$email'";
         $result = $this->mysqli->query($sql);
         if ($result->num_rows == 1) {
             return true;
@@ -132,7 +155,13 @@ class USER_Model {
         }
     }
 
-    /* INCOMPLETAS. PROBAR FECHA Y DNI */ 
+
+    function is_valid_email($str)
+{
+    return (false !== filter_var($str, FILTER_VALIDATE_EMAIL));
+}
+
+    /* INCOMPLETAS. PROBAR FECHA */ 
     public function checkIsValidForAdd_Update() {
 
         $errors = array();
@@ -163,10 +192,16 @@ class USER_Model {
             $errors = "User surnames can not be that long";
         }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->surname)){
             $errors = "User surnames are invalid. Try again!";
+        }elseif($this->existsDNI($this->dni)){
+            $errors = "There is already a user with that dni";
         }else if (!preg_match('/^\d{8}[a-zA-Z]$/', $this->dni)) {
             $errors = "User id is invalid. Try again!";
         }elseif(!$this->letterDNI($this->dni)){
             $errors = "User id letter is invalid. Try again!";
+        }elseif(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
+            $errors = "There is already a user with that email";
+        }elseif($this->existsEmail($this->email)){
+            $errors = "There is already a user with that email";
         }else if (strlen(trim($this->phone)) != 9 ) {
             $errors= "User phone is incorrect. Example: 666777888";
         }else if(!preg_match('/^[9|6|7][0-9]{8}$/', $this->phone)){

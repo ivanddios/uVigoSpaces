@@ -1,7 +1,11 @@
 //Function JQuery to limit the time of alerts messages
 $(document).ready(function() {
     setTimeout(function() {
-        $(".alert").alert('close');
+        $(".alert-danger").alert('close');
+    }, 4000);
+
+    setTimeout(function() {
+        $(".alert-success").alert('close');
     }, 4000);
 });
 
@@ -259,6 +263,29 @@ function searchInTable() {
 
 
 
+function calendar() {
+
+    $('#date-es').bootstrapMaterialDatePicker
+    ({
+        format: 'DD/MM/YYYY',
+        lang: 'es',
+        time: false,
+        weekStart: 1, 
+        nowButton : true,
+        switchOnClick : true,
+        maxDate : new Date()
+    });
+
+    $('#date-eng').bootstrapMaterialDatePicker
+    ({
+        format: 'DD/MM/YYYY',
+        time: false,
+        weekStart: 1, 
+        nowButton : true,
+        switchOnClick : true,
+        maxDate : new Date()
+    });
+}
 
  
 

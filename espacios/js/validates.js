@@ -53,7 +53,7 @@ function checkSpaceId(spaceId){
 
 function checkText(textId){
     
-    var expr = /[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/;
+     var expr = /[A-Za-z0-9ñÑ-áéíóúÁÉÍÓÚ]*$/;
     var text = document.getElementById(textId).value;
     
     if (expr.test(text) && text.length > 0 && text.length < 225){
@@ -67,6 +67,7 @@ function checkText(textId){
         return false;
     }
 }
+
 
 function checkNumPhone(phoneId){
     
@@ -177,6 +178,143 @@ function validateUpdloadFile(planeFloorID) {
 
 
 
+
+
+function checkUser(usernameID){
+    
+   var expr = /[A-Za-z0-9]*$/;
+   var username = document.getElementById(usernameID).value;
+   
+   if (expr.test(username) && username.length > 0 && username.length < 225){
+       document.getElementById(usernameID).nextElementSibling.style.backgroundColor = "green"; 
+       document.getElementById(usernameID).style.borderColor = "green";
+       return true;
+   }
+   else{
+       document.getElementById(usernameID).nextElementSibling.style.backgroundColor = "red";  
+       document.getElementById(usernameID).style.borderColor = "red";
+       return false;
+   }
+}
+
+
+
+
+function checkPassword(passwordID){
+
+    var expr = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+    var lowerCaseLetters = /[a-z]/g;
+    var upperCaseLetters = /[A-Z]/g;
+    var numbers = /[0-9]/g;
+    var password = document.getElementById(passwordID).value;
+    var passwordBox =  document.getElementById("passwordAlert");
+    var lowercase = document.getElementById("lowercase");
+    var uppercase = document.getElementById("uppercase");
+    var number = document.getElementById("number");
+    var length = document.getElementById("length");
+    
+
+    if(password.length >= 8) {
+        length.classList.remove("invalid");
+        length.classList.add("valid");
+      } else {
+        length.classList.remove("valid");
+        length.classList.add("invalid");
+      }
+
+   
+    if(lowerCaseLetters.test(password)) {  
+        lowercase.classList.remove("invalid");
+        lowercase.classList.add("valid");
+    } else {
+        lowercase.classList.remove("valid");
+        lowercase.classList.add("invalid");
+    }
+
+   
+    if(upperCaseLetters.test(password)) {  
+        uppercase.classList.remove("invalid");
+        uppercase.classList.add("valid");
+    } else {
+        uppercase.classList.remove("valid");
+        uppercase.classList.add("invalid");
+    }
+
+   
+    if(numbers.test(password)) { 
+        number.classList.remove("invalid");
+        number.classList.add("valid");
+    } else {
+        number.classList.remove("valid");
+        number.classList.add("invalid");
+    }
+    
+
+    if (expr.test(password) && password.length >= 8 && password.length < 225){
+        passwordBox.style.display = 'none';
+        document.getElementById(passwordID).nextElementSibling.style.backgroundColor = "green"; 
+        document.getElementById(passwordID).style.borderColor = "green";
+        return true;
+    }
+    else{
+        passwordBox.style.display = 'block';
+        document.getElementById(passwordID).nextElementSibling.style.backgroundColor = "red";  
+        document.getElementById(passwordID).style.borderColor = "red";
+        return false;
+    }
+}
+
+
+
+function checkConfirmPassword(confirmPasswordID){
+    
+    var confirmPassword = document.getElementById(confirmPasswordID).value;
+    var password = document.getElementById("password").value;
+
+    
+    if (password == confirmPassword){
+        document.getElementById(confirmPasswordID).nextElementSibling.style.backgroundColor = "green"; 
+        document.getElementById(confirmPasswordID).style.borderColor = "green";
+        return true;
+    }
+    else{
+        document.getElementById(confirmPasswordID).nextElementSibling.style.backgroundColor = "red";  
+        document.getElementById(confirmPasswordID).style.borderColor = "red";
+        return false;
+    }
+ }
+
+
+function checkDNI(dniID) {
+    var dni = document.getElementById(dniID).value;
+    var numberDNI, letterDNI, validLetter, expr;
+   
+    expr = /^\d{8}[a-zA-Z]$/;
+   
+    if(expr.test(dni)){
+        numberDNI = dni.substr(0, dni.length - 1);
+        letterDNI = dni.substr(dni.length - 1, 1);
+        numberDNI = numberDNI % 23;
+        validLetter = 'TRWAGMYFPDXBNJZSQVHLCKET';
+        validLetter = validLetter.substring(numberDNI, numberDNI + 1);
+        if (letterDNI.toUpperCase() != validLetter.toUpperCase()) {
+            document.getElementById(dniID).nextElementSibling.style.backgroundColor = "red";  
+            document.getElementById(dniID).style.borderColor = "red";
+            return false;
+        }else{
+            document.getElementById(dniID).nextElementSibling.style.backgroundColor = "green"; 
+            document.getElementById(dniID).style.borderColor = "green";
+            return true;
+        }
+    }else{
+        document.getElementById(dniID).nextElementSibling.style.backgroundColor = "red";  
+        document.getElementById(dniID).style.borderColor = "red";
+        return false;
+    }
+}
+
+
+
 function validateBuilding() {
     
     if(checkBuildingId("idBuilding") && checkText("nameBuilding") && checkText("addressBuilding") && checkNumPhone("phoneBuilding")) {
@@ -199,31 +337,30 @@ function validateFloor() {
 function validateSpace() {
     
     if(checkSpaceId("idSpace") && checkText("nameSpace") && checkSurface("surfaceSpace") && checkNumberInventory("numberInventorySpace")) { 
-        //var surface = document.getElementById("surfaceSpace").value;
-        //var numInventory = document.getElementById("numberInventorySpace").value;
-        //document.getElementsByName("submit")[0].disabled = false;
-        
-        // if(surface.length > 0){
-        //     if(checkSurfaceSpace("surfaceSpace")){
-        //         document.getElementsByName("submit")[0].disabled = false;
-        //     }
-        // }
-
-        // if(numInventory.length > 0){
-        //     if(checkNumberInventory("numberInventorySpace")){
-        //         document.getElementsByName("submit")[0].disabled = false;
-        //     }
-        // }
-
         document.getElementsByName("submit")[0].disabled = false;
-        // document.getElementById("error").style.display = "none";
     }else{
         document.getElementsByName("submit")[0].disabled = true;
-        // document.getElementsByName("error")[0].style.display = "block";
         return false;
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -246,32 +383,5 @@ function highlightNumberInventoryAndSurface(){
 
 
 
-// function validateSpace() {
-    
-//     if(checkSpaceId("idSpace") && checkText("nameSpace")) { 
-//         //var surface = document.getElementById("surfaceSpace").value;
-//         //var numInventory = document.getElementById("numberInventorySpace").value;
-//         //document.getElementsByName("submit")[0].disabled = false;
-        
-//         // if(surface.length > 0){
-//         //     if(checkSurfaceSpace("surfaceSpace")){
-//         //         document.getElementsByName("submit")[0].disabled = false;
-//         //     }
-//         // }
 
-//         // if(numInventory.length > 0){
-//         //     if(checkNumberInventory("numberInventorySpace")){
-//         //         document.getElementsByName("submit")[0].disabled = false;
-//         //     }
-//         // }
-
-//         document.getElementsByName("submit")[0].disabled = false;
-//         // document.getElementById("error").style.display = "none";
-//     }else{
-//         document.getElementsByName("submit")[0].disabled = true;
-//         // document.getElementsByName("error")[0].style.display = "block";
-//         return false;
-//     }
-             
-// }
 

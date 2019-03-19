@@ -32,7 +32,7 @@ class FLOOR_ADD{
 						<?=htmlentities($strings["Data of the new building's floor"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form method="POST" action="FLOOR_Controller.php?action=<?= $strings['Add']?>&building=<?= $this->building?>" enctype="multipart/form-data" onchange="validateFloor()">
+						<form method="POST" action="FLOOR_Controller.php?action=<?= $strings['Add']?>&building=<?= $this->building?>" enctype="multipart/form-data" onkeyup="validateFloor()">
 							<div id="group-form">
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" id="idBuilding" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?= $this->building?>" readonly>
@@ -40,22 +40,22 @@ class FLOOR_ADD{
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="idFloor" name="idFloor" placeholder="<?= $strings['What is the identifier of this floor?']?>" onblur="checkFloorId(this.id)">
+									<input type="text" id="idFloor" name="idFloor" placeholder="<?= $strings['What is the identifier of this floor?']?>" onkeyup="checkFloorId(this.id)">
 									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="nameFloor" name="nameFloor" placeholder="<?= $strings['What floor is it?']?>" onblur="checkText(this.id)">
+									<input type="text" id="nameFloor" name="nameFloor" placeholder="<?= $strings['What floor is it?']?>" onkeyup="checkText(this.id)">
 									<i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="surfaceBuildingFloor" name="surfaceBuildingFloor" placeholder="<?= $strings['What is the constructed surface?']?>" onblur="checkSurface(this.id)">
+									<input type="text" id="surfaceBuildingFloor" name="surfaceBuildingFloor" placeholder="<?= $strings['What is the constructed surface?']?>" onkeyup="checkSurface(this.id)">
 									<i class="fa fa-area-chart fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="surfaceUsefulFloor" name="surfaceUsefulFloor" placeholder="<?= $strings['What is the useful surface?']?>" onblur="checkSurface(this.id)">
+									<input type="text" id="surfaceUsefulFloor" name="surfaceUsefulFloor" placeholder="<?= $strings['What is the useful surface?']?>" onkeyup="checkSurface(this.id)">
 									<i class="fa fa-area-chart fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 								
