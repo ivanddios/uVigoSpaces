@@ -44,6 +44,12 @@ class USER_ADD{
 					<div class="col-lg-12 center-block-content">
 						<form method="POST" action="USER_Controller.php?action=<?= $strings['Add']?>">
 							<div id="group-form">
+
+								<div id="profilePhoto-container">
+									<img id="profilePhoto" src="../img/camera2.png" onclick="uploadProfilePhoto()"/>
+									<input id="imageUpload" type="file" name="photo" placeholder="Photo" onchange="previewProfilePhoto(this); validateUpdloadFile(this.id);">
+								</div>
+								
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" id="username" name="username" placeholder="<?= $strings['What is the username of this user?']?>" onkeyup="checkUser(this.id)" required>
 									<i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
@@ -97,10 +103,6 @@ class USER_ADD{
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" id="phone" name="phone" placeholder="<?= $strings['What is his phone?']?>" onkeyup="checkNumPhone(this.id)" required>
 									<i class="fa fa-phone fa-lg fa-fw" aria-hidden="true"></i>
-                                </div>
-                                
-                                <div class="inputWithIcon inputIconBg">
-									<input type="file" id="photo" name="photo" accept="image/*" onchange="validateUpdloadFile(this.id)">
                                 </div>
                                 
 								<button type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>

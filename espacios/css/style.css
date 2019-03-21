@@ -456,3 +456,38 @@ p{
 
 
 
+
+
+#imageUpload
+{
+    display: none;
+}
+
+#profilePhoto
+{
+    cursor: pointer;
+}
+
+#profilePhoto-container {
+    width: 150px;
+	height: 150px;
+	margin:auto;
+	margin-bottom: 5%;
+	overflow: hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+	-o-border-radius: 50%;
+	
+	border-radius: 50%;
+	border: 2px dashed rgba(0, 0, 0, 0.623);
+	
+}
+
+#profilePhoto-container img {
+    width: 150px;
+    height: 150px;
+}
+
+
+

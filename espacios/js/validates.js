@@ -160,6 +160,7 @@ function checkSurfaceSpace(surfaceId){
 function validateUpdloadFile(planeFloorID) {
     var validFileExtensions = [".jpg", ".jpeg",".png"], 
         planeFloor = document.getElementById(planeFloorID);
+        console.log(planeFloor.value);
 
     if (planeFloor.type == "file") {
         var fileName = planeFloor.value;
@@ -167,7 +168,7 @@ function validateUpdloadFile(planeFloorID) {
                 for (var i = 0; i < validFileExtensions.length; i++) {
                     var validExtension = validFileExtensions[i];
                     if (fileName.substr(fileName.length - validExtension.length, validExtension.length).toLowerCase() == validExtension.toLowerCase()) {
-                       return true;
+                        return true;
                     }
                 }
             }

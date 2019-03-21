@@ -163,10 +163,10 @@ Switch ($_REQUEST['action']){
         $buildingid = $_GET["building"];
         $floorid = $_GET['floor'];
 
-        if(!checkRol('SHOW', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-        }
+        // if(!checkRol('SHOW', $function)){
+        //     $view->setFlashDanger($strings["You do not have the necessary permits"]);
+        //     $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        // }
         
         $floor = new FLOOR_Model($buildingid, $floorid);
         $values = $floor->findFloor();
@@ -215,10 +215,10 @@ Switch ($_REQUEST['action']){
 
     case  $strings['Show Plane']:
 
-        if (!isset($_SESSION['LOGIN'])){
-            $view->setFlashDanger($strings["Not in session. Show the floors requires login"]);
-            $view->redirect("USER_Controller.php", "index");
-        }
+        // if (!isset($_SESSION['LOGIN'])){
+        //     $view->setFlashDanger($strings["Not in session. Show the floors requires login"]);
+        //     $view->redirect("USER_Controller.php", "index");
+        // }
 
         if (!isset($_GET['building']) && !isset($_GET['floor'])){
             $view->setFlashDanger($strings["Building and floor id is mandatory"]);
@@ -227,10 +227,10 @@ Switch ($_REQUEST['action']){
         $buildingid = $_GET["building"];
         $floorid = $_GET['floor'];
 
-        if(!checkRol('SHOW', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-        }
+        // if(!checkRol('SHOW', $function)){
+        //     $view->setFlashDanger($strings["You do not have the necessary permits"]);
+        //     $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+        // }
         
         $space = new SPACE_Model($buildingid, $floorid);
         $spacesValues = $space->showAllSpaces();

@@ -4,7 +4,7 @@ require_once(__DIR__."../../core/ViewManager.php");
 require_once(__DIR__."../../core/ACL.php");
 require_once(__DIR__."../../model/BUILDING_Model.php");
 require_once(__DIR__."../../model/FLOOR_Model.php");
-require_once(__DIR__."../../model/SPACE_Model.php")
+require_once(__DIR__."../../model/SPACE_Model.php");
 require_once(__DIR__."../../view/SPACE_SHOWALL_View.php");
 require_once(__DIR__."../../view/SPACE_ADD_View.php");
 require_once(__DIR__."../../view/SPACE_EDIT_View.php");
@@ -98,11 +98,12 @@ Switch ($_REQUEST['action']){
             $view->setFlashDanger($strings["Building, floor and space id are mandatory"]);
             $view->redirect("BUILDING_Controller.php", "");
         }
-//////////////////////////////////////////////
+        //////////////////////////////////////////////
         $buildingid = $_GET["building"];
         $floorid = $_GET['floor'];
         $spaceid = $_GET['space'];
-/////////////////////////////////////////////
+        /////////////////////////////////////////////
+
         if (isset($_POST["submit"])) { 
             $spaceEdit = get_data_form();
             
@@ -129,15 +130,10 @@ Switch ($_REQUEST['action']){
 
     case  $strings['Show']:
 
-        if (!isset($_SESSION['LOGIN'])){
-            $view->setFlashDanger($strings["Not in session. Show the space requires login"]);
-             $view->redirect("USER_Controller.php", "index");
-        }
-
-        if(!checkRol('SHOW', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
-        }
+        // if (!isset($_SESSION['LOGIN'])){
+        //     $view->setFlashDanger($strings["Not in session. Show the space requires login"]);
+        //      $view->redirect("USER_Controller.php", "index");
+        // }
              
         if (!isset($_GET['building']) && !isset($_GET['floor']) && !isset($_GET['space'])){
             $view->setFlashDanger($strings["Building, floor and space id are mandatory"]);
@@ -149,6 +145,11 @@ Switch ($_REQUEST['action']){
         $floorid = $_GET['floor'];
         $spaceid = $_GET['space'];
         //////////////////////////////////////////////////
+
+        // if(!checkRol('SHOW', $function)){
+        //     $view->setFlashDanger($strings["You do not have the necessary permits"]);
+        //     $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+        // }
 
         $space = new SPACE_Model($buildingid, $floorid, $spaceid);
         $values = $space->findSpace();
@@ -241,10 +242,10 @@ Switch ($_REQUEST['action']){
 
     case  $strings['ShowSpacePlane']:
 
-        if (!isset($_SESSION['LOGIN'])){
-            $view->setFlashDanger($strings["Not in session. Add space requires login."]);
-            $view->redirect("USER_Controller.php", "");
-        } 
+        // if (!isset($_SESSION['LOGIN'])){
+        //     $view->setFlashDanger($strings["Not in session. Add space requires login."]);
+        //     $view->redirect("USER_Controller.php", "");
+        // } 
 
         if(!isset($_GET['building']) && !isset($_GET['floor'])){
             $view->setFlashDanger($strings["Building and floor id is mandatory"]);

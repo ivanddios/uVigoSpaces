@@ -345,3 +345,23 @@ function calendar() {
 
 
 // })
+
+
+
+
+// $("#profileImage").click(function(e) {
+//     $("#imageUpload").click();
+// });
+
+
+function uploadProfilePhoto(){
+    $("#imageUpload").click();
+}
+
+function previewProfilePhoto(uploader) {
+    if (uploader.files && uploader.files[0] ){
+        $('#profilePhoto').attr('src', window.URL.createObjectURL(uploader.files[0]));
+    }
+
+    $('html,body').scrollTop(0);
+}
