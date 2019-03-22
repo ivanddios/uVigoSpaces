@@ -54,7 +54,7 @@
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <a title="Home" class="navbar-brand" href="../index.php">
-                        <img height="38" src="../img/logo.png" alt="logo universidade de vigo"/>
+                        <img src="../img/logo.png" class="logoPpal" alt="<?=$strings['LogoUVigo']?>"/>
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,21 +64,21 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <?php  if(checkRol('SHOWALL', 'USER')): ?>
-                                <a class="nav-link" href="../controller/USER_CONTROLLER.php"><?=$strings['Users']?></a>
+                                <li><a class="nav-link" href="../controller/USER_CONTROLLER.php"><?=$strings['Users']?></a></li>
                             <?php endif; ?>
-                            <a class="nav-link" href="../index.php"><?=$strings['Buildings']?></a>
+                                <li><a class="nav-link" href="../controller/BUILDING_Controller.php"><?=$strings['Buildings']?></a></li>
                         </ul>
                         <?php if(isset($_SESSION['LOGIN'])): ?>
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Mi Cuenta </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="../controller/USER_Controller.php?action=edit"><?=$strings['MyAccount']?></a>
+                                    <a class="dropdown-item" href="../controller/USER_Controller.php?action=<?=$strings['Edit']?>"><?=$strings['MyAccount']?></a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="../controller/USER_Controller.php?action=logout"><?=$strings['LogOut']?></a>
+                                    <a class="dropdown-item" href="../controller/USER_Controller.php?action=<?=$strings['Logout']?>"><?=$strings['Logout']?></a>
                                 </div>
                             </div>
                         <?php else: ?>
-                            <a class="nav-link nav-a" href="../controller/USER_Controller.php?action=login"><?=$strings['Login']?></a>
+                            <a class="nav-link nav-a" href="../controller/USER_Controller.php?action=<?=$strings['Login']?>"><?=$strings['Login']?></a>
                         <?php endif; ?>
 
                         <div class="nav-item dropdown">

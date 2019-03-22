@@ -22,6 +22,8 @@ function get_data_form() {
     $idBuilding = $_POST['idBuilding'];
     $idFloor = $_POST['idFloor'];
     $nameFloor = $_POST['nameFloor'];
+    $surfaceBuildingFloor =  $_POST['surfaceBuildingFloor'];
+    $surfaceUsefulFloor =  $_POST['surfaceUsefulFloor'];
     
     if (isset($_FILES['planeFloor']['name']) && ($_FILES['planeFloor']['name'] !== '')) {
         $planeFloor = '../document/Buildings/'.$idBuilding.'/'.$idBuilding.$idFloor.'/'.$_FILES['planeFloor']['name'];
@@ -29,9 +31,6 @@ function get_data_form() {
         $planeFloor = $_POST['planeFloorOriginal'];
     }
 
-    $surfaceBuildingFloor =  $_POST['surfaceBuildingFloor'];
-    $surfaceUsefulFloor =  $_POST['surfaceUsefulFloor'];
-   
     $floor = new FLOOR_Model($idBuilding, $idFloor, $nameFloor, $planeFloor, $surfaceBuildingFloor, $surfaceUsefulFloor);
     return $floor;
 }

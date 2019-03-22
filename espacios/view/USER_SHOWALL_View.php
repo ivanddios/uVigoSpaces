@@ -48,12 +48,16 @@ class USER_SHOWALL{
                     <table id="dataTable" class="table text-center">
                         <thead>
                             <tr>
-                                <?php foreach ($listTitles as $title): ?>
-                                    <th scope="col"><?=$strings[$title]?></th>
+                                <?php foreach ($listTitles as $title): 
+                                    if($title == "photo"): ?>
+                                        <th scope="col">
+                                    <?php else: ?>
+                                        <th scope="col"><?=$strings[$title]?></th>
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
                                 <?php  if(checkRol('ADD', 'USER')): ?>
                                     <th scope="col">
-                                        <a href="USER_Controller.php?&action=<?= $strings['Add']?>">
+                                        <a href="USER_Controller.php?action=<?= $strings['Add']?>">
                                             <span title="<?= $strings['Add User']?>" class="btn btn-success btn-sm fa fa-plus"></span>
                                         </a>
                                     </th>

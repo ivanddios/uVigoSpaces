@@ -202,19 +202,19 @@ public function checkIsValidForAdd() {
         $errors = "Building id can not be that long";
     }else if(!preg_match('/[A-Z0-9]/', $this->idBuilding)){
         $errors = "Building id is invalid. Example: OSBI0";
-    }elseif (strlen(trim($this->idFloor)) == 0 ) {
+    }else if (strlen(trim($this->idFloor)) == 0 ) {
         $errors= "Floor id is mandatory";
     }else if (strlen(trim($this->idFloor)) > 2 ) {
         $errors = "Floor id can not be that long";
     }else if(!preg_match('/[A-Z0-9]/', $this->idFloor)){
         $errors = "Floor id is invalid. Example: 00,S1";
-    }elseif (strlen(trim($this->idSpace)) == 0 ) {
+    }else if (strlen(trim($this->idSpace)) == 0 ) {
         $errors= "Space id is mandatory";
     }else if (strlen(trim($this->idSpace)) > 6 ) {
         $errors = "Space id can not be that long";
     }else if(!preg_match('/^[0-9]{5}$/', $this->idSpace)){
         $errors = "Space id is invalid. Example: 000011";
-    }elseif($this->existsSpace()){
+    }else if($this->existsSpace()){
         $errors = "There is already a space with that id in this floor";
     }else if (strlen(trim($this->nameSpace)) == 0 ) {
         $errors= "Space name is mandatory";
@@ -224,10 +224,16 @@ public function checkIsValidForAdd() {
         $errors = "Space name is invalid. Try again!";
     }else if (strlen(trim($this->surfaceSpace)) > 99999999.99) {
         $errors = "Space surface can not be that long";
+    }else if (strlen(trim($this->numberInventorySpace)) > 10) {
+        $errors = "Number inventory can not be that long";
+    }else if (strlen(trim($this->coordsPlane)) > 225) {
+        $errors = "Coords can not be that long";
     }
+
     if (sizeof($errors) > 0){
         throw new Exception($errors);
     }
+
 }
 
 public function checkIsValidForEdit($idSpace) {
@@ -248,19 +254,19 @@ public function checkIsValidForEdit($idSpace) {
         $errors = "Building id can not be that long";
     }else if(!preg_match('/[A-Z0-9]/', $this->idBuilding)){
         $errors = "Building id is invalid. Example: OSBI0";
-    }elseif (strlen(trim($this->idFloor)) == 0 ) {
+    }else if (strlen(trim($this->idFloor)) == 0 ) {
         $errors= "Floor id is mandatory";
     }else if (strlen(trim($this->idFloor)) > 2 ) {
         $errors = "Floor id can not be that long";
     }else if(!preg_match('/[A-Z0-9]/', $this->idFloor)){
         $errors = "Floor id is invalid. Example: 00,S1";
-    }elseif (strlen(trim($this->idSpace)) == 0 ) {
+    }else if (strlen(trim($this->idSpace)) == 0 ) {
         $errors= "Space id is mandatory";
     }else if (strlen(trim($this->idSpace)) > 6 ) {
         $errors = "Space id can not be that long";
     }else if(!preg_match('/^[0-9]{5}$/', $this->idSpace)){
         $errors = "Space id is invalid. Example: 000011";
-    }elseif($this->existsSpaceToEdit($idSpace)){
+    }else if($this->existsSpaceToEdit($idSpace)){
         $errors = "There is already a space with that id in this floor";
     }else if (strlen(trim($this->nameSpace)) == 0 ) {
         $errors= "Space name is mandatory";
@@ -270,6 +276,10 @@ public function checkIsValidForEdit($idSpace) {
         $errors = "Space name is invalid. Try again!";
     }else if (strlen(trim($this->surfaceSpace)) > 99999999.99) {
         $errors = "Space surface can not be that long";
+    }else if (strlen(trim($this->numberInventorySpace)) > 10) {
+        $errors = "Number inventory can not be that long";
+    }else if (strlen(trim($this->coordsPlane)) > 225) {
+        $errors = "Coords can not be that long";
     }
     if (sizeof($errors) > 0){
         throw new Exception($errors);

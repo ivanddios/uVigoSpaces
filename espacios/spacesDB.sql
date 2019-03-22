@@ -8,12 +8,12 @@ CREATE TABLE IF NOT EXISTS USER(
   photo varchar(500) COLLATE utf8_spanish_ci DEFAULT NULL,
   username varchar(25) COLLATE utf8_spanish_ci NOT NULL,
   passwd varchar(128) COLLATE utf8_spanish_ci NOT NULL,
-  name varchar(25) COLLATE utf8_spanish_ci NOT NULL,
-  surname varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  dni varchar(10) COLLATE utf8_spanish_ci NOT NULL UNIQUE,
+  name varchar(40) COLLATE utf8_spanish_ci NOT NULL,
+  surname varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  dni varchar(9) COLLATE utf8_spanish_ci NOT NULL UNIQUE,
   birthdate date NOT NULL,
   email varchar(50) COLLATE utf8_spanish_ci NOT NULL UNIQUE,
-  phone int(15) DEFAULT NULL,
+  phone int(9) DEFAULT NULL,
   PRIMARY KEY(username)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8  COLLATE=utf8_spanish_ci;
 
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS USER_GROUP(
 CREATE TABLE IF NOT EXISTS BUILDING(
   idBuilding char(5) COLLATE utf8_spanish_ci NOT NULL,
   nameBuilding varchar(225) COLLATE utf8_spanish_ci NOT NULL,
-  addressBuilding varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  addressBuilding varchar(225) COLLATE utf8_spanish_ci,
   phoneBuilding int(9) DEFAULT NULL,
   PRIMARY KEY(idBuilding)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8  COLLATE=utf8_spanish_ci;

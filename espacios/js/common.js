@@ -273,7 +273,7 @@ function calendar() {
         weekStart: 1, 
         nowButton : true,
         switchOnClick : true,
-        maxDate : new Date()
+        maxDate : new Date(),
     });
 
     $('#date-eng').bootstrapMaterialDatePicker
@@ -356,12 +356,16 @@ function calendar() {
 
 function uploadProfilePhoto(){
     $("#imageUpload").click();
+
 }
 
 function previewProfilePhoto(uploader) {
-    if (uploader.files && uploader.files[0] ){
-        $('#profilePhoto').attr('src', window.URL.createObjectURL(uploader.files[0]));
-    }
 
-    $('html,body').scrollTop(0);
+    var preview = document.getElementById('profilePhoto');
+    
+    if (uploader.files && uploader.files[0] ){
+        var url = URL.createObjectURL(uploader.files[0]);  
+        preview.setAttribute('src', url);
+        document.getElementById('profilePhoto-container').style.border = 0;
+    };
 }

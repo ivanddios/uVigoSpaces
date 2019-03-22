@@ -58,7 +58,7 @@ class FLOOR_SHOWALL{
                                                         <?php if($value === ''): ?>
                                                             <img src="../img/noPlane.png" width="25px" height="25px">
                                                         <?php else: ?>
-                                                            <a href="<?= $this->floors[$j]['planeFloor']?>" target="_blank"><img src="<?= $this->floors[$j]['planeFloor']?>" alt="plane" class="logo"></a>
+                                                            <a href="<?= $this->floors[$j]['planeFloor']?>" target="_blank"><img src="<?= $this->floors[$j]['planeFloor']?>" alt="plane" class="miniatureTable"></a>
                                                         <?php endif; ?>   
                                                     <?php elseif($key === 'surfaceBuildingFloor' || $key === 'surfaceUsefulFloor'): ?>
                                                         <?=$value . ' m²'?>
