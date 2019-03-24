@@ -2,6 +2,7 @@
 
 require_once(__DIR__."..\..\core\ViewManager.php");
 include '../core/ACL.php';
+include '../model/USER_Model.php';
 include '../view/USER_SHOWALL_View.php';
 include '../view/USER_ADD_View.php';
 include '../view/USER_EDIT_View.php';
