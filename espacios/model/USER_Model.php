@@ -116,6 +116,14 @@ class USER_Model {
         }
     }
 
+    function infoUser(){
+        $array = array();
+        foreach($this as $key => $value) {
+            $array[$key] = $value;
+        }
+        return $array;
+    }
+
 
     function formatDate($date){
         $dateFormat = str_replace('/', '-', $date);

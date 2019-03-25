@@ -3,11 +3,11 @@
 class SPACE_ADD{
 
     private $building;
-    private $floor;
+	private $floor;
 
     function __construct($building, $floor) {
         $this->building = $building;
-        $this->floor = $floor;
+		$this->floor = $floor;
         $this->render();
     }
     

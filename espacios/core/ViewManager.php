@@ -70,7 +70,7 @@ class ViewManager {
 	}
 	
   public function setElement($element, $content){
-    $buffer = ob_get_contents();
+    	$buffer = ob_get_contents();
 		ob_end_clean();
 		$buffer=str_replace($element, $content, $buffer);
 		echo $buffer;

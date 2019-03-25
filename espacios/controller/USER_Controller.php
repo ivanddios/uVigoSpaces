@@ -26,12 +26,10 @@ function get_data_form() {
     $birthdate = $_POST['birthdate'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
+    $photo = null;
 
     if (isset($_FILES['photo']['name']) && ($_FILES['photo']['name'] !== '')) {
         $photo = '../document/Users/'.$username.'/'.$_FILES['photo']['name'];
-    
-    } else {
-        //$photo = $_POST['planeFloorOriginal'];
     }
 
     $user = new USER_Model($username,  $password, $name, $surname, $dni, $birthdate, $email, $phone, $photo);
@@ -83,6 +81,8 @@ Switch ($_GET['action']){
             $userAdd = get_data_form();
 
             try{
+
+                var_dump($userAdd);
                 $userAdd->checkIsValidForAdd();
                 $dirPhoto = '../document/Users/'.$userAdd->getUsername().'/';
                 if ($_FILES['photo']['name'] !== '') {
@@ -98,6 +98,8 @@ Switch ($_GET['action']){
 
             }catch(Exception $errors) {
                 $view->setFlashDanger($strings[$errors->getMessage()]);
+                $valuesForm = $userAdd->infoUser();
+                $view->setVariable("userForm", $valuesForm);
                 $view->redirect("USER_Controller.php", $strings['Add']);
             }
                 

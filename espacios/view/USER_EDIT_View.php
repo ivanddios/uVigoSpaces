@@ -6,7 +6,6 @@ class USER_EDIT{
 
     function __construct($user) {
         $this->user = $user;
-        $this->user['birthdate'] = 
         $this->render();
     }
     
