@@ -2,39 +2,18 @@
 
 class USER_SHOWALL{
     private $users;
-    private $popMessage;
 
     function __construct($users) {
         $this->users = $users;
-
-        if(empty($_SESSION['popMessage'])){
-            $this->popMessage = '';
-        }else $this->popMessage = $_SESSION['popMessage'];
 
         $this->render();
     }
 
     function render() {
-        include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
-        $listTitles = array('photo', 'username', 'name', 'surname', 'email');
-        ?> 
-        <?php 
-        ////////////////////////////////////////////////////
-        ob_start();
+        
         include 'header.php';
-        $buffer = ob_get_contents();
-        ob_end_clean();
-        $buffer=str_replace("%TITLE%",$strings['Users'],$buffer);
-        echo $buffer;
-         ////////////////////////////////////////////////////
-        ?>
-
-        <?php if (!empty($this->popMessage)): ?>
-            <div class="alert alert-success text-center" id="success-alert" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<?= $this->popMessage; unset($_SESSION['popMessage']);?>
-            </div>
-        <?php  endif; ?>
+        $this->view->setElement("%TITLE%", $strings["Users"]); 
+        $listTitles = array('photo', 'username', 'name', 'surname', 'email');?>
 
         <div class="container">
             <div class="row center-row">

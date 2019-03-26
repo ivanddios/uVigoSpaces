@@ -13,7 +13,7 @@ class USER_Model {
 	var $email;
 	var $phone;
 	var $photo;
-	var $mysqli;
+	private $mysqli;
 
 
     function __construct($username=null, $password=null, $name=null, $surname=null, $dni=null, $birthdate=null, $email=null, $phone=null, $photo=null)
@@ -33,6 +33,10 @@ class USER_Model {
 
     public function getUsername(){
         return $this->username;
+    }
+
+    public function getPassword(){
+        return $this->password;
     }
 
     public function getPhoto(){
@@ -116,13 +120,13 @@ class USER_Model {
         }
     }
 
-    function infoUser(){
-        $array = array();
-        foreach($this as $key => $value) {
-            $array[$key] = $value;
-        }
-        return $array;
-    }
+    // function infoUser(){
+    //     $array = array();
+    //     foreach($this as $key => $value) {
+    //         $array[$key] = $value;
+    //     }
+    //     return $array;
+    // }
 
 
     function formatDate($date){

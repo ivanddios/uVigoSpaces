@@ -1,15 +1,7 @@
 <?php
-	//include_once '../Functions/Authentication.php';
-	//Si no tiene guardado el idioma en la sesion
-	// if (!isset($_SESSION['idioma'])) {
-	// 	$_SESSION['idioma'] = 'SPANISH';
-	// }
-    //include '../Locales/Strings_' . $_SESSION['idioma'] . '.php';
-
     require_once(__DIR__."..\..\core\ViewManager.php");
     $this->view = new ViewManager();
     include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
-    //include '../core/ACL.php';
     $this->flashMessageSuccess = $this->view->popFlashSuccess("successMessage");
     $this->flashMessageDanger = $this->view->popFlashDanger("dangerMessage");
 ?>
@@ -88,13 +80,13 @@
                             <?php } elseif($_SESSION['LANGUAGE'] === 'English') { ?>
                                 <img src="../img/uk.png" alt="lang" class="languageFlag">
                             <?php } else { ?>
-                                <img src="../img/galician.gif" alt="lang" class="languageFlag">
+                                <img src="../img/galicia2.png" alt="lang" class="languageFlag">
                             <?php } ?>
                         </a>
                         <div class="dropdown-menu languages" aria-labelledby="navbarDropdownLang">
                             <?php if($_SESSION['LANGUAGE'] === 'Castellano') { ?>
                                 <a href="../core/CambioIdioma.php?idioma=Galego">
-                                    <img src="../img/galician.gif" alt="lang" class="languageFlag">
+                                    <img src="../img/galicia2.png" alt="lang" class="languageFlag">
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a href="../core/CambioIdioma.php?idioma=English">

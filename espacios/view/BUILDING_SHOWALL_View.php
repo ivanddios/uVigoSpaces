@@ -2,39 +2,18 @@
 
 class BUILDING_SHOWALL{
     private $buildings;
-    private $popMessage;
 
     function __construct($buildings) {
         $this->buildings = $buildings;
-
-        if(empty($_SESSION['popMessage'])){
-            $this->popMessage = '';
-        }else $this->popMessage = $_SESSION['popMessage'];
 
         $this->render();
     }
 
     function render() {
-        include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
-        $listTitles = array('idBuilding', 'nameBuilding', 'addressBuilding', 'phoneBuilding');
-        ?> 
-        <?php 
-        ////////////////////////////////////////////////////
-        ob_start();
-        include 'header.php';
-        $buffer = ob_get_contents();
-        ob_end_clean();
-        $buffer=str_replace("%TITLE%",$strings['Buildings'],$buffer);
-        echo $buffer;
-         ////////////////////////////////////////////////////
-        ?>
 
-        <?php if (!empty($this->popMessage)): ?>
-            <div class="alert alert-success text-center" id="success-alert" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<?= $this->popMessage; unset($_SESSION['popMessage']);?>
-            </div>
-        <?php  endif; ?>
+        include 'header.php';
+        $this->view->setElement("%TITLE%", $strings["Buildings"]);
+        $listTitles = array('idBuilding', 'nameBuilding', 'addressBuilding', 'phoneBuilding'); ?>
 
         <div class="container">
             <div class="row center-row">

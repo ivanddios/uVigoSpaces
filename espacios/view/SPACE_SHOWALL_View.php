@@ -13,10 +13,9 @@ class SPACE_SHOWALL{
     }
 
     function render() {
-        $listTitles = array('idBuilding', 'nameSpace', 'surfaceSpace', 'numberInventorySpace');
-
         include 'header.php';
-        $this->view->setElement("%TITLE%", $strings["Spaces"]);?>
+        $this->view->setElement("%TITLE%", $strings["Spaces"]);
+        $listTitles = array('idBuilding', 'nameSpace', 'surfaceSpace', 'numberInventorySpace'); ?>
 
         <div class="container">
             <div class="row center-row">

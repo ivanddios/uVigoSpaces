@@ -1,30 +1,17 @@
 <?php
 
-
-
-
-
 class USER_ADD{
 
 	private $user;
 
     function __construct() {
-		$this->render();
-		
+			$this->render();
     }
     
     function render() {
-		include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';  
-
-        ////////////////////////////////////////////////////
-        ob_start();
-        include 'header.php';
-        $buffer = ob_get_contents();
-        ob_end_clean();
-        $buffer=str_replace("%TITLE%",$strings['Add User'],$buffer);
-		echo $buffer;
-		
-		?>
+			include 'header.php';
+			$this->view->setElement("%TITLE%", $strings["Add User"]);
+			$this->user = json_decode($this->view->getVariable("userForm"), true); ?>
 
 			<script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
 			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -37,13 +24,7 @@ class USER_ADD{
 			<link rel="stylesheet" href="../css/bootstrap-material-datetimepicker.css"/>
 			<link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
 			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-			<?php
-
-			$this->user = $this->view->getVariable("userForm");
-			
-		////////////////////////////////////////////////////
 		
-        ?>
 		<div class="container">
 			<div class="row center-row">
 				<div class="col-lg-6 center-block">
@@ -65,9 +46,9 @@ class USER_ADD{
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="password" id="password" name="password" placeholder="<?= $strings['What is the password of this user?']?>">
+									<input type="password" id="password" name="password" placeholder="<?= $strings['What is the password of this user?']?>" value="<?= $this->user['password']?>">
 									<i class="fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
-                                    <div id="passwordAlert" class="alert alert-secondary passwordAlert" role="alert">
+                    <div id="passwordAlert" class="alert alert-secondary passwordAlert" role="alert">
 											<p id="length" class="invalid"><?=$strings['PasswordCharacters']?></p>
 											<p id="lowercase" class="invalid"><?=$strings['PasswordLowercase']?></p>
 											<p id="uppercase" class="invalid"><?=$strings['PasswordUppercase']?></p>
@@ -81,38 +62,38 @@ class USER_ADD{
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="name" name="name" placeholder="<?= $strings['What is the name of the user?']?>">
+									<input type="text" id="name" name="name" placeholder="<?= $strings['What is the name of the user?']?>" value="<?= $this->user['name']?>">
 									<i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="surname" name="surname" placeholder="<?= $strings["What are the user's surnames?"]?>">
+									<input type="text" id="surname" name="surname" placeholder="<?= $strings["What are the user's surnames?"]?>" value="<?= $this->user['surname']?>">
 									<i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
-                                </div>
+              	</div>
 
-                                <div class="inputWithIcon inputIconBg">
-									<input type="text" id="dni" name="dni" placeholder="<?= $strings['What is your ID?']?>" 	>
+                <div class="inputWithIcon inputIconBg">
+									<input type="text" id="dni" name="dni" placeholder="<?= $strings['What is your ID?']?>" value="<?= $this->user['dni']?>">
 									<i class="fa fa-id-card fa-lg fa-fw" aria-hidden="true"></i>
-                                </div>
+                </div>
 								
-                                <div class="inputWithIcon inputIconBg">
+                <div class="inputWithIcon inputIconBg">
 									<?php if($_SESSION['LANGUAGE'] === 'English'): ?>
-										<input type="text" id="date-eng" name="birthdate" class ="date" placeholder="<?= $strings['What is his birthdate?']?>" onfocus ="calendar(this.id)">
+										<input type="text" id="date-eng" name="birthdate" class ="date" placeholder="<?= $strings['What is his birthdate?']?>" value="<?= $this->user['birthdate']?>" onmousedown ="calendar(this.id)">
 									<?php else: ?>
-										<input type="text" id="date-es" name="birthdate" class ="date" placeholder="<?= $strings['What is his birthdate?']?>" onfocus ="calendar(this.id)">
+										<input type="text" id="date-es" name="birthdate" class ="date" placeholder="<?= $strings['What is his birthdate?']?>" value="<?= $this->user['birthdate']?>" onmousedown ="calendar(this.id)">
 									<?php endif; ?>
 									<i class="fa fa-calendar fa-lg fa-fw" aria-hidden="true"></i>
-                                </div>
+                </div>
                                 
-                                <div class="inputWithIcon inputIconBg">
-									<input type="text" id="email" name="email" placeholder="<?= $strings['What is his email?']?>">
+                <div class="inputWithIcon inputIconBg">
+									<input type="text" id="email" name="email" placeholder="<?= $strings['What is his email?']?>" value="<?= $this->user['email']?>">
 									<i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="phone" name="phone" placeholder="<?= $strings['What is his phone?']?>">
+									<input type="text" id="phone" name="phone" placeholder="<?= $strings['What is his phone?']?>" value="<?= $this->user['phone']?>">
 									<i class="fa fa-phone fa-lg fa-fw" aria-hidden="true"></i>
-                                </div>
+                </div>
                                 
 								<button id="submitButton" type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
 							</div> 

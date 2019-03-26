@@ -265,6 +265,8 @@ function searchInTable() {
 
 function calendar() {
 
+
+
     $('#date-es').bootstrapMaterialDatePicker
     ({
         format: 'DD/MM/YYYY',

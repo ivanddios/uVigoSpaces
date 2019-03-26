@@ -1,31 +1,25 @@
 
 <?php
-//include_once '../Functions/Authentication.php';
-//Si no tiene guardado el idioma en la sesion
-// if (!isset($_SESSION['idioma'])) {
-// 	$_SESSION['idioma'] = 'SPANISH';
-// }
-//include '../Locales/Strings_' . $_SESSION['idioma'] . '.php';
 
 require_once(__DIR__."..\..\core\ViewManager.php");
-$view = new ViewManager();
-include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
-$flashMessageSuccess = $view->popFlashSuccess("successMessage");
-$flashMessageDanger = $view->popFlashDanger("dangerMessage");
-
 
 class Login{
+
+    private $flashMessageDanger;
+
     function __construct(){	
+        $view = new ViewManager();
+        $this->flashMessageDanger = $view->popFlashDanger("dangerMessage");
         $this->render();
     }
-
-
-    function render(){ ?>
+    
+    function render(){ 
+        include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php'; ?>
         
         <!DOCTYPE html>
             <html lang="es">
                 <head>
-                    <title>Login</title>
+                    <title><?=$strings["Login"]?></title>
                     <link rel="shortcut icon" href="../img/favicon.png"/>
                     <meta charset="utf-8"/>
 
@@ -46,19 +40,6 @@ class Login{
                 </head>
 
                 <body>
-
-                    <?php if (!empty($this->flashMessageSuccess)): ?>
-                        <div class="alert alert-success text-center" id="success-alert" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <?= $this->flashMessageSuccess; ?>
-                        </div>
-                    <?php elseif(!empty($this->flashMessageDanger)): ?>
-                        <div class="alert alert-danger text-center" id="danger-alert" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <?= $this->flashMessageDanger; ?>
-                        </div>            
-                    <?php endif; ?>
-
                     <div class="container">
                         <div class="row center-row">
                             <div class="col-lg-6 center-block loginContainer">
@@ -76,16 +57,22 @@ class Login{
                                             <div class="inputWithIcon inputIconBg">
                                                 <input type="password" name="passwd" placeholder="Password" required>
                                                 <i class="fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
+                                                <?php if(isset($this->flashMessageDanger)): ?> 
+                                                    <div class="alert alert-danger" role="alert">
+                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <?= $strings[$this->flashMessageDanger]?>
+                                                    </div>
+                                                <?php endif; ?>
                                             </div>
 
                                             <div class="item-select">
                                                 <p><select name="language">
-                                                        <option value="Castellano">Castellano</option>
-                                                        <option value="Galego">Galego</option>
-                                                        <option value="English">English</option>
+                                                    <option value="Castellano"><?=$strings["Spanish"]?></option>
+                                                    <option value="Galego"><?=$strings["Galician"]?></option>
+                                                    <option value="English"><?=$strings["English"]?></option>
                                                 </select></p>
                                             </div>
-                                            <button type="submit" name="submit" class="loginButton btn btn-darkLogin">Login</button>
+                                            <button type="submit" name="submit" class="loginButton btn btn-darkLogin"><?=$strings["Login"]?></button>
                                         </div>
                                     </form>
                                 </div>

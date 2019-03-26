@@ -12,23 +12,15 @@ class SPACE_SHOW_PLANE{
     }
     
     function render() {
-			include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
-			////////////////////////////////////////////////////
-			ob_start();
 			include 'header.php';
-			$buffer = ob_get_contents();
-			ob_end_clean();
-			$buffer=str_replace("%TITLE%",$strings['ViewSpace'],$buffer);
-			echo $buffer;
-			////////////////////////////////////////////////////
-			?>
+			$this->view->setElement("%TITLE%", $strings["ViewSpace"]); ?>
 
 			<div id="titleView">
 				<h3><?= $this->space['nameBuilding'];?><h3>
 				<h4><?= $this->space['nameFloor'];?> ~ <?= $this->space['nameSpace'];?>
 				<canvas id="canvas"></canvas>		 
 			</div>	
-		    <?php
+			<?php
 				include 'footer.php';  
 		} 
 	}

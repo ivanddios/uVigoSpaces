@@ -12,21 +12,8 @@ class SPACE_ADD{
     }
     
     function render() {
-        include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';  
-		
-		
-		////////////////////////////////////////////////////
-		ob_start();
-		include 'header.php';
-		$buffer = ob_get_contents();
-		ob_end_clean();
-		$buffer=str_replace("%TITLE%",$strings['Add Floor'],$buffer);
-		echo $buffer;
-
-		//
-		//  <script src="../js/validates.js"></script><?php
-		////////////////////////////////////////////////////
-		?>
+        include 'header.php';
+        $this->view->setElement("%TITLE%", $strings["Add Floor"]); ?>
 
 		<div class="container">
 			<div class="row center-row">

@@ -11,17 +11,8 @@ class SPACE_SHOW{
     }
     
     function render() {
-		include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
-		  
-        ////////////////////////////////////////////////////
-		ob_start();
-		include 'header.php';
-		$buffer = ob_get_contents();
-		ob_end_clean();
-		$buffer=str_replace("%TITLE%",$strings['Show Space'],$buffer);
-		echo $buffer;
-		////////////////////////////////////////////////////
-		?>
+			include 'header.php';
+			$this->view->setElement("%TITLE%", $strings["Show Space"]); ?>
 
 		<div class="container">
 			<div class="row center-row">

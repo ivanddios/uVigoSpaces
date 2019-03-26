@@ -7,22 +7,9 @@ class BUILDING_ADD{
     }
     
     function render() {
-		include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';  
+		include 'header.php';
+		$this->view->setElement("%TITLE%", $strings["Add Building"]);?>
 		
-
-        ////////////////////////////////////////////////////
-        ob_start();
-        include 'header.php';
-        $buffer = ob_get_contents();
-        ob_end_clean();
-        $buffer=str_replace("%TITLE%",$strings['Add Building'],$buffer);
-		echo $buffer;
-		
-
-		?> <script src="../js/validates.js"></script><?php
-		////////////////////////////////////////////////////
-		
-        ?>
 		<div class="container">
 			<div class="row center-row">
 				<div class="col-lg-6 center-block">

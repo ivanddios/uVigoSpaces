@@ -11,10 +11,9 @@ class FLOOR_SHOWALL{
     }
 
     function render() {
-        $listTitles = array('idBuilding', 'nameFloor', 'planeFloor', 'surfaceBuildingFloor', 'surfaceUsefulFloor');
-
         include 'header.php';
-        $this->view->setElement("%TITLE%", $strings["Floors"]);?>
+        $this->view->setElement("%TITLE%", $strings["Show Plane"]);
+        $listTitles = array('idBuilding', 'nameFloor', 'planeFloor', 'surfaceBuildingFloor', 'surfaceUsefulFloor'); ?>
 
         <div class="container">
             <div class="row center-row">

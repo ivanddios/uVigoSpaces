@@ -1,20 +1,17 @@
 <?php
 
 require_once(__DIR__."..\..\core\ViewManager.php");
-include '../core/ACL.php';
-include '../model/USER_Model.php';
-include '../view/USER_SHOWALL_View.php';
-include '../view/USER_ADD_View.php';
-include '../view/USER_EDIT_View.php';
+require_once(__DIR__.'..\..\core\ACL.php');
+require_once(__DIR__.'..\..\model\USER_Model.php');
+require_once(__DIR__.'..\..\view\USER_LOGIN_View.php');
+require_once(__DIR__.'..\..\view\USER_SHOWALL_View.php');
+require_once(__DIR__.'..\..\view\USER_ADD_View.php');
+require_once(__DIR__.'..\..\view\USER_EDIT_View.php');
 
-if(!isset($_SESSION['LANGUAGE'])){
-	include '../locate/Strings_Castellano.php';
-}else {
-	include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
-}
-
-$function = "USER";
 $view = new ViewManager();
+$function = "USER";
+
+include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
 
 function get_data_form() {
 
@@ -26,10 +23,12 @@ function get_data_form() {
     $birthdate = $_POST['birthdate'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
-    $photo = null;
+    
 
     if (isset($_FILES['photo']['name']) && ($_FILES['photo']['name'] !== '')) {
         $photo = '../document/Users/'.$username.'/'.$_FILES['photo']['name'];
+    } else {
+        $photo = null;
     }
 
     $user = new USER_Model($username,  $password, $name, $surname, $dni, $birthdate, $email, $phone, $photo);
@@ -42,30 +41,29 @@ if (!isset($_GET['action'])){
 }
 Switch ($_GET['action']){
 
-	case  $strings['Login']:
+	case $strings['Login']:
 
 		if(!isset($_POST['submit'])){
-			require_once '../view/USER_LOGIN_View.php';
-			$login = new Login();
+			new Login();
 		}else{
 			if(isset($_POST['username']) && isset($_POST['passwd'])){
-				$user = new USER_Model($_POST['username'], $_POST['passwd']);
-				$answer = $user->login();
-				if ($answer == 'true'){
-					$_SESSION['LOGIN'] = $_POST['username'];
+                $user = new USER_Model($_POST['username'], $_POST['passwd']);
+                try {
+				    $user->login();
+					$_SESSION['LOGIN'] = $user->getUsername();
 					$_SESSION['PERMISSIONS'] = $user->getPermissions();
 					$_SESSION['LANGUAGE'] = $_POST['language'];
 					header('Location:../index.php');
-				}else{
-                    $view->setFlashDanger($strings[$errors->getMessage()]);
-                    $view->redirect("USER_Controller.php", $strings['login']);
+				}catch(Exception $errors){
+                    $view->setFlashDanger($errors->getMessage());
+                    $view->redirect("USER_Controller.php", $strings['Login']);
 				}
 			}
 		}
 
 	break;
 
-	case  $strings['Add']:
+	case $strings['Add']:
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add users requires login."]);
@@ -81,8 +79,6 @@ Switch ($_GET['action']){
             $userAdd = get_data_form();
 
             try{
-
-                var_dump($userAdd);
                 $userAdd->checkIsValidForAdd();
                 $dirPhoto = '../document/Users/'.$userAdd->getUsername().'/';
                 if ($_FILES['photo']['name'] !== '') {
@@ -98,7 +94,7 @@ Switch ($_GET['action']){
 
             }catch(Exception $errors) {
                 $view->setFlashDanger($strings[$errors->getMessage()]);
-                $valuesForm = $userAdd->infoUser();
+                $valuesForm = json_encode($userAdd);
                 $view->setVariable("userForm", $valuesForm);
                 $view->redirect("USER_Controller.php", $strings['Add']);
             }
@@ -109,7 +105,7 @@ Switch ($_GET['action']){
            	       
     break;
 
-    case  $strings['Edit']:
+    case $strings['Edit']:
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Show the floors requires login"]);
@@ -125,7 +121,7 @@ Switch ($_GET['action']){
 
         if (isset($_POST["submit"])) { 
             $userEdit = get_data_form();
-            
+    
             try{
                 $userEdit->checkIsValidForEdit(); 
                 $dirPlane = '../document/Users/'.$userEdit->getUsername().'/';
@@ -150,17 +146,15 @@ Switch ($_GET['action']){
             $values = $user->findUser();
             new USER_EDIT($values);
         }
-
     break;
 
 
-    case  $strings['Logout']:
+    case $strings['Logout']:
         session_destroy();
         $view->redirect("../index.php", "index");
     break;	
 
 	default:
-
         if(!checkRol('SHOWALL', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php", "");
@@ -169,7 +163,6 @@ Switch ($_GET['action']){
 			$users = $user->showAllUsers();
 			new USER_SHOWALL($users);
 		}
-            
     break;
 						
 }
