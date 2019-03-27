@@ -79,7 +79,7 @@ class BUILDING_SHOWALL{
                                                             <p><?= $strings["The information that this building has will be lost"]?></p>
                                                         </div>
                                                         <form method="POST" action="BUILDING_Controller.php?action=<?= htmlentities($strings['Delete'])?>">
-                                                            <input type="hidden" name="building" value="<?= $this->buildings[$j]['idBuilding']?>">
+                                                            <input type="hidden" name="building" value="<?= $this->buildings[$j]['idBuilding']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
                                                                 <button type="submit" name="submit" id="submit" class="btn btn-success success"><?= $strings["Ok"]?></button>
