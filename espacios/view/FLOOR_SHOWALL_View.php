@@ -74,11 +74,11 @@ class FLOOR_SHOWALL{
                                         </a>
                                         <?php if(checkRol('EDIT', 'FLOOR')): ?>
                                             <a href="FLOOR_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->floors[$j]['idBuilding']?>&floor=<?= $this->floors[$j]['idFloor']?>">
-                                                <span title="<?= $strings['Edit Building']?>" class="btn btn-primary btn-sm fa fa-pencil"></span>
+                                                <span title="<?= $strings['Edit Floor']?>" class="btn btn-primary btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
                                         <?php if(checkRol('DELETE', 'FLOOR')): ?>
-                                            <i title="<?= $strings['Delete Building']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?=$this->floors[$j]['idFloor']?>"></i>
+                                            <i title="<?= $strings['Delete Floor']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?=$this->floors[$j]['idFloor']?>"></i>
                                             <div id="item-<?=$this->floors[$j]['idFloor']?>" class="modal fade"  tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">

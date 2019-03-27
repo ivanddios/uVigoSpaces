@@ -93,6 +93,7 @@ Switch ($_GET['action']){
                 $view->redirect("USER_Controller.php", "index");
 
             }catch(Exception $errors) {
+                
                 $view->setFlashDanger($strings[$errors->getMessage()]);
                 $valuesForm = json_encode($userAdd);
                 $view->setVariable("userForm", $valuesForm);
@@ -117,7 +118,7 @@ Switch ($_GET['action']){
             $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
         }
 
-        $user = $_GET['user'];
+        $username = $_GET['user'];
 
         if (isset($_POST["submit"])) { 
             $userEdit = get_data_form();
@@ -142,10 +143,46 @@ Switch ($_GET['action']){
                 $view->redirect("USER_Controller.php", $strings['Edit']);
             }
         } else {
-            $user = new USER_Model($user);
+            $user = new USER_Model($username);
             $values = $user->findUser();
             new USER_EDIT($values);
         }
+    break;
+
+    case  $strings['Delete']:
+
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Delete users requires login."]);
+            $view->redirect("USER_Controller.php", "");
+        }
+
+        if(!checkRol('DELETE', $function)){
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->redirect("USER_Controller.php", "");
+        }
+
+        if (!isset($_POST['username'])){
+            $view->setFlashDanger($strings["Username is mandatory"]);
+            $view->redirect("USER_Controller.php", "");
+        }
+        $username = $_POST['username'];
+        $userDelete = new USER_Model($username);
+
+        if (!$userDelete->findUser()) {
+            $view->setFlashDanger($strings["No such user with this id"]);
+            $view->redirect("USER_Controller.php", "");
+        }
+
+        try{
+            $userDelete->deleteUser();
+            $flashMessageSuccess = sprintf($strings["User \"%s\" successfully deleted."], $username);
+            $view->setFlashSuccess($flashMessageSuccess);
+            $view->redirect("USER_Controller.php", "");     
+        }catch(Exception $errors) {
+            $view->setFlashDanger($strings[$errors->getMessage()]);
+            $view->redirect("USER_Controller.php", "");
+        }
+            	
     break;
 
 

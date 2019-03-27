@@ -32,7 +32,7 @@ class USER_ADD{
 						<?=htmlentities($strings["New user"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form name="userForm" method="POST" action="USER_Controller.php?action=<?= $strings['Add']?>" enctype="multipart/form-data">
+						<form name="userForm" method="POST" action="USER_Controller.php?action=<?= $strings['Add']?>" enctype="multipart/form-data" onkeyup="validateUser(this)">
 							<div id="group-form">
 
 								<div id="profilePhoto-container" class="extra">
@@ -41,12 +41,12 @@ class USER_ADD{
 								</div>
 								
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="username" name="username" placeholder="<?= $strings['What is the username of this user?']?>"  value="<?= $this->user['username']?>" required>
+									<input type="text" id="username" name="username" placeholder="<?= $strings['What is the username of this user?']?>"  value="<?= $this->user['username']?>" onkeyup="checkUser(this.id)" required>
 									<i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="password" id="password" name="password" placeholder="<?= $strings['What is the password of this user?']?>" value="<?= $this->user['password']?>">
+									<input type="password" id="password" name="password" placeholder="<?= $strings['What is the password of this user?']?>" onkeyup="checkPassword(this.id)" required >
 									<i class="fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
                     <div id="passwordAlert" class="alert alert-secondary passwordAlert" role="alert">
 											<p id="length" class="invalid"><?=$strings['PasswordCharacters']?></p>
@@ -57,41 +57,41 @@ class USER_ADD{
 								</div>
 								
 								<div class="inputWithIcon inputIconBg">
-									<input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="<?= $strings['Repeat password']?>">
+									<input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="<?= $strings['Repeat password']?>" onkeyup="checkConfirmPassword(this.id)" required>
 									<i class="fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="name" name="name" placeholder="<?= $strings['What is the name of the user?']?>" value="<?= $this->user['name']?>">
+									<input type="text" id="name" name="name" placeholder="<?= $strings['What is the name of the user?']?>" value="<?= $this->user['name']?>" onkeyup="checkText(this.id)" required>
 									<i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="surname" name="surname" placeholder="<?= $strings["What are the user's surnames?"]?>" value="<?= $this->user['surname']?>">
+									<input type="text" id="surname" name="surname" placeholder="<?= $strings["What are the user's surnames?"]?>" value="<?= $this->user['surname']?>" onkeyup="checkText(this.id)" required>
 									<i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
               	</div>
 
                 <div class="inputWithIcon inputIconBg">
-									<input type="text" id="dni" name="dni" placeholder="<?= $strings['What is your ID?']?>" value="<?= $this->user['dni']?>">
+									<input type="text" id="dni" name="dni" placeholder="<?= $strings['What is your ID?']?>" value="<?= $this->user['dni']?>" onkeyup="checkDNI(this.id)" required>
 									<i class="fa fa-id-card fa-lg fa-fw" aria-hidden="true"></i>
                 </div>
 								
                 <div class="inputWithIcon inputIconBg">
 									<?php if($_SESSION['LANGUAGE'] === 'English'): ?>
-										<input type="text" id="date-eng" name="birthdate" class ="date" placeholder="<?= $strings['What is his birthdate?']?>" value="<?= $this->user['birthdate']?>" onmousedown ="calendar(this.id)">
+										<input type="text" id="date-eng" name="birthdate" class ="date" placeholder="<?= $strings['What is his birthdate?']?>" value="<?= $this->user['birthdate']?>"  onchange="checkDate(this)" required>
 									<?php else: ?>
-										<input type="text" id="date-es" name="birthdate" class ="date" placeholder="<?= $strings['What is his birthdate?']?>" value="<?= $this->user['birthdate']?>" onmousedown ="calendar(this.id)">
+										<input type="text" id="date-es" name="birthdate" class ="date" placeholder="<?= $strings['What is his birthdate?']?>" value="<?= $this->user['birthdate']?>"  onchange="checkDate(this)" required>
 									<?php endif; ?>
 									<i class="fa fa-calendar fa-lg fa-fw" aria-hidden="true"></i>
                 </div>
                                 
                 <div class="inputWithIcon inputIconBg">
-									<input type="text" id="email" name="email" placeholder="<?= $strings['What is his email?']?>" value="<?= $this->user['email']?>">
+									<input type="text" id="email" name="email" placeholder="<?= $strings['What is his email?']?>" value="<?= $this->user['email']?>" onkeyup="checkEmail(this.id)" required>
 									<i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="phone" name="phone" placeholder="<?= $strings['What is his phone?']?>" value="<?= $this->user['phone']?>">
+									<input type="text" id="phone" name="phone" placeholder="<?= $strings['What is his phone?']?>" value="<?= $this->user['phone']?>" onkeyup="checkNumPhone(this.id)" required>
 									<i class="fa fa-phone fa-lg fa-fw" aria-hidden="true"></i>
                 </div>
                                 

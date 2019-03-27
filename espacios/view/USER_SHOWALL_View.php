@@ -86,11 +86,11 @@ class USER_SHOWALL{
                                                             <?= $strings["Attention"]?>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <?= sprintf($strings["Are you sure you want to delete the user \"%s\" ?"], $this->users[$j]['name'] )?>
+                                                            <?= sprintf($strings["Are you sure you want to delete the user \"%s\" ?"], $this->users[$j]['username'] )?>
                                                             <p><?= $strings["The information that this user has will be lost"]?></p>
                                                         </div>
                                                         <form method="POST" action="USER_Controller.php?action=<?= htmlentities($strings['Delete'])?>">
-                                                            <input type="hidden" name="user" value="<?= $this->users[$j]['username']?>">
+                                                            <input type="hidden" name="username" value="<?= $this->users[$j]['username']?>">
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
                                                                 <button type="submit" name="submit" id="submit" class="btn btn-success success"><?= $strings["Ok"]?></button>

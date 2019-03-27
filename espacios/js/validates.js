@@ -271,8 +271,8 @@ function checkConfirmPassword(confirmPasswordId){
     var confirmPasswordInput = document.getElementById(confirmPasswordId);
     var passwordInput = document.getElementById("password");
 
-    if(passwordInput.value.length !== null){
-        if (confirmPasswordInput.value.length != 0 && passwordInput.value == confirmPasswordInput.value){
+    if(passwordInput.value.length !== null && confirmPasswordInput){
+        if (passwordInput.value == confirmPasswordInput.value){
             confirmPasswordInput.nextElementSibling.style.backgroundColor = "green"; 
             confirmPasswordInput.style.borderColor = "green";
             return true;
@@ -282,7 +282,7 @@ function checkConfirmPassword(confirmPasswordId){
             confirmPasswordInput.style.borderColor = "red";
             return false;
         }
-    }
+    } 
  }
 
 
@@ -332,8 +332,8 @@ function checkDate(dateId){
 
 }
 
-function checkDate(dateId){
-    var dateInput = document.getElementById(dateId);
+function checkDate(dateInput){
+    // var dateInput = document.getElementById(dateId);
     var expr = /^(0[1-9]|[12][0-9]|3[01])[\- \/.](?:(0[1-9]|1[012])[\- \/.](19|20)[0-9]{2})$/;
     var dateArray = dateInput.value.split("/");
     var dateConvert = dateArray[1] + '/' + dateArray[0] + '/' + dateArray[2];
@@ -402,10 +402,14 @@ function validateSpace() {
 }
 
 
-function validateUser() {
-    
-    if(checkUser("username") && checkPassword("password") && checkConfirmPassword("confirmPassword") && checkText("name") && checkText("surname") && checkDNI("dni") 
-    && checkDate("surname") && checkDate(document.forms["userForm"]["date"].id) && checkEmail("email") && checkNumPhone("phone")) { 
+function validateUser(form) {
+    // if(checkDate(document.getElementsByClassName("date")[0])){
+    //     console.log("asdsad");
+    //     document.getElementsByName("submit")[0].disabled = false;
+    // }
+   
+    if(checkUser("username") && checkPassword("password") && checkConfirmPassword("passwordConfirm") && checkText("name") && checkText("surname") && checkDNI("dni") 
+     && checkDate(document.getElementsByClassName("date")[0]) && checkEmail("email") && checkNumPhone("phone")) { 
         document.getElementsByName("submit")[0].disabled = false;
         return true;
     }else{

@@ -5,7 +5,7 @@ require_once(__DIR__."..\..\core\ConnectionBD.php");
 class USER_Model {
 
 	var $username;
-	var $password;
+	private $password;
 	var $name;
 	var $surname;
 	var $dni;
@@ -120,6 +120,15 @@ class USER_Model {
         }
     }
 
+    function deleteUser() {
+        $sql = "DELETE FROM user WHERE username ='$this->username'";
+        if (!($resultado = $this->mysqli->query($sql))) {
+            return 'Error in the query on the database';
+        } else {
+            return true;
+        }
+    }
+
     // function infoUser(){
     //     $array = array();
     //     foreach($this as $key => $value) {
@@ -136,15 +145,15 @@ class USER_Model {
     }
 
 
-    function existsUser($username) {
-        $sql = "SELECT * FROM user WHERE username = '$username'";
-        $result = $this->mysqli->query($sql);
-        if ($result->num_rows == 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // function existsUser($username) {
+    //     $sql = "SELECT * FROM user WHERE username = '$username'";
+    //     $result = $this->mysqli->query($sql);
+    //     if ($result->num_rows == 1) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
     function existsDNI($dni) {
         $sql = "SELECT * FROM user WHERE dni = '$dni'";
@@ -211,7 +220,7 @@ class USER_Model {
             $errors = "Username can not be that long";
         }else if(!preg_match('/^[a-zA-Z0-9, ]*$/', $this->username)){
             $errors = "Username is invalid";
-        }elseif($this->existsUser($this->username)){
+        }elseif($this->findUser($this->username)){
             $errors = "There is already a user with that username";
         }else if (strlen(trim($this->password)) == 0 ) {
             $errors= "Password is mandatory";
@@ -244,7 +253,7 @@ class USER_Model {
         }else if (strlen(trim($this->email)) > 50 ) {
             $errors= "Email can not be that long";
         }elseif(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
-            $errors = "There is already a user with that email";
+            $errors = "Email is invalid";
         }elseif($this->existsEmail($this->email)){
             $errors = "There is already a user with that email";
         }else if (strlen(trim($this->phone)) != 9 ) {
