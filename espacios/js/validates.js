@@ -214,55 +214,66 @@ function checkPassword(passwordId){
     var length = document.getElementById("length");
     
 
-    if(passwordInput.value.length >= 8) {
-        length.classList.remove("invalid");
-        length.classList.add("valid");
-      } else {
-        length.classList.remove("valid");
-        length.classList.add("invalid");
-      }
+    if(passwordInput.value){
 
-   
-    if(lowerCaseLetters.test(passwordInput.value)) {  
-        lowercase.classList.remove("invalid");
-        lowercase.classList.add("valid");
-    } else {
-        lowercase.classList.remove("valid");
-        lowercase.classList.add("invalid");
-    }
+        if(passwordInput.value.length >= 8) {
+            length.classList.remove("invalid");
+            length.classList.add("valid");
+        } else {
+            length.classList.remove("valid");
+            length.classList.add("invalid");
+        }
 
-   
-    if(upperCaseLetters.test(passwordInput.value)) {  
-        uppercase.classList.remove("invalid");
-        uppercase.classList.add("valid");
-    } else {
-        uppercase.classList.remove("valid");
-        uppercase.classList.add("invalid");
-    }
-
-   
-    if(numbers.test(passwordInput.value)) { 
-        number.classList.remove("invalid");
-        number.classList.add("valid");
-    } else {
-        number.classList.remove("valid");
-        number.classList.add("invalid");
-    }
     
+        if(lowerCaseLetters.test(passwordInput.value)) {  
+            lowercase.classList.remove("invalid");
+            lowercase.classList.add("valid");
+        } else {
+            lowercase.classList.remove("valid");
+            lowercase.classList.add("invalid");
+        }
 
-    if (expr.test(passwordInput.value) && passwordInput.value.length >= 8 && passwordInput.value.length < 225){
+    
+        if(upperCaseLetters.test(passwordInput.value)) {  
+            uppercase.classList.remove("invalid");
+            uppercase.classList.add("valid");
+        } else {
+            uppercase.classList.remove("valid");
+            uppercase.classList.add("invalid");
+        }
+
+    
+        if(numbers.test(passwordInput.value)) { 
+            number.classList.remove("invalid");
+            number.classList.add("valid");
+        } else {
+            number.classList.remove("valid");
+            number.classList.add("invalid");
+        }
+        
+
+        if (expr.test(passwordInput.value) && passwordInput.value.length >= 8 && passwordInput.value.length < 225){
+            passwordBox.style.display = 'none';
+            passwordInput.nextElementSibling.style.backgroundColor = "green"; 
+            passwordInput.style.borderColor = "green";
+            document.getElementById("passwordConfirm").type = "password";
+            return true;
+        }
+        else{
+            passwordBox.style.display = 'block';
+            passwordInput.nextElementSibling.style.backgroundColor = "red";  
+            passwordInput.style.borderColor = "red";
+            return false;
+        }
+
+    } else {
         passwordBox.style.display = 'none';
-        passwordInput.nextElementSibling.style.backgroundColor = "green"; 
-        passwordInput.style.borderColor = "green";
-        return true;
-    }
-    else{
-        passwordBox.style.display = 'block';
-        passwordInput.nextElementSibling.style.backgroundColor = "red";  
-        passwordInput.style.borderColor = "red";
-        return false;
+        passwordInput.nextElementSibling.style.backgroundColor = "#aaa"; 
+        passwordInput.style.borderColor =  "#aaa";
+        document.getElementById("passwordConfirm").type = "hidden";
     }
 }
+
 
 
 
@@ -402,12 +413,8 @@ function validateSpace() {
 }
 
 
-function validateUser(form) {
-    // if(checkDate(document.getElementsByClassName("date")[0])){
-    //     console.log("asdsad");
-    //     document.getElementsByName("submit")[0].disabled = false;
-    // }
-   
+function validateAddUser() {
+
     if(checkUser("username") && checkPassword("password") && checkConfirmPassword("passwordConfirm") && checkText("name") && checkText("surname") && checkDNI("dni") 
      && checkDate(document.getElementsByClassName("date")[0]) && checkEmail("email") && checkNumPhone("phone")) { 
         document.getElementsByName("submit")[0].disabled = false;
@@ -421,7 +428,27 @@ function validateUser(form) {
 
 
 
+function validateEditUser() {
 
+    if(checkUser("username") && checkText("name") && checkText("surname") && checkDNI("dni") 
+     && checkDate(document.getElementsByClassName("date")[0]) && checkEmail("email") && checkNumPhone("phone")) {
+        if(document.getElementsByName("password")[0].value) {
+            if(checkPassword("password") && checkConfirmPassword("passwordConfirm")){
+                document.getElementsByName("submit")[0].disabled = false;
+                return true;
+            } else {
+                document.getElementsByName("submit")[0].disabled = true;
+                return false;
+            }
+        }
+        document.getElementsByName("submit")[0].disabled = false;
+        return true;
+    }else{
+        document.getElementsByName("submit")[0].disabled = true;
+        return false;
+    }
+
+}
 
 
 

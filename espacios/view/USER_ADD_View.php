@@ -32,7 +32,7 @@ class USER_ADD{
 						<?=htmlentities($strings["New user"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form name="userForm" method="POST" action="USER_Controller.php?action=<?= $strings['Add']?>" enctype="multipart/form-data" onkeyup="validateUser(this)">
+						<form name="userForm" method="POST" action="USER_Controller.php?action=<?= $strings['Add']?>" enctype="multipart/form-data" onkeyup="validateAddUser()">
 							<div id="group-form">
 
 								<div id="profilePhoto-container" class="extra">

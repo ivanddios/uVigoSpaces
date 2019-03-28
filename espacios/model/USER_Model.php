@@ -129,6 +129,21 @@ class USER_Model {
         }
     }
 
+    // function updateUser() {
+    //     $dateBD = $this->formatDate($this->birthdate);
+        
+    //     if(empty($this->password)){
+    //         $sql = "UPDATE user SET name = '$this->name', surname = '$this->surname', dni = '$this->dni', birthdate = '$dateBD', email = '$this->email', phone = '$this->phone' WHERE username = '$this->username'";  
+    //     }else {
+    //           $sql = "UPDATE user SET photo = '$this->photo', password = '$this->password', name = '$this->name', surname = '$this->surname', dni = '$this->dni', birthdate = '$dateBD', email = '$this->email', phone = '$this->phone' WHERE username = '$this->username'";  
+    //     }
+    //     if (!($resultado = $this->mysqli->query($sql))) {
+    //         throw new Exception('Error in the query on the database');
+    //     } else {
+    //         return true;
+    //     }
+    // }
+
     // function infoUser(){
     //     $array = array();
     //     foreach($this as $key => $value) {
@@ -264,9 +279,67 @@ class USER_Model {
 
         if (sizeof($errors) > 0){
             throw new Exception($errors);
+        }   
+    }
+
+
+
+
+    public function checkIsValidForEdit() {
+
+        $errors = array();
+
+        var_dump($this->password);
+
+        if (strlen(trim($this->username)) == 0 ) {
+            $errors= "Username is mandatory";
+        }else if (strlen(trim($this->username)) > 25 ) {
+            $errors = "Username can not be that long";
+        }else if(!preg_match('/^[a-zA-Z0-9, ]*$/', $this->username)){
+            $errors = "Username is invalid";
+        }else if(strlen(trim($this->password)) > 0 ) {
+            if (strlen(trim(md5($this->password))) > 128 ) {
+                $errors = "Password can not be that long";
+            }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->password)){
+                $errors = "Password is invalid. Try again!";
+            }
+        }else if (strlen(trim($this->name)) == 0 ) {
+            $errors= "User name is mandatory";
+        }else if (strlen(trim($this->name)) > 40 ) {
+            $errors = "User name can not be that long";
+        }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->name)){
+            $errors = "User name is invalid. Try again!";
+        }else if (strlen(trim($this->surname)) == 0 ) {
+            $errors= "User surnames are mandatory";
+        }else if (strlen(trim($this->surname)) > 100 ) {
+            $errors = "User surnames can not be that long";
+        }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->surname)){
+            $errors = "User surnames are invalid. Try again!";
+        }else if (strlen(trim($this->dni)) != 9 ) {
+            $errors= "DNI can not be that long";
+        // }elseif($this->existsDNI($this->dni)){
+        //     $errors = "There is already a user with that dni";
+        }else if (!preg_match('/^\d{8}[a-zA-Z]$/', $this->dni)) {
+            $errors = "User id is invalid. Try again!";
+        }elseif(!$this->letterDNI($this->dni)){
+            $errors = "User id letter is invalid. Try again!";
+        }else if(!$this->validateDate($this->birthdate)){
+            $errors = "Birthdate is incorrect";
+        }else if (strlen(trim($this->email)) > 50 ) {
+            $errors= "Email can not be that long";
+        }elseif(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
+            $errors = "Email is invalid";
+        // }elseif($this->existsEmail($this->email)){
+        //     $errors = "There is already a user with that email";
+        }else if (strlen(trim($this->phone)) != 9 ) {
+            $errors= "User phone is incorrect. Example: 666777888";
+        }else if(!preg_match('/^[9|6|7][0-9]{8}$/', $this->phone)){
+            $errors = "User phone format is invalid. Example: 666777888";
         }
 
-       
+        if (sizeof($errors) > 0){
+            throw new Exception($errors);
+        }       
     }
 
 }

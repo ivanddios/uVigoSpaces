@@ -125,19 +125,19 @@ Switch ($_GET['action']){
     
             try{
                 $userEdit->checkIsValidForEdit(); 
-                $dirPlane = '../document/Users/'.$userEdit->getUsername().'/';
-                if ($_FILES['photo']['name'] !== '') {
-                    if (!file_exists($dirPlane)) {
-                        mkdir($dirPlane, 0777, true);
-                    }
-                    move_uploaded_file($_FILES['photo']['tmp_name'],$userEdit->getPhoto());
-                    $link = $userEdit->findLinkProfilePhoto();
-                    unlink($link);
-                }
-                $userEdit->updateUser();
-                $flashMessageSuccess = sprintf($strings["User \"%s\" successfully updated."], $userEdit->getNameFloor());
+                //$dirPlane = '../document/Users/'.$userEdit->getUsername().'/';
+                // if ($_FILES['photo']['name'] !== '') {
+                //     if (!file_exists($dirPlane)) {
+                //         mkdir($dirPlane, 0777, true);
+                //     }
+                //     move_uploaded_file($_FILES['photo']['tmp_name'],$userEdit->getPhoto());
+                //     $link = $userEdit->findLinkProfilePhoto();
+                //     unlink($link);
+                // }
+                //$userEdit->updateUser();
+                $flashMessageSuccess = sprintf($strings["User \"%s\" successfully updated."], $userEdit->getUsername());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("USER_Controller.php", "index");
+                //$view->redirect("USER_Controller.php", "index");
             }catch(Exception $errors) {
                 $view->setFlashDanger($strings[$errors->getMessage()]);
                 $view->redirect("USER_Controller.php", $strings['Edit']);
