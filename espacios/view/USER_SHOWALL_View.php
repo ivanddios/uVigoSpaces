@@ -90,7 +90,7 @@ class USER_SHOWALL{
                                                             <p><?= $strings["The information that this user has will be lost"]?></p>
                                                         </div>
                                                         <form method="POST" action="USER_Controller.php?action=<?= htmlentities($strings['Delete'])?>">
-                                                            <input type="hidden" name="username" value="<?= $this->users[$j]['username']?>">
+                                                            <input type="hidden" name="username" value="<?= $this->users[$j]['username']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
                                                                 <button type="submit" name="submit" id="submit" class="btn btn-success success"><?= $strings["Ok"]?></button>

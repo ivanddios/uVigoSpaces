@@ -174,6 +174,7 @@ Switch ($_GET['action']){
         }
 
         try{
+            rmdir('../document/Users/'.$username);
             $userDelete->deleteUser();
             $flashMessageSuccess = sprintf($strings["User \"%s\" successfully deleted."], $username);
             $view->setFlashSuccess($flashMessageSuccess);
