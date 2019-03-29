@@ -64,7 +64,7 @@
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Mi Cuenta </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="../controller/USER_Controller.php?action=<?=$strings['Edit']?>"><?=$strings['MyAccount']?></a>
+                                    <a class="dropdown-item" href="../controller/USER_Controller.php?action=<?=$strings['Edit']?>&user=<?=$_SESSION['LOGIN']?>"><?=$strings['MyAccount']?></a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="../controller/USER_Controller.php?action=<?=$strings['Logout']?>"><?=$strings['Logout']?></a>
                                 </div>

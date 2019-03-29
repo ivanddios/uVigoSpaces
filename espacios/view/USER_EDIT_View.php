@@ -30,14 +30,18 @@ class USER_EDIT{
 			<div class="row center-row">
 				<div class="col-lg-6 center-block">
 					<div id="titleView">
-						<?=htmlentities($strings["New user"])?>
+						<?=htmlentities($strings["Edit User"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
 						<form name="userForm" method="POST" action="USER_Controller.php?action=<?= $strings['Edit']?>&user=<?= $this->user['username']?>" enctype="multipart/form-data" onkeyup="validateEditUser()">
 							<div id="group-form">
 
 								<div id="profilePhoto-container">
-									<img id="profilePhoto" alt="<?= $strings['ProfilePhoto']?>" src="<?=$this->user['photo']?>" onclick="uploadProfilePhoto()"/>
+									<?php if($this->user['photo']){ ?>
+										<img id="profilePhoto" alt="<?= $strings['ProfilePhoto']?>" src="<?=$this->user['photo']?>" onclick="uploadProfilePhoto()"/>
+									<?php } else { ?>
+										<img id="profilePhoto" alt="<?= $strings['ProfilePhoto']?>" src="../img/notUser.jpg" onclick="uploadProfilePhoto()"/>
+									<?php } ?>
 									<input id="imageUpload" type="file" name="photo" accept="image/*" onchange="previewProfilePhoto(this)">
 								</div>
 								

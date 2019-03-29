@@ -4,15 +4,16 @@ require_once(__DIR__."..\..\core\ConnectionBD.php");
 
 class USER_Model {
 
-	var $username;
+	private $username;
 	private $password;
-	var $name;
-	var $surname;
-	var $dni;
-	var $birthdate;
-	var $email;
-	var $phone;
-	var $photo;
+	private $name;
+	private $surname;
+	private $dni;
+	private $birthdate;
+	private $email;
+	private $phone;
+    private $photo = array();
+    private $dirPhoto;
 	private $mysqli;
 
 
@@ -27,6 +28,7 @@ class USER_Model {
         $this->email = $email;
         $this->phone = $phone;
         $this->photo = $photo;
+        $this->dirPhoto = '../document/Users/'.$this->getUsername().'/';
         $this->mysqli = Connection::connectionBD();
     }
 
@@ -35,12 +37,12 @@ class USER_Model {
         return $this->username;
     }
 
-    public function getPassword(){
-        return $this->password;
-    }
-
-    public function getPhoto(){
-        return $this->photo;
+    public function getPhoto($option=null){
+        if($option !== null && isset($this->photo[$option])){
+            return $this->photo[$option];
+        } else {
+            return $this->photo;
+        }   
     }
 
 
@@ -112,7 +114,36 @@ class USER_Model {
     function addUser() {
         $passwordBD = md5($this->password);
         $dateBD = $this->formatDate($this->birthdate);
-        $sql = "INSERT INTO user VALUES ('$this->photo', '$this->username', '$passwordBD', '$this->name', '$this->surname', '$this->dni', '$dateBD', '$this->email', '$this->phone')";
+        $photoBD =$this->dirPhoto.$this->getPhoto('name');
+        $sql = "INSERT INTO user VALUES ('$photoBD', '$this->username', '$passwordBD', '$this->name', '$this->surname', '$this->dni', '$dateBD', '$this->email', '$this->phone')";
+        $this->updateDirPhoto();
+        if (!($resultado = $this->mysqli->query($sql))) {
+            throw new Exception('Error in the query on the database');
+        } else {
+            return true;
+        }
+    }
+
+
+    function updateUser() {
+
+        $dateBD = $this->formatDate($this->birthdate);
+        if($this->getPhoto('name') == '' && empty($this->password)){
+            $sql = "UPDATE user SET name = '$this->name', surname = '$this->surname', dni = '$this->dni', birthdate = '$dateBD', email = '$this->email', phone = '$this->phone' WHERE username = '$this->username'";  
+        }else if($this->getPhoto('name') == '' && !empty($this->password)){
+            $sql = "UPDATE user SET password = '$this->password', name = '$this->name', surname = '$this->surname', dni = '$this->dni', birthdate = '$dateBD', email = '$this->email', phone = '$this->phone' WHERE username = '$this->username'";  
+        }else if($this->getPhoto('name') !== '' && empty($this->password)){
+            $photoBD =$this->dirPhoto.$this->getPhoto('name');
+            $sql = "UPDATE user SET photo = '$photoBD', name = '$this->name', surname = '$this->surname', dni = '$this->dni', birthdate = '$dateBD', email = '$this->email', phone = '$this->phone' WHERE username = '$this->username'";
+            $this->updateDirPhoto();
+            unlink($this->findLinkProfilePhoto());
+        } else {
+            $photoBD =$this->dirPhoto.$this->getPhoto('name'); 
+            $sql = "UPDATE user SET photo = '$photoBD', password = '$this->password', name = '$this->name', surname = '$this->surname', dni = '$this->dni', birthdate = '$dateBD', email = '$this->email', phone = '$this->phone' WHERE username = '$this->username'";
+            $this->updateDirPhoto();
+            unlink($this->findLinkProfilePhoto());
+        }
+
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
         } else {
@@ -129,29 +160,6 @@ class USER_Model {
         }
     }
 
-    // function updateUser() {
-    //     $dateBD = $this->formatDate($this->birthdate);
-        
-    //     if(empty($this->password)){
-    //         $sql = "UPDATE user SET name = '$this->name', surname = '$this->surname', dni = '$this->dni', birthdate = '$dateBD', email = '$this->email', phone = '$this->phone' WHERE username = '$this->username'";  
-    //     }else {
-    //           $sql = "UPDATE user SET photo = '$this->photo', password = '$this->password', name = '$this->name', surname = '$this->surname', dni = '$this->dni', birthdate = '$dateBD', email = '$this->email', phone = '$this->phone' WHERE username = '$this->username'";  
-    //     }
-    //     if (!($resultado = $this->mysqli->query($sql))) {
-    //         throw new Exception('Error in the query on the database');
-    //     } else {
-    //         return true;
-    //     }
-    // }
-
-    // function infoUser(){
-    //     $array = array();
-    //     foreach($this as $key => $value) {
-    //         $array[$key] = $value;
-    //     }
-    //     return $array;
-    // }
-
 
     function formatDate($date){
         $dateFormat = str_replace('/', '-', $date);
@@ -160,15 +168,26 @@ class USER_Model {
     }
 
 
-    // function existsUser($username) {
-    //     $sql = "SELECT * FROM user WHERE username = '$username'";
-    //     $result = $this->mysqli->query($sql);
-    //     if ($result->num_rows == 1) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
+    function updateDirPhoto() {
+
+        if ($this->getPhoto('name') !== '') {
+            if (!file_exists($this->dirPhoto)) {
+                mkdir($this->dirPhoto, 0777, true);
+            }
+        move_uploaded_file($this->getPhoto('tmp_name'), $this->dirPhoto.$this->getPhoto('name'));
+        }
+    }
+
+
+    function existsUser($username) {
+        $sql = "SELECT * FROM user WHERE username = '$username'";
+        $result = $this->mysqli->query($sql);
+        if ($result->num_rows == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     function existsDNI($dni) {
         $sql = "SELECT * FROM user WHERE dni = '$dni'";
@@ -191,7 +210,7 @@ class USER_Model {
     }
 
 
-    function letterDNI($dni) {
+    function validateletterDNI($dni) {
 
         $letterDNI = substr($dni, -1, 1);
         $numberDNI = substr($dni, 0, 8);
@@ -235,7 +254,7 @@ class USER_Model {
             $errors = "Username can not be that long";
         }else if(!preg_match('/^[a-zA-Z0-9, ]*$/', $this->username)){
             $errors = "Username is invalid";
-        }elseif($this->findUser($this->username)){
+        }elseif($this->existsUser($this->username)){
             $errors = "There is already a user with that username";
         }else if (strlen(trim($this->password)) == 0 ) {
             $errors= "Password is mandatory";
@@ -261,7 +280,7 @@ class USER_Model {
             $errors = "There is already a user with that dni";
         }else if (!preg_match('/^\d{8}[a-zA-Z]$/', $this->dni)) {
             $errors = "User id is invalid. Try again!";
-        }elseif(!$this->letterDNI($this->dni)){
+        }elseif(!$this->validateletterDNI($this->dni)){
             $errors = "User id letter is invalid. Try again!";
         }else if(!$this->validateDate($this->birthdate)){
             $errors = "Birthdate is incorrect";
@@ -289,8 +308,6 @@ class USER_Model {
 
         $errors = array();
 
-        var_dump($this->password);
-
         if (strlen(trim($this->username)) == 0 ) {
             $errors= "Username is mandatory";
         }else if (strlen(trim($this->username)) > 25 ) {
@@ -317,11 +334,9 @@ class USER_Model {
             $errors = "User surnames are invalid. Try again!";
         }else if (strlen(trim($this->dni)) != 9 ) {
             $errors= "DNI can not be that long";
-        // }elseif($this->existsDNI($this->dni)){
-        //     $errors = "There is already a user with that dni";
         }else if (!preg_match('/^\d{8}[a-zA-Z]$/', $this->dni)) {
             $errors = "User id is invalid. Try again!";
-        }elseif(!$this->letterDNI($this->dni)){
+        }elseif(!$this->validateletterDNI($this->dni)){
             $errors = "User id letter is invalid. Try again!";
         }else if(!$this->validateDate($this->birthdate)){
             $errors = "Birthdate is incorrect";
@@ -329,8 +344,6 @@ class USER_Model {
             $errors= "Email can not be that long";
         }elseif(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
             $errors = "Email is invalid";
-        // }elseif($this->existsEmail($this->email)){
-        //     $errors = "There is already a user with that email";
         }else if (strlen(trim($this->phone)) != 9 ) {
             $errors= "User phone is incorrect. Example: 666777888";
         }else if(!preg_match('/^[9|6|7][0-9]{8}$/', $this->phone)){

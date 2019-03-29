@@ -7,6 +7,7 @@ require_once(__DIR__.'..\..\view\USER_LOGIN_View.php');
 require_once(__DIR__.'..\..\view\USER_SHOWALL_View.php');
 require_once(__DIR__.'..\..\view\USER_ADD_View.php');
 require_once(__DIR__.'..\..\view\USER_EDIT_View.php');
+require_once(__DIR__.'..\..\view\USER_SHOW_View.php');
 
 $view = new ViewManager();
 $function = "USER";
@@ -25,11 +26,13 @@ function get_data_form() {
     $phone = $_POST['phone'];
     
 
-    if (isset($_FILES['photo']['name']) && ($_FILES['photo']['name'] !== '')) {
-        $photo = '../document/Users/'.$username.'/'.$_FILES['photo']['name'];
-    } else {
-        $photo = null;
-    }
+    // if (isset($_FILES['photo']['name']) && ($_FILES['photo']['name'] !== '')) {
+    //     $photo = '../document/Users/'.$username.'/'.$_FILES['photo']['name'];
+    // } else {
+    //     $photo = null;
+    // }
+
+    $photo = $_FILES['photo'];
 
     $user = new USER_Model($username,  $password, $name, $surname, $dni, $birthdate, $email, $phone, $photo);
     return $user;
@@ -80,20 +83,11 @@ Switch ($_GET['action']){
 
             try{
                 $userAdd->checkIsValidForAdd();
-                $dirPhoto = '../document/Users/'.$userAdd->getUsername().'/';
-                if ($_FILES['photo']['name'] !== '') {
-                    if (!file_exists($dirPhoto)) {
-                        mkdir($dirPhoto, 0777, true);
-                    }
-                    move_uploaded_file($_FILES['photo']['tmp_name'], $userAdd->getPhoto());
-                }
                 $userAdd->addUser();
                 $flashMessageSuccess = sprintf($strings["User \"%s\" successfully added."], $userAdd->getUsername());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("USER_Controller.php", "index");
-
             }catch(Exception $errors) {
-                
                 $view->setFlashDanger($strings[$errors->getMessage()]);
                 $valuesForm = json_encode($userAdd);
                 $view->setVariable("userForm", $valuesForm);
@@ -125,22 +119,13 @@ Switch ($_GET['action']){
     
             try{
                 $userEdit->checkIsValidForEdit(); 
-                //$dirPlane = '../document/Users/'.$userEdit->getUsername().'/';
-                // if ($_FILES['photo']['name'] !== '') {
-                //     if (!file_exists($dirPlane)) {
-                //         mkdir($dirPlane, 0777, true);
-                //     }
-                //     move_uploaded_file($_FILES['photo']['tmp_name'],$userEdit->getPhoto());
-                //     $link = $userEdit->findLinkProfilePhoto();
-                //     unlink($link);
-                // }
-                //$userEdit->updateUser();
+                $userEdit->updateUser($_FILES['photo']['tmp_name']);
                 $flashMessageSuccess = sprintf($strings["User \"%s\" successfully updated."], $userEdit->getUsername());
                 $view->setFlashSuccess($flashMessageSuccess);
-                //$view->redirect("USER_Controller.php", "index");
+                $view->redirect("USER_Controller.php", "index");
             }catch(Exception $errors) {
                 $view->setFlashDanger($strings[$errors->getMessage()]);
-                $view->redirect("USER_Controller.php", $strings['Edit']);
+                $view->redirect("USER_Controller.php", $strings['Edit'],"user=$username");
             }
         } else {
             $user = new USER_Model($username);
@@ -187,12 +172,40 @@ Switch ($_GET['action']){
     break;
 
 
+    case  $strings['Show']:
+
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Show floors requires login."]);
+            $view->redirect("USER_Controller.php", "");
+        }
+
+        if(!checkRol('SHOW', $function)){
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->redirect("USER_Controller.php", "");
+        }
+
+        if (!isset($_GET['user'])){
+            $view->setFlashDanger($strings["Username is mandatory"]);
+            $view->redirect("USER_Controller.php", "");
+        }
+        $username = $_GET['user'];
+
+        $user = new USER_Model($username);
+        $values = $user->findUser();
+        new USER_SHOW($values);
+
+    break;
+
+
     case $strings['Logout']:
+
         session_destroy();
         $view->redirect("../index.php", "index");
+
     break;	
 
-	default:
+    default:
+    
         if(!checkRol('SHOWALL', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php", "");
@@ -200,7 +213,8 @@ Switch ($_GET['action']){
 			$user = new USER_Model();
 			$users = $user->showAllUsers();
 			new USER_SHOWALL($users);
-		}
+        }
+        
     break;
 						
 }

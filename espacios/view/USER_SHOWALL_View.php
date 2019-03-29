@@ -13,7 +13,7 @@ class USER_SHOWALL{
         
         include 'header.php';
         $this->view->setElement("%TITLE%", $strings["Users"]); 
-        $listTitles = array('photo', 'username', 'name', 'surname', 'email');?>
+        $listTitles = array('photo', 'username', 'name', 'surname', 'dni', 'email');?>
 
         <div class="container">
             <div class="row center-row">
@@ -62,7 +62,7 @@ class USER_SHOWALL{
                                                                 </a> 
                                                             <?php } 
                                                     } elseif ($key === 'username') {?>
-                                                        <a title="<?= $strings['Show User']?>" href='USER_Controller.php?action=<?= $strings['Show']?>&username=<?= $this->users[$j]['username']?>'><?= $value?></a>                
+                                                        <a title="<?= $strings['Show User']?>" href='USER_Controller.php?action=<?= $strings['Show']?>&user=<?= $this->users[$j]['username']?>'><?= $value?></a>                
                                                     <?php }else { ?>
                                                         <?= $value;
                                                     } ?>

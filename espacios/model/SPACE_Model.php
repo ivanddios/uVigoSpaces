@@ -125,7 +125,6 @@ function addCoords() {
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
-        var_dump($resultado);
         return true;
     }
 }
