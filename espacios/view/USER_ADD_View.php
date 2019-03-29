@@ -19,6 +19,7 @@ class USER_ADD{
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.min.js"></script>
 			<script src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
 			<script src="../js/bootstrap-material-datetimepicker.js"></script>
+			<script src="../js/calendar.js"></script>
 
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/ripples.min.css"/>
 			<link rel="stylesheet" href="../css/bootstrap-material-datetimepicker.css"/>

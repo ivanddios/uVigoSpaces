@@ -10,7 +10,7 @@ class FLOOR_EDIT{
     
     function render() {
 			include 'header.php';
-			$this->view->setElement("%TITLE%", $strings["Edir Floor"]);?>
+			$this->view->setElement("%TITLE%", $strings["Edit Floor"]);?>
 
 			<div class="container">
 				<div class="row center-row">
@@ -48,7 +48,7 @@ class FLOOR_EDIT{
 									</div>
 
 									<div class="inputWithIcon inputIconBg">
-										<a target='_blank' href='<?= $this->floor['planeFloor']; ?>'><img src='<?= $this->floor['planeFloor']; ?>' class="viewPlane" alt="plane" onchange="validateUpdloadFile(this.id)"></a>
+										<a target='_blank' href='<?= $this->floor['planeFloor']; ?>'><img src='<?= $this->floor['planeFloor']; ?>' class="avatarPlane" alt="plane" onchange="validateUpdloadFile(this.id)"></a>
 										<input type="file" name="planeFloor" accept="image/*">
 										<input type="hidden" name="planeFloorOriginal" value="<?=$this->floor['planeFloor']?>">
 									</div>

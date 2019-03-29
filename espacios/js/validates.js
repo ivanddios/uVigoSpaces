@@ -451,7 +451,20 @@ function validateEditUser() {
 }
 
 
+function validateCheckboxes() {
 
+    var checkboxChecked = [];
+    var checkbox = document.getElementsByName('action');
+
+    for (var i = 0; i < checkbox.length; i++) {
+        if (checkbox[i].checked) {
+            checkboxChecked.push({"id":checkbox[i].value});
+        }
+    }
+    document.getElementById("actions").value = JSON.stringify(checkboxChecked);
+
+    console.log(document.getElementById("actions").value);
+}
 
 
 

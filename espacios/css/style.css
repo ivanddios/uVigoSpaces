@@ -1,4 +1,4 @@
-@import "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css";
+@import "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css";
 
 body {
 	font-family:'K2D','Open Sans', Arial, sans-serif;
@@ -50,11 +50,6 @@ header{
 
 .navbar-light .navbar-nav .nav-link {
 	color: #000; 
-	margin-right: 15%;
-}
-
-.navbar-nav li{
-	padding-right: 12%;
 }
 
 .dropdown-menu{
@@ -94,7 +89,6 @@ header{
 	margin-left: auto;
 	margin-right: auto;
 }
-
 
 .center-block{
 	float: none;
@@ -144,7 +138,6 @@ header{
   font-size: 10px;
   margin-left: 25%;
 }
-
 
 
 
@@ -215,6 +208,101 @@ input[type=text],[type=password]{
 }
 
 
+/*PASSWORD BOX  */
+
+.passwordAlert {
+	display: none;
+}
+
+.passwordAlert p{
+	text-align: inherit;
+	margin:auto;
+    margin-left: 35%;
+}
+
+.valid {
+	color: green;
+}
+  
+.valid:before {
+	position: relative;
+	left: -35px;
+	content: "✔";
+}
+  
+.invalid {
+	color: red;
+}
+  
+.invalid:before {
+	position: relative;
+	left: -35px;
+	content: "✖";
+}
+
+
+/* CHECKBOX */
+
+label {
+	width: 30%;
+	border-radius: 3px;
+	border: 1px solid #D1D3D4;
+}
+  
+input[type="checkbox"] {
+	display: none;
+}
+  
+input[type="checkbox"]:empty ~ label {
+	margin-left:35%;
+	position: relative;
+	line-height: 2.5em;
+	text-indent: 3.25em;
+	margin-top: 0.5em;
+	cursor: pointer;
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+		-ms-user-select: none;
+			user-select: none;
+}
+  
+input[type="checkbox"]:empty ~ label:before {
+	position: absolute;
+	display: block;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	content: '';
+	width: 2.5em;
+	background: #D1D3D4;
+	border-radius: 3px 0 0 3px;
+	content: '\2717';
+	text-indent: .9em;
+	color: #C2C2C2;
+}
+  
+input[type="checkbox"]:hover:not(:checked) ~ label:before {
+	content: '\2714';
+	text-indent: .9em;
+	color: #C2C2C2;
+} 
+  
+input[type="checkbox"]:checked ~ label {
+	
+	color: #777;
+}
+  
+input[type="checkbox"]:checked ~ label:before {
+	content: '\2714';
+	text-indent: .9em;
+	color: #333;
+}
+  
+input[type="checkbox"]:checked ~ label:before {
+	color: #fff;
+	background-color: #337ab7;
+}
+
 /* PANEL BOTON ATRÁS + CAMPO BUSCAR*/
 
 #pnlBoxSearch {
@@ -240,6 +328,16 @@ input[type=text],[type=password]{
 
 /* BUTTONS */
 
+.btn-glyphicon {
+    padding:8px;
+    background:#ffffff;
+    margin-right:4px;
+}
+.icon-btn {
+    padding: 1px 15px 3px 2px;
+    border-radius:50px;
+}
+
 .btn-dark{
 	margin-top:20px;
 	margin-bottom:10px;
@@ -252,7 +350,6 @@ input[type=text],[type=password]{
 	border-bottom:3px solid #19e6;
 	border-radius:2px;
 	float:right;
-	
 }
 
 .btn-dark-Plane{
@@ -263,8 +360,6 @@ input[type=text],[type=password]{
 	border:none;
 	border-bottom:3px solid #19e6;
 	border-radius:2px;
-
-	
 }
 
 .loginButton {
@@ -285,6 +380,7 @@ input[type=text],[type=password]{
 
 
 
+
 /* HTML ELEMENTS */
 
 td{
@@ -299,6 +395,7 @@ p{
 
 
 /* IMG ELEMENTS */
+
 .miniatureTable{
 	width: 40px;
 	height: 40px;
@@ -324,6 +421,59 @@ p{
 	height: 40px;
 }
 
+#imageUpload
+{
+    display: none;
+}
+
+#profilePhoto
+{
+    cursor: pointer;
+}
+
+#profilePhoto-container {
+    width: 150px;
+	height: 150px;
+	margin:auto;
+	margin-bottom: 5%;
+	overflow: hidden;
+	border-radius: 50%;	
+}
+
+.extra {
+	border: 2px dashed rgba(0, 0, 0, 0.623);
+}
+
+#profilePhoto-container img {
+    width: 150px;
+    height: 150px;
+}
+
+
+/* CANVAS ELEMENTS*/
+#clearButtons {
+    margin: 0 auto;
+    width: 520px;
+    height: 32px;
+	margin-top: 4px;
+	font-size:14px;
+}
+
+#canvas{
+	margin-top:3%;
+	margin-bottom:3%;
+}
+
+#planeButtons
+{
+	position: fixed;
+	top: 45%;
+	margin-left: 3%;
+}
+
+#planeButtons li{
+	list-style:none;
+}
 
 
 
@@ -369,127 +519,5 @@ ul.social-network li a {
 
 
 
-
-
-
-
-/* .effect {
-	border: 2px solid #333;
-	background-color: #EAEAEA;
-	box-shadow: 0 3px 16px rgba(0, 0, 0, 0.7);
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	text-shadow: 0 1px 0 #fff;
-} */
-
-
-
-/* CANVAS ELEMENTS*/
-#clearButtons {
-    margin: 0 auto;
-    width: 520px;
-    height: 32px;
-	margin-top: 4px;
-	font-size:14px;
-}
-
-#canvas{
-	margin-top:3%;
-	margin-bottom:3%;
-}
-
-#planeButtons
-{
-	position: fixed;
-	top: 45%;
-	margin-left: 3%;
-}
-
-#planeButtons li{
-	list-style:none;
-}
-
-
-
-
-.btn-glyphicon {
-    padding:8px;
-    background:#ffffff;
-    margin-right:4px;
-}
-.icon-btn {
-    padding: 1px 15px 3px 2px;
-    border-radius:50px;
-}
-
-
-
-
-/*PASSWORD BOX  */
-
-.passwordAlert {
-	display: none;
-}
-
-.passwordAlert p{
-	text-align: inherit;
-	margin:auto;
-    margin-left: 35%;
-}
-
-.valid {
-	color: green;
-}
+ 
   
-.valid:before {
-	position: relative;
-	left: -35px;
-	content: "✔";
-}
-  
-.invalid {
-	color: red;
-}
-  
-.invalid:before {
-	position: relative;
-	left: -35px;
-	content: "✖";
-}
-
-
-
-
-
-#imageUpload
-{
-    display: none;
-}
-
-#profilePhoto
-{
-    cursor: pointer;
-}
-
-#profilePhoto-container {
-    width: 150px;
-	height: 150px;
-	margin:auto;
-	margin-bottom: 5%;
-	overflow: hidden;
-	border-radius: 50%;	
-}
-
-.extra {
-	border: 2px dashed rgba(0, 0, 0, 0.623);
-	
-}
-
-#profilePhoto-container img {
-    width: 150px;
-    height: 150px;
-}
-
-
-

@@ -37,8 +37,8 @@ CREATE TABLE IF NOT EXISTS ACTION_FUNCTIONALITY(
   idAction int NOT NULL,
   idFunction int NOT NULL,
   PRIMARY KEY(idAction, idFunction),
-  FOREIGN KEY (idAction) REFERENCES ACTION (idAction),
-  FOREIGN KEY (idFunction) REFERENCES FUNCTIONALITY (idFunction) 
+  FOREIGN KEY (idAction) REFERENCES ACTION (idAction) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (idFunction) REFERENCES FUNCTIONALITY (idFunction) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8  COLLATE=utf8_spanish_ci;
 
 
@@ -55,17 +55,17 @@ CREATE TABLE IF NOT EXISTS PERMISSION(
   idFunction int NOT NULL,
   idAction int NOT NULL,
   PRIMARY KEY(idGroup,idFunction,idAction),
-  FOREIGN KEY (idGroup) REFERENCES `GROUP` (idGroup),
-  FOREIGN KEY (idFunction) REFERENCES FUNCTIONALITY (idFunction),
-  FOREIGN KEY (idAction) REFERENCES ACTION (idAction)
+  FOREIGN KEY (idGroup) REFERENCES `GROUP` (idGroup) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (idFunction) REFERENCES FUNCTIONALITY (idFunction) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (idAction) REFERENCES ACTION (idAction) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8  COLLATE=utf8_spanish_ci;
 
 CREATE TABLE IF NOT EXISTS USER_GROUP(
   username varchar(25) COLLATE utf8_spanish_ci NOT NULL,
   idGroup int NOT NULL,
   PRIMARY KEY(username, idGroup),
-  FOREIGN KEY (username) REFERENCES USER (username),
-  FOREIGN KEY (idGroup) REFERENCES `GROUP` (idGroup) 
+  FOREIGN KEY (username) REFERENCES USER (username) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (idGroup) REFERENCES `GROUP` (idGroup) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8  COLLATE=utf8_spanish_ci;
 
 
@@ -114,7 +114,7 @@ INSERT INTO USER_GROUP (username, idGroup) VALUES
 ('admin', '1');
 
 INSERT INTO ACTION (idAction, nameAction, descripAction) VALUES 
-('1', 'SHOWALL', 'SHOWALL'),
+('1', 'SHOW ALL', 'SHOW ALL'),
 ('2', 'ADD', 'ADD'),
 ('3', 'EDIT', 'EDIT'),
 ('4', 'DELETE', 'DELETE'),
@@ -122,18 +122,21 @@ INSERT INTO ACTION (idAction, nameAction, descripAction) VALUES
 
 
 INSERT INTO FUNCTIONALITY(idFunction, nameFunction, descripFunction) VALUES 
-('1', 'USER', 'User Controller'),
-('2', 'BUILDING', 'Building Controller'),
-('3', 'FLOOR', 'Floor Controller'),
-('4', 'SPACE', 'Space Controller');
+('1', 'USER', "Actions on the set of users"),
+('2', 'BUILDING', "Actions on the set of buildings"),
+('3', 'FLOOR', "Actions on the set of building's floor"),
+('4', 'SPACE', "Actions on the set of floor's spaces"),
+('5', 'FUNCTIONALITY', "Actions on the set of floor's spaces");
+-- ('6', 'PERMISSION', 'Permission Controller'),
 
 INSERT INTO ACTION_FUNCTIONALITY (idAction, idFunction) VALUES
+/* USER*/
 ('1', '1'),
 ('2', '1'),
 ('3', '1'),
 ('4', '1'),
 ('5', '1'),
-/*BUILDING*/
+/* BUILDING*/
 ('1', '2'),
 ('2', '2'),
 ('3', '2'),
@@ -150,9 +153,23 @@ INSERT INTO ACTION_FUNCTIONALITY (idAction, idFunction) VALUES
 ('2', '4'),
 ('3', '4'),
 ('4', '4'),
-('5', '4');
+('5', '4'),
+/*FUNCTIONALITY*/
+('1', '5'),
+('2', '5'),
+('3', '5'),
+('4', '5'),
+('5', '5');
+-- /*GROUP*/
+-- ('1', '6'),
+-- ('2', '6'),
+-- ('3', '6'),
+-- ('4', '6'),
+-- ('5', '6');
 
 INSERT INTO PERMISSION (idGroup, idFunction, idAction) VALUES
+
+/*USERS*/
 ('1', '1', '1'),
 ('1', '1', '2'),
 ('1', '1', '3'),
@@ -175,7 +192,15 @@ INSERT INTO PERMISSION (idGroup, idFunction, idAction) VALUES
 ('1', '4', '2'),
 ('1', '4', '3'),
 ('1', '4', '4'),
-('1', '4', '5');
+('1', '4', '5'),
+/*FUNCTIONALITY*/
+('1', '5', '1'),
+('1', '5', '2'),
+('1', '5', '3'),
+('1', '5', '4'),
+('1', '5', '5');
+
+
 
 
 INSERT INTO BUILDING (idBuilding, nameBuilding, addressBuilding, phoneBuilding) VALUES
