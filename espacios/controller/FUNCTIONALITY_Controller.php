@@ -5,7 +5,7 @@ require_once(__DIR__."../../core/ACL.php");
 require_once(__DIR__."../../model/FUNCTIONALITY_Model.php");
 require_once(__DIR__."../../view/FUNCTIONALITY_SHOWALL_View.php");
 require_once(__DIR__."../../view/FUNCTIONALITY_ADD_View.php");
-// require_once(__DIR__."../../view/BUILDING_EDIT_View.php");
+require_once(__DIR__."../../view/FUNCTIONALITY_EDIT_View.php");
 // require_once(__DIR__."../../view/BUILDING_SHOW_View.php");
 
 
@@ -16,10 +16,11 @@ include '../locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
 
 function get_data_form() {
 
+    $idFunction = $_GET['function'];
     $nameFunction = $_POST['nameFunction'];
     $descripFunction = $_POST['descripFunction'];
    
-    $function = new FUNCTIONALITY_Model($nameFunction, $descripFunction);
+    $function = new FUNCTIONALITY_Model($idFunction, $nameFunction, $descripFunction);
     return $function;
 }
 
@@ -34,12 +35,12 @@ Switch ($_GET['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add functionalities requires login."]);
-            $view->redirect("USER_Controller.php", "");
+            $view->redirect("USER_Controller.php", "index");
         }
 
         if(!checkRol('ADD', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("BUILDING_Controller.php", "");
+            $view->redirect("BUILDING_Controller.php", "index");
         }
 
         if (isset($_POST["submit"])) { 
@@ -67,45 +68,50 @@ Switch ($_GET['action']){
     break;
 
 
-    // case  $strings['Edit']:
+    case  $strings['Edit']:
 
-    //     if (!isset($_SESSION['LOGIN'])){
-    //         $view->setFlashDanger($strings["Not in session. Edit floors requires login."]);
-    //         $view->redirect("USER_Controller.php", "");
-    //     }
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Edit functionalities requires login."]);
+            $view->redirect("USER_Controller.php", "index");
+        }
 
-    //     if(!checkRol('EDIT', $function)){
-    //         $view->setFlashDanger($strings["You do not have the necessary permits"]);
-    //         $view->redirect("BUILDING_Controller.php", "");
-    //     }
+        if(!checkRol('EDIT', $function)){
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->redirect("BUILDING_Controller.php", "index");
+        }
 
-    //     if (!isset($_GET['building'])){
-    //         $view->setFlashDanger($strings["Building id is mandatory"]);
-    //         $view->redirect("BUILDING_Controller.php", "");
-    //     }
-    //     $buildingid = $_GET['building'];
+        if (!isset($_GET['function'])){
+            $view->setFlashDanger($strings["Function id is mandatory"]);
+            $view->redirect("FUNCTIONALITY_Controller.php", "index");
+        }
+        $functionId = $_GET['function'];
 
-    //     if (isset($_POST["submit"])) { 
-    //         $buildingEdit = get_data_form();
+        if (isset($_POST["submit"])) { 
+            $functionEdit = get_data_form();
+            $actions = json_decode($_POST["actions"]);
+            try{
+                //$functionEdit->checkIsValidForAdd_Update();
+                var_dump("HO");
+                $functionEdit->updateFunction($actions);
+                $flashMessageSuccess = sprintf($strings["Function \"%s\" successfully updated."], $functionEdit->getNameFunction());
+                $view->setFlashSuccess($flashMessageSuccess);
+                $view->redirect("FUNCTIONALITY_Controller.php", "index");   
 
-    //         try{
-    //             $buildingEdit->checkIsValidForAdd_Update(); 
-    //             $buildingEdit->updateBuilding($buildingid);
-    //             $flashMessageSuccess = sprintf($strings["Building \"%s\" successfully updated."], $buildingEdit->getNameBuilding());
-    //             $view->setFlashSuccess($flashMessageSuccess);
-    //             $view->redirect("BUILDING_Controller.php", "");   
+            }catch(Exception $errors) {
+                $view->setFlashDanger($strings[$errors->getMessage()]);
+                $view->redirect("FUNCTIONALITY_Controller.php", $strings['Edit'], 'function='.$functionId);
+            }
+        } else {
 
-    //         }catch(Exception $errors) {
-    //             $view->setFlashDanger($strings[$errors->getMessage()]);
-    //             $view->redirect("BUILDING_Controller.php", "edit");
-    //         }
-    //     } else {
-    //         $building = new BUILDING_Model($buildingid);
-    //         $values = $building->fillInBuilding();
-    //         new BUILDING_EDIT($values);
-    //     }
+            $function = new FUNCTIONALITY_Model($functionId);
+            $functionValues = $function->findFunctionality();
+            $actions = $function->showAllActions();
+            $actionsForFunctionality = $function->showAllActionsForFunctionality();
+            //var_dump($actionsForFunctionality);
+            new FUNCTIONALITY_EDIT($functionValues, $actions, $actionsForFunctionality);
+        }
             
-    // break;
+    break;
 
 
 
@@ -134,53 +140,53 @@ Switch ($_GET['action']){
     // break;
 
 
-    // case  $strings['Delete']:
+    case  $strings['Delete']:
 
-    //     if (!isset($_SESSION['LOGIN'])){
-    //         $view->setFlashDanger($strings["Not in session. Delete floors requires login."]);
-    //         $view->redirect("USER_Controller.php", "");
-    //     }
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Delete functionalities requires login."]);
+            $view->redirect("USER_Controller.php", "index");
+        }
 
-    //     if(!checkRol('DELETE', $function)){
-    //         $view->setFlashDanger($strings["You do not have the necessary permits"]);
-    //         $view->redirect("BUILDING_Controller.php", "");
-    //     }
+        if(!checkRol('DELETE', $function)){
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->redirect("FUNCTIONALITY_Controller.php", "index");
+        }
 
-    //     if (!isset($_POST['building'])){
-    //         $view->setFlashDanger($strings["Building id is mandatory"]);
-    //         $view->redirect("BUILDING_Controller.php", "");
-    //     }
-    //     $buildingid = $_POST['building'];
-    //     $buildingDelete = new BUILDING_Model($buildingid);
+        if (!isset($_POST['function'])){
+            $view->setFlashDanger($strings["Function id is mandatory"]);
+            $view->redirect("FUNCTIONALITY_Controller.php", "index");
+        }
+        $functionId = $_POST['function'];
+        $functionDelete = new FUNCTIONALITY_Model($functionId);
 
-    //     if (!$buildingDelete->findBuilding()) {
-    //         $view->setFlashDanger($strings["No such building with this id"]);
-    //         $view->redirect("BUILDING_Controller.php", "");
-    //     }
+        if (!$functionDelete->existsFunction()) {
+            $view->setFlashDanger($strings["No such function with this id"]);
+            $view->redirect("FUNCTIONALITY_Controller.php", "index");
+        }
 
-    //     try{
-    //         $buildingDelete->deleteBuilding();
-    //         $flashMessageSuccess = sprintf($strings["Building \"%s\" successfully deleted."], $buildingid);
-    //         $view->setFlashSuccess($flashMessageSuccess);
-    //         $view->redirect("BUILDING_Controller.php", "");     
-    //     }catch(Exception $errors) {
-    //         $view->setFlashDanger($strings[$errors->getMessage()]);
-    //         $view->redirect("BUILDING_Controller.php", "");
-    //     }
+        try{
+            $functionDelete->deleteFunction();
+            $flashMessageSuccess = sprintf($strings["Function \"%s\" successfully deleted."], $buildingid);
+            $view->setFlashSuccess($flashMessageSuccess);
+            $view->redirect("FUNCTIONALITY_Controller.php", "index");     
+        }catch(Exception $errors) {
+            $view->setFlashDanger($strings[$errors->getMessage()]);
+            $view->redirect("FUNCTIONALITY_Controller.php", "index");
+        }
             	
-    // break;
+    break;
     
 
     default:
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add functionalities requires login."]);
-            $view->redirect("USER_Controller.php", "");
+            $view->redirect("USER_Controller.php", "index");
         }
 
-        if(!checkRol('SHOWALL', $function)){
+        if(!checkRol('SHOW ALL', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("BUILDING_Controller.php", "");
+            $view->redirect("BUILDING_Controller.php", "index");
         }
 
         $function = new FUNCTIONALITY_Model();

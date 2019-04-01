@@ -4,13 +4,15 @@ require_once(__DIR__."..\..\core\ConnectionBD.php");
 
 class FUNCTIONALITY_Model {
 
+    private $idFunction;
 	private $nameFunction;
 	private $descripFunction;
 	private $mysqli;
 
 
-function __construct($nameFunction=NULL, $descripFunction=NULL)
+function __construct($idFunction=null,$nameFunction=NULL, $descripFunction=NULL)
 {
+    $this->idFunction = $idFunction;
     $this->nameFunction =  $nameFunction; 
 	$this->descripFunction = $descripFunction;
     $this->mysqli = Connection::connectionBD();
@@ -50,15 +52,32 @@ function showAllActions() {
         return $toret;
     }
 }
-// function findBuilding() {
-// 	$sql = "SELECT * FROM building WHERE idBuilding = '$this->idBuilding'";
-// 	$result = $this->mysqli->query($sql);
-// 	if ($result->num_rows == 1) {
-// 		return true;
-// 	} else {
-// 		throw new Exception('Error in the query on the database');
-// 	}
-// }
+
+
+function showAllActionsForFunctionality() {
+    $sql = "SELECT idAction FROM action_functionality WHERE idFunction = '$this->idFunction'";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        throw new Exception('Error in the query on the database');
+    } else {
+        $toret = array();
+        $i = 0;
+        while ($fila = $resultado->fetch_array()) {
+            $toret[$i] = $fila['idAction'];
+            $i++;
+        }
+        return  $toret;
+    }
+}
+
+function findFunctionality() {
+	$sql = "SELECT * FROM functionality WHERE idFunction = '$this->idFunction'";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        throw new Exception('Error in the query on the database');
+    } else {
+        $result = $resultado->fetch_array();
+        return $result;
+    }
+}
 
 function addFunction($actions) {
     $sqlFunction = "INSERT INTO functionality (nameFunction, descripFunction) VALUES ('$this->nameFunction', '$this->descripFunction')";
@@ -78,51 +97,38 @@ function addFunction($actions) {
 }
 
 
-// function deleteBuilding() {
-//     $sql = "DELETE FROM building WHERE idBuilding ='$this->idBuilding'";
-//     if (!($resultado = $this->mysqli->query($sql))) {
-//         throw new Exception('Error in the query on the database');
-//     } else {
-//         return true;
-//     }
-// }
-
-// function fillInBuilding() {
-//     $sql = "SELECT * FROM building WHERE idBuilding = '$this->idBuilding'";
-//     if (!($resultado = $this->mysqli->query($sql))) {
-//         throw new Exception('Error in the query on the database');
-//     } else {
-//         $result = $resultado->fetch_array();
-//         return $result;
-//     }
-// }
-
-// function updateBuilding($idBuilding) {
-//     $sql = "UPDATE building SET idBuilding = '$this->idBuilding', nameBuilding = '$this->nameBuilding', addressBuilding = '$this->addressBuilding', phoneBuilding = '$this->phoneBuilding' WHERE idBuilding = '$idBuilding'";
-//     if (!($resultado = $this->mysqli->query($sql))) {
-//         throw new Exception('Error in the query on the database');
-//     } else {
-//         return true;
-//     }
-// }
+function deleteFunction() {
+    $sql = "DELETE FROM functionality WHERE idFunction ='$this->idFunction'";
+    if (!($resultado = $this->mysqli->query($sql))) {
+        throw new Exception('Error in the query on the database');
+    } else {
+        return true;
+    }
+}
 
 
-// function findBuildingName() {
-//     $sql = "SELECT nameBuilding FROM building WHERE idBuilding='$this->idBuilding'";
-//     $result = $this->mysqli->query($sql)->fetch_array();
-//     return $result['nameBuilding'];
-// }
+function updateFunction($actions) {
+    $sql = "DELETE FROM functionality WHERE idFunction ='$this->idFunction'";
+    if (($resultado = $this->mysqli->query($sql))) {
+        if(!$this->addFunction($actions)){
+            throw new Exception('Error in the query on the database'); 
+        }
+    } else {
+        throw new Exception('Error in the query on the database'); 
+    }
+    return true;
+}
 
 
-// public function existsBuilding($idBuilding) {
-// 	$sql = "SELECT * FROM building WHERE idBuilding = '$idBuilding'";
-// 	$result = $this->mysqli->query($sql);
-// 	if ($result->num_rows == 1) {
-// 		return true;
-// 	} else {
-// 		return false;
-// 	}
-// }
+public function existsFunction() {
+	$sql = "SELECT * FROM functionality WHERE idFunction = '$this->idFunction'";
+	$result = $this->mysqli->query($sql);
+	if ($result->num_rows == 1) {
+		return true;
+	} else {
+		return false;
+	}
+}
 
 
 // public function checkIsValidForAdd_Update() {

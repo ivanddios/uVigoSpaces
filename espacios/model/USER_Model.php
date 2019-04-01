@@ -116,10 +116,10 @@ class USER_Model {
         $dateBD = $this->formatDate($this->birthdate);
         $photoBD =$this->dirPhoto.$this->getPhoto('name');
         $sql = "INSERT INTO user VALUES ('$photoBD', '$this->username', '$passwordBD', '$this->name', '$this->surname', '$this->dni', '$dateBD', '$this->email', '$this->phone')";
-        $this->updateDirPhoto();
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
         } else {
+            $this->updateDirPhoto();
             return true;
         }
     }

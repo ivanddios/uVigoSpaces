@@ -5,7 +5,6 @@ class FUNCTIONALITY_SHOWALL{
 
     function __construct($functions) {
         $this->functions = $functions;
-
         $this->render();
     }
 
@@ -64,7 +63,7 @@ class FUNCTIONALITY_SHOWALL{
                                             </a>
                                         <?php endif; ?>
                                         <?php  if(checkRol('DELETE', 'FUNCTIONALITY')): ?>
-                                            <i title="<?= $strings['Delete Functionality']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->buildings[$j]['idFunction']?>"></i>
+                                            <i title="<?= $strings['Delete Functionality']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->functions[$j]['idFunction']?>"></i>
                                             <div id="item-<?= $this->functions[$j]['idFunction']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
@@ -72,11 +71,11 @@ class FUNCTIONALITY_SHOWALL{
                                                             <?= $strings["Attention"]?>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <?= sprintf($strings["Are you sure you want to delete the building \"%s\" ?"], $this->functions[$j]['nameFunction'] )?>
-                                                            <p><?= $strings["The information that this building has will be lost"]?></p>
+                                                            <?= sprintf($strings["Are you sure you want to delete the functionality \"%s\" ?"], $this->functions[$j]['nameFunction'] )?>
+                                                            <p><?= $strings["The information that this functionality has will be lost"]?></p>
                                                         </div>
-                                                        <form method="POST" action="FUNCTIONALITY_Controller.php?action=<?= htmlentities($strings['Delete'])?>">
-                                                            <input type="hidden" name="building" value="<?= $this->functions[$j]['idFunction']?>" readonly>
+                                                        <form method="POST" action="FUNCTIONALITY_Controller.php?action=<?=$strings['Delete']?>">
+                                                            <input type="hidden" name="function" value="<?=$this->functions[$j]['idFunction']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
                                                                 <button type="submit" name="submit" id="submit" class="btn btn-success success"><?= $strings["Ok"]?></button>

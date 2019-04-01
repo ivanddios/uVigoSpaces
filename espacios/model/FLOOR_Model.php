@@ -10,6 +10,7 @@ class FLOOR_Model {
 	private $planeFloor;
 	private $surfaceBuildingFloor;
     private $surfaceUsefulFloor;
+    private $dirPhoto;
 	private $mysqli;
 
 
@@ -21,6 +22,7 @@ function __construct($idBuilding=NULL, $idFloor=NULL, $nameFloor=NULL, $planeFlo
 	$this->planeFloor = $planeFloor;
 	$this->surfaceBuildingFloor = $surfaceBuildingFloor;
     $this->surfaceUsefulFloor =  $surfaceUsefulFloor;
+    $this->dirPhoto = '../document/Users/'.$this->getIdBuilding().'/'.$this->getIdBuilding().$this->getIdFloor().'/';
     $this->mysqli = Connection::connectionBD();
 }
 
@@ -38,8 +40,12 @@ public function getNameFloor(){
     return $this->nameFloor;
 }
 
-public function getPlaneFloor(){
-    return $this->planeFloor;
+public function getPlaneFloor($option=null){
+    if($option !== null && isset($this->planeFloor[$option])){
+        return $this->planeFloor[$option];
+    } else {
+        return $this->planeFloor;
+    }   
 }
 
 
@@ -96,16 +102,26 @@ function findLinkPlane($idBuilding, $idFloor) {
 
 
 function addFloor() {
-    $sql = "INSERT INTO floor (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES ('$this->idBuilding', '$this->idFloor', '$this->nameFloor', '$this->planeFloor', $this->surfaceBuildingFloor, $this->surfaceUsefulFloor)";
+    $planeFloorBD =$this->dirPhoto.$this->getPlaneFloor('name');
+    $sql = "INSERT INTO floor (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES ('$this->idBuilding', '$this->idFloor', '$this->nameFloor', '$planeFloorBD', $this->surfaceBuildingFloor, $this->surfaceUsefulFloor)";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
+        $this->updateDirPhoto();
         return true;
     }
 }
 
 function updateFloor($idBuilding, $idFloor) {
-    $sql = "UPDATE FLOOR SET idFloor = '$this->idFloor', nameFloor = '$this->nameFloor', planeFloor = '$this->planeFloor', surfaceBuildingFloor = '$this->surfaceBuildingFloor', surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor'";
+    if($this->getPlaneFloor('name') == ''){
+        $sql = "UPDATE FLOOR SET idFloor = '$this->idFloor', nameFloor = '$this->nameFloor', surfaceBuildingFloor = '$this->surfaceBuildingFloor', surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor'";
+    } else {
+        $planeFloorBD =$this->dirPhoto.$this->getPlaneFloor('name');
+        $sql = "UPDATE FLOOR SET idFloor = '$this->idFloor', nameFloor = '$this->nameFloor', planeFloor = '$planeFloorBD', surfaceBuildingFloor = '$this->surfaceBuildingFloor', surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor'";
+        $this->updateDirPhoto();
+        unlink($this->findLinkPlane());
+    }
+   
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -150,6 +166,16 @@ public function existsFloor() {
 	}
 }
 
+
+
+function updateDirPhoto() {
+    if ($this->getPlaneFloor('name') !== '') {
+        if (!file_exists($this->dirPhoto)) {
+            mkdir($this->dirPhoto, 0777, true);
+        }
+    move_uploaded_file($this->getPlaneFloor('tmp_name'), $this->dirPhoto.$this->getPlaneFloor('name'));
+    }
+}
 
 
 public function checkIsValidForAdd() {
@@ -202,7 +228,6 @@ public function checkIsValidForAdd() {
 
 
 public function existsFloorToEdit($idFloor) {
-	$this->ConectarBD();
 	$sql = "SELECT * FROM floor WHERE (idFloor, idBuilding) NOT IN (SELECT idFloor, idBuilding FROM floor WHERE idBuilding='$this->idBuilding' AND idFloor='$idFloor') AND idBuilding='$this->idBuilding' AND idFloor='$this->idFloor'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows >= 1) {

@@ -57,7 +57,7 @@
                         <ul class="navbar-nav mr-auto">
 
                         <li><a class="nav-link" href="../controller/BUILDING_Controller.php"><?=$strings['Buildings']?></a></li>&nbsp;&nbsp;
-                            <?php  if(checkRol('SHOWALL', 'USER')): ?>
+                            <?php  if(checkRol('SHOW ALL', 'USER')): ?>
                                 <div class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?=$strings['Users']?></a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
