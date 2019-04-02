@@ -81,7 +81,7 @@ Switch ($_REQUEST['action']){
 
             }catch(Exception $errors) {
                 $view->setFlashDanger($strings[$errors->getMessage()]);
-                $view->redirect("FLOOR_Controller.php", $strings['Add'], "building=".$buildingid);
+                $view->redirect("FLOOR_Controller.php", $strings['Add'], "building=".$buildingid, "floor=".$strings['Add']);
             }
 
         } else {
@@ -108,7 +108,7 @@ Switch ($_REQUEST['action']){
 
 		if(!checkRol('EDIT', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("FLOOR_Controller.php", "index", "&building=".$buildingid);
+            $view->redirect("FLOOR_Controller.php", "index", "building=".$buildingid);
         }
 
         
@@ -189,13 +189,13 @@ Switch ($_REQUEST['action']){
 
         if(!checkRol('DELETE', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+            $view->redirect("FLOOR_Controller.php", "index", "building=".$buildingid);
         }
         $floor = new FLOOR_Model($buildingid, $floorid);
                 
         if (!$floor->existsFloor()) {
             $view->setFlashDanger($strings["No exist floor to delete"]);
-            $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
+            $view->redirect("FLOOR_Controller.php", "index", "building=".$buildingid);
         }
 
         try{

@@ -55,7 +55,7 @@ Switch ($_GET['action']){
 
             }catch(Exception $errors) {
                 $view->setFlashDanger($strings[$errors->getMessage()]);
-                $view->redirect("BUILDING_Controller.php", "add");
+                $view->redirect("BUILDING_Controller.php", $strings['Add']);
 
             }
                 
@@ -107,7 +107,6 @@ Switch ($_GET['action']){
             $functionValues = $function->findFunctionality();
             $actions = $function->showAllActions();
             $actionsForFunctionality = $function->showAllActionsForFunctionality();
-            //var_dump($actionsForFunctionality);
             new FUNCTIONALITY_EDIT($functionValues, $actions, $actionsForFunctionality);
         }
             
@@ -166,7 +165,7 @@ Switch ($_GET['action']){
 
         try{
             $functionDelete->deleteFunction();
-            $flashMessageSuccess = sprintf($strings["Function \"%s\" successfully deleted."], $buildingid);
+            $flashMessageSuccess = sprintf($strings["Function \"%s\" successfully deleted."], $functionId);
             $view->setFlashSuccess($flashMessageSuccess);
             $view->redirect("FUNCTIONALITY_Controller.php", "index");     
         }catch(Exception $errors) {

@@ -462,13 +462,27 @@ function validateCheckboxes() {
         }
     }
     document.getElementById("actions").value = JSON.stringify(checkboxChecked);
-
-    console.log(document.getElementById("actions").value);
 }
 
 
 
+function validateGroup() {
+    
+    if(checkText("nameGroup") && checkText("descripGroup")) {
+        document.getElementsByName("submit")[0].disabled = false;
+    }else{
+        document.getElementsByName("submit")[0].disabled = true;
+    }    
+}
 
+function validateAction() {
+    
+    if(checkText("nameAction") && checkText("descripAction")) {
+        document.getElementsByName("submit")[0].disabled = false;
+    }else{
+        document.getElementsByName("submit")[0].disabled = true;
+    }    
+}
 
 
 

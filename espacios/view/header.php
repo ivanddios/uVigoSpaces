@@ -63,9 +63,12 @@
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="../controller/FUNCTIONALITY_Controller.php"><?=$strings['Functionalitys']?></a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="../controller/GROUP_Controller.php"><?=$strings['Permissions']?></a>
+                                        <a class="dropdown-item" href="../controller/GROUP_Controller.php"><?=$strings['Groups']?></a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="../controller/ACTION_CONTROLLER.php"><?=$strings['Actions']?></a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="../controller/USER_CONTROLLER.php"><?=$strings['Users']?></a>
+                                        
                                     </div>
                                 </div>
                             <?php endif; ?>

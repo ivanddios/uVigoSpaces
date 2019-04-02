@@ -114,11 +114,11 @@ INSERT INTO USER_GROUP (username, idGroup) VALUES
 ('admin', '1');
 
 INSERT INTO ACTION (idAction, nameAction, descripAction) VALUES 
-('1', 'SHOW ALL', 'SHOW ALL'),
-('2', 'ADD', 'ADD'),
-('3', 'EDIT', 'EDIT'),
-('4', 'DELETE', 'DELETE'),
-('5', 'SHOW', 'SHOW');
+('1', 'SHOW ALL', 'Action to show all the content of an entity'),
+('2', 'ADD', 'Action to add content to an entity'),
+('3', 'EDIT', 'Action to edit content to an entity'),
+('4', 'DELETE', 'Action to delete content to an entity'),
+('5', 'SHOW', 'Action to show content to an entity');
 
 
 INSERT INTO FUNCTIONALITY(idFunction, nameFunction, descripFunction) VALUES 
@@ -126,8 +126,9 @@ INSERT INTO FUNCTIONALITY(idFunction, nameFunction, descripFunction) VALUES
 ('2', 'BUILDING', "Actions on the set of buildings"),
 ('3', 'FLOOR', "Actions on the set of building's floor"),
 ('4', 'SPACE', "Actions on the set of floor's spaces"),
-('5', 'FUNCTIONALITY', "Actions on the set of floor's spaces");
--- ('6', 'PERMISSION', 'Permission Controller'),
+('5', 'FUNCTIONALITY', "Actions on the set of floor's spaces"),
+('6', 'GROUP', "Actions on the set of groups"),
+('7', 'ACTION', "Actions on the set of actions");
 
 INSERT INTO ACTION_FUNCTIONALITY (idAction, idFunction) VALUES
 /* USER*/
@@ -159,13 +160,19 @@ INSERT INTO ACTION_FUNCTIONALITY (idAction, idFunction) VALUES
 ('2', '5'),
 ('3', '5'),
 ('4', '5'),
-('5', '5');
--- /*GROUP*/
--- ('1', '6'),
--- ('2', '6'),
--- ('3', '6'),
--- ('4', '6'),
--- ('5', '6');
+('5', '5'),
+/*GROUP*/
+('1', '6'),
+('2', '6'),
+('3', '6'),
+('4', '6'),
+('5', '6'),
+/*ACTION*/
+('1', '7'),
+('2', '7'),
+('3', '7'),
+('4', '7'),
+('5', '7');
 
 INSERT INTO PERMISSION (idGroup, idFunction, idAction) VALUES
 
@@ -198,7 +205,19 @@ INSERT INTO PERMISSION (idGroup, idFunction, idAction) VALUES
 ('1', '5', '2'),
 ('1', '5', '3'),
 ('1', '5', '4'),
-('1', '5', '5');
+('1', '5', '5'),
+/*GROUP*/
+('1', '6', '1'),
+('1', '6', '2'),
+('1', '6', '3'),
+('1', '6', '4'),
+('1', '6', '5'),
+/*ACTION*/
+('1', '7', '1'),
+('1', '7', '2'),
+('1', '7', '3'),
+('1', '7', '4'),
+('1', '7', '5');
 
 
 
