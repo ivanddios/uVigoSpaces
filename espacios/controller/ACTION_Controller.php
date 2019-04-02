@@ -40,7 +40,7 @@ Switch ($_GET['action']){
 
         if(!checkRol('ADD', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("ACTION_Controller.php", "index");
         }
 
         if (isset($_POST["submit"])) { 
@@ -72,7 +72,7 @@ Switch ($_GET['action']){
 
         if(!checkRol('EDIT', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("ACTION_Controller.php", "index");
         }
 
         if (!isset($_GET['action'])){

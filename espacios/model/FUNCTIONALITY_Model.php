@@ -38,22 +38,6 @@ function showAllFunctions() {
     }
 }
 
-function showAllActions() {
-    $sql = "SELECT * FROM action";
-    if (!($resultado = $this->mysqli->query($sql))) {
-        throw new Exception('Error in the query on the database');
-    } else {
-        $toret = array();
-        $i = 0;
-        while ($fila = $resultado->fetch_array()) {
-            $toret[$i] = $fila;
-            $i++;
-        }
-        return $toret;
-    }
-}
-
-
 function showAllActionsForFunctionality() {
     $sql = "SELECT idAction FROM action_functionality WHERE idFunction = '$this->idFunction'";
     if (!($resultado = $this->mysqli->query($sql))) {

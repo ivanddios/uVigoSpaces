@@ -190,10 +190,8 @@ Switch ($_GET['action']){
 
 
     case $strings['Logout']:
-
         session_destroy();
         $view->redirect("../index.php", "index");
-
     break;	
 
     default:

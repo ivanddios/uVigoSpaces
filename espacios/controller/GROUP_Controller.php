@@ -2,6 +2,8 @@
 
 require_once(__DIR__."../../core/ViewManager.php");
 require_once(__DIR__."../../core/ACL.php");
+require_once(__DIR__."../../model/FUNCTIONALITY_Model.php");
+require_once(__DIR__."../../model/ACTION_Model.php");
 require_once(__DIR__."../../model/GROUP_Model.php");
 require_once(__DIR__."../../view/GROUP_SHOWALL_View.php");
 require_once(__DIR__."../../view/GROUP_ADD_View.php");
@@ -40,7 +42,7 @@ Switch ($_GET['action']){
 
         if(!checkRol('ADD', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("GROUP_Controller.php", "index");
         }
 
         if (isset($_POST["submit"])) { 
@@ -58,7 +60,12 @@ Switch ($_GET['action']){
             }
                 
         } else {
-            new GROUP_ADD();
+            $function = new FUNCTIONALITY_Model();
+            $action = new ACTION_Model();
+            
+            $functions = $function->showAllFunctions();
+            $actions = $action->showAllActions();
+            new GROUP_ADD($functions, $actions);
         }
            	       
     break;
@@ -73,7 +80,7 @@ Switch ($_GET['action']){
 
         if(!checkRol('EDIT', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("GROUP_Controller.php", "index");
         }
 
         if (!isset($_GET['group'])){

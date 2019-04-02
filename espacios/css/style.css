@@ -519,5 +519,14 @@ ul.social-network li a {
 
 
 
+
+#checkboxActions{
+	display: none; 
+}
+
+.boxx{
+	display: block;
+}
+
  
   

@@ -2,6 +2,7 @@
 
 require_once(__DIR__."../../core/ViewManager.php");
 require_once(__DIR__."../../core/ACL.php");
+require_once(__DIR__."../../model/ACTION_Model.php");
 require_once(__DIR__."../../model/FUNCTIONALITY_Model.php");
 require_once(__DIR__."../../view/FUNCTIONALITY_SHOWALL_View.php");
 require_once(__DIR__."../../view/FUNCTIONALITY_ADD_View.php");
@@ -40,7 +41,7 @@ Switch ($_GET['action']){
 
         if(!checkRol('ADD', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("FUNCTIONALITY_Controller.php", "index");
         }
 
         if (isset($_POST["submit"])) { 
@@ -61,7 +62,9 @@ Switch ($_GET['action']){
                 
         } else {
             $function = new FUNCTIONALITY_Model();
-            $actions = $function->showAllActions();
+            $action = new ACTION_Model();
+
+            $actions = $action->showAllActions();
             new FUNCTIONALITY_ADD($actions);
         }
            	       
@@ -77,7 +80,7 @@ Switch ($_GET['action']){
 
         if(!checkRol('EDIT', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("FUNCTIONALITY_Controller.php", "index");
         }
 
         if (!isset($_GET['function'])){
@@ -104,8 +107,10 @@ Switch ($_GET['action']){
         } else {
 
             $function = new FUNCTIONALITY_Model($functionId);
+            $action = new ACTION_Model();
+
             $functionValues = $function->findFunctionality();
-            $actions = $function->showAllActions();
+            $actions = $action->showAllActions();
             $actionsForFunctionality = $function->showAllActionsForFunctionality();
             new FUNCTIONALITY_EDIT($functionValues, $actions, $actionsForFunctionality);
         }

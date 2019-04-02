@@ -279,3 +279,18 @@ function previewProfilePhoto(uploader) {
         document.getElementById('profilePhoto-container').style.border = 0;
     };
 }
+
+
+
+
+function showActions(idFunction){
+
+    checkbox = document.getElementsByClassName('checkbox-'.concat(idFunction));
+    for(i=0; i<checkbox.length; i++){
+        if(checkbox[i].style.display == 'block'){
+            checkbox[i].style.display = 'none';
+        }else{
+            checkbox[i].style.display = 'block';
+        }      
+    }
+}

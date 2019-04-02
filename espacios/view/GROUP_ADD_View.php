@@ -2,8 +2,13 @@
 
 class GROUP_ADD{
 
-    function __construct() {
-        $this->render();
+	private $functions;
+	private $actions;
+
+    function __construct($functions, $actions) {
+			$this->functions = $functions;
+			$this->actions = $actions;
+      $this->render();
     }
     
     function render() {
@@ -29,6 +34,30 @@ class GROUP_ADD{
 									<input type="text" id="descripGroup" name="descripGroup" placeholder="<?= $strings['What is the group about?']?>" onkeyup="checkText(this.id)" required>
                   <i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
+
+								<?php foreach($this->functions as $function): ?>
+									
+									<button id="<?=$function['idFunction']?>" type="button" class="btn btn-primary boxx" onclick="showActions(this.id)"><?=$function['nameFunction']?></button>
+									<?=$strings['Check the actions:']?>
+										<?php foreach($this->actions as $action): ?>
+										<div id="checkboxActions" class="checkbox-<?=$function['idFunction']?>">
+												<input type="checkbox" name="action" id="<?=$action['idAction']?>" value="<?=$action['idAction']?>"/>
+												<label for="<?=$action['idAction']?>"><?=$action['nameAction']?></label>
+											</div>
+										<?php endforeach; ?>
+									
+
+
+
+									<?php endforeach; ?>
+
+
+
+
+
+
+									<input type="hidden" id="actions" name="actions">
+
                               
 								<button type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>
 							</div> 
