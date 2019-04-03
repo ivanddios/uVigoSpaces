@@ -18,9 +18,16 @@ include '../locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
 
 function get_data_form() {
 
-    $idGroup = $_GET['group'];
+    if(isset($_GET['group'])){
+        $idGroup = $_GET['group'];
+    }else{
+        $idGroup = null;
+    }
     $nameGroup = $_POST['nameGroup'];
     $descripGroup = $_POST['descripGroup'];
+    // $permissions = $_POST['permissions'];
+
+    // var_dump($permissions);
    
     $group = new GROUP_Model($idGroup, $nameGroup, $descripGroup);
     return $group;
@@ -49,10 +56,11 @@ Switch ($_GET['action']){
             $groupAdd = get_data_form();
             try{
                 //$functionAdd->checkIsValidForAdd_Update(); 
-                $groupAdd->addGroup();
-                $flashMessageSuccess = sprintf($strings["Group \"%s\" successfully added."], $groupAdd->getNameGroup());
-                $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("GROUP_Controller.php", "index");
+                // $groupAdd->addGroup();
+                // $flashMessageSuccess = sprintf($strings["Group \"%s\" successfully added."], $groupAdd->getNameGroup());
+                // $view->setFlashSuccess($flashMessageSuccess);
+                // $view->redirect("GROUP_Controller.php", "index");
+                var_dump("JEJ");
 
             }catch(Exception $errors) {
                 $view->setFlashDanger($strings[$errors->getMessage()]);

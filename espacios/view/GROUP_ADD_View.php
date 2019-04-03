@@ -22,7 +22,7 @@ class GROUP_ADD{
 						<?=htmlentities($strings["Datas of the new group"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form  method="POST" action="GROUP_Controller.php?action=<?= $strings['Add']?>" onkeyup="validateGroup()">
+						<form  method="POST" action="GROUP_Controller.php?action=<?= $strings['Add']?>">
 							<div id="group-form">
 
 								<div class="inputWithIcon inputIconBg">
@@ -35,31 +35,22 @@ class GROUP_ADD{
                   <i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 
+
+								<?=$strings['Functionalities']?>:
+							
 								<?php foreach($this->functions as $function): ?>
-									
 									<button id="<?=$function['idFunction']?>" type="button" class="btn btn-primary boxx" onclick="showActions(this.id)"><?=$function['nameFunction']?></button>
-									<?=$strings['Check the actions:']?>
+									<div class="function id-<?=$function['idFunction']?>">
 										<?php foreach($this->actions as $action): ?>
-										<div id="checkboxActions" class="checkbox-<?=$function['idFunction']?>">
-												<input type="checkbox" name="action" id="<?=$action['idAction']?>" value="<?=$action['idAction']?>"/>
-												<label for="<?=$action['idAction']?>"><?=$action['nameAction']?></label>
+											<div class="checkbox-<?=$function['idFunction']?><?=$action['idAction']?>">
+													<input id="<?=$function['idFunction']?><?=$action['idAction']?>" type="checkbox" name="action" value="<?=$function['idFunction']?>,<?=$action['idAction']?>"/>
+													<label for="<?=$function['idFunction']?><?=$action['idAction']?>"><?=$action['nameAction']?></label>
 											</div>
 										<?php endforeach; ?>
-									
-
-
-
-									<?php endforeach; ?>
-
-
-
-
-
-
-									<input type="hidden" id="actions" name="actions">
-
-                              
-								<button type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>
+									</div>
+								<?php endforeach; ?>
+								<input type="hidden" id="permissions" name="permissions">
+								<button type="submit" name="submit" class="btn-dark" ><?= $strings["Save"]?></button>
 							</div> 
 						</form>
 						<a href="GROUP_Controller.php"><?= $strings["Back"] ?></a>

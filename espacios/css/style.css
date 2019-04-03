@@ -520,13 +520,22 @@ ul.social-network li a {
 
 
 
-#checkboxActions{
+/* #checkboxActions{
 	display: none; 
+} */
+
+.function{
+	display:none;
+	margin-bottom: 20px;
 }
 
 .boxx{
+	margin-bottom: 5%;
+	margin-left: 25%;
 	display: block;
 }
+
+
 
  
   

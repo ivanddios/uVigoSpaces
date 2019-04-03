@@ -285,12 +285,12 @@ function previewProfilePhoto(uploader) {
 
 function showActions(idFunction){
 
-    checkbox = document.getElementsByClassName('checkbox-'.concat(idFunction));
-    for(i=0; i<checkbox.length; i++){
-        if(checkbox[i].style.display == 'block'){
-            checkbox[i].style.display = 'none';
+    divFunction = document.getElementsByClassName('id-'.concat(idFunction));
+    for(i=0; i<divFunction.length; i++){
+        if(divFunction[i].style.display == 'block'){
+            divFunction[i].style.display = 'none';
         }else{
-            checkbox[i].style.display = 'block';
+            divFunction[i].style.display = 'block';
         }      
     }
 }
