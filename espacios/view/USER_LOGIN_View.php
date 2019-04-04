@@ -48,7 +48,7 @@ class Login{
                                 </div>
                                 <div class="col-lg-12 center-block">
                                     <form method="POST" action="USER_Controller.php?action=Login">
-                                        <div id="inputLogin">
+                                        <!-- <div id="inputLogin">
                                             <div class="inputWithIcon inputIconBg">
                                                 <input type="text" name="username" placeholder="Username" required>
                                                 <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
@@ -63,7 +63,20 @@ class Login{
                                                         <?= $strings[$this->flashMessageDanger]?>
                                                     </div>
                                                 <?php endif; ?>
-                                            </div>
+                                            </div> -->
+
+
+                                            <div class="input-container" id="phone">
+										<input type="text" name="username" required/>
+										<!-- <label for="phone">First name</label> -->
+									</div>
+
+
+                                    <div class="input-container" id="phone">
+										<input type="text" name="passwd" required/>
+										<!-- <label for="phone">First name</label> -->
+									</div>
+
 
                                             <div class="item-select">
                                                 <p><select name="language">

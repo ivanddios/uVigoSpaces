@@ -107,13 +107,37 @@ class USER_ADD{
 								</div> -->
 
 
-							 <div class="input-group mb-3">
+							 <!-- <div class="input-group mb-3">
 								<div class="input-group-prepend">
 									<span class="input-group-text fa fa-phone fa-lg"></span>
 								</div>
-								<!-- <label class="form-control-placeholder" class="bmd-label-floating" for="Phone">Phone</label> -->
+							 <label class="form-control-placeholder" class="bmd-label-floating" for="Phone">Phone</label> 
 								<input type="text" class="form-control" name="Phone" placeholder="Phone" aria-label="Username" aria-describedby="basic-addon1">
-							</div> 
+							</div>  -->
+
+
+
+				
+									
+									<div id="username" class="input-container withIcon">
+										<span class="input-group-text fa fa-user"></span>
+										<input type="text" name="username" required/>
+										<label for="username"><?= $strings['What is the username of this user?']?></label>
+									</div>
+
+
+									<div class="input-container">
+										<input type="text" name="phone" required/>
+										<label for="phone"><?= $strings['What is the username of this user?']?></label>
+									</div>
+									<div class="input-container">
+										<input type="text" name="phone" required/>
+										<label for="phone"><?= $strings['What is the username of this user?']?></label>
+									</div>
+									<div class="input-container">
+										<input type="text" name="phone" required/>
+										<label for="phone"><?= $strings['What is the username of this user?']?></label>
+									</div>
 
 
 
