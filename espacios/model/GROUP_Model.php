@@ -19,7 +19,7 @@ function __construct($idGroup=NULL, $nameGroup=NULL, $descripGroup=NULL)
 }
 
 public function getNameGroup(){
-    return $this->nameFunction;
+    return $this->nameGroup;
 }
 
 
@@ -51,14 +51,29 @@ function findGroup() {
 }
 
 
-function addGroup($actions) {
+function addGroup($permissions) {
+
     $sql = "INSERT INTO `group` (nameGroup, descripGroup) VALUES ('$this->nameGroup', '$this->descripGroup')";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
+        $idGroup = $this->mysqli->insert_id;
+        $this->addPermission($idGroup, $permissions);
         return true;
     }
     throw new Exception('Error in the query on the database');
+}
+
+
+function addPermission($idGroup, $permissions) {
+
+    foreach($permissions as $permission){
+        $sql = "INSERT INTO permission (idGroup, idFunction, idAction) VALUES ('$idGroup', '$permission->idFunction', '$permission->idAction')";
+        if (!($resultado = $this->mysqli->query($sql))) {
+            throw new Exception('Error in the query on the database');
+        }
+    }
+    return true;
 }
 
 

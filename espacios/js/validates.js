@@ -488,23 +488,17 @@ function validateAction() {
 
 function validatePermissions() {
 
-
-    console.log("HOLAAAA");
-
     var checkboxChecked = [];
     var checkbox = document.getElementsByName('action');
 
-    // console.log("HOLA");
-    // for (var i = 0; i < checkbox.length; i++) {
-    //     if (checkbox[i].checked) {
-    //         checkboxChecked.push({"idFunction":checkbox[i].value.substr(0,1), "idAction":checkbox[i].value.substr(2,3)});
-    //     }
-    // }
-    // console.log(document.getElementById("permissions").value);
-    // document.getElementById("permissions").value = JSON.stringify(checkboxChecked);
+    for (var i = 0; i < checkbox.length; i++) {
+        if (checkbox[i].checked) {
+            checkboxChecked.push({"idFunction":checkbox[i].value.substr(0,1), "idAction":checkbox[i].value.substr(2,3)});
+        }
+    }
+    document.getElementById("permissions").value = JSON.stringify(checkboxChecked);
+
 }
-
-
 
 
 

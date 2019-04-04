@@ -22,7 +22,7 @@ class GROUP_ADD{
 						<?=htmlentities($strings["Datas of the new group"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form  method="POST" action="GROUP_Controller.php?action=<?= $strings['Add']?>">
+						<form method="POST" action="GROUP_Controller.php?action=<?= $strings['Add']?>">
 							<div id="group-form">
 
 								<div class="inputWithIcon inputIconBg">
@@ -50,7 +50,7 @@ class GROUP_ADD{
 									</div>
 								<?php endforeach; ?>
 								<input type="hidden" id="permissions" name="permissions">
-								<button type="submit" name="submit" class="btn-dark" ><?= $strings["Save"]?></button>
+								<button type="submit" name="submit" class="btn-dark" onclick="validatePermissions()"><?= $strings["Save"]?></button>
 							</div> 
 						</form>
 						<a href="GROUP_Controller.php"><?= $strings["Back"] ?></a>

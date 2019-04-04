@@ -33,8 +33,8 @@ class USER_ADD{
 						<?=htmlentities($strings["New user"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form name="userForm" method="POST" action="USER_Controller.php?action=<?= $strings['Add']?>" enctype="multipart/form-data" onkeyup="validateAddUser()">
-							<div id="group-form">
+						<form name="userForm" method="POST" action="USER_Controller.php?action=<?= $strings['Add']?>" enctype="multipart/form-data">
+							<!-- <div id="group-form">
 
 								<div id="profilePhoto-container" class="extra">
 									<img id="profilePhoto" alt="<?= $strings['ProfilePhoto']?>" src="../img/camera2.png" onclick="uploadProfilePhoto()"/>
@@ -94,10 +94,32 @@ class USER_ADD{
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" id="phone" name="phone" placeholder="<?= $strings['What is his phone?']?>" value="<?= $this->user['phone']?>" onkeyup="checkNumPhone(this.id)" required>
 									<i class="fa fa-phone fa-lg fa-fw" aria-hidden="true"></i>
-                </div>
-                                
-								<button id="submitButton" type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
+								</div>
+								 -->
+								<!-- <div class="inputWithIcon inputIconBg">
+									<select class="custom-select">
+										<option selected>Open this select menu</option>
+										<option value="1">One</option>
+										<option value="2">Two</option>
+										<option value="3">Three</option>
+									</select>
+									<i class="fa fa-tag fa-lg fa-fw" aria-hidden="true"></i>
+								</div> -->
+
+
+							 <div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text fa fa-phone fa-lg"></span>
+								</div>
+								<!-- <label class="form-control-placeholder" class="bmd-label-floating" for="Phone">Phone</label> -->
+								<input type="text" class="form-control" name="Phone" placeholder="Phone" aria-label="Username" aria-describedby="basic-addon1">
 							</div> 
+
+
+
+            
+								<button id="submitButton" type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
+							<!-- </div>  -->
 						</form>
 						<a href="../controller/USER_Controller.php"><?= $strings["Back"] ?></a>
 					</div>

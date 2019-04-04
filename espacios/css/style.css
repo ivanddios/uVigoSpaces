@@ -146,18 +146,31 @@ header{
 /* TYPE=TEXT  AND TYPE=PASSWORD*/
 
 input[type=text],[type=password]{
+	font-size:14px;
+	font-weight:300;
+	line-height:1.6em;
     width:100%;
-    border:2px solid #aaa;
-    border-radius:4px;
-    margin:8px 0;
-    outline:none;
-    padding:8px;
-    box-sizing:border-box;
+	border:2px solid #aaa;
+	border-width: 0 0 2px;
+	border-radius:4px;
+	box-sizing:border-box;
+	margin-left: 8px;
+	padding:6px;
+	outline: 0;
 	transition:.3s;
-	height: 10%!important;
-  }
+}
 
-.inputWithIcon input[type=text],[type=password]{
+.form-control:focus {
+    border-color:#aaaa;; 
+	box-shadow: none; 
+}
+
+  /* input:focus, textarea:focus, select:focus {
+	outline-offset: 0px !important;
+	outline: none !important;
+	} */
+
+/* .inputWithIcon input[type=text],[type=password]{
 	padding-left:40px;
 	margin-bottom: 5%;
 }
@@ -182,7 +195,7 @@ input[type=text],[type=password]{
 	color:#fff;
 	padding:9px 4px;
 	border-radius:4px 0 0 4px;
-}
+} */
 
 #inputLogin{
 	width: 50%;
@@ -243,11 +256,11 @@ input[type=text],[type=password]{
 
 /* CHECKBOX */
 
-label {
+/* label {
 	width: 30%;
 	border-radius: 3px;
 	border: 1px solid #D1D3D4;
-}
+} */
   
 input[type="checkbox"] {
 	display: none;
@@ -288,7 +301,6 @@ input[type="checkbox"]:hover:not(:checked) ~ label:before {
 } 
   
 input[type="checkbox"]:checked ~ label {
-	
 	color: #777;
 }
   
@@ -520,9 +532,7 @@ ul.social-network li a {
 
 
 
-/* #checkboxActions{
-	display: none; 
-} */
+/* USER ADD*/
 
 .function{
 	display:none;
@@ -538,4 +548,23 @@ ul.social-network li a {
 
 
  
-  
+select{
+	width:100%;
+    border:2px solid #aaa;
+    border-radius:4px;
+    margin:8px 0;
+    outline:none;
+    padding:8px;
+    box-sizing:border-box;
+	transition:.3s;
+	height: 10%!important;
+  }
+
+
+  .input-group-text {
+	background-color: #aaa;
+	color: #fff;
+
+  }
+
+

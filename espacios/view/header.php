@@ -29,6 +29,8 @@
             <script src="../js/validates.js"></script>
             <!-- Our CSS -->
             <link rel="stylesheet" href="../css/style.css">
+
+
         </head>
 
         <?php if(strpos($_SERVER['REQUEST_URI'],'ShowSpacePlane')) { ?>

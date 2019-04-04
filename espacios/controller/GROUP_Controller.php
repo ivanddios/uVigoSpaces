@@ -25,9 +25,6 @@ function get_data_form() {
     }
     $nameGroup = $_POST['nameGroup'];
     $descripGroup = $_POST['descripGroup'];
-    // $permissions = $_POST['permissions'];
-
-    // var_dump($permissions);
    
     $group = new GROUP_Model($idGroup, $nameGroup, $descripGroup);
     return $group;
@@ -52,16 +49,15 @@ Switch ($_GET['action']){
             $view->redirect("GROUP_Controller.php", "index");
         }
 
-        if (isset($_POST["submit"])) { 
+        if (isset($_POST["submit"])) {
             $groupAdd = get_data_form();
             try{
+                $permissions = json_decode($_POST['permissions']);
                 //$functionAdd->checkIsValidForAdd_Update(); 
-                // $groupAdd->addGroup();
-                // $flashMessageSuccess = sprintf($strings["Group \"%s\" successfully added."], $groupAdd->getNameGroup());
-                // $view->setFlashSuccess($flashMessageSuccess);
-                // $view->redirect("GROUP_Controller.php", "index");
-                var_dump("JEJ");
-
+                $groupAdd->addGroup($permissions);
+                $flashMessageSuccess = sprintf($strings["Group \"%s\" successfully added."], $groupAdd->getNameGroup());
+                $view->setFlashSuccess($flashMessageSuccess);
+                $view->redirect("GROUP_Controller.php", "index");
             }catch(Exception $errors) {
                 $view->setFlashDanger($strings[$errors->getMessage()]);
                 $view->redirect("GROUP_Controller.php", $strings['Add']);
