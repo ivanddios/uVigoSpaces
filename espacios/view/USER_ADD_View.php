@@ -126,7 +126,7 @@ class USER_ADD{
 									</div>
 
 
-									<div class="input-container">
+									<!-- <div class="input-container">
 										<input type="text" name="phone" required/>
 										<label for="phone"><?= $strings['What is the username of this user?']?></label>
 									</div>
@@ -137,7 +137,7 @@ class USER_ADD{
 									<div class="input-container">
 										<input type="text" name="phone" required/>
 										<label for="phone"><?= $strings['What is the username of this user?']?></label>
-									</div>
+									</div> -->
 
 
 

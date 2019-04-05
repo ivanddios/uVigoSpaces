@@ -145,23 +145,22 @@ header{
 
 /* TYPE=TEXT*/
 
-
-
 .input-container {
 	position: relative;
 	height: 2.7em;
-	margin-top: 5%;
+	margin-top: 7%;
 	margin-bottom: 5%;
+	
 }
   
   
 input[type=text],[type=password]{
 	display: block;
 	position: absolute;
-	margin-left: 10%;
+	left: 10%;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	width: 100%;
+	width: 90%;
 	border: 0;
 	outline: none;
 	top: 34%;
@@ -237,7 +236,7 @@ input:focus + label, input:valid + label {
 			left: 1em;
 			opacity: 0;
 			bottom: 15px; 
-			color: #0075d5;
+			color: black;;
 			font-weight: 400;
   	}
    	100% {
@@ -245,7 +244,7 @@ input:focus + label, input:valid + label {
 			opacity: 1;
 			left: 1px;
 			bottom:15px; 
-		  color: #0075d5;
+		  color: black;
 			font-weight: 400;
   	} 
   }
@@ -271,7 +270,7 @@ input:focus + label, input:valid + label {
 			left: 1em;
 			opacity: 0;
 			bottom: 15px; 
-			color: #0075d5;
+			color: black;
 			font-weight: 400;
 		} 
 		100% {
@@ -279,7 +278,7 @@ input:focus + label, input:valid + label {
 			opacity: 1;
 			left: 1px;
 			bottom: 15px; 
-			color: #0075d5;
+			color: black;
 			font-weight: 400;
 		}
 	}
