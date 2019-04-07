@@ -20,26 +20,29 @@ class BUILDING_SHOW{
 						</div>
 						<div class="col-lg-12 center-block-content">
 								<div id="group-form">
-									<div class="inputWithIcon inputIconBg">
-										<input type="text" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?=$this->building['idBuilding']?>" readonly>
-										<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
+									<div class="input-container">
+											<span class="input-group-text fa fa-lock"></span>
+											<input type="text" id="idBuilding" name="idBuilding" value="<?=$this->building['idBuilding']?>" readonly/>
+											<label for="idBuilding"><?= $strings['What is the identifier of this building?']?></label>
 									</div>
 
-									<div class="inputWithIcon inputIconBg">
-										<input type="text" name="nameBuilding" placeholder="<?= $strings['What building is it?']?>"  value="<?=$this->building['nameBuilding']?>" readonly>
-										<i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
+									<div class="input-container">
+										<span class="input-group-text fa fa-building"></span>
+										<input type="text" id="nameBuilding" name="nameBuilding" value="<?=$this->building['nameBuilding']?>" readonly/>
+										<label for="nameBuilding"><?= $strings['What is the identifier of this building?']?></label>
 									</div>
 
-									<div class="inputWithIcon inputIconBg">
-										<input type="text" name="addressBuilding" placeholder="<?= $strings['What is your postal address?']?>" value="<?=$this->building['addressBuilding']?>" readonly>
-										<i class="fa fa-map-marker fa-lg fa-fw" aria-hidden="true"></i>
+									<div class="input-container">
+										<span class="input-group-text fa fa-map-marker"></span>
+										<input type="text" id="addressBuilding" name="addressBuilding" value="<?=$this->building['addressBuilding']?>" readonly/>
+										<label for="addressBuilding"><?= $strings['What is your postal address?']?></label>
 									</div>
 
-									<div class="inputWithIcon inputIconBg">
-										<input type="text" name="phoneBuilding" placeholder="<?= $strings['What is your phone?']?> " value="<?=$this->building['phoneBuilding']?>" readonly>
-										<i class="fa fa-phone fa-lg fa-fw" aria-hidden="true"></i>
+									<div class="input-container">
+										<span class="input-group-text fa fa-phone"></span>
+										<input type="text" id="phoneBuilding" name="phoneBuilding" value="<?=$this->building['phoneBuilding']?>" readonly/>
+										<label for="phoneBuilding"><?= $strings['What is your phone?']?></label>
 									</div>
-									
 								</div>
 							<a href="../index.php?"><?= $strings["Back"] ?></a>
 						</div>

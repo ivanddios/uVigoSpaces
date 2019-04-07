@@ -29,8 +29,6 @@
             <script src="../js/validates.js"></script>
             <!-- Our CSS -->
             <link rel="stylesheet" href="../css/style.css">
-
-
         </head>
 
         <?php if(strpos($_SERVER['REQUEST_URI'],'ShowSpacePlane')) { ?>
@@ -61,16 +59,13 @@
                         <li><a class="nav-link" href="../controller/BUILDING_Controller.php"><?=$strings['Buildings']?></a></li>&nbsp;&nbsp;
                             <?php  if(checkRol('SHOW ALL', 'USER')): ?>
                                 <div class="nav-item dropdown">
-                                    <a id="navbarDropdown-User" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?=$strings['Users']?></a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown-User">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?=$strings['Users']?></a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="../controller/FUNCTIONALITY_Controller.php"><?=$strings['Functionalitys']?></a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="../controller/GROUP_Controller.php"><?=$strings['Groups']?></a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="../controller/ACTION_CONTROLLER.php"><?=$strings['Actions']?></a>
+                                        <a class="dropdown-item" href="../controller/GROUP_Controller.php"><?=$strings['Permissions']?></a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="../controller/USER_CONTROLLER.php"><?=$strings['Users']?></a>
-                                        
                                     </div>
                                 </div>
                             <?php endif; ?>
@@ -78,8 +73,8 @@
                         </ul>
                         <?php if(isset($_SESSION['LOGIN'])): ?>
                             <div class="nav-item dropdown">
-                                <a id="navbarDropdown-Account" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?=$strings['My Account']?></a>	
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown-Account">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?=$strings['My Account']?></a>	
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="../controller/USER_Controller.php?action=<?=$strings['Edit']?>&user=<?=$_SESSION['LOGIN']?>"><?=$strings['My Profile']?></a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="../controller/USER_Controller.php?action=<?=$strings['Logout']?>"><?=$strings['Logout']?></a>

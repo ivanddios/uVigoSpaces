@@ -119,7 +119,7 @@ class USER_ADD{
 
 				
 									
-									<div id="username" class="input-container withIcon">
+									<div id="username" class="input-container">
 										<span class="input-group-text fa fa-user"></span>
 										<input type="text" name="username" required/>
 										<label for="username"><?= $strings['What is the username of this user?']?></label>

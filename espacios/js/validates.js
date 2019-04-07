@@ -5,13 +5,13 @@ function checkBuildingId(buildingId){
     var idBuildingInput = document.getElementById(buildingId);
 
     if (expr.test(idBuildingInput.value) && idBuildingInput.value.length > 0 && idBuildingInput.value.length < 6){ 
-        idBuildingInput.nextElementSibling.style.backgroundColor = "green";
         idBuildingInput.style.borderColor = "green";
+        idBuildingInput.previousElementSibling.style.backgroundColor = "green";
         return true;
     }
     else{ 
-        idBuildingInput.nextElementSibling.style.backgroundColor = "red";
         idBuildingInput.style.borderColor = "red";
+        idBuildingInput.previousElementSibling.style.backgroundColor = "red";
         return false;
     }
 }
@@ -22,12 +22,12 @@ function checkFloorId(floorId){
     var idFloorInput = document.getElementById(floorId);
     
     if (expr.test(idFloorInput.value) && idFloorInput.value.length > 0 && idFloorInput.value.length < 3){ 
-        idFloorInput.nextElementSibling.style.backgroundColor = "green";
+        idFloorInput.previousElementSibling.style.backgroundColor = "green";
         idFloorInput.style.borderColor = "green";
         return true;
     }
     else{ 
-        idFloorInput.nextElementSibling.style.backgroundColor = "red";
+        idFloorInput.previousElementSibling.style.backgroundColor = "red";
         idFloorInput.style.borderColor = "red";
         return false;
     }
@@ -39,12 +39,12 @@ function checkSpaceId(spaceId){
     var idSpaceInput = document.getElementById(spaceId);
     
     if (expr.test(idSpaceInput.value) && idSpaceInput.value.length > 0 && idSpaceInput.value.length < 7){ 
-        idSpaceInput.nextElementSibling.style.backgroundColor = "green";
+        idSpaceInput.previousElementSibling.style.backgroundColor = "green";
         idSpaceInput.style.borderColor = "green";
         return true;
     }
     else{ 
-        idSpaceInput.nextElementSibling.style.backgroundColor = "red";
+        idSpaceInput.previousElementSibling.style.backgroundColor = "red";
         idSpaceInput.style.borderColor = "red";
         return false;
     }
@@ -57,12 +57,12 @@ function checkText(textId){
     var textInput = document.getElementById(textId);
     
     if (expr.test(textInput.value) && textInput.value.length > 0 && textInput.value.length < 225){
-        textInput.nextElementSibling.style.backgroundColor = "green"; 
+        textInput.previousElementSibling.style.backgroundColor = "green"; 
         textInput.style.borderColor = "green";
         return true;
     }
     else{
-        textInput.nextElementSibling.style.backgroundColor = "red";  
+        textInput.previousElementSibling.style.backgroundColor = "red";  
         textInput.style.borderColor = "red";
         return false;
     }
@@ -75,12 +75,12 @@ function checkNumPhone(phoneId){
     var phoneInput = document.getElementById(phoneId);
     
     if (expr.test(phoneInput.value) && phoneInput.value.length == 9){
-        phoneInput.nextElementSibling.style.backgroundColor = "green";  
+        phoneInput.previousElementSibling.style.backgroundColor = "green";  
         phoneInput.style.borderColor = "green";
         return true;
     }
     else{ 
-        phoneInput.nextElementSibling.style.backgroundColor = "red";  
+        phoneInput.previousElementSibling.style.backgroundColor = "red";  
         phoneInput.style.borderColor = "red";
         return false;
     }
@@ -93,18 +93,18 @@ function checkSurface(surfaceId){
     var surfaceInput = document.getElementById(surfaceId);
 
     if(surfaceInput.value.length == 0){
-        surfaceInput.nextElementSibling.style.backgroundColor = "grey"; 
+        surfaceInput.previousElementSibling.style.backgroundColor = "grey"; 
         surfaceInput.style.borderColor = "grey";
         return true;
     }
     
     if (expr.test(surfaceInput.value) && surfaceInput.value.length < 12 && surfaceInput.value <= 99999999.99){ 
-        surfaceInput.nextElementSibling.style.backgroundColor = "green";  
+        surfaceInput.previousElementSibling.style.backgroundColor = "green";  
         surfaceInput.style.borderColor = "green";
         return true;
     }
     else{ 
-        surfaceInput.nextElementSibling.style.backgroundColor = "red";  
+        surfaceInput.previousElementSibling.style.backgroundColor = "red";  
         surfaceInput.style.borderColor = "red";
         return false;
     }
@@ -117,19 +117,19 @@ function checkNumberInventory(numInventoryId){
     var numInventoryInput = document.getElementById(numInventoryId);
 
     if(numInventory.value.length == 0){
-        numInventoryInput.nextElementSibling.style.backgroundColor = "grey"; 
+        numInventoryInput.previousElementSibling.style.backgroundColor = "grey"; 
         numInventoryInput.style.borderColor = "grey";
         return true;
     }
     
     if(numInventory.value.length > 0){
         if (expr.test(numInventory.value) && numInventory.value.length < 7){
-            numInventoryInput.nextElementSibling.style.backgroundColor = "green"; 
+            numInventoryInput.previousElementSibling.style.backgroundColor = "green"; 
             numInventoryInput.style.borderColor = "green";
             return true;
         }
         else{ 
-            numInventoryInput.nextElementSibling.style.backgroundColor = "red";
+            numInventoryInput.previousElementSibling.style.backgroundColor = "red";
             numInventoryInput.style.borderColor = "red";
             return false;
         }
@@ -144,12 +144,12 @@ function checkSurfaceSpace(surfaceId){
     
     if(surfaceInput.value.length > 0){
         if (expr.test(surface) && surface.length < 12 && surface <= 99999999.99){
-            surfaceInput.nextElementSibling.style.backgroundColor = "green"; 
+            surfaceInput.previousElementSibling.style.backgroundColor = "green"; 
             surfaceInput.style.borderColor="green";
             return true;
         }
         else{ 
-            surfaceInput.nextElementSibling.style.backgroundColor = "red";
+            surfaceInput.previousElementSibling.style.backgroundColor = "red";
             surfaceInput.style.borderColor = "red";
             return false;
         }
@@ -186,12 +186,12 @@ function checkUser(usernameId){
    var usernameInput = document.getElementById(usernameId);
    
    if (expr.test(username.value) && username.value.length > 0 && username.value.length < 225){
-        usernameInput.nextElementSibling.style.backgroundColor = "green"; 
+        usernameInput.previousElementSibling.style.backgroundColor = "green"; 
         usernameInput.style.borderColor = "green";
        return true;
    }
    else{
-        usernameInput.nextElementSibling.style.backgroundColor = "red";  
+        usernameInput.previousElementSibling.style.backgroundColor = "red";  
         usernameInput.style.borderColor = "red";
        return false;
    }
@@ -254,21 +254,21 @@ function checkPassword(passwordId){
 
         if (expr.test(passwordInput.value) && passwordInput.value.length >= 8 && passwordInput.value.length < 225){
             passwordBox.style.display = 'none';
-            passwordInput.nextElementSibling.style.backgroundColor = "green"; 
+            passwordInput.previousElementSibling.style.backgroundColor = "green"; 
             passwordInput.style.borderColor = "green";
             document.getElementById("passwordConfirm").type = "password";
             return true;
         }
         else{
             passwordBox.style.display = 'block';
-            passwordInput.nextElementSibling.style.backgroundColor = "red";  
+            passwordInput.previousElementSibling.style.backgroundColor = "red";  
             passwordInput.style.borderColor = "red";
             return false;
         }
 
     } else {
         passwordBox.style.display = 'none';
-        passwordInput.nextElementSibling.style.backgroundColor = "#aaa"; 
+        passwordInput.previousElementSibling.style.backgroundColor = "#aaa"; 
         passwordInput.style.borderColor =  "#aaa";
         document.getElementById("passwordConfirm").type = "hidden";
     }
@@ -284,12 +284,12 @@ function checkConfirmPassword(confirmPasswordId){
 
     if(passwordInput.value.length !== null && confirmPasswordInput){
         if (passwordInput.value == confirmPasswordInput.value){
-            confirmPasswordInput.nextElementSibling.style.backgroundColor = "green"; 
+            confirmPasswordInput.previousElementSibling.style.backgroundColor = "green"; 
             confirmPasswordInput.style.borderColor = "green";
             return true;
         }
         else{
-            confirmPasswordInput.nextElementSibling.style.backgroundColor = "red";  
+            confirmPasswordInput.previousElementSibling.style.backgroundColor = "red";  
             confirmPasswordInput.style.borderColor = "red";
             return false;
         }
@@ -309,16 +309,16 @@ function checkDNI(dniId) {
         validLetter = 'TRWAGMYFPDXBNJZSQVHLCKET';
         validLetter = validLetter.substring(numberDNI, numberDNI + 1);
         if (letterDNI.toUpperCase() != validLetter.toUpperCase()) {
-            dniInput.nextElementSibling.style.backgroundColor = "red";  
+            dniInput.previousElementSibling.style.backgroundColor = "red";  
             dniInput.style.borderColor = "red";
             return false;
         }else{
-            dniInput.nextElementSibling.style.backgroundColor = "green"; 
+            dniInput.previousElementSibling.style.backgroundColor = "green"; 
             dniInput.style.borderColor = "green";
             return true;
         }
     }else{
-        dniInput.nextElementSibling.style.backgroundColor = "red";  
+        dniInput.previousElementSibling.style.backgroundColor = "red";  
         dniInput.style.borderColor = "red";
         return false;
     }
@@ -332,11 +332,11 @@ function checkDate(dateId){
     var CurrentDate = new Date();
 
     if(expr2.test(dateInput.value) && (CurrentDate.getFullYear() - dateFormat.getFullYear()) > 18){
-        dateInput.nextElementSibling.style.backgroundColor = "green";  
+        dateInput.previousElementSibling.style.backgroundColor = "green";  
         dateInput.style.borderColor = "green";
         return true;    
     } else {
-        dateInput.nextElementSibling.style.backgroundColor = "red";  
+        dateInput.previousElementSibling.style.backgroundColor = "red";  
         dateInput.style.borderColor = "red";
         return false;
     }
@@ -352,11 +352,11 @@ function checkDate(dateInput){
     var CurrentDate = new Date();
 
     if(dateInput.value.length === 10 && expr.test(dateInput.value) && (CurrentDate.getFullYear() - dateFormat.getFullYear()) > 18){
-        dateInput.nextElementSibling.style.backgroundColor = "green";  
+        dateInput.previousElementSibling.style.backgroundColor = "green";  
         dateInput.style.borderColor = "green";
         return true;    
     } else {
-        dateInput.nextElementSibling.style.backgroundColor = "red";  
+        dateInput.previousElementSibling.style.backgroundColor = "red";  
         dateInput.style.borderColor = "red";
         return false;
     }
@@ -369,11 +369,11 @@ function checkEmail(emailId){
     var expr = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if(emailInput.value.length > 0 && expr.test(emailInput.value)){
-        emailInput.nextElementSibling.style.backgroundColor = "green";  
+        emailInput.previousElementSibling.style.backgroundColor = "green";  
         emailInput.style.borderColor = "green";
         return true;    
     } else {
-        emailInput.nextElementSibling.style.backgroundColor = "red";  
+        emailInput.previousElementSibling.style.backgroundColor = "red";  
         emailInput.style.borderColor = "red";
         return false;
     }

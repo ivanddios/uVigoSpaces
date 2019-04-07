@@ -23,7 +23,7 @@ class ACTION_EDIT{
 						<form  method="POST" action="ACTION_Controller.php?action=<?= $strings['Edit']?>&accion=<?=$this->values['idAction']?>">
 							<div id="group-form">
 
-								<div class="inputWithIcon inputIconBg">
+								<!-- <div class="inputWithIcon inputIconBg">
 									<input type="text" id="nameAction" name="nameAction" placeholder="<?= $strings['What action is it?']?>" value="<?=$this->values['nameAction']?>" onkeyup="checkText(this.id)" required>
                                     <i class="fa fa-users fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
@@ -31,7 +31,20 @@ class ACTION_EDIT{
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" id="descripAction" name="descripAction" placeholder="<?= $strings['What is the action about?']?>" value="<?=$this->values['descripAction']?>" onkeyup="checkText(this.id)" required>
                                     <i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
+								</div> -->
+
+
+								<div class="input-container">
+										<span class="input-group-text fa fa-users"></span>
+										<input type="text" id="nameAction" name="nameAction" value="<?=$this->values['nameAction']?>" readonly/>
+										<label for="nameAction"><?= $strings['What action is it?']?></label>
+									</div>
+
+									<div class="input-container">
+										<span class="input-group-text fa fa-reorder"></span>
+										<input type="text" id="descripAction" name="descripAction" value="<?=$this->values['descripAction']?>" onkeyup="checkText(this.id)" required/>
+										<label for="descripAction"><?= $strings['What is the action about?']?></label>
+									</div>
                               
 								<button type="submit" name="submit" class="btn-dark" onsubmit="validateAction()"><?= $strings["Save"]?></button>
 							</div> 

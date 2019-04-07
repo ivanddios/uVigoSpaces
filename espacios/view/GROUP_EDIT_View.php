@@ -23,7 +23,7 @@ class GROUP_EDIT{
 						<form  method="POST" action="GROUP_Controller.php?action=<?= $strings['Edit']?>&group=<?=$this->values['idGroup']?>">
 							<div id="group-form">
 
-								<div class="inputWithIcon inputIconBg">
+								<!-- <div class="inputWithIcon inputIconBg">
 									<input type="text" id="nameGroup" name="nameGroup" placeholder="<?= $strings['What group is it?']?>" value="<?=$this->values['nameGroup']?>" onkeyup="checkText(this.id)" required>
                                     <i class="fa fa-users fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
@@ -31,7 +31,19 @@ class GROUP_EDIT{
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" id="descripGroup" name="descripGroup" placeholder="<?= $strings['What is the group about?']?>" value="<?=$this->values['descripGroup']?>" onkeyup="checkText(this.id)" required>
                                     <i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
+								</div> -->
+
+								<div class="input-container">
+										<span class="input-group-text fa fa-users"></span>
+										<input type="text" id="nameGroup" name="nameGroup" value="<?=$this->values['nameGroup']?>" readonly/>
+										<label for="nameGroup"><?= $strings['What group is it?']?></label>
+									</div>
+
+									<div class="input-container">
+										<span class="input-group-text fa fa-reorder"></span>
+										<input type="text" id="descripGroup" name="descripFunction" value="<?=$this->values['descripFunction']?>" onkeyup="checkText(this.id)" required/>
+										<label for="descripGroup"><?= $strings['What is the group about?']?></label>
+									</div>
                               
 								<button type="submit" name="submit" class="btn-dark" onsubmit="validateGroup()"><?= $strings["Save"]?></button>
 							</div> 

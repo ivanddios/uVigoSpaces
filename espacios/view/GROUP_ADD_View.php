@@ -25,7 +25,7 @@ class GROUP_ADD{
 						<form method="POST" action="GROUP_Controller.php?action=<?= $strings['Add']?>">
 							<div id="group-form">
 
-								<div class="inputWithIcon inputIconBg">
+								<!-- <div class="inputWithIcon inputIconBg">
 									<input type="text" id="nameGroup" name="nameGroup" placeholder="<?= $strings['What group is it?']?>" onkeyup="checkText(this.id)" required >
                   <i class="fa fa-users fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
@@ -33,7 +33,19 @@ class GROUP_ADD{
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" id="descripGroup" name="descripGroup" placeholder="<?= $strings['What is the group about?']?>" onkeyup="checkText(this.id)" required>
                   <i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
+								</div> -->
+
+								<div class="input-container">
+										<span class="input-group-text fa fa-users"></span>
+										<input type="text" id="nameGroup" name="nameGroup" onkeyup="checkText(this.id)" required/>
+										<label for="nameGroup"><?= $strings['What group is it?']?></label>
+									</div>
+
+									<div class="input-container">
+										<span class="input-group-text fa fa-reorder"></span>
+										<input type="text" id="descripGroup" name="descripFunction" onkeyup="checkText(this.id)" required/>
+										<label for="descripGroup"><?= $strings['What is the group about?']?></label>
+									</div>
 
 
 								<?=$strings['Functionalities']?>:

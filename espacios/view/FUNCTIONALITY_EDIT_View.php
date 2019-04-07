@@ -27,7 +27,7 @@ class FUNCTIONALITY_EDIT{
 						<form  method="POST" action="FUNCTIONALITY_Controller.php?action=<?= $strings['Edit']?>&function=<?=$this->values['idFunction']?>">
 							<div id="group-form">
 
-								<div class="inputWithIcon inputIconBg">
+								<!-- <div class="inputWithIcon inputIconBg">
 									<input type="text" id="nameFunction" name="nameFunction" placeholder="<?= $strings['What functionality is it?']?>" value="<?=$this->values['nameFunction']?>" onkeyup="checkText(this.id)" required>
                                     <i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
@@ -35,12 +35,24 @@ class FUNCTIONALITY_EDIT{
 								<div class="inputWithIcon inputIconBg">
 									<input type="text" id="descripFunction" name="descripFunction" placeholder="<?= $strings['What is the functionality about?']?>" value="<?=$this->values['descripFunction']?>" onkeyup="checkText(this.id)" required>
                                     <i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
+                                </div> -->
+                                
+                                <div class="input-container">
+										<span class="input-group-text fa fa-reorder"></span>
+										<input type="text" id="nameFunction" name="nameFunction" value="<?=$this->values['nameFunction']?>" readonly/>
+										<label for="nameFunction"><?= $strings['What functionality is it?']?></label>
+									</div>
+
+									<div class="input-container">
+										<span class="input-group-text fa fa-reorder"></span>
+										<input type="text" id="descripFunction" name="descripFunction" onkeyup="checkText(this.id)" value="<?=$this->values['descripFunction']?>" required/>
+										<label for="descripFunction"><?= $strings['What is the functionality about?']?></label>
+									</div>
                               
                               
                                 <?=$strings['Check the actions:']?>
                                     <?php foreach($this->actions as $action): ?>
-                                            <div class="checkbox-primary">
+                                            <div class="checkboxList">
                                                 <?php if (in_array($action['idAction'], $this->actionsForFunction)): ?>
                                                     <input type="checkbox" name="action" id="<?=$action['idAction']?>" value="<?=$action['idAction']?>" checked/>
                                                 <?php else : ?>
