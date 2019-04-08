@@ -22,7 +22,7 @@ class FLOOR_ADD{
 					<div class="col-lg-12 center-block-content">
 						<form method="POST" action="FLOOR_Controller.php?action=<?= $strings['Add']?>&building=<?= $this->building?>" enctype="multipart/form-data" onkeyup="validateFloor()">
 							<div id="group-form">
-								<div class="inputWithIcon inputIconBg">
+								<!-- <div class="inputWithIcon inputIconBg">
 									<input type="text" id="idBuilding" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?= $this->building?>" readonly>
 									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
@@ -49,7 +49,43 @@ class FLOOR_ADD{
 								
 								<div class="inputWithIcon inputIconBg">
 									<input type="file" id="planeFloor" name="planeFloor" accept="image/*" onchange="validateUpdloadFile(this.id)">
+								</div> -->
+
+								<div class="input-container">
+										<span class="input-group-text fa fa-lock"></span>
+										<input type="text" id="idBuilding" name="idBuilding" value="<?= $this->building?>" readonly/>
+										<label for="idBuilding"><?= $strings['What is the identifier of this building?']?></label>
 								</div>
+
+								<div class="input-container">
+										<span class="input-group-text fa fa-building"></span>
+										<input type="text" id="idFloor" name="idFloor" onkeyup="checkFloorId(this.id)" required/>
+										<label for="idFloor"><?= $strings['What is the identifier of this floor?']?></label>
+								</div>
+								
+								<div class="input-container">
+										<span class="input-group-text fa fa-reorder"></span>
+										<input type="text" id="nameFloor" name="nameFloor" onkeyup="checkText(this.id)" required/>
+										<label for="nameFloor"><?= $strings['What floor is it?']?></label>
+								</div>
+
+								<div class="input-container">
+										<span class="input-group-text fa fa-area-chart"></span>
+										<input type="text" id="surfaceBuildingFloor" name="surfaceBuildingFloor" onkeyup="checkSurface(this.id)" required/>
+										<label for="surfaceBuildingFloor"><?= $strings['What is the constructed surface?']?></label>
+								</div>
+
+								<div class="input-container">
+										<span class="input-group-text fa fa-area-chart"></span>
+										<input type="text" id="surfaceUsefulFloor" name="surfaceUsefulFloor" onkeyup="checkSurface(this.id)" required/>
+										<label for="surfaceUsefulFloor"><?= $strings['What is the useful surface?']?></label>
+								</div>
+
+								<div class="input-file">
+									<label class="control-label"><?= $strings['Upload the floor plane']?></label>
+									<input type="file" class="filestyle">
+								</div>
+
 							</div>	
 							<button type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>
 						</form>

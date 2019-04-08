@@ -249,7 +249,7 @@ Switch ($_REQUEST['action']){
         //     $view->redirect("USER_Controller.php", "");
         // }
 
-        // if(!checkRol('SHOWALL', $function)){
+        // if(!checkRol('SHOW ALL', $function)){
         //     $view->setFlashDanger($strings["You do not have the necessary permits"]);
         //     $view->redirect("BUILDING_Controller.php", "");
         // }

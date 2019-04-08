@@ -57,11 +57,6 @@ header{
 	text-align: center;
 }
 
-.languages{
-	padding: 0.5rem;
-	margin-left: 4%;	
-}
-
 #navbarDropdown{
 	color: #000;
 	margin-left: 10px;
@@ -78,8 +73,23 @@ header{
 }
 
 
+.languages{
+	padding: 0.5rem;
+	margin-left: 4%;	
+}
 
-/* BODY BASIC ELEMENTS */
+.languageFlag{
+	width: 32px;
+	height: 32px;
+}
+
+.logoPpal {
+	height: 40px;
+}
+
+
+
+/* FORM STRUCTURE */
 
 .container {
 	margin: auto;
@@ -105,10 +115,9 @@ header{
 }
 
 .center-block-content {
-	  margin: auto;
-	  margin-top: 5%;
-	  margin-bottom: 7%;
-	  overflow-x: auto;
+	margin: auto;
+	margin-top: 5%;
+	margin-bottom: 7%;
 }
 
 #titleView{
@@ -129,23 +138,14 @@ header{
 
 
 #group-form{
-	margin-top: 2%;
+	margin-top: 10%;
 	margin-bottom: 5%;
 }
 
 
-.font-weight-light{
-  font-size: 10px;
-  margin-left: 25%;
-}
-
-
-
 /* INPUTS */
 
-/* TYPE=TEXT*/
-
-/*STYLE FORMS ADD_EDIT_SHOWCURRENT*/
+/*STYLE INPUTS FORMS*/
 
 
 .input-container {
@@ -282,7 +282,7 @@ input:valid + label, input:focus + label, input:read-only + label {
 
 
 
-/*STYLE FORMS ADD_EDIT_SHOWCURRENT*/
+/*STYLE FORMS LOGIN*/
 
 #inputLogin{
 	width: 50%;
@@ -327,6 +327,7 @@ input:valid + label, input:focus + label, input:read-only + label {
 	border-radius:4px 0 0 4px;
 }
 
+
 #logoLogin{
 	margin:auto;
 }
@@ -337,8 +338,8 @@ input:valid + label, input:focus + label, input:read-only + label {
 }
 
 .fa-lg {
-    font-size: 1.6em;
-    line-height: 0.84em;
+  font-size: 1.6em;
+  line-height: 0.84em;
 }
 
 
@@ -441,9 +442,10 @@ input[type="checkbox"]:checked ~ label:before {
 	background-color: #337ab7;
 }
 
-/* PANEL BOTON ATRÁS + CAMPO BUSCAR*/
 
-#pnlBoxSearch {
+/* BOTON ATRÁS + CAMPO BUSCAR*/
+
+#pnlBoxSearch{
 	margin-top: 2%;
 }
 
@@ -467,26 +469,25 @@ input[type="checkbox"]:checked ~ label:before {
 /* BUTTONS */
 
 .btn-glyphicon {
-    padding:8px;
-    background:#ffffff;
-    margin-right:4px;
+  padding:8px;
+  background:#ffffff;
+  margin-right:4px;
 }
 .icon-btn {
-    padding: 1px 15px 3px 2px;
-    border-radius:50px;
+	padding: 1px 15px 3px 2px;
+  /* border-radius:50px; */
 }
 
 .btn-dark{
 	margin-top:20px;
 	margin-bottom:10px;
-	margin-right: 0%;
 	padding:8px;
 	font-size:14px;
 	background-color:#eeee;
 	color:#000;
 	border:none;
 	border-bottom:3px solid #19e6;
-	border-radius:2px;
+	border-radius:8%;
 	float:right;
 }
 
@@ -550,23 +551,15 @@ p{
 	height: 50px;
 }
 
-.languageFlag{
-	width: 32px;
-	height: 32px;
+
+
+/* PROFILE USER PHOTO */
+#imageUpload{
+  display: none;
 }
 
-.logoPpal {
-	height: 40px;
-}
-
-#imageUpload
-{
-    display: none;
-}
-
-#profilePhoto
-{
-    cursor: pointer;
+#profilePhoto{
+  cursor: pointer;
 }
 
 #profilePhoto-container {
@@ -602,8 +595,7 @@ p{
 	margin-bottom:3%;
 }
 
-#planeButtons
-{
+#planeButtons{
 	position: fixed;
 	top: 45%;
 	margin-left: 3%;
@@ -623,26 +615,11 @@ p{
 	width: 100%;
 	padding-top: 1.25rem;
 	padding-bottom: 1.25rem;
-    background-color: white;
-    color: #000;
+  background-color: white;
+  color: #000;
 	text-align: center; 
 	border-top: 2px solid black;
 	border-bottom: 2px solid black;
-}
-
-ul.social-network {
-	padding: 0;
-	text-align:center;	
-}
-
-ul.social-network li {
-	display:inline;
-	margin: 0 10px;
-	color:#000;
-}
-ul.social-network li a {	
-	color:#000;
-	
 }
 
 .copyright {
@@ -659,10 +636,10 @@ ul.social-network li a {
 
 /* USER ADD*/
 
-.function{
+/* .function{
 	display:none;
 	margin-bottom: 20px;
-}
+} */
 
 .boxx{
 	margin-bottom: 5%;
@@ -671,24 +648,20 @@ ul.social-network li a {
 }
 
 
-
  
-/* select{
-	width:100%;
-    border:2px solid #aaa;
-    border-radius:4px;
-    margin:8px 0;
-    outline:none;
-    padding:8px;
-    box-sizing:border-box;
-	transition:.3s;
-	height: 10%!important;
-  } */
+/* div input file */
 
+.buttonText {
+	font-size: 14px;
+}
 
+.form-control {
+	font-size: 15px;
+}
 
-
-
+.control-label {
+	color: #ACACAC;
+} 
 
 
 

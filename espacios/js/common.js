@@ -10,6 +10,7 @@ $(document).ready(function() {
 });
 
 
+
 function loadImage(srcImage, ctx) {
     var image = new Image();
     image.src = srcImage;

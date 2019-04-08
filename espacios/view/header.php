@@ -27,7 +27,8 @@
             <!-- Our JS -->
             <script src="../js/common.js"></script>
             <script src="../js/validates.js"></script>
-            <!-- Our CSS -->
+            <script type="text/javascript" src="../js/bootstrap-filestyle.js"> </script>
+
             <link rel="stylesheet" href="../css/style.css">
         </head>
 
@@ -75,9 +76,9 @@
                             
                         </ul>
                         <?php if(isset($_SESSION['LOGIN'])): ?>
-                            <div class="nav-item dropdown">
-                                <a id="navbarDropdown-Account" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?=$strings['My Account']?></a>	
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown-Account">
+                                                 <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?=$strings['My Account']?></a>	
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="../controller/USER_Controller.php?action=<?=$strings['Edit']?>&user=<?=$_SESSION['LOGIN']?>"><?=$strings['My Profile']?></a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="../controller/USER_Controller.php?action=<?=$strings['Logout']?>"><?=$strings['Logout']?></a>

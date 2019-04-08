@@ -51,8 +51,7 @@ class BUILDING_ADD{
 										<input type="text" id="nameBuilding" name="nameBuilding" onkeyup="checkText(this.id)" required/>
 										<label for="nameBuilding"><?= $strings['What is the identifier of this building?']?></label>
 								</div>
-
-
+								
 								<div class="input-container">
 										<span class="input-group-text fa fa-map-marker"></span>
 										<input type="text" id="addressBuilding" name="addressBuilding" onkeyup="checkText(this.id)" required/>

@@ -61,6 +61,7 @@ $strings = array(
     "Plane" => "Plane",
     "surfaceBuildingFloor" => "Sup. Construida",
     "surfaceUsefulFloor" => "Sup. Útil",
+    "Upload the floor plane" => "Seleccione el plano de la planta: ",
     "Show Spaces" => "Ver Espacios",
     "Add Floor" => "Añadir Planta",
     "Edit Floor" => "Editar Planta",
