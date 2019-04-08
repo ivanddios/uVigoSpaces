@@ -126,7 +126,7 @@ INSERT INTO FUNCTIONALITY(idFunction, nameFunction, descripFunction) VALUES
 ('2', 'BUILDING', "Actions on the set of buildings"),
 ('3', 'FLOOR', "Actions on the set of building's floor"),
 ('4', 'SPACE', "Actions on the set of floor's spaces"),
-('5', 'FUNCTIONALITY', "Actions on the set of floor's spaces"),
+('5', 'FUNCTIONALITY', "Actions on the set of functionalities"),
 ('6', 'GROUP', "Actions on the set of groups"),
 ('7', 'ACTION', "Actions on the set of actions");
 
