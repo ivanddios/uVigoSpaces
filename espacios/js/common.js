@@ -9,8 +9,6 @@ $(document).ready(function() {
     }, 4000);
 });
 
-
-
 function loadImage(srcImage, ctx) {
     var image = new Image();
     image.src = srcImage;
@@ -75,7 +73,8 @@ function isInitialPoint(position) {
 
 function drawPoint(position, ctx) {
     ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
-    ctx.strokeStyle = "#4F95EA";
+    // ctx.strokeStyle = "#4F95EA";
+    ctx.strokeStyle = 'rgb(255,20,20)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     if(storedLines.length == 1){
@@ -94,8 +93,10 @@ function drawPoint(position, ctx) {
 };
 
 function drawPolygon(polyLines, ctx) {
-    ctx.fillStyle = "rgba(143, 143, 143, 0.5)";
-    ctx.strokeStyle = "#4F95EA";
+    // ctx.fillStyle = "rgba(143, 143, 143, 0.5)";
+    ctx.fillStyle = "rgb(255,20,20,0.3)";
+    // ctx.strokeStyle = "#4F95EA";
+    ctx.strokeStyle = 'rgb(255,20,20)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(polyLines[0].x, polyLines[0].y);
@@ -238,6 +239,9 @@ function editSpace(coordsSpace, srcImage) {
     });
 
 };
+
+
+
 
 function searchInTable() {
 

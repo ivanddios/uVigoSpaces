@@ -20,7 +20,7 @@ class FLOOR_SHOW{
 						</div>
 						<div class="col-lg-12 center-block-content">
 								<div id="group-form">
-									<label><?= $strings['idBuilding']; ?></label>
+									<!-- <label><?= $strings['idBuilding']; ?></label>
 									<div class="inputWithIcon inputIconBg">
 										<input type="text" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?=$this->floor['idBuilding']?><?=$this->floor['idFloor']?>" readonly>
 										<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
@@ -48,7 +48,46 @@ class FLOOR_SHOW{
 									<div class="inputWithIcon inputIconBg">
 										<a target='_blank' href="FLOOR_Controller.php?action=<?= $strings['Show Plane']?>&building=<?= $this->floor['idBuilding']?>&floor=<?= $this->floor['idFloor']?>"><img src='<?= $this->floor['planeFloor']; ?>' class="avatarPlane"></a>
 									</div>
-									
+									 -->
+
+
+									 <div class="input-container">
+										<span class="input-group-text fa fa-lock"></span>
+										<input type="text" id="idBuilding" name="idBuilding" value="<?=$this->floor['idBuilding']?>" readonly>
+										<label for="idBuilding"><?= $strings['What is the identifier of this building?']?></label>
+									</div>
+
+									<div class="input-container">
+										<span class="input-group-text fa fa-building"></span>
+										<input type="text" id="idFloor" name="idFloor" value="<?=$this->floor['idFloor']?>" readonly>
+										<label for="idFloor"><?= $strings['What is the identifier of this floor?']?></label>
+									</div>
+								
+									<div class="input-container">
+										<span class="input-group-text fa fa-reorder"></span>
+										<input type="text" id="nameFloor" name="nameFloor" value="<?=$this->floor['nameFloor']?>" readonly>
+										<label for="nameFloor"><?= $strings['What floor is it?']?></label>
+									</div>
+
+									<div class="input-container">
+										<span class="input-group-text fa fa-area-chart"></span>
+										<input type="text" id="surfaceBuildingFloor" name="surfaceBuildingFloor" value="<?=$this->floor['surfaceBuildingFloor']?>" readonly>
+										<label for="surfaceBuildingFloor"><?= $strings['What is the constructed surface?']?></label>
+									</div>
+
+									<div class="input-container">
+										<span class="input-group-text fa fa-area-chart"></span>
+										<input type="text" id="surfaceUsefulFloor" name="surfaceUsefulFloor" value="<?=$this->floor['surfaceUsefulFloor']?>" readonly>
+										<label for="surfaceUsefulFloor"><?= $strings['What is the useful surface?']?></label>
+									</div>
+
+									<div class="input-file">
+										<label class="control-label"><?= $strings['Click to see the plane']?></label>
+										<div class="inputWithIcon inputIconBg">
+										<a target='_blank' href="FLOOR_Controller.php?action=<?= $strings['Show Plane']?>&building=<?= $this->floor['idBuilding']?>&floor=<?= $this->floor['idFloor']?>"><img src='<?= $this->floor['planeFloor']; ?>' class="avatarPlane"></a>
+									</div>
+									</div>
+								
 								</div>
 							<a href="FLOOR_Controller.php?building=<?= $this->floor['idBuilding']?>"><?= $strings["Back"] ?></a>
 						</div>

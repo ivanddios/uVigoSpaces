@@ -24,10 +24,8 @@ class SPACE_ADD{
 					<div class="col-lg-12 center-block-content">
 						<form method="POST" action="SPACE_Controller.php?action=<?= $strings['Add']?>&building=<?= $this->building?>&floor=<?= $this->floor?>" enctype="multipart/form-data" onkeyup="validateSpace()">
 							<div id="group-form">
-                                <input type="hidden" name="idBuilding" value="<?=$this->building?>" readonly>
-                                <input type="hidden" name="idFloor" value="<?=$this->floor?>" readonly>
-
-								<div class="inputWithIcon inputIconBg">
+                      
+								<!--<div class="inputWithIcon inputIconBg">
 									<input type="text" placeholder="<?= $this->building.$this->floor?>" readonly>
 									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
@@ -50,6 +48,33 @@ class SPACE_ADD{
 								<div class="inputWithIcon inputIconBg">
 									<input id="numberInventorySpace" type="text" name="numberInventorySpace" placeholder="<?= $strings['What is the number inventory?']?>" onkeyup="checkNumberInventory(this.id)">
 									<i class="fa fa-barcode fa-lg fa-fw" aria-hidden="true"></i>
+								</div> -->
+
+								<input type="hidden" name="idBuilding" value="<?=$this->building?>" readonly>
+                                <input type="hidden" name="idFloor" value="<?=$this->floor?>" readonly>
+
+								<div class="input-container">
+									<span class="input-group-text fa fa-cube"></span>
+									<input type="text" id="idSpace" name="idSpace" onkeyup="checkSpaceId(this.id)" required/>
+									<label for="idSpace"><?= $strings['What is the identifier of this space?']?></label>
+								</div>
+
+								<div class="input-container">
+									<span class="input-group-text fa fa-reorder"></span>
+									<input type="text" id="nameSpace" name="idFloor" onkeyup="checkText(this.id)" required/>
+									<label for="idFloor"><?= $strings['What space is it?']?></label>
+								</div>
+								
+								<div class="input-container">
+									<span class="input-group-text fa fa-area-chart"></span>
+									<input type="text" id="surfaceSpace" name="surfaceSpace" onkeyup="checkSurfaceSpace(this.id)"/>
+									<label for="surfaceSpace"><?= $strings['What is the surface of space?']?></label>
+								</div>
+
+								<div class="input-container">
+									<span class="input-group-text fa fa-barcode"></span>
+									<input type="text" id="numberInventorySpace" name="numberInventorySpace" onkeyup="checkNumberInventory(this.id)"/>
+									<label for="numberInventorySpace"><?= $strings['What is the number inventory?']?></label>
 								</div>
 
 							</div>	

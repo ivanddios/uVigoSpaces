@@ -158,13 +158,13 @@ header{
 	display: block;
 	position: absolute;
 	left: 10%;
+	bottom: 1%;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	width: 90%;
 	border:1px solid #aaa ;
 	border-width: 0 0 1px;
 	outline: none;
-	top: 34%;
 	background: none;
 	z-index: 1;
 	padding: 1px;
@@ -174,6 +174,7 @@ header{
 
 .input-group-text {
 	width: 8%;
+	align-content:center;
 	background-color: #aaa;
 	color: #fff;
 }
@@ -182,10 +183,10 @@ header{
 .input-container > label {
 	display: block;
 	position: absolute;
-	margin-left: 9%;
+	margin-left: 10%;
 	padding: 1px;
 	letter-spacing: 0.012em;
-	color: #ACACAC;
+	color: #636c72;
 	font-size:24px;
 	-webkit-animation-name: labelIn;
 	animation-name: labelIn;
@@ -232,16 +233,16 @@ input:valid + label, input:focus + label, input:read-only + label {
 			font-size: 1em;
 			left: 1em;
 			opacity: 0;
-			bottom: 15px; 
-			color: #6c757d;;
+			bottom: 60%; 
+			color:#636c72;
 			font-weight: 400;
   	}
    	100% {
 			font-size: 1.00em;
 			opacity: 1;
 			left: 1px;
-			bottom:15px; 
-		  color: #6c757d;
+			bottom: 60%; 
+		  color: #636c72;
 			font-weight: 400;
   	} 
   }
@@ -266,34 +267,30 @@ input:valid + label, input:focus + label, input:read-only + label {
 			font-size: 1em;
 			left: 1em;
 			opacity: 0;
-			bottom: 15px; 
-			color: #6c757d;
+			bottom: 60%; 
+			color: #636c72;
 			font-weight: 400;
 		} 
 		100% {
 			font-size: 1em;
 			opacity: 1;
 			left: 1px;
-			bottom: 15px; 
-			color: #6c757d;
+			bottom: 60%; 
+			color: #636c72;
 			font-weight: 400;
 		}
 	}
 
 
 
-/*STYLE FORMS LOGIN*/
+/*STYLE ONLYLOGIN VIEW */
 
-#inputLogin{
+#loginContainer{
 	width: 50%;
 	margin: auto;
 }
 
-.inputWithIcon{
-	position:relative;
-}
-
-.inputWithIcon > input[type=text],[type=password]{
+input#loginUsername, input#loginPassword{
   width:100%;
   border:2px solid #aaa;
   border-radius:4px;
@@ -305,11 +302,15 @@ input:valid + label, input:focus + label, input:read-only + label {
 	height: 10%!important;
 }
 
-.inputWithIcon input[type=text],[type=password]{
+
+.inputWithIcon{
+	position:relative;
+}
+
+.inputWithIcon input#loginUsername,input#loginPassword{
 	padding-left:40px;
 	margin-bottom: 5%;
 }
-
 
 .inputWithIcon i{
 	position:absolute;
@@ -345,14 +346,20 @@ input:valid + label, input:focus + label, input:read-only + label {
 
 /*PASSWORD BOX  */
 
+
+.passHelp{
+	/* margin-bottom:5% ; */
+}
+
 .passwordAlert {
 	display: none;
+	margin-bottom:8% ;
 }
 
 .passwordAlert p{
 	text-align: inherit;
 	margin:auto;
-    margin-left: 35%;
+  margin-left: 35%;
 }
 
 .valid {
@@ -559,16 +566,18 @@ p{
 }
 
 #profilePhoto{
-  cursor: pointer;
+	cursor: pointer;
+	
 }
 
 #profilePhoto-container {
-    width: 150px;
+  width: 150px;
 	height: 150px;
 	margin:auto;
 	margin-bottom: 5%;
 	overflow: hidden;
 	border-radius: 50%;	
+	margin-bottom: 10%;
 }
 
 .extra {

@@ -7,6 +7,7 @@
  * Version 2.1.0
  * Licensed under the MIT license.
  */
+
 (function($) {
 	"use strict";
 
@@ -135,6 +136,15 @@
 				return this.options.text;
 			}
 		},
+
+		// id : function(value) {
+		// 	if (value !== undefined) {
+		// 		this.options.id = value;
+		// 		this.$elementFilestyle.find('input').attr('id', value);
+		// 	} else {
+		// 		return this.options.id;
+		// 	}
+		// },
 		
 		btnClass : function(value) {
 			if (value !== undefined) {
@@ -181,7 +191,7 @@
 
 		htmlInput : function() {
 			if (this.options.input) {
-				return '<input type="text" class="form-control ' + (this.options.size == 'nr' ? '' : 'form-control-' + this.options.size) + '" placeholder="'+ this.options.placeholder +'" disabled> ';
+				return '<input type="text" id="'+ this.options.id +'" name="'+ this.options.name +'" class="form-control ' + (this.options.size == 'md' ? '' : 'form-control-' + this.options.size) + '" placeholder="'+ this.options.placeholder +'" disabled> ';
 			} else {
 				return '';
 			}
@@ -382,6 +392,8 @@
 	};
 
 	$.fn.filestyle.defaults = {
+		'id' : 'planeFloor',
+		'name' : 'planeFloor',
 		'text' : '',
 		'htmlIcon' : '⇧',
 		'btnClass' : 'btn-secondary',
@@ -421,3 +433,10 @@
 		});
 	});
 })(window.jQuery);
+
+
+$(window).on('load', function() {
+    if(document.getElementById("planeFloorOriginal")){
+		$("#planeFloor").val(document.getElementById("planeFloorOriginal").value);
+	}
+});

@@ -48,14 +48,14 @@ class Login{
                                 </div>
                                 <div class="col-lg-12 center-block">
                                     <form method="POST" action="USER_Controller.php?action=Login">
-                                        <div id="inputLogin">
+                                        <div id="loginContainer">
                                             <div class="inputWithIcon inputIconBg">
-                                                <input type="text" name="username" placeholder="Username" required>
+                                                <input id="loginUsername" type="text" name="username" placeholder="Username" required>
                                                 <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
                                             </div>
 
                                             <div class="inputWithIcon inputIconBg">
-                                                <input type="password" name="passwd" placeholder="Password" required>
+                                                <input id="loginPassword" type="password" name="passwd" placeholder="Password" required>
                                                 <i class="fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
                                                 <?php if(isset($this->flashMessageDanger)): ?> 
                                                     <div class="alert alert-danger" role="alert">
