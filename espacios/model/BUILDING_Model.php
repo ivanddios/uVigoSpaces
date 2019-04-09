@@ -30,7 +30,7 @@ public function getNameBuilding(){
 
 
 function showAllBuilding() {
-    $sql = "SELECT * FROM building";
+    $sql = "SELECT * FROM `SM_BUILDING`";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -45,7 +45,7 @@ function showAllBuilding() {
 }
 
 function findBuilding() {
-	$sql = "SELECT * FROM building WHERE idBuilding = '$this->idBuilding'";
+	$sql = "SELECT * FROM `SM_BUILDING` WHERE sm_idBuilding = '$this->idBuilding'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows == 1) {
 		return true;
@@ -55,7 +55,7 @@ function findBuilding() {
 }
 
 function addBuilding() {
-    $sql = "INSERT INTO building (idBuilding, nameBuilding, addressBuilding, phoneBuilding) VALUES ('$this->idBuilding', '$this->nameBuilding', '$this->addressBuilding', '$this->phoneBuilding')";
+    $sql = "INSERT INTO `SM_BUILDING` (sm_idBuilding, sm_nameBuilding, sm_addressBuilding, sm_phoneBuilding) VALUES ('$this->idBuilding', '$this->nameBuilding', '$this->addressBuilding', '$this->phoneBuilding')";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -65,7 +65,7 @@ function addBuilding() {
 
 
 function deleteBuilding() {
-    $sql = "DELETE FROM building WHERE idBuilding ='$this->idBuilding'";
+    $sql = "DELETE FROM `SM_BUILDING` WHERE sm_idBuilding ='$this->idBuilding'";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -74,7 +74,7 @@ function deleteBuilding() {
 }
 
 function fillInBuilding() {
-    $sql = "SELECT * FROM building WHERE idBuilding = '$this->idBuilding'";
+    $sql = "SELECT * FROM `SM_BUILDING` WHERE sm_idBuilding = '$this->idBuilding'";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -84,7 +84,7 @@ function fillInBuilding() {
 }
 
 function updateBuilding($idBuilding) {
-    $sql = "UPDATE building SET idBuilding = '$this->idBuilding', nameBuilding = '$this->nameBuilding', addressBuilding = '$this->addressBuilding', phoneBuilding = '$this->phoneBuilding' WHERE idBuilding = '$idBuilding'";
+    $sql = "UPDATE `SM_BUILDING` SET sm_idBuilding = '$this->idBuilding', sm_nameBuilding = '$this->nameBuilding', sm_addressBuilding = '$this->addressBuilding', sm_phoneBuilding = '$this->phoneBuilding' WHERE sm_idBuilding = '$idBuilding'";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -94,14 +94,14 @@ function updateBuilding($idBuilding) {
 
 
 function findBuildingName() {
-    $sql = "SELECT nameBuilding FROM building WHERE idBuilding='$this->idBuilding'";
+    $sql = "SELECT sm_nameBuilding FROM `SM_BUILDING` WHERE sm_idBuilding='$this->idBuilding'";
     $result = $this->mysqli->query($sql)->fetch_array();
-    return $result['nameBuilding'];
+    return $result['sm_nameBuilding'];
 }
 
 
 public function existsBuilding($idBuilding) {
-	$sql = "SELECT * FROM building WHERE idBuilding = '$idBuilding'";
+	$sql = "SELECT * FROM `SM_BUILDING` WHERE sm_idBuilding = '$idBuilding'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows == 1) {
 		return true;

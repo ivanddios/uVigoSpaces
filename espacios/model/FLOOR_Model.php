@@ -68,7 +68,7 @@ public function setSurfaceUsefulFloor($surfaceUsefulFloor) {
 
 
 function findFloor() {
-    $sql = "SELECT * FROM floor WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'";
+    $sql = "SELECT * FROM `SM_FLOOR` WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -78,7 +78,7 @@ function findFloor() {
 }
 
 function findInfoFloor() {
-    $sql = "SELECT building.nameBuilding, floor.nameFloor, space.nameSpace, space.coordsPlane FROM building, floor, space WHERE  building.idBuilding = floor.idBuilding AND floor.idFloor = space.idFloor AND building.idBuilding = '$this->idBuilding' AND floor.idFloor = '$this->idFloor'";
+    $sql = "SELECT SM_BUILDING.sm_nameBuilding, SM_FLOOR.sm_nameFloor, SM_SPACE.sm_nameSpace, SM_SPACE.sm_coordsPlane FROM `SM_BUILDING`, `SM_FLOOR`, `SM_SPACE` WHERE  SM_BUILDING.sm_idBuilding = SM_FLOOR.sm_idBuilding AND SM_FLOOR.sm_idFloor = SM_SPACE.sm_idFloor AND SM_BUILDING.sm_idBuilding = '$this->idBuilding' AND SM_FLOOR.sm_idFloor = '$this->idFloor'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -88,22 +88,22 @@ function findInfoFloor() {
 }
 
 function findFloorName() {
-    $sql = "SELECT nameFloor FROM floor WHERE idBuilding='$this->idBuilding' AND idFloor = '$this->idFloor'";
+    $sql = "SELECT sm_nameFloor FROM `SM_FLOOR` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
     $result = $this->mysqli->query($sql)->fetch_array();
-    return $result['nameFloor'];
+    return $result['sm_nameFloor'];
 }
 
 function findLinkPlane($idBuilding, $idFloor) {
-    $sql = "SELECT planeFloor FROM floor WHERE idBuilding='$idBuilding' AND idFloor = '$idFloor'";
+    $sql = "SELECT sm_planeFloor FROM `SM_FLOOR` WHERE sm_idBuilding='$idBuilding' AND sm_idFloor = '$idFloor'";
     $result = $this->mysqli->query($sql)->fetch_array();
-    return $result['planeFloor'];
+    return $result['sm_planeFloor'];
 }
 
 
 
 function addFloor() {
     $planeFloorBD =$this->dirPhoto.$this->getPlaneFloor('name');
-    $sql = "INSERT INTO floor (idBuilding, idFloor, nameFloor, planeFloor, surfaceBuildingFloor, surfaceUsefulFloor) VALUES ('$this->idBuilding', '$this->idFloor', '$this->nameFloor', '$planeFloorBD', $this->surfaceBuildingFloor, $this->surfaceUsefulFloor)";
+    $sql = "INSERT INTO `SM_FLOOR` (sm_idBuilding, sm_idFloor, sm_nameFloor, sm_planeFloor, sm_surfaceBuildingFloor, sm_surfaceUsefulFloor) VALUES ('$this->idBuilding', '$this->idFloor', '$this->nameFloor', '$planeFloorBD', $this->surfaceBuildingFloor, $this->surfaceUsefulFloor)";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -114,10 +114,10 @@ function addFloor() {
 
 function updateFloor($idBuilding, $idFloor) {
     if($this->getPlaneFloor('name') == ''){
-        $sql = "UPDATE FLOOR SET idFloor = '$this->idFloor', nameFloor = '$this->nameFloor', surfaceBuildingFloor = '$this->surfaceBuildingFloor', surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor'";
+        $sql = "UPDATE `SM_FLOOR` SET sm_idFloor = '$this->idFloor', sm_nameFloor = '$this->nameFloor', sm_surfaceBuildingFloor = '$this->surfaceBuildingFloor', sm_surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE sm_idBuilding = '$idBuilding' AND sm_idFloor = '$idFloor'";
     } else {
         $planeFloorBD =$this->dirPhoto.$this->getPlaneFloor('name');
-        $sql = "UPDATE FLOOR SET idFloor = '$this->idFloor', nameFloor = '$this->nameFloor', planeFloor = '$planeFloorBD', surfaceBuildingFloor = '$this->surfaceBuildingFloor', surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor'";
+        $sql = "UPDATE `SM_FLOOR` SET sm_idFloor = '$this->idFloor', sm_nameFloor = '$this->nameFloor', sm_planeFloor = '$planeFloorBD', sm_surfaceBuildingFloor = '$this->surfaceBuildingFloor', sm_surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE sm_idBuilding = '$idBuilding' AND sm_idFloor = '$idFloor'";
         $this->updateDirPhoto();
         unlink($this->findLinkPlane());
     }
@@ -130,7 +130,7 @@ function updateFloor($idBuilding, $idFloor) {
 }
 
 function deleteFloor() {
-    $sql = "DELETE FROM floor WHERE idBuilding ='$this->idBuilding' AND idFloor = '$this->idFloor'";
+    $sql = "DELETE FROM `SM_FLOOR` WHERE sm_idBuilding ='$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -140,7 +140,7 @@ function deleteFloor() {
 
 
 function showAllFloors() {
-    $sql = "SELECT * FROM floor WHERE idBuilding = '$this->idBuilding'";
+    $sql = "SELECT * FROM `SM_FLOOR` WHERE sm_idBuilding = '$this->idBuilding'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -157,7 +157,7 @@ function showAllFloors() {
 
 
 public function existsFloor() {
-	$sql = "SELECT * FROM floor WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'";
+	$sql = "SELECT * FROM `SM_FLOOR` WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows == 1) {
 		return true;
@@ -228,7 +228,7 @@ public function checkIsValidForAdd() {
 
 
 public function existsFloorToEdit($idFloor) {
-	$sql = "SELECT * FROM floor WHERE (idFloor, idBuilding) NOT IN (SELECT idFloor, idBuilding FROM floor WHERE idBuilding='$this->idBuilding' AND idFloor='$idFloor') AND idBuilding='$this->idBuilding' AND idFloor='$this->idFloor'";
+	$sql = "SELECT * FROM `SM_FLOOR` WHERE (sm_idFloor, sm_idBuilding) NOT IN (SELECT sm_idFloor, sm_idBuilding FROM `SM_FLOOR` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor='$idFloor') AND sm_idBuilding='$this->idBuilding' AND sm_idFloor='$this->idFloor'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows >= 1) {
 		return true;

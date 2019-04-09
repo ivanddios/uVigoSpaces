@@ -58,7 +58,7 @@ public function setNumberInventorySpace($numberInventorySpace) {
 
 
 function showAllSpaces() {
-    $sql = "SELECT * FROM space WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'" ;
+    $sql = "SELECT * FROM `SM_SPACE` WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'" ;
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -73,7 +73,7 @@ function showAllSpaces() {
 }
 
 function findSpace() {
-    $sql = "SELECT * FROM space WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
+    $sql = "SELECT * FROM `SM_SPACE` WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -84,7 +84,7 @@ function findSpace() {
 
 
 function findInfoSpace() {
-    $sql = "SELECT building.nameBuilding, floor.nameFloor, space.nameSpace, space.coordsPlane FROM building, floor, space WHERE building.idBuilding = floor.idBuilding AND floor.idFloor = space.idFloor AND building.idBuilding = '$this->idBuilding' AND floor.idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
+    $sql = "SELECT SM_BUILDING.sm_nameBuilding, SM_FLOOR.sd_nameFloor, SM_SPACE.sm_nameSpace, SM_SPACE.sm_coordsPlane FROM `SM_BUILDING`, `SM_FLOOR`, `SM_SPACE` WHERE SM_BUILDING.sm_idBuilding = SM_FLOOR.sd_idBuilding AND SM_FLOOR.sm_idFloor = SM_SPACE.sm_idFloor AND SM_BUILDING.sm_idBuilding = '$this->idBuilding' AND SM_FLOOR.sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -94,15 +94,15 @@ function findInfoSpace() {
 }
 
 function findNameSpace() {
-    $sql = "SELECT nameSpace FROM space WHERE idBuilding='$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
+    $sql = "SELECT sm_nameSpace FROM `SM_SPACE` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
     $result = $this->mysqli->query($sql)->fetch_array();
-    return $result['nameSpace'];
+    return $result['sm_nameSpace'];
 }
 
 function findCoordsSpace() {
-    $sql = "SELECT coordsPlane FROM space WHERE idBuilding='$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
+    $sql = "SELECT sm_coordsPlane FROM `SM_SPACE` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
     $result = $this->mysqli->query($sql)->fetch_array();
-    return $result['coordsPlane'];
+    return $result['sm_coordsPlane'];
 }
 
 
@@ -111,7 +111,7 @@ function findCoordsSpace() {
 
 
 function addSpace() {
-    $sql = "INSERT INTO space (idBuilding, idFloor, idSpace, nameSpace, surfaceSpace, numberInventorySpace) VALUES ('$this->idBuilding', '$this->idFloor', '$this->idSpace', '$this->nameSpace', $this->surfaceSpace, '$this->numberInventorySpace')";
+    $sql = "INSERT INTO `SM_SPACE` (sm_idBuilding, sm_idFloor, sm_idSpace, sm_nameSpace, sm_surfaceSpace, sm_numberInventorySpace) VALUES ('$this->idBuilding', '$this->idFloor', '$this->idSpace', '$this->nameSpace', $this->surfaceSpace, '$this->numberInventorySpace')";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -121,7 +121,7 @@ function addSpace() {
 
 
 function addCoords() {
-    $sql = "UPDATE space SET coordsPlane = '$this->coordsPlane' WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
+    $sql = "UPDATE `SM_SPACE` SET sm_coordsPlane = '$this->coordsPlane' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -131,7 +131,7 @@ function addCoords() {
 
 
 function updateSpace($idBuilding, $idFloor, $idSpace) {
-    $sql = "UPDATE space SET idSpace = '$this->idSpace', nameSpace = '$this->nameSpace', surfaceSpace = $this->surfaceSpace, numberInventorySpace = '$this->numberInventorySpace' WHERE idBuilding = '$idBuilding' AND idFloor = '$idFloor' AND idSpace = '$idSpace'";
+    $sql = "UPDATE `SM_SPACE` SET sm_idSpace = '$this->idSpace', nameSpace = '$this->nameSpace', sm_surfaceSpace = $this->surfaceSpace, sm_numberInventorySpace = '$this->numberInventorySpace' WHERE sm_idBuilding = '$idBuilding' AND sm_idFloor = '$idFloor' AND sm_idSpace = '$idSpace'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -140,7 +140,7 @@ function updateSpace($idBuilding, $idFloor, $idSpace) {
 }
 
 function deleteSpace() {
-    $sql = "DELETE FROM space WHERE idBuilding ='$this->idBuilding' AND idFloor = '$this->idFloor' AND idSpace = '$this->idSpace'";
+    $sql = "DELETE FROM `SM_SPACE` WHERE sm_idBuilding ='$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
     if (!($resultado = $this->mysqli->query($sql))) {
         return 'Error in the query on the database';
     } else {
@@ -150,7 +150,7 @@ function deleteSpace() {
 
 
 public function existsSpace() {
-	$sql = "SELECT * FROM space WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor' AND idSPace = '$this->idSpace'";
+	$sql = "SELECT * FROM `SM_SPACE` WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSPace = '$this->idSpace'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows == 1) {
 		return true;
@@ -160,9 +160,9 @@ public function existsSpace() {
 }
 
 public function existsSpaceToEdit($idSpace) {
-	$sql = "SELECT * FROM space WHERE (idBuilding, idFloor, idSpace) 
-            NOT IN (SELECT idBuilding, idFloor, idSpace FROM space WHERE idBuilding='$this->idBuilding' AND idFloor='$this->idFloor' AND idSpace='$idSpace') 
-            AND idBuilding='$this->idBuilding' AND idFloor='$this->idFloor' AND idSpace='$this->idSpace'";
+	$sql = "SELECT * FROM `SM_SPACE` WHERE (sm_idBuilding, sm_idFloor, sm_idSpace) 
+            NOT IN (SELECT sm_idBuilding, sm_idFloor, sm_idSpace FROM `SM_SPACE` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor='$this->idFloor' AND sm_idSpace='$idSpace') 
+            AND sm_idBuilding='$this->idBuilding' AND sm_idFloor='$this->idFloor' AND sm_idSpace='$this->idSpace'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows >= 1) {
 		return true;
@@ -173,9 +173,9 @@ public function existsSpaceToEdit($idSpace) {
 
 
 public function findPlane() {
-	$sql = "SELECT planeFloor FROM floor WHERE idBuilding = '$this->idBuilding' AND idFloor = '$this->idFloor'";
+	$sql = "SELECT sm_planeFloor FROM `SM_FLOOR` WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
 	$result = $this->mysqli->query($sql)->fetch_array();
-    return $result['planeFloor'];
+    return $result['sm_planeFloor'];
 }
 
 

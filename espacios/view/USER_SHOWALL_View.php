@@ -13,7 +13,7 @@ class USER_SHOWALL{
         
         include 'header.php';
         $this->view->setElement("%TITLE%", $strings["Users"]); 
-        $listTitles = array('photo', 'username', 'name', 'surname', 'dni', 'email');?>
+        $listTitles = array('sm_photo', 'sm_username', 'sm_name', 'sm_surname', 'sm_dni', 'sm_email');?>
 
         <div class="container">
             <div class="row center-row">
@@ -28,7 +28,7 @@ class USER_SHOWALL{
                         <thead>
                             <tr>
                                 <?php foreach ($listTitles as $title): 
-                                    if($title == "photo"): ?>
+                                    if($title == "sm_photo"): ?>
                                         <th scope="col">
                                     <?php else: ?>
                                         <th scope="col"><?=$strings[$title]?></th>

@@ -13,7 +13,7 @@ class FLOOR_SHOWALL{
     function render() {
         include 'header.php';
         $this->view->setElement("%TITLE%", $strings["Show Plane"]);
-        $listTitles = array('idBuilding', 'nameFloor', 'planeFloor', 'surfaceBuildingFloor', 'surfaceUsefulFloor'); ?>
+        $listTitles = array('sm_idBuilding', 'sm_nameFloor', 'sm_planeFloor', 'sm_surfaceBuildingFloor', 'sm_surfaceUsefulFloor'); ?>
 
         <div class="container">
             <div class="row center-row">
@@ -51,15 +51,15 @@ class FLOOR_SHOWALL{
                                         for ($i = 0; $i < count($listTitles); $i++):
                                             if ($key === $listTitles[$i]): ?>
                                                 <td>
-                                                    <?php if ($key === 'idBuilding'): ?>
-                                                        <a title="<?= $strings['Show']?>" href='FLOOR_Controller.php?action=<?= $strings['Show']?>&building=<?= $this->floors[$j]['idBuilding']?>&floor=<?= $this->floors[$j]['idFloor']?>'> <?= $this->floors[$j]['idBuilding'].$this->floors[$j]['idFloor']?></a> 
-                                                    <?php elseif($key === 'planeFloor'): ?>
+                                                    <?php if ($key === 'sm_idBuilding'): ?>
+                                                        <a title="<?= $strings['Show']?>" href='FLOOR_Controller.php?action=<?= $strings['Show']?>&building=<?= $this->floors[$j]['sm_idBuilding']?>&floor=<?= $this->floors[$j]['sm_idFloor']?>'> <?= $this->floors[$j]['sm_idBuilding'].$this->floors[$j]['sm_idFloor']?></a> 
+                                                    <?php elseif($key === 'sm_planeFloor'): ?>
                                                         <?php if($value === ''): ?>
                                                             <img src="../img/noPlane.png" width="25px" height="25px">
                                                         <?php else: ?>
-                                                            <a href="<?= $this->floors[$j]['planeFloor']?>" target="_blank"><img src="<?= $this->floors[$j]['planeFloor']?>" alt="plane" class="miniatureTable"></a>
+                                                            <a href="<?= $this->floors[$j]['sm_planeFloor']?>" target="_blank"><img src="<?= $this->floors[$j]['sm_planeFloor']?>" alt="plane" class="miniatureTable"></a>
                                                         <?php endif; ?>   
-                                                    <?php elseif($key === 'surfaceBuildingFloor' || $key === 'surfaceUsefulFloor'): ?>
+                                                    <?php elseif($key === 'sm_surfaceBuildingFloor' || $key === 'sm_surfaceUsefulFloor'): ?>
                                                         <?=$value . ' m²'?>
                                                     <?php else:
                                                         echo $value;
@@ -69,28 +69,28 @@ class FLOOR_SHOWALL{
                                         endfor;
                                     endforeach; ?>
                                     <td>
-                                        <a href="SPACE_Controller.php?building=<?= $this->floors[$j]['idBuilding']?>&floor=<?= $this->floors[$j]['idFloor']?>">
+                                        <a href="SPACE_Controller.php?building=<?= $this->floors[$j]['sm_idBuilding']?>&floor=<?= $this->floors[$j]['sm_idFloor']?>">
                                             <span title="<?= $strings['Show Space']?>" class="btn btn-success btn-sm fa fa-cube"></span>
                                         </a>
                                         <?php if(checkRol('EDIT', 'FLOOR')): ?>
-                                            <a href="FLOOR_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->floors[$j]['idBuilding']?>&floor=<?= $this->floors[$j]['idFloor']?>">
+                                            <a href="FLOOR_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->floors[$j]['sm_idBuilding']?>&floor=<?= $this->floors[$j]['sm_idFloor']?>">
                                                 <span title="<?= $strings['Edit Floor']?>" class="btn btn-primary btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
                                         <?php if(checkRol('DELETE', 'FLOOR')): ?>
-                                            <i title="<?= $strings['Delete Floor']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?=$this->floors[$j]['idFloor']?>"></i>
-                                            <div id="item-<?=$this->floors[$j]['idFloor']?>" class="modal fade"  tabindex="-1" role="dialog" aria-hidden="true">
+                                            <i title="<?= $strings['Delete Floor']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?=$this->floors[$j]['sm_idFloor']?>"></i>
+                                            <div id="item-<?=$this->floors[$j]['sm_idFloor']?>" class="modal fade"  tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <?= $strings["Attention"]?>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <?= sprintf($strings["Are you sure you want to delete the floor \"%s\"?"], $this->floors[$j]['nameFloor'])?><br><br>
+                                                            <?= sprintf($strings["Are you sure you want to delete the floor \"%s\"?"], $this->floors[$j]['sm_nameFloor'])?><br><br>
                                                             <b><strong><?= $strings["The information that this floor has will be lost"]?></strong></b>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <form method="POST" action="FLOOR_Controller.php?action=<?= htmlentities($strings['Delete'])?>&building=<?= htmlentities($this->floors[$j]['idBuilding'])?>&floor=<?= $this->floors[$j]['idFloor']?>">
+                                                            <form method="POST" action="FLOOR_Controller.php?action=<?= htmlentities($strings['Delete'])?>&building=<?= htmlentities($this->floors[$j]['sm_idBuilding'])?>&floor=<?= $this->floors[$j]['sm_idFloor']?>">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
                                                                 <button type="submit" name="submit" class="btn btn-success success"><?= $strings["Ok"]?></button> 
                                                             </form>

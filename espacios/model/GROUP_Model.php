@@ -24,7 +24,7 @@ public function getNameGroup(){
 
 
 function showAllGroups() {
-    $sql = "SELECT * FROM `group`";
+    $sql = "SELECT * FROM `SM_GROUP`";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -41,7 +41,7 @@ function showAllGroups() {
 
 
 function findGroup() {
-	$sql = "SELECT * FROM `group` WHERE idGroup = '$this->idGroup'";
+	$sql = "SELECT * FROM `SM_GROUP` WHERE sm_idGroup = '$this->idGroup'";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -53,7 +53,7 @@ function findGroup() {
 
 function addGroup($permissions) {
 
-    $sql = "INSERT INTO `group` (nameGroup, descripGroup) VALUES ('$this->nameGroup', '$this->descripGroup')";
+    $sql = "INSERT INTO `SM_GROUP` (sm_nameGroup, sm_descripGroup) VALUES ('$this->nameGroup', '$this->descripGroup')";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -68,7 +68,7 @@ function addGroup($permissions) {
 function addPermission($idGroup, $permissions) {
 
     foreach($permissions as $permission){
-        $sql = "INSERT INTO permission (idGroup, idFunction, idAction) VALUES ('$idGroup', '$permission->idFunction', '$permission->idAction')";
+        $sql = "INSERT INTO `SM_PERMISSION` (sm_idGroup, sm_idFunction, sm_idAction) VALUES ('$idGroup', '$permission->idFunction', '$permission->idAction')";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
         }
@@ -78,7 +78,7 @@ function addPermission($idGroup, $permissions) {
 
 
 function deleteGroup() {
-    $sql = "DELETE FROM `group` WHERE idGroup ='$this->idGroup'";
+    $sql = "DELETE FROM `SM_GROUP` WHERE sm_idGroup ='$this->idGroup'";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -88,7 +88,7 @@ function deleteGroup() {
 
 
 function updateGroup() {
-    $sql = "UPDATE `group` SET nameGroup = '$this->nameGroup', descripGroup = '$this->descripGroup' WHERE idGroup = '$this->idGroup'";
+    $sql = "UPDATE `SM_GROUP` SET sm_nameGroup = '$this->nameGroup', sm_descripGroup = '$this->descripGroup' WHERE sm_idGroup = '$this->idGroup'";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -98,7 +98,7 @@ function updateGroup() {
 
 
 public function existsGroup() {
-	$sql = "SELECT * FROM `group` WHERE idGroup = '$this->idGroup'";
+	$sql = "SELECT * FROM `SM_GROUP` WHERE sm_idGroup = '$this->idGroup'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows == 1) {
 		return true;

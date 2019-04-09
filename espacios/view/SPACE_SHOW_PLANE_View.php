@@ -16,8 +16,8 @@ class SPACE_SHOW_PLANE{
 			$this->view->setElement("%TITLE%", $strings["ViewSpace"]); ?>
 
 			<div id="titleView">
-				<h3><?= $this->space['nameBuilding'];?><h3>
-				<h4><?= $this->space['nameFloor'];?> ~ <?= $this->space['nameSpace'];?>
+				<h3><?= $this->space['sm_nameBuilding'];?><h3>
+				<h4><?= $this->space['sm_nameFloor'];?> ~ <?= $this->space['sm_nameSpace'];?>
 				<canvas id="canvas"></canvas>		 
 			</div>	
 			<?php

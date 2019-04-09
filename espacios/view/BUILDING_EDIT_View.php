@@ -20,7 +20,7 @@ class BUILDING_EDIT{
 							<?=htmlentities($strings["Do you want to change something?"])?>
 						</div>
 						<div class="col-lg-12 center-block-content">
-							<form method="POST" action="BUILDING_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->building['idBuilding']?>" onkeyup="validateBuilding();">
+							<form method="POST" action="BUILDING_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->building['sm_idBuilding']?>" onkeyup="validateBuilding();">
 								<div id="group-form">
 									<!-- <div class="inputWithIcon inputIconBg">
 										<input type="text" id="idBuilding" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?=$this->building['idBuilding']?>" readonly>
@@ -45,25 +45,25 @@ class BUILDING_EDIT{
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-lock"></span>
-										<input type="text" id="idBuilding" name="idBuilding" value="<?=$this->building['idBuilding']?>" readonly/>
+										<input type="text" id="idBuilding" name="idBuilding" value="<?=$this->building['sm_idBuilding']?>" readonly/>
 										<label for="idBuilding"><?= $strings['What is the identifier of this building?']?></label>
 									</div>
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-building"></span>
-										<input type="text" id="nameBuilding" name="nameBuilding" onkeyup="checkText(this.id)" value="<?=$this->building['nameBuilding']?>" required/>
+										<input type="text" id="nameBuilding" name="nameBuilding" onkeyup="checkText(this.id)" value="<?=$this->building['sm_nameBuilding']?>" required/>
 										<label for="nameBuilding"><?= $strings['What is the identifier of this building?']?></label>
 									</div>
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-map-marker"></span>
-										<input type="text" id="addressBuilding" name="addressBuilding" onkeyup="checkText(this.id)" value="<?=$this->building['addressBuilding']?>" required/>
+										<input type="text" id="addressBuilding" name="addressBuilding" onkeyup="checkText(this.id)" value="<?=$this->building['sm_addressBuilding']?>" required/>
 										<label for="addressBuilding"><?= $strings['What is your postal address?']?></label>
 									</div>
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-phone"></span>
-										<input type="text" id="phoneBuilding" name="phoneBuilding" onkeyup="checkNumPhone(this.id)" value="<?=$this->building['phoneBuilding']?>" required/>
+										<input type="text" id="phoneBuilding" name="phoneBuilding" onkeyup="checkNumPhone(this.id)" value="<?=$this->building['sm_phoneBuilding']?>" required/>
 										<label for="phoneBuilding"><?= $strings['What is your phone?']?></label>
 									</div>
 

@@ -24,7 +24,7 @@ public function getNameAction(){
 
 
 function showAllActions() {
-    $sql = "SELECT * FROM action";
+    $sql = "SELECT * FROM `SM_ACTION`";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -41,7 +41,7 @@ function showAllActions() {
 
 
 function findAction() {
-	$sql = "SELECT * FROM action WHERE idAction = '$this->idAction'";
+	$sql = "SELECT * FROM `SM_ACTION` WHERE sm_idAction = '$this->idAction'";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -51,7 +51,7 @@ function findAction() {
 }
 
 function findNameAction() {
-	$sql = "SELECT nameAction FROM action WHERE idAction = '$this->idAction'";
+	$sql = "SELECT sm_nameAction FROM `SM_ACTION` WHERE sm_idAction = '$this->idAction'";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -61,7 +61,7 @@ function findNameAction() {
 }
 
 function addAction() {
-    $sql = "INSERT INTO action (nameAction, descripAction) VALUES ('$this->nameAction', '$this->descripAction')";
+    $sql = "INSERT INTO `SM_ACTION` (sm_nameAction, sm_descripAction) VALUES ('$this->nameAction', '$this->descripAction')";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -72,7 +72,7 @@ function addAction() {
 
 
 function deleteAction() {
-    $sql = "DELETE FROM action WHERE idAction ='$this->idAction'";
+    $sql = "DELETE FROM `SM_ACTION` WHERE sm_idAction ='$this->idAction'";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -82,7 +82,7 @@ function deleteAction() {
 
 
 function updateAction() {
-    $sql = "UPDATE action SET nameAction = '$this->nameAction', descripAction = '$this->descripAction' WHERE idAction = '$this->idAction'";
+    $sql = "UPDATE `SM_ACTION` SET sm_nameAction = '$this->nameAction', sm_descripAction = '$this->descripAction' WHERE sm_idAction = '$this->idAction'";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -92,7 +92,7 @@ function updateAction() {
 
 
 public function existsAction() {
-	$sql = "SELECT * FROM action WHERE idAction = '$this->idAction'";
+	$sql = "SELECT * FROM `SM_ACTION` WHERE sm_idAction = '$this->idAction'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows == 1) {
 		return true;

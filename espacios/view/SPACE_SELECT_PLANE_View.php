@@ -18,10 +18,10 @@ class SPACE_SELECT_PLANE{
 			<div id="titleView">
 				<?=htmlentities($strings["Select the space in the plane"])?>
 				<canvas id="canvas"></canvas>	
-				<form method="POST" action="SPACE_Controller.php?action=<?= $strings['Plane']?>&building=<?= $this->space['idBuilding']?>&floor=<?= $this->space['idFloor']?>&space=<?= $this->space['idSpace']?>">
-					<input  type="hidden" name="idBuilding" value="<?=$this->space['idBuilding']?>" readonly>
-					<input  type="hidden"name="idFloor" value="<?=$this->space['idFloor']?>" readonly>
-					<input  type="hidden" name="idSpace" value="<?=$this->space['idSpace']?>" readonly>
+				<form method="POST" action="SPACE_Controller.php?action=<?= $strings['Plane']?>&building=<?= $this->space['sm_idBuilding']?>&floor=<?= $this->space['sm_idFloor']?>&space=<?= $this->space['sm_idSpace']?>">
+					<input  type="hidden" name="idBuilding" value="<?=$this->space['sm_idBuilding']?>" readonly>
+					<input  type="hidden"name="idFloor" value="<?=$this->space['sm_idFloor']?>" readonly>
+					<input  type="hidden" name="idSpace" value="<?=$this->space['sm_idSpace']?>" readonly>
 					<input  type="hidden" id="coordsSpace" name="coordsSpace">
 					<div id="planeButtons">
 						<li>

@@ -18,7 +18,7 @@ class SPACE_SHOW{
 			<div class="row center-row">
 				<div class="col-lg-6 center-block">
                 <div id="titleView">
-						<?=$this->space['nameSpace']?>
+						<?=$this->space['sm_nameSpace']?>
 					</div>
 					<div class="col-lg-12 center-block-content">
             <div id="group-form">
@@ -50,30 +50,30 @@ class SPACE_SHOW{
 
 								<div class="input-container">
 									<span class="input-group-text fa fa-cube"></span>
-									<input type="text" id="idSpace" name="idSpace" value="<?=$this->space['idSpace']?>" readonly>
+									<input type="text" id="idSpace" name="idSpace" value="<?=$this->space['sm_idSpace']?>" readonly>
 									<label for="idSpace"><?= $strings['What is the identifier of this space?']?></label>
 								</div>
 
 								<div class="input-container">
 									<span class="input-group-text fa fa-reorder"></span>
-									<input type="text" id="nameSpace" name="idFloor" value="<?=$this->space['nameSpace']?>" readonly>
+									<input type="text" id="nameSpace" name="idFloor" value="<?=$this->space['sm_nameSpace']?>" readonly>
 									<label for="idFloor"><?= $strings['What space is it?']?></label>
 								</div>
 									
 								<div class="input-container">
 									<span class="input-group-text fa fa-area-chart"></span>
-									<input type="text" id="surfaceSpace" name="surfaceSpace" value="<?=$this->space['surfaceSpace']?>" readonly>
+									<input type="text" id="surfaceSpace" name="surfaceSpace" value="<?=$this->space['sm_surfaceSpace']?>" readonly>
 									<label for="surfaceSpace"><?= $strings['What is the surface of space?']?></label>
 								</div>
 
 								<div class="input-container">
 									<span class="input-group-text fa fa-barcode"></span>
-									<input type="text" id="numberInventorySpace" name="numberInventorySpace" value="<?=$this->space['numberInventorySpace']?>" readonly>
+									<input type="text" id="numberInventorySpace" name="numberInventorySpace" value="<?=$this->space['sm_numberInventorySpace']?>" readonly>
 									<label for="numberInventorySpace"><?= $strings['What is the number inventory?']?></label>
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<a href="SPACE_Controller.php?action=<?= $strings['EditSpacePlane']?>&building=<?= $this->space['idBuilding']?>&floor=<?= $this->space['idFloor']?>&space=<?= $this->space['idSpace']?>"><img src='<?= $this->plane; ?>' class="avatarPlane" onchange="validateUpdloadFile(this.id)"></a>
+									<a href="SPACE_Controller.php?action=<?= $strings['EditSpacePlane']?>&building=<?= $this->space['sm_idBuilding']?>&floor=<?= $this->space['sm_idFloor']?>&space=<?= $this->space['sm_idSpace']?>"><img src='<?= $this->plane; ?>' class="avatarPlane" onchange="validateUpdloadFile(this.id)"></a>
 								</div>
 								
 							</div>

@@ -4,7 +4,7 @@
         private static $dbhost = "127.0.0.1";
         private static $dbuser = "root";
         private static $dbpass = "";
-        private static $dbname = "usermanager";
+        private static $dbname = "USER_MANAGER";
         private static $dbcharset = "utf8";
 
     public static function connectionBD()

@@ -47,11 +47,11 @@ class USER_Model {
 
 
     function login() {
-        $sql = "SELECT * FROM user WHERE username = '$this->username'";
+        $sql = "SELECT * FROM `SM_USER` WHERE sm_username = '$this->username'";
         $result = $this->mysqli->query($sql);
         if ($result->num_rows == 1) {
             $tuple = $result->fetch_array();
-            if ($tuple['passwd'] == md5($this->password)) {
+            if ($tuple['sm_passwd'] == md5($this->password)) {
                 return true;
             } else {
                 throw new Exception('Username or password is incorrect');
@@ -63,7 +63,7 @@ class USER_Model {
 
 
     function getPermissions(){
-        $sql ="SELECT DISTINCT action.nameAction, functionality.nameFunction FROM user_group, permission, functionality, action WHERE user_group.username = '$this->username' AND user_group.idGroup = permission.idGroup AND permission.idFunction = functionality.idFunction AND permission.idAction = action.idAction";
+        $sql ="SELECT DISTINCT SM_ACTION.sm_nameAction, SM_FUNCTIONALITY.sm_nameFunction FROM `SM_GROUP`, `SM_USER_GROUP`, `SM_PERMISSION`, `SM_FUNCTIONALITY`, `SM_ACTION` WHERE SM_USER_GROUP.sm_username = '$this->username' AND SM_USER_GROUP.sm_idGroup = SM_GROUP.sm_idGroup AND SM_PERMISSION.sm_idFunction = SM_FUNCTIONALITY.sm_idFunction AND SM_PERMISSION.sm_idAction = SM_ACTION.sm_idAction";
         $result = $this->mysqli->query($sql);  
         $j = 0;
         if (!($resultado = $this->mysqli->query($sql))) {
@@ -80,7 +80,7 @@ class USER_Model {
     }
 
     function findUser() {
-        $sql = "SELECT * FROM user WHERE username = '$this->username'";
+        $sql = "SELECT * FROM `SM_USER` WHERE sm_username = '$this->username'";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
         } else {
@@ -90,14 +90,14 @@ class USER_Model {
     }
 
     function findLinkProfilePhoto() {
-        $sql = "SELECT photo FROM user WHERE username='$this->username'";
+        $sql = "SELECT sm_photo FROM `SM_USER` WHERE sm_username='$this->username'";
         $result = $this->mysqli->query($sql)->fetch_array();
         return $result['photo'];
     }
 
 
     function showAllUsers() {
-        $sql = "SELECT * FROM user";
+        $sql = "SELECT * FROM `SM_USER`";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
         } else {
@@ -115,7 +115,7 @@ class USER_Model {
         $passwordBD = md5($this->password);
         $dateBD = $this->formatDate($this->birthdate);
         $photoBD =$this->dirPhoto.$this->getPhoto('name');
-        $sql = "INSERT INTO user VALUES ('$photoBD', '$this->username', '$passwordBD', '$this->name', '$this->surname', '$this->dni', '$dateBD', '$this->email', '$this->phone')";
+        $sql = "INSERT INTO `SM_USER` VALUES ('$photoBD', '$this->username', '$passwordBD', '$this->name', '$this->surname', '$this->dni', '$dateBD', '$this->email', '$this->phone')";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
         } else {
@@ -129,17 +129,17 @@ class USER_Model {
 
         $dateBD = $this->formatDate($this->birthdate);
         if($this->getPhoto('name') == '' && empty($this->password)){
-            $sql = "UPDATE user SET name = '$this->name', surname = '$this->surname', dni = '$this->dni', birthdate = '$dateBD', email = '$this->email', phone = '$this->phone' WHERE username = '$this->username'";  
+            $sql = "UPDATE `SM_USER` SET sm_name = '$this->name', sm_surname = '$this->surname', sm_dni = '$this->dni', sm_birthdate = '$dateBD', sm_email = '$this->email', sm_phone = '$this->phone' WHERE sm_username = '$this->username'";  
         }else if($this->getPhoto('name') == '' && !empty($this->password)){
-            $sql = "UPDATE user SET password = '$this->password', name = '$this->name', surname = '$this->surname', dni = '$this->dni', birthdate = '$dateBD', email = '$this->email', phone = '$this->phone' WHERE username = '$this->username'";  
+            $sql = "UPDATE `SM_USER` SET sm_password = '$this->password', sm_name = '$this->name', sm_surname = '$this->surname', sm_dni = '$this->dni', sm_birthdate = '$dateBD', sm_email = '$this->email', sm_phone = '$this->phone' WHERE sm_username = '$this->username'";  
         }else if($this->getPhoto('name') !== '' && empty($this->password)){
             $photoBD =$this->dirPhoto.$this->getPhoto('name');
-            $sql = "UPDATE user SET photo = '$photoBD', name = '$this->name', surname = '$this->surname', dni = '$this->dni', birthdate = '$dateBD', email = '$this->email', phone = '$this->phone' WHERE username = '$this->username'";
+            $sql = "UPDATE `SM_USER` SET sm_photo = '$photoBD', sm_name = '$this->name', sm_surname = '$this->surname', sm_dni = '$this->dni', sm_birthdate = '$dateBD', sm_email = '$this->email', sm_phone = '$this->phone' WHERE sm_username = '$this->username'";
             $this->updateDirPhoto();
             unlink($this->findLinkProfilePhoto());
         } else {
             $photoBD =$this->dirPhoto.$this->getPhoto('name'); 
-            $sql = "UPDATE user SET photo = '$photoBD', password = '$this->password', name = '$this->name', surname = '$this->surname', dni = '$this->dni', birthdate = '$dateBD', email = '$this->email', phone = '$this->phone' WHERE username = '$this->username'";
+            $sql = "UPDATE `SM_USER` SET sm_photo = '$photoBD', sm_password = '$this->password', sm_name = '$this->name', sm_surname = '$this->surname', sm_dni = '$this->dni', sm_birthdate = '$dateBD', sm_email = '$this->email', sm_phone = '$this->phone' WHERE sm_username = '$this->username'";
             $this->updateDirPhoto();
             unlink($this->findLinkProfilePhoto());
         }
@@ -152,7 +152,7 @@ class USER_Model {
     }
 
     function deleteUser() {
-        $sql = "DELETE FROM user WHERE username ='$this->username'";
+        $sql = "DELETE FROM `SM_USER` WHERE sm_username ='$this->username'";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
         } else {
@@ -180,7 +180,7 @@ class USER_Model {
 
 
     function existsUser($username) {
-        $sql = "SELECT * FROM user WHERE username = '$username'";
+        $sql = "SELECT * FROM `SM_USER` WHERE sm_username = '$username'";
         $result = $this->mysqli->query($sql);
         if ($result->num_rows == 1) {
             return true;
@@ -190,7 +190,7 @@ class USER_Model {
     }
 
     function existsDNI($dni) {
-        $sql = "SELECT * FROM user WHERE dni = '$dni'";
+        $sql = "SELECT * FROM `SM_USER` WHERE sm_dni = '$dni'";
         $result = $this->mysqli->query($sql);
         if ($result->num_rows == 1) {
             return true;
@@ -200,7 +200,7 @@ class USER_Model {
     }
 
     function existsEmail($email) {
-        $sql = "SELECT * FROM user WHERE email = '$email'";
+        $sql = "SELECT * FROM `SM_USER` WHERE sm_email = '$email'";
         $result = $this->mysqli->query($sql);
         if ($result->num_rows == 1) {
             return true;

@@ -24,7 +24,7 @@ public function getNameFunction(){
 
 
 function showAllFunctions() {
-    $sql = "SELECT * FROM functionality";
+    $sql = "SELECT * FROM `SM_FUNCTIONALITY`";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -39,14 +39,14 @@ function showAllFunctions() {
 }
 
 function showAllActionsForFunctionality() {
-    $sql = "SELECT idAction FROM action_functionality WHERE idFunction = '$this->idFunction'";
+    $sql = "SELECT sm_idAction FROM `SM_ACTION_FUNCTIONALITY` WHERE sm_idFunction = '$this->idFunction'";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
         $toret = array();
         $i = 0;
         while ($fila = $resultado->fetch_array()) {
-            $toret[$i] = $fila['idAction'];
+            $toret[$i] = $fila['sm_idAction'];
             $i++;
         }
         return  $toret;
@@ -54,7 +54,7 @@ function showAllActionsForFunctionality() {
 }
 
 function findFunctionality() {
-	$sql = "SELECT * FROM functionality WHERE idFunction = '$this->idFunction'";
+	$sql = "SELECT * FROM `SM_FUNCTIONALITY` WHERE sm_idFunction = '$this->idFunction'";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -64,13 +64,13 @@ function findFunctionality() {
 }
 
 function addFunction($actions) {
-    $sqlFunction = "INSERT INTO functionality (nameFunction, descripFunction) VALUES ('$this->nameFunction', '$this->descripFunction')";
+    $sqlFunction = "INSERT INTO `SM_FUNCTIONALITY` (sm_nameFunction, sm_descripFunction) VALUES ('$this->nameFunction', '$this->descripFunction')";
     if (!($resultado = $this->mysqli->query($sqlFunction))) {
         throw new Exception('Error in the query on the database');
     } else {
         $lastId = $this->mysqli->insert_id;
         foreach($actions as $action){
-            $sqlFunctionAction = "INSERT INTO action_functionality (idAction, idFunction) VALUES ($action->id, $lastId)";
+            $sqlFunctionAction = "INSERT INTO `SM_ACTION_FUNCTIONALITY` (sm_idAction, sm_idFunction) VALUES ($action->id, $lastId)";
             if (!($resultado = $this->mysqli->query($sqlFunctionAction))) {
                 throw new Exception('Error in the query on the database');
             }
@@ -82,7 +82,7 @@ function addFunction($actions) {
 
 
 function deleteFunction() {
-    $sql = "DELETE FROM functionality WHERE idFunction ='$this->idFunction'";
+    $sql = "DELETE FROM `SM_FUNCTIONALITY` WHERE sm_idFunction ='$this->idFunction'";
     if (!($resultado = $this->mysqli->query($sql))) {
         throw new Exception('Error in the query on the database');
     } else {
@@ -92,7 +92,7 @@ function deleteFunction() {
 
 
 function updateFunction($actions) {
-    $sql = "DELETE FROM functionality WHERE idFunction ='$this->idFunction'";
+    $sql = "DELETE FROM `SM_FUNCTIONALITY` WHERE sm_idFunction ='$this->idFunction'";
     if (($resultado = $this->mysqli->query($sql))) {
         if(!$this->addFunction($actions)){
             throw new Exception('Error in the query on the database'); 
@@ -105,7 +105,7 @@ function updateFunction($actions) {
 
 
 public function existsFunction() {
-	$sql = "SELECT * FROM functionality WHERE idFunction = '$this->idFunction'";
+	$sql = "SELECT * FROM `SM_FUNCTIONALITY` WHERE sm_idFunction = '$this->idFunction'";
 	$result = $this->mysqli->query($sql);
 	if ($result->num_rows == 1) {
 		return true;

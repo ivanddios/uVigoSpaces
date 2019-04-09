@@ -51,12 +51,12 @@ class GROUP_ADD{
 								<?=$strings['Functionalities']?>:
 							
 								<?php foreach($this->functions as $function): ?>
-									<button id="<?=$function['idFunction']?>" type="button" class="btn btn-primary boxx" onclick="showActions(this.id)"><?=$function['nameFunction']?></button>
-									<div class="function id-<?=$function['idFunction']?>">
+									<button id="<?=$function['sm_idFunction']?>" type="button" class="btn btn-primary boxx" onclick="showActions(this.id)"><?=$function['sm_nameFunction']?></button>
+									<div class="function id-<?=$function['sm_idFunction']?>">
 										<?php foreach($this->actions as $action): ?>
-											<div class="checkbox-<?=$function['idFunction']?><?=$action['idAction']?>">
-													<input id="<?=$function['idFunction']?><?=$action['idAction']?>" type="checkbox" name="action" value="<?=$function['idFunction']?>,<?=$action['idAction']?>"/>
-													<label for="<?=$function['idFunction']?><?=$action['idAction']?>"><?=$action['nameAction']?></label>
+											<div class="checkbox-<?=$function['sm_idFunction']?><?=$action['idAction']?>">
+													<input id="<?=$function['sm_idFunction']?><?=$action['sm_idAction']?>" type="checkbox" name="action" value="<?=$function['sm_idFunction']?>,<?=$action['sm_idAction']?>"/>
+													<label for="<?=$function['sm_idFunction']?><?=$action['sm_idAction']?>"><?=$action['sm_nameAction']?></label>
 											</div>
 										<?php endforeach; ?>
 									</div>

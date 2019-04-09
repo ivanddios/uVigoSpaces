@@ -19,7 +19,7 @@ class FLOOR_EDIT{
 							<?=htmlentities($strings["Do you want to change something?"])?>
 						</div>
 						<div class="col-lg-12 center-block-content">
-							<form method="POST" action="FLOOR_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->floor['idBuilding']?>&floor=<?= $this->floor['idFloor']?>" enctype="multipart/form-data" onkeyup="validateFloor()">
+							<form method="POST" action="FLOOR_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->floor['am_idBuilding']?>&floor=<?= $this->floor['sm_idFloor']?>" enctype="multipart/form-data" onkeyup="validateFloor()">
 								<div id="group-form">
 									
 									<!-- <div class="inputWithIcon inputIconBg">
@@ -56,44 +56,44 @@ class FLOOR_EDIT{
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-lock"></span>
-										<input type="text" id="idBuilding" name="idBuilding" value="<?=$this->floor['idBuilding']?>" readonly>
+										<input type="text" id="idBuilding" name="idBuilding" value="<?=$this->floor['sm_idBuilding']?>" readonly>
 										<label for="idBuilding"><?= $strings['What is the identifier of this building?']?></label>
 									</div>
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-building"></span>
-										<input type="text" id="idFloor" name="idFloor" value="<?=$this->floor['idFloor']?>" onkeyup="checkFloorId(this.id)" required>
+										<input type="text" id="idFloor" name="idFloor" value="<?=$this->floor['sm_idFloor']?>" onkeyup="checkFloorId(this.id)" required>
 										<label for="idFloor"><?= $strings['What is the identifier of this floor?']?></label>
 									</div>
 								
 									<div class="input-container">
 										<span class="input-group-text fa fa-reorder"></span>
-										<input type="text" id="nameFloor" name="nameFloor" value="<?=$this->floor['nameFloor']?>" onkeyup="checkText(this.id)" required>
+										<input type="text" id="nameFloor" name="nameFloor" value="<?=$this->floor['sm_nameFloor']?>" onkeyup="checkText(this.id)" required>
 										<label for="nameFloor"><?= $strings['What floor is it?']?></label>
 									</div>
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-area-chart"></span>
-										<input type="text" id="surfaceBuildingFloor" name="surfaceBuildingFloor" value="<?=$this->floor['surfaceBuildingFloor']?>" onkeyup="checkSurface(this.id)" required>
+										<input type="text" id="surfaceBuildingFloor" name="surfaceBuildingFloor" value="<?=$this->floor['sm_surfaceBuildingFloor']?>" onkeyup="checkSurface(this.id)" required>
 										<label for="surfaceBuildingFloor"><?= $strings['What is the constructed surface?']?></label>
 									</div>
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-area-chart"></span>
-										<input type="text" id="surfaceUsefulFloor" name="surfaceUsefulFloor" value="<?=$this->floor['surfaceUsefulFloor']?>" onkeyup="checkSurface(this.id)" required>
+										<input type="text" id="surfaceUsefulFloor" name="surfaceUsefulFloor" value="<?=$this->floor['sm_surfaceUsefulFloor']?>" onkeyup="checkSurface(this.id)" required>
 										<label for="surfaceUsefulFloor"><?= $strings['What is the useful surface?']?></label>
 									</div>
 
 									<div class="input-file">
 										<label class="control-label"><?= $strings['Upload the floor plane']?></label>
 										<input type="file" name="planeFloor" class="filestyle">
-										<input type="hidden" id="planeFloorOriginal" name="planeFloorOriginal" value="<?=$this->floor['planeFloor']?>">
+										<input type="hidden" id="planeFloorOriginal" name="planeFloorOriginal" value="<?=$this->floor['sm_planeFloor']?>">
 									</div>
 								
 								</div>
 								<button type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
 							</form>
-							<a href="FLOOR_Controller.php?building=<?= $this->floor['idBuilding']?>"><?= $strings["Back"] ?></a>
+							<a href="FLOOR_Controller.php?building=<?= $this->floor['sm_idBuilding']?>"><?= $strings["Back"] ?></a>
 						</div>
 					</div>
 				</div>

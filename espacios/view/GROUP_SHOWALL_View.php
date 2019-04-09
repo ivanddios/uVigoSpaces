@@ -12,7 +12,7 @@ class GROUP_SHOWALL{
 
         include 'header.php';
         $this->view->setElement("%TITLE%", $strings["Groups"]);
-        $listTitles = array('nameGroup', 'descripGroup'); ?>
+        $listTitles = array('sm_nameGroup', 'sm_descripGroup'); ?>
 
         <div class="container">
             <div class="row center-row">
@@ -46,8 +46,8 @@ class GROUP_SHOWALL{
                                         for ($i = 0; $i < count($listTitles); $i++):
                                             if ($key === $listTitles[$i]) : ?>
                                                 <td>
-                                                    <?php if ($key === 'nameGroup') {?>
-                                                        <a title="<?= $strings['Show Group']?>" href='GROUP_Controller.php?action=<?= $strings['Show']?>&group=<?= $this->groups[$j]['idGroup']?>'><?= $value?></a>                
+                                                    <?php if ($key === 'sm_nameGroup') {?>
+                                                        <a title="<?= $strings['Show Group']?>" href='GROUP_Controller.php?action=<?= $strings['Show']?>&group=<?= $this->groups[$j]['sm_idGroup']?>'><?= $value?></a>                
                                                     <?php }else {
                                                         echo $value;
                                                     } ?>
@@ -58,29 +58,29 @@ class GROUP_SHOWALL{
                                         
                                     <td>
                                 <!--    <?php  if(checkRol('EDIT', 'GROUP')): ?> -->
-                                            <a href="GROUP_Controller.php?action=<?= $strings['FindUsers']?>&group=<?= $this->groups[$j]['idGroup']?>">
+                                            <a href="GROUP_Controller.php?action=<?= $strings['FindUsers']?>&group=<?= $this->groups[$j]['sm_idGroup']?>">
                                                 <span title="<?= $strings['Show Users']?>" class="btn btn-warning btn-sm fa fa-users"></span>
                                             </a>
                                 <!--    <?php endif; ?> -->
                                         <?php  if(checkRol('EDIT', 'GROUP')): ?>
-                                            <a href="GROUP_Controller.php?action=<?= $strings['Edit']?>&group=<?= $this->groups[$j]['idGroup']?>">
+                                            <a href="GROUP_Controller.php?action=<?= $strings['Edit']?>&group=<?= $this->groups[$j]['sm_idGroup']?>">
                                                 <span title="<?= $strings['Edit Group']?>" class="btn btn-primary btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
                                         <?php  if(checkRol('DELETE', 'GROUP')): ?>
-                                            <i title="<?= $strings['Delete Group']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->groups[$j]['idGroup']?>"></i>
-                                            <div id="item-<?= $this->groups[$j]['idGroup']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <i title="<?= $strings['Delete Group']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->groups[$j]['sm_idGroup']?>"></i>
+                                            <div id="item-<?= $this->groups[$j]['sm_idGroup']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <?= $strings["Attention"]?>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <?= sprintf($strings["Are you sure you want to delete the group \"%s\" ?"], $this->groups[$j]['nameGroup'] )?>
+                                                            <?= sprintf($strings["Are you sure you want to delete the group \"%s\" ?"], $this->groups[$j]['sm_nameGroup'] )?>
                                                             <p><?= $strings["The information that this group has will be lost"]?></p>
                                                         </div>
                                                         <form method="POST" action="GROUP_Controller.php?action=<?=$strings['Delete']?>">
-                                                            <input type="hidden" name="group" value="<?=$this->groups[$j]['idGroup']?>" readonly>
+                                                            <input type="hidden" name="group" value="<?=$this->groups[$j]['sm_idGroup']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
                                                                 <button type="submit" name="submit" id="submit" class="btn btn-success success"><?= $strings["Ok"]?></button>

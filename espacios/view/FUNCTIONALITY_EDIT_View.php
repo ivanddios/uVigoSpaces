@@ -24,7 +24,7 @@ class FUNCTIONALITY_EDIT{
                      <?=htmlentities($strings["Do you want to change something?"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form  method="POST" action="FUNCTIONALITY_Controller.php?action=<?= $strings['Edit']?>&function=<?=$this->values['idFunction']?>">
+						<form  method="POST" action="FUNCTIONALITY_Controller.php?action=<?= $strings['Edit']?>&function=<?=$this->values['sm_idFunction']?>">
 							<div id="group-form">
 
 								<!-- <div class="inputWithIcon inputIconBg">
@@ -39,13 +39,13 @@ class FUNCTIONALITY_EDIT{
                                 
                                 <div class="input-container">
 										<span class="input-group-text fa fa-reorder"></span>
-										<input type="text" id="nameFunction" name="nameFunction" value="<?=$this->values['nameFunction']?>" readonly/>
+										<input type="text" id="nameFunction" name="nameFunction" value="<?=$this->values['sm_nameFunction']?>" readonly/>
 										<label for="nameFunction"><?= $strings['What functionality is it?']?></label>
 									</div>
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-reorder"></span>
-										<input type="text" id="descripFunction" name="descripFunction" onkeyup="checkText(this.id)" value="<?=$this->values['descripFunction']?>" required/>
+										<input type="text" id="descripFunction" name="descripFunction" onkeyup="checkText(this.id)" value="<?=$this->values['sm_descripFunction']?>" required/>
 										<label for="descripFunction"><?= $strings['What is the functionality about?']?></label>
 									</div>
                               
@@ -53,12 +53,12 @@ class FUNCTIONALITY_EDIT{
                                 <?=$strings['Check the actions:']?>
                                     <?php foreach($this->actions as $action): ?>
                                             <div class="checkboxList">
-                                                <?php if (in_array($action['idAction'], $this->actionsForFunction)): ?>
-                                                    <input type="checkbox" name="action" id="<?=$action['idAction']?>" value="<?=$action['idAction']?>" checked/>
+                                                <?php if (in_array($action['sm_idAction'], $this->actionsForFunction)): ?>
+                                                    <input type="checkbox" name="action" id="<?=$action['sm_idAction']?>" value="<?=$action['sm_idAction']?>" checked/>
                                                 <?php else : ?>
-                                                    <input type="checkbox" name="action" id="<?=$action['idAction']?>" value="<?=$action['idAction']?>"/>
+                                                    <input type="checkbox" name="action" id="<?=$action['sm_idAction']?>" value="<?=$action['sm_idAction']?>"/>
                                                 <?php endif; ?>
-                                                <label for="<?=$action['idAction']?>"><?=$action['nameAction']?></label>
+                                                <label for="<?=$action['sm_idAction']?>"><?=$action['sm_nameAction']?></label>
                                             </div>
                                     <?php endforeach; ?>
                                 <input type="hidden" id="actions" name="actions">

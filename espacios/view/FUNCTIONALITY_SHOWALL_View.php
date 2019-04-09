@@ -12,7 +12,7 @@ class FUNCTIONALITY_SHOWALL{
 
         include 'header.php';
         $this->view->setElement("%TITLE%", $strings["Functionalities"]);
-        $listTitles = array('nameFunction', 'descripFunction'); ?>
+        $listTitles = array('sm_nameFunction', 'sm_descripFunction'); ?>
 
         <div class="container">
             <div class="row center-row">
@@ -46,8 +46,8 @@ class FUNCTIONALITY_SHOWALL{
                                         for ($i = 0; $i < count($listTitles); $i++):
                                             if ($key === $listTitles[$i]) : ?>
                                                 <td>
-                                                    <?php if ($key === 'nameFunction') {?>
-                                                        <a title="<?= $strings['Show Functionality']?>" href='FUNCTIONALITY_Controller.php?action=<?= $strings['Show']?>&function=<?= $this->functions[$j]['idFunction']?>'><?= $value?></a>                
+                                                    <?php if ($key === 'sm_nameFunction') {?>
+                                                        <a title="<?= $strings['Show Functionality']?>" href='FUNCTIONALITY_Controller.php?action=<?= $strings['Show']?>&function=<?= $this->functions[$j]['sm_idFunction']?>'><?= $value?></a>                
                                                     <?php }else {
                                                         echo $value;
                                                     } ?>
@@ -58,24 +58,24 @@ class FUNCTIONALITY_SHOWALL{
                                         
                                     <td>
                                         <?php  if(checkRol('EDIT', 'FUNCTIONALITY')): ?>
-                                            <a href="FUNCTIONALITY_Controller.php?action=<?= $strings['Edit']?>&function=<?= $this->functions[$j]['idFunction']?>">
+                                            <a href="FUNCTIONALITY_Controller.php?action=<?= $strings['Edit']?>&function=<?= $this->functions[$j]['sm_idFunction']?>">
                                                 <span title="<?= $strings['Edit Functionality']?>" class="btn btn-primary btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
                                         <?php  if(checkRol('DELETE', 'FUNCTIONALITY')): ?>
-                                            <i title="<?= $strings['Delete Functionality']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->functions[$j]['idFunction']?>"></i>
-                                            <div id="item-<?= $this->functions[$j]['idFunction']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <i title="<?= $strings['Delete Functionality']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->functions[$j]['sm_idFunction']?>"></i>
+                                            <div id="item-<?= $this->functions[$j]['sm_idFunction']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <?= $strings["Attention"]?>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <?= sprintf($strings["Are you sure you want to delete the functionality \"%s\" ?"], $this->functions[$j]['nameFunction'] )?>
+                                                            <?= sprintf($strings["Are you sure you want to delete the functionality \"%s\" ?"], $this->functions[$j]['sm_nameFunction'] )?>
                                                             <p><?= $strings["The information that this functionality has will be lost"]?></p>
                                                         </div>
                                                         <form method="POST" action="FUNCTIONALITY_Controller.php?action=<?=$strings['Delete']?>">
-                                                            <input type="hidden" name="function" value="<?=$this->functions[$j]['idFunction']?>" readonly>
+                                                            <input type="hidden" name="function" value="<?=$this->functions[$j]['sm_idFunction']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
                                                                 <button type="submit" name="submit" id="submit" class="btn btn-success success"><?= $strings["Ok"]?></button>

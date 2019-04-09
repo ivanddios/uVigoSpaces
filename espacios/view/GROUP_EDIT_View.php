@@ -17,10 +17,10 @@ class GROUP_EDIT{
 			<div class="row center-row">
 				<div class="col-lg-6 center-block">
 					<div id="titleView">
-                     <?=htmlentities($strings["Do you want to change something?"])?>
+          	<?=htmlentities($strings["Do you want to change something?"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form  method="POST" action="GROUP_Controller.php?action=<?= $strings['Edit']?>&group=<?=$this->values['idGroup']?>">
+						<form  method="POST" action="GROUP_Controller.php?action=<?= $strings['Edit']?>&group=<?=$this->values['sm_idGroup']?>">
 							<div id="group-form">
 
 								<!-- <div class="inputWithIcon inputIconBg">
@@ -35,13 +35,13 @@ class GROUP_EDIT{
 
 								<div class="input-container">
 										<span class="input-group-text fa fa-users"></span>
-										<input type="text" id="nameGroup" name="nameGroup" value="<?=$this->values['nameGroup']?>" readonly/>
+										<input type="text" id="nameGroup" name="nameGroup" value="<?=$this->values['sm_nameGroup']?>" readonly/>
 										<label for="nameGroup"><?= $strings['What group is it?']?></label>
 									</div>
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-reorder"></span>
-										<input type="text" id="descripGroup" name="descripFunction" value="<?=$this->values['descripFunction']?>" onkeyup="checkText(this.id)" required/>
+										<input type="text" id="descripGroup" name="descripGroup" value="<?=$this->values['sm_descripGroup']?>" onkeyup="checkText(this.id)" required/>
 										<label for="descripGroup"><?= $strings['What is the group about?']?></label>
 									</div>
                               

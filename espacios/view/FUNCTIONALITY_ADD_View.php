@@ -48,8 +48,8 @@ class FUNCTIONALITY_ADD{
                                 <?=$strings['Check the actions:']?>
                                     <?php foreach($this->actions as $action): ?>
                                         <div class="checkboxList">
-                                            <input type="checkbox" name="action" id="<?=$action['idAction']?>" value="<?=$action['idAction']?>"/>
-                                            <label for="<?=$action['idAction']?>"><?=$action['nameAction']?></label>
+                                            <input type="checkbox" name="action" id="<?=$action['sm_idAction']?>" value="<?=$action['sm_idAction']?>"/>
+                                            <label for="<?=$action['sm_idAction']?>"><?=$action['sm_nameAction']?></label>
                                         </div>
                                     <?php endforeach; ?>
                                 <input type="hidden" id="actions" name="actions">
