@@ -61,19 +61,19 @@ class SPACE_ADD{
 
 								<div class="input-container">
 									<span class="input-group-text fa fa-reorder"></span>
-									<input type="text" id="nameSpace" name="idFloor" onkeyup="checkText(this.id)" required/>
-									<label for="idFloor"><?= $strings['What space is it?']?></label>
+									<input type="text" id="nameSpace" name="nameSpace" onkeyup="checkText(this.id)" required/>
+									<label for="nameSpace"><?= $strings['What space is it?']?></label>
 								</div>
 								
 								<div class="input-container">
 									<span class="input-group-text fa fa-area-chart"></span>
-									<input type="text" id="surfaceSpace" name="surfaceSpace" onkeyup="checkSurfaceSpace(this.id)"/>
+									<input type="text" id="surfaceSpace" name="surfaceSpace" onkeyup="checkSurface(this.id)" required/>
 									<label for="surfaceSpace"><?= $strings['What is the surface of space?']?></label>
 								</div>
 
 								<div class="input-container">
 									<span class="input-group-text fa fa-barcode"></span>
-									<input type="text" id="numberInventorySpace" name="numberInventorySpace" onkeyup="checkNumberInventory(this.id)"/>
+									<input type="text" id="numberInventorySpace" name="numberInventorySpace" onkeyup="checkSurface(this.id)" required/>
 									<label for="numberInventorySpace"><?= $strings['What is the number inventory?']?></label>
 								</div>
 

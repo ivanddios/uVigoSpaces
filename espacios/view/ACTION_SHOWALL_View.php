@@ -12,7 +12,7 @@ class ACTION_SHOWALL{
 
         include 'header.php';
         $this->view->setElement("%TITLE%", $strings["Actions"]);
-        $listTitles = array('nameAction', 'descripAction'); ?>
+        $listTitles = array('sm_nameAction', 'sm_descripAction'); ?>
 
         <div class="container">
             <div class="row center-row">
@@ -46,8 +46,8 @@ class ACTION_SHOWALL{
                                         for ($i = 0; $i < count($listTitles); $i++):
                                             if ($key === $listTitles[$i]) : ?>
                                                 <td>
-                                                    <?php if ($key === 'nameAction') {?>
-                                                        <a title="<?= $strings['Show Action']?>" href='ACTION_Controller.php?action=<?= $strings['Show']?>&action=<?= $this->actions[$j]['idAction']?>'><?= $value?></a>                
+                                                    <?php if ($key === 'sm_nameAction') {?>
+                                                        <a title="<?= $strings['Show Action']?>" href='ACTION_Controller.php?action=<?= $strings['Show']?>&action=<?= $this->actions[$j]['sm_idAction']?>'><?= $value?></a>                
                                                     <?php }else {
                                                         echo $value;
                                                     } ?>
@@ -58,24 +58,24 @@ class ACTION_SHOWALL{
                                         
                                     <td>
                                         <?php  if(checkRol('EDIT', 'ACTION')): ?>
-                                            <a href="ACTION_Controller.php?action=<?= $strings['Edit']?>&accion=<?= $this->actions[$j]['idAction']?>">
+                                            <a href="ACTION_Controller.php?action=<?= $strings['Edit']?>&accion=<?= $this->actions[$j]['sm_idAction']?>">
                                                 <span title="<?= $strings['Edit Action']?>" class="btn btn-primary btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
                                         <?php  if(checkRol('DELETE', 'ACTION')): ?>
-                                            <i title="<?= $strings['Delete Action']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->actions[$j]['idAction']?>"></i>
-                                            <div id="item-<?= $this->actions[$j]['idAction']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <i title="<?= $strings['Delete Action']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->actions[$j]['sm_idAction']?>"></i>
+                                            <div id="item-<?= $this->actions[$j]['sm_idAction']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <?= $strings["Attention"]?>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <?= sprintf($strings["Are you sure you want to delete the action \"%s\" ?"], $this->actions[$j]['nameAction'] )?>
+                                                            <?= sprintf($strings["Are you sure you want to delete the action \"%s\" ?"], $this->actions[$j]['sm_nameAction'] )?>
                                                             <p><?= $strings["The information that this action has will be lost"]?></p>
                                                         </div>
                                                         <form method="POST" action="ACTION_Controller.php?action=<?=$strings['Delete']?>">
-                                                            <input type="hidden" name="action" value="<?=$this->actions[$j]['idAction']?>" readonly>
+                                                            <input type="hidden" name="action" value="<?=$this->actions[$j]['sm_idAction']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
                                                                 <button type="submit" name="submit" id="submit" class="btn btn-success success"><?= $strings["Ok"]?></button>

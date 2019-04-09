@@ -72,7 +72,6 @@ header{
 	background-color: #fff;
 }
 
-
 .languages{
 	padding: 0.5rem;
 	margin-left: 4%;	
@@ -154,7 +153,7 @@ header{
 	margin-bottom: 8%;
 }
 	
-.input-container > input{
+.input-container > input[type="text"],[type="password"]{
 	display: block;
 	position: absolute;
 	left: 10%;
@@ -172,14 +171,6 @@ header{
 }
 
 
-.input-group-text {
-	width: 8%;
-	align-content:center;
-	background-color: #aaa;
-	color: #fff;
-}
-	
-  
 .input-container > label {
 	display: block;
 	position: absolute;
@@ -200,7 +191,7 @@ header{
 	animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-input:valid + label, input:focus + label, input:read-only + label {
+.input-container > input:valid + label, .input-container > input:focus + label, .input-container > input:read-only + label {
   -webkit-animation-name: labelOut;
   animation-name: labelOut;
   -webkit-animation-duration: 0.35s;
@@ -211,7 +202,13 @@ input:valid + label, input:focus + label, input:read-only + label {
   animation-fill-mode: forwards;
   -webkit-animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
   animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
-  }
+}
+	
+.input-group-text {
+	width: 8%;
+	background-color: #aaa;
+	color: #fff;
+}
 
 @keyframes 
   labelIn {  
@@ -233,7 +230,7 @@ input:valid + label, input:focus + label, input:read-only + label {
 			font-size: 1em;
 			left: 1em;
 			opacity: 0;
-			bottom: 60%; 
+			bottom: 45%; 
 			color:#636c72;
 			font-weight: 400;
   	}
@@ -241,7 +238,7 @@ input:valid + label, input:focus + label, input:read-only + label {
 			font-size: 1.00em;
 			opacity: 1;
 			left: 1px;
-			bottom: 60%; 
+			bottom: 45%; 
 		  color: #636c72;
 			font-weight: 400;
   	} 
@@ -267,7 +264,7 @@ input:valid + label, input:focus + label, input:read-only + label {
 			font-size: 1em;
 			left: 1em;
 			opacity: 0;
-			bottom: 60%; 
+			bottom: 45%; 
 			color: #636c72;
 			font-weight: 400;
 		} 
@@ -275,12 +272,11 @@ input:valid + label, input:focus + label, input:read-only + label {
 			font-size: 1em;
 			opacity: 1;
 			left: 1px;
-			bottom: 60%; 
+			bottom: 45%; 
 			color: #636c72;
 			font-weight: 400;
 		}
 	}
-
 
 
 /*STYLE ONLYLOGIN VIEW */
@@ -346,10 +342,6 @@ input#loginUsername, input#loginPassword{
 
 /*PASSWORD BOX  */
 
-
-.passHelp{
-	/* margin-bottom:5% ; */
-}
 
 .passwordAlert {
 	display: none;
@@ -482,7 +474,6 @@ input[type="checkbox"]:checked ~ label:before {
 }
 .icon-btn {
 	padding: 1px 15px 3px 2px;
-  /* border-radius:50px; */
 }
 
 .btn-dark{
@@ -525,8 +516,6 @@ input[type="checkbox"]:checked ~ label:before {
 }
 
 
-
-
 /* HTML ELEMENTS */
 
 td{
@@ -561,14 +550,6 @@ p{
 
 
 /* PROFILE USER PHOTO */
-#imageUpload{
-  display: none;
-}
-
-#profilePhoto{
-	cursor: pointer;
-	
-}
 
 #profilePhoto-container {
   width: 150px;
@@ -578,16 +559,22 @@ p{
 	overflow: hidden;
 	border-radius: 50%;	
 	margin-bottom: 10%;
+	cursor: pointer;
 }
 
-.extra {
+.profilePhoto-frame {
 	border: 2px dashed rgba(0, 0, 0, 0.623);
 }
 
-#profilePhoto-container img {
+#profilePhoto {
   width: 150px;
   height: 150px;
 }
+
+#imageUpload{
+  display: none;
+}
+
 
 
 /* CANVAS ELEMENTS*/
@@ -645,10 +632,10 @@ p{
 
 /* USER ADD*/
 
-/* .function{
+.function{
 	display:none;
 	margin-bottom: 20px;
-} */
+}
 
 .boxx{
 	margin-bottom: 5%;

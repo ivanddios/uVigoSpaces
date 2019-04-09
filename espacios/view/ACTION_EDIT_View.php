@@ -2,14 +2,14 @@
 
 class ACTION_EDIT{
 
-    private $values;
+  private $values;
 
-    function __construct($values) {
-        $this->values = $values;
-        $this->render();
-    }
+  function __construct($values) {
+      $this->values = $values;
+      $this->render();
+  }
     
-    function render() {
+  function render() {
 		include 'header.php';
 		$this->view->setElement("%TITLE%", $strings["Edit Action"]);?>
 		
@@ -17,31 +17,21 @@ class ACTION_EDIT{
 			<div class="row center-row">
 				<div class="col-lg-6 center-block">
 					<div id="titleView">
-                     <?=htmlentities($strings["Do you want to change something?"])?>
+            <?=htmlentities($strings["Do you want to change something?"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form  method="POST" action="ACTION_Controller.php?action=<?= $strings['Edit']?>&accion=<?=$this->values['idAction']?>">
+						<form  method="POST" action="ACTION_Controller.php?action=<?= $strings['Edit']?>&accion=<?=$this->values['sm_idAction']?>">
 							<div id="group-form">
-
-								<!-- <div class="inputWithIcon inputIconBg">
-									<input type="text" id="nameAction" name="nameAction" placeholder="<?= $strings['What action is it?']?>" value="<?=$this->values['nameAction']?>" onkeyup="checkText(this.id)" required>
-                   <i class="fa fa-users fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
-
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="descripAction" name="descripAction" placeholder="<?= $strings['What is the action about?']?>" value="<?=$this->values['descripAction']?>" onkeyup="checkText(this.id)" required>
-                  <i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
-								</div> -->
 
 								<div class="input-container">
 									<span class="input-group-text fa fa-users"></span>
-									<input type="text" id="nameAction" name="nameAction" value="<?=$this->values['nameAction']?>" readonly/>
+									<input type="text" id="nameAction" name="nameAction" value="<?=$this->values['sm_nameAction']?>" onkeyup="checkText(this.id)" required/>
 									<label for="nameAction"><?= $strings['What action is it?']?></label>
 								</div>
 
 								<div class="input-container">
 									<span class="input-group-text fa fa-reorder"></span>
-									<input type="text" id="descripAction" name="descripAction" value="<?=$this->values['descripAction']?>" onkeyup="checkText(this.id)" required/>
+									<input type="text" id="descripAction" name="descripAction" value="<?=$this->values['sm_descripAction']?>" onkeyup="checkText(this.id)" required/>
 									<label for="descripAction"><?= $strings['What is the action about?']?></label>
 								</div>
            
@@ -53,8 +43,8 @@ class ACTION_EDIT{
 				</div>
 			</div>
 		</div>
- <?php
-    include 'footer.php';  
+ 		<?php
+    	include 'footer.php';  
   } 
 }
 

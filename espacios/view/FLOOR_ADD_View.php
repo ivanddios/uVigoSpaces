@@ -22,34 +22,6 @@ class FLOOR_ADD{
 					<div class="col-lg-12 center-block-content">
 						<form method="POST" action="FLOOR_Controller.php?action=<?= $strings['Add']?>&building=<?= $this->building?>" enctype="multipart/form-data" onkeyup="validateFloor()">
 							<div id="group-form">
-								<!-- <div class="inputWithIcon inputIconBg">
-									<input type="text" id="idBuilding" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?= $this->building?>" readonly>
-									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
-
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="idFloor" name="idFloor" placeholder="<?= $strings['What is the identifier of this floor?']?>" onkeyup="checkFloorId(this.id)">
-									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
-
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="nameFloor" name="nameFloor" placeholder="<?= $strings['What floor is it?']?>" onkeyup="checkText(this.id)">
-									<i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
-
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="surfaceBuildingFloor" name="surfaceBuildingFloor" placeholder="<?= $strings['What is the constructed surface?']?>" onkeyup="checkSurface(this.id)">
-									<i class="fa fa-area-chart fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
-
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="surfaceUsefulFloor" name="surfaceUsefulFloor" placeholder="<?= $strings['What is the useful surface?']?>" onkeyup="checkSurface(this.id)">
-									<i class="fa fa-area-chart fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
-								
-								<div class="inputWithIcon inputIconBg">
-									<input type="file" id="planeFloor" name="planeFloor" accept="image/*" onchange="validateUpdloadFile(this.id)">
-								</div> -->
 
 								<div class="input-container">
 										<span class="input-group-text fa fa-lock"></span>

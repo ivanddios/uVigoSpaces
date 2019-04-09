@@ -19,26 +19,6 @@ class BUILDING_ADD{
 					<div class="col-lg-12 center-block-content">
 						<form method="POST" action="BUILDING_Controller.php?action=<?= $strings['Add']?>" onkeyup="validateBuilding();">
 							<div id="group-form">
-								<!-- <div class="inputWithIcon inputIconBg">
-									<input type="text" id="idBuilding" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" onkeyup="checkBuildingId(this.id)">
-									<i class="fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
-
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="nameBuilding" name="nameBuilding" placeholder="<?= $strings['What building is it?']?>" onkeyup="checkText(this.id)">
-									<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
-
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="addressBuilding" name="addressBuilding" placeholder="<?= $strings['What is your postal address?']?>" onkeyup="checkText(this.id)">
-									<i class="fa fa-map-marker fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
-
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="phoneBuilding" name="phoneBuilding" placeholder="<?= $strings['What is your phone?']?>" onkeyup="checkNumPhone(this.id)">
-									<i class="fa fa-phone fa-lg fa-fw" aria-hidden="true"></i>
-								</div> -->
-
 
 								<div class="input-container">
 										<span class="input-group-text fa fa-lock"></span>

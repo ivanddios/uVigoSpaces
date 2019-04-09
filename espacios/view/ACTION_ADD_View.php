@@ -20,17 +20,6 @@ class ACTION_ADD{
 						<form  method="POST" action="ACTION_Controller.php?action=<?= $strings['Add']?>" onkeyup="validateAction()">
 							<div id="group-form">
 
-								<!-- <div class="inputWithIcon inputIconBg">
-									<input type="text" id="nameAction" name="nameAction" placeholder="<?= $strings['What action is it?']?>" onkeyup="checkText(this.id)" required >
-                  <i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
-
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="descripAction" name="descripAction" placeholder="<?= $strings['What is the action about?']?>" onkeyup="checkText(this.id)" required>
-                  <i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
-								</div> -->
-
-
 								<div class="input-container">
 									<span class="input-group-text fa fa-users"></span>
 									<input type="text" id="nameAction" name="nameAction" onkeyup="checkText(this.id)" required/>
@@ -39,7 +28,7 @@ class ACTION_ADD{
 
 								<div class="input-container">
 									<span class="input-group-text fa fa-reorder"></span>
-									<input type="text" id="descripAction" name="descripAction" value="<?=$this->values['descripAction']?>" onkeyup="checkText(this.id)" required/>
+									<input type="text" id="descripAction" name="descripAction" onkeyup="checkText(this.id)" required/>
 									<label for="descripAction"><?= $strings['What is the action about?']?></label>
 								</div>
                             

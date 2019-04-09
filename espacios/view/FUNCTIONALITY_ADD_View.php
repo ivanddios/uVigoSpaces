@@ -23,27 +23,17 @@ class FUNCTIONALITY_ADD{
 						<form  method="POST" action="FUNCTIONALITY_Controller.php?action=<?= $strings['Add']?>">
 							<div id="group-form">
 
-								<!-- <div class="inputWithIcon inputIconBg">
-									<input type="text" id="nameFunction" name="nameFunction" placeholder="<?= $strings['What functionality is it?']?>" onkeyup="checkText(this.id)" required >
-                                    <i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
+								<div class="input-container">
+									<span class="input-group-text fa fa-reorder"></span>
+									<input type="text" id="nameFunction" name="nameFunction" onkeyup="checkText(this.id)" required/>
+									<label for="nameFunction"><?= $strings['What functionality is it?']?></label>
 								</div>
 
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="descripFunction" name="descripFunction" placeholder="<?= $strings['What is the functionality about?']?>" onkeyup="checkText(this.id)" required>
-                                    <i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
-								</div> -->
-
 								<div class="input-container">
-										<span class="input-group-text fa fa-reorder"></span>
-										<input type="text" id="nameFunction" name="nameFunction" onkeyup="checkText(this.id)" required/>
-										<label for="nameFunction"><?= $strings['What functionality is it?']?></label>
-									</div>
-
-									<div class="input-container">
-										<span class="input-group-text fa fa-reorder"></span>
-										<input type="text" id="descripFunction" name="descripFunction" onkeyup="checkText(this.id)" required/>
-										<label for="descripFunction"><?= $strings['What is the functionality about?']?></label>
-									</div>
+									<span class="input-group-text fa fa-reorder"></span>
+									<input type="text" id="descripFunction" name="descripFunction" onkeyup="checkText(this.id)" required/>
+									<label for="descripFunction"><?= $strings['What is the functionality about?']?></label>
+								</div>
                               
                                 <?=$strings['Check the actions:']?>
                                     <?php foreach($this->actions as $action): ?>

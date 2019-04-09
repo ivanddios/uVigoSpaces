@@ -34,7 +34,7 @@ class USER_ADD{
 						<form name="userForm" method="POST" action="USER_Controller.php?action=<?= $strings['Add']?>" enctype="multipart/form-data">
 							<div id="group-form">
 
-								<div id="profilePhoto-container" class="extra">
+								<div id="profilePhoto-container" class="profilePhoto-frame">
 									<img id="profilePhoto" alt="<?= $strings['ProfilePhoto']?>" src="../img/camera2.png" onclick="uploadProfilePhoto()"/>
 									<input id="imageUpload" type="file" name="photo" accept="image/*" onchange="previewProfilePhoto(this)">
 								</div> 

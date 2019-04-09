@@ -25,70 +25,67 @@
                 crossorigin="anonymous"></script>
 
             <!-- Our JS -->
-            <script src="../js/common.js"></script>
-            <script src="../js/validates.js"></script>
+            <script type="text/javascript" src="../js/common.js"></script>
+            <script type="text/javascript" src="../js/validates.js"></script>
             <script type="text/javascript" src="../js/bootstrap-filestyle.js"> </script>
 
             <link rel="stylesheet" href="../css/style.css">
         </head>
 
-        <?php if(strpos($_SERVER['REQUEST_URI'],'ShowSpacePlane')) { ?>
-            <body onload = "viewSpace('<?= $this->space['coordsPlane'] ?>','<?= $this->plane ?>')"> 
-        <?php }else if (strpos($_SERVER['REQUEST_URI'],'EditSpacePlane')) { ?>
-            <body onload = "editSpace('<?= $this->space['coordsPlane'] ?>','<?= $this->plane ?>')"> 
-        <?php } else if (strpos($_SERVER['REQUEST_URI'],'SelectSpacePlane')) { ?>
+
+        <?php if(get_class($this) === 'SPACE_SHOW_PLANE'){ ?>
+            <body onload = "viewSpace('<?= $this->space['sm_coordsPlane'] ?>','<?= $this->plane ?>')">
+        <?php }else if(get_class($this) === 'SPACE_EDIT_PLANE'){ ?>
+            <body onload = "editSpace('<?= $this->space['sm_coordsPlane'] ?>','<?= $this->plane ?>')"> 
+        <?php } else if(get_class($this) === 'SPACE_SELECT_PLANE'){ ?>
             <body onload = "selectSpace('<?= $this->plane ?>')"> 
         <?php } else { ?>
-            <body>
+             <body>
         <?php } ?>
 
+        <!-- HEADER -->
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a title="Home" class="navbar-brand" href="../index.php">
+                    <img src="../img/logo.png" class="logoPpal" alt="<?=$strings['LogoUVigo']?>"/>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <!-- HEADER -->
-            <header>
-                <nav class="navbar navbar-expand-lg navbar-light">
-                    <a title="Home" class="navbar-brand" href="../index.php">
-                        <img src="../img/logo.png" class="logoPpal" alt="<?=$strings['LogoUVigo']?>"/>
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
                         <li><a class="nav-link" href="../controller/BUILDING_Controller.php"><?=$strings['Buildings']?></a></li>&nbsp;&nbsp;
-                            <?php  if(checkRol('SHOW ALL', 'USER')): ?>
-                                <div class="nav-item dropdown">
-                                    <a id="navbarDropdown-User" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?=$strings['Users']?></a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown-User">
-                                        <a class="dropdown-item" href="../controller/FUNCTIONALITY_Controller.php"><?=$strings['Functionalitys']?></a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="../controller/GROUP_Controller.php"><?=$strings['Groups']?></a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="../controller/ACTION_CONTROLLER.php"><?=$strings['Actions']?></a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="../controller/USER_CONTROLLER.php"><?=$strings['Users']?></a>
-                                        
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-                            
-                        </ul>
-                        <?php if(isset($_SESSION['LOGIN'])): ?>
-                                                 <div class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?=$strings['My Account']?></a>	
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="../controller/USER_Controller.php?action=<?=$strings['Edit']?>&user=<?=$_SESSION['LOGIN']?>"><?=$strings['My Profile']?></a>
+                        <?php  if(checkRol('SHOW ALL', 'USER')): ?>
+                            <div class="nav-item dropdown">
+                                <a id="navbarDropdown-User" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?=$strings['Users']?></a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown-User">
+                                    <a class="dropdown-item" href="../controller/FUNCTIONALITY_Controller.php"><?=$strings['Functionalitys']?></a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="../controller/USER_Controller.php?action=<?=$strings['Logout']?>"><?=$strings['Logout']?></a>
+                                    <a class="dropdown-item" href="../controller/GROUP_Controller.php"><?=$strings['Groups']?></a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="../controller/ACTION_CONTROLLER.php"><?=$strings['Actions']?></a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="../controller/USER_CONTROLLER.php"><?=$strings['Users']?></a>    
                                 </div>
                             </div>
-                        <?php else: ?>
-                            <a class="nav-link nav-a" href="../controller/USER_Controller.php?action=<?=$strings['Login']?>"><?=$strings['Login']?></a>
-                        <?php endif; ?>
+                        <?php endif; ?>     
+                    </ul>
 
+                    <?php if(isset($_SESSION['LOGIN'])): ?>
                         <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?=$strings['My Account']?></a>	
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="../controller/USER_Controller.php?action=<?=$strings['Edit']?>&user=<?=$_SESSION['LOGIN']?>"><?=$strings['My Profile']?></a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="../controller/USER_Controller.php?action=<?=$strings['Logout']?>"><?=$strings['Logout']?></a>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <a class="nav-link nav-a" href="../controller/USER_Controller.php?action=<?=$strings['Login']?>"><?=$strings['Login']?></a>
+                    <?php endif; ?>
+
+                    <div class="nav-item dropdown">
                         <a id="navbarDropdownLang" class="nav-link dropdown-toggle nav-a" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <?php if($_SESSION['LANGUAGE'] === 'Castellano') { ?>
                                 <img src="../img/spain.png" alt="lang" class="languageFlag">
@@ -124,24 +121,24 @@
                                     <img src="../img/spain.png" alt="lang" class="languageFlag">
                                 </a>
                             <?php } ?>
-                            </div>
                         </div>
                     </div>
-                </nav>
-            </header>
-
-            <?php if (!empty($this->flashMessageSuccess)): ?>
-                <div class="alert alert-success text-center" id="success-alert" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <?= $this->flashMessageSuccess; ?>
                 </div>
-            <?php elseif(!empty($this->flashMessageDanger)): ?>
-                <div class="alert alert-danger text-center" id="danger-alert" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <?= $this->flashMessageDanger; ?>
-                </div>            
-            <?php endif; ?>
+            </nav>
+        </header>
+
+        <?php if (!empty($this->flashMessageSuccess)): ?>
+            <div class="alert alert-success text-center" id="success-alert" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <?= $this->flashMessageSuccess; ?>
+            </div>
+        <?php elseif(!empty($this->flashMessageDanger)): ?>
+            <div class="alert alert-danger text-center" id="danger-alert" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <?= $this->flashMessageDanger; ?>
+            </div>            
+        <?php endif; ?>

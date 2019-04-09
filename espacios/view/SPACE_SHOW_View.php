@@ -51,29 +51,29 @@ class SPACE_SHOW{
 								<div class="input-container">
 									<span class="input-group-text fa fa-cube"></span>
 									<input type="text" id="idSpace" name="idSpace" value="<?=$this->space['sm_idSpace']?>" readonly>
-									<label for="idSpace"><?= $strings['What is the identifier of this space?']?></label>
+									<label for="idSpace"><?= $strings['sm_idSpace']?></label>
 								</div>
 
 								<div class="input-container">
 									<span class="input-group-text fa fa-reorder"></span>
 									<input type="text" id="nameSpace" name="idFloor" value="<?=$this->space['sm_nameSpace']?>" readonly>
-									<label for="idFloor"><?= $strings['What space is it?']?></label>
+									<label for="idFloor"><?= $strings['sm_nameSpace']?></label>
 								</div>
 									
 								<div class="input-container">
 									<span class="input-group-text fa fa-area-chart"></span>
-									<input type="text" id="surfaceSpace" name="surfaceSpace" value="<?=$this->space['sm_surfaceSpace']?>" readonly>
-									<label for="surfaceSpace"><?= $strings['What is the surface of space?']?></label>
+									<input type="text" id="surfaceSpace" name="surfaceSpace" value="<?=$this->space['sm_surfaceSpace']?> m²" readonly>
+									<label for="surfaceSpace"><?= $strings['sm_surfaceSpace']?></label>
 								</div>
 
 								<div class="input-container">
 									<span class="input-group-text fa fa-barcode"></span>
 									<input type="text" id="numberInventorySpace" name="numberInventorySpace" value="<?=$this->space['sm_numberInventorySpace']?>" readonly>
-									<label for="numberInventorySpace"><?= $strings['What is the number inventory?']?></label>
+									<label for="numberInventorySpace"><?= $strings['sm_numberInventorySpace']?></label>
 								</div>
 
 								<div class="inputWithIcon inputIconBg">
-									<a href="SPACE_Controller.php?action=<?= $strings['EditSpacePlane']?>&building=<?= $this->space['sm_idBuilding']?>&floor=<?= $this->space['sm_idFloor']?>&space=<?= $this->space['sm_idSpace']?>"><img src='<?= $this->plane; ?>' class="avatarPlane" onchange="validateUpdloadFile(this.id)"></a>
+									<a href="SPACE_Controller.php?action=<?= $strings['ShowSpacePlane']?>&building=<?= $this->space['sm_idBuilding']?>&floor=<?= $this->space['sm_idFloor']?>&space=<?= $this->space['sm_idSpace']?>"><img src='<?= $this->plane; ?>' class="avatarPlane" onchange="validateUpdloadFile(this.id)"></a>
 								</div>
 								
 							</div>

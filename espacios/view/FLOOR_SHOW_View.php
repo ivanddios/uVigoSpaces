@@ -20,38 +20,8 @@ class FLOOR_SHOW{
 						</div>
 						<div class="col-lg-12 center-block-content">
 								<div id="group-form">
-									<!-- <label><?= $strings['idBuilding']; ?></label>
-									<div class="inputWithIcon inputIconBg">
-										<input type="text" name="idBuilding" placeholder="<?= $strings['What is the identifier of this building?']?>" value="<?=$this->floor['idBuilding']?><?=$this->floor['idFloor']?>" readonly>
-										<i class="fa fa-building fa-lg fa-fw" aria-hidden="true"></i>
-									</div>
-										
-									<label><?= $strings['nameFloor']; ?></label>	
-									<div class="inputWithIcon inputIconBg">
-										<input type="text" name="nameFloor" placeholder="<?= $strings['What floor is it?']?>" value="<?=$this->floor['nameFloor']?>" readonly>
-										<i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
-									</div>
 
-									<label><?= $strings['surfaceBuildingFloor']; ?></label>	
-									<div class="inputWithIcon inputIconBg">
-										<input type="text" name="surfaceBuildingFloor" placeholder="<?= $strings['What is the constructed surface?']?>" value="<?=$this->floor['surfaceBuildingFloor']?> m²" readonly>
-										<i class="fa fa-area-chart fa-lg fa-fw" aria-hidden="true"></i>
-									</div>
-
-									<label><?= $strings['surfaceUsefulFloor']; ?></label>
-									<div class="inputWithIcon inputIconBg">
-										<input type="text" name="surfaceUsefulFloor" placeholder="<?= $strings['What is the useful surface?']?>" value="<?=$this->floor['surfaceUsefulFloor']?> m²" readonly>
-										<i class="fa fa-area-chart fa-lg fa-fw" aria-hidden="true"></i>
-									</div>
-
-									<label><?= $strings['planeFloor']; ?></label>
-									<div class="inputWithIcon inputIconBg">
-										<a target='_blank' href="FLOOR_Controller.php?action=<?= $strings['Show Plane']?>&building=<?= $this->floor['idBuilding']?>&floor=<?= $this->floor['idFloor']?>"><img src='<?= $this->floor['planeFloor']; ?>' class="avatarPlane"></a>
-									</div>
-									 -->
-
-
-									 <div class="input-container">
+									<div class="input-container">
 										<span class="input-group-text fa fa-lock"></span>
 										<input type="text" id="idBuilding" name="idBuilding" value="<?=$this->floor['sm_idBuilding']?>" readonly>
 										<label for="idBuilding"><?= $strings['What is the identifier of this building?']?></label>
