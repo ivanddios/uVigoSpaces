@@ -130,7 +130,7 @@ Switch ($_REQUEST['action']){
                 // }
                 // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                $floorEdit->updateFloor($buildingid, $floorid);
+                $floorEdit->updateFloor();
                 $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully updated."], $floorEdit->getNameFloor());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("FLOOR_Controller.php", "index", "building=".$floorEdit->getIdBuilding());
@@ -234,7 +234,7 @@ Switch ($_REQUEST['action']){
         $spacesValues = $space->showAllSpaces();
         
         $floor = new FLOOR_Model($buildingid, $floorid);
-        $planeFloor = $floor->findLinkPlane($buildingid, $floorid);
+        $planeFloor = $floor->findLinkPlane();
         $infoFloor = $floor->findInfoFloor();
 
         new FLOOR_SHOW_PLANE($spacesValues, $planeFloor, $infoFloor);

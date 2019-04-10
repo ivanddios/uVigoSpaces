@@ -19,7 +19,7 @@ class FLOOR_EDIT{
 							<?=htmlentities($strings["Do you want to change something?"])?>
 						</div>
 						<div class="col-lg-12 center-block-content">
-							<form method="POST" action="FLOOR_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->floor['am_idBuilding']?>&floor=<?= $this->floor['sm_idFloor']?>" enctype="multipart/form-data" onkeyup="validateFloor()">
+							<form method="POST" action="FLOOR_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->floor['sm_idBuilding']?>&floor=<?= $this->floor['sm_idFloor']?>" enctype="multipart/form-data" onkeyup="validateFloor()">
 								<div id="group-form">
 									
 									<!-- <div class="inputWithIcon inputIconBg">
@@ -54,15 +54,11 @@ class FLOOR_EDIT{
 									</div> -->
 
 
-									<div class="input-container">
-										<span class="input-group-text fa fa-lock"></span>
-										<input type="text" id="idBuilding" name="idBuilding" value="<?=$this->floor['sm_idBuilding']?>" readonly>
-										<label for="idBuilding"><?= $strings['What is the identifier of this building?']?></label>
-									</div>
+									<input type="hidden" id="idBuilding" name="idBuilding" value="<?=$this->floor['sm_idBuilding']?>" readonly>
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-building"></span>
-										<input type="text" id="idFloor" name="idFloor" value="<?=$this->floor['sm_idFloor']?>" onkeyup="checkFloorId(this.id)" required>
+										<input type="text" id="idFloor" name="idFloor" value="<?=$this->floor['sm_idFloor']?>" readonly>
 										<label for="idFloor"><?= $strings['What is the identifier of this floor?']?></label>
 									</div>
 								

@@ -93,8 +93,8 @@ function findFloorName() {
     return $result['sm_nameFloor'];
 }
 
-function findLinkPlane($idBuilding, $idFloor) {
-    $sql = "SELECT sm_planeFloor FROM `SM_FLOOR` WHERE sm_idBuilding='$idBuilding' AND sm_idFloor = '$idFloor'";
+function findLinkPlane() {
+    $sql = "SELECT sm_planeFloor FROM `SM_FLOOR` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
     $result = $this->mysqli->query($sql)->fetch_array();
     return $result['sm_planeFloor'];
 }
@@ -112,12 +112,13 @@ function addFloor() {
     }
 }
 
-function updateFloor($idBuilding, $idFloor) {
+function updateFloor() {
+
     if($this->getPlaneFloor('name') == ''){
-        $sql = "UPDATE `SM_FLOOR` SET sm_idFloor = '$this->idFloor', sm_nameFloor = '$this->nameFloor', sm_surfaceBuildingFloor = '$this->surfaceBuildingFloor', sm_surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE sm_idBuilding = '$idBuilding' AND sm_idFloor = '$idFloor'";
+        $sql = "UPDATE `SM_FLOOR` SET sm_idFloor = '$this->idFloor', sm_nameFloor = '$this->nameFloor', sm_surfaceBuildingFloor = '$this->surfaceBuildingFloor', sm_surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
     } else {
         $planeFloorBD =$this->dirPhoto.$this->getPlaneFloor('name');
-        $sql = "UPDATE `SM_FLOOR` SET sm_idFloor = '$this->idFloor', sm_nameFloor = '$this->nameFloor', sm_planeFloor = '$planeFloorBD', sm_surfaceBuildingFloor = '$this->surfaceBuildingFloor', sm_surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE sm_idBuilding = '$idBuilding' AND sm_idFloor = '$idFloor'";
+        $sql = "UPDATE `SM_FLOOR` SET sm_idFloor = '$this->idFloor', sm_nameFloor = '$this->nameFloor', sm_planeFloor = '$planeFloorBD', sm_surfaceBuildingFloor = '$this->surfaceBuildingFloor', sm_surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
         $this->updateDirPhoto();
         unlink($this->findLinkPlane());
     }

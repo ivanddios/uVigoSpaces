@@ -43,19 +43,18 @@ Switch ($_GET['action']){
 		}else{
 			if(isset($_POST['username']) && isset($_POST['passwd'])){
                 $user = new USER_Model($_POST['username'], $_POST['passwd']);
-                try {
-				    $user->login();
-					$_SESSION['LOGIN'] = $user->getUsername();
-					$_SESSION['PERMISSIONS'] = $user->getPermissions();
-					$_SESSION['LANGUAGE'] = $_POST['language'];
-					header('Location:../index.php');
-				}catch(Exception $errors){
-                    $view->setFlashDanger($errors->getMessage());
+                $loginAnswer = $user->login();
+				if($loginAnswer === true){
+                    $_SESSION['LOGIN'] = $user->getUsername();
+                    $_SESSION['PERMISSIONS'] = $user->getPermissions();
+                    $_SESSION['LANGUAGE'] = $_POST['language'];
+                    $view->redirect("BUILDING_Controller.php", "index");
+                } else {
+                    $view->setFlashDanger($loginAnswer);
                     $view->redirect("USER_Controller.php", $strings['Login']);
-				}
+                }
 			}
 		}
-
 	break;
 
 	case $strings['Add']:

@@ -51,17 +51,21 @@ class USER_Model {
 
 
     function login() {
-        $sql = "SELECT * FROM `SM_USER` WHERE sm_username = '$this->username'";
-        $result = $this->mysqli->query($sql);
-        if ($result->num_rows == 1) {
-            $tuple = $result->fetch_array();
-            if ($tuple['sm_passwd'] == md5($this->password)) {
-                return true;
+        if($this->getUsername() != null && $this->getPassword() != null){
+            $sql = "SELECT * FROM `SM_USER` WHERE sm_username = '$this->username'";
+            $result = $this->mysqli->query($sql);
+            if ($result->num_rows == 1) {
+                $tuple = $result->fetch_array();
+                if ($tuple['sm_passwd'] == md5($this->password)) {
+                    return true;
+                } else {
+                    return 'Password is incorrect';
+                }
             } else {
-                throw new Exception('Password is incorrect');
+                return 'The user does not exists';
             }
-        } else {
-            throw new Exception('The user does not exists');
+        }else{
+            return 'Username and password are mandatory';
         }
     }
 
