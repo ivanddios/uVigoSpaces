@@ -37,6 +37,10 @@ class USER_Model {
         return $this->username;
     }
 
+    public function getPassword(){
+        return $this->password;
+    }
+
     public function getPhoto($option=null){
         if($option !== null && isset($this->photo[$option])){
             return $this->photo[$option];
@@ -54,10 +58,10 @@ class USER_Model {
             if ($tuple['sm_passwd'] == md5($this->password)) {
                 return true;
             } else {
-                throw new Exception('Username or password is incorrect');
+                throw new Exception('Password is incorrect');
             }
         } else {
-            throw new Exception('Username or password is incorrect');
+            throw new Exception('The user does not exists');
         }
     }
 

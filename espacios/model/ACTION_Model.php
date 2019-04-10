@@ -10,7 +10,7 @@ class ACTION_Model {
 	private $mysqli;
 
 
-function __construct($idAction=NULL, $nameAction=NULL, $descripAction=NULL)
+function __construct($idAction=null, $nameAction=null, $descripAction=null)
 {
     $this->idAction = $idAction;
     $this->nameAction =  $nameAction; 

@@ -36,6 +36,7 @@ class Login{
                         crossorigin="anonymous"></script>
                     
                     <!-- Our CSS -->
+                    <link rel="stylesheet" href="../css/styleTFG.css">
                     <link rel="stylesheet" href="../css/style.css">
                 </head>
 

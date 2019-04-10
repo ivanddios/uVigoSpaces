@@ -51,7 +51,7 @@ class USER_SHOWALL{
                                         for ($i = 0; $i < count($listTitles); $i++):
                                             if ($key === $listTitles[$i]) : ?>
                                                 <td>
-                                                    <?php if ($key === 'photo') {
+                                                    <?php if ($key === 'sm_photo') {
                                                             if (is_file($value)) {?>
                                                                 <a target='_blank' href='<?= $value?>'>
                                                                     <img src='<?= $value?>' class='avatarUser'>
@@ -61,7 +61,7 @@ class USER_SHOWALL{
                                                                     <img src="../img/notUser.jpg" class='avatarUser'>
                                                                 </a> 
                                                             <?php } 
-                                                    } elseif ($key === 'username') {?>
+                                                    } elseif ($key === 'sm_username') {?>
                                                         <a title="<?= $strings['Show User']?>" href='USER_Controller.php?action=<?= $strings['Show']?>&user=<?= $this->users[$j]['username']?>'><?= $value?></a>                
                                                     <?php }else { ?>
                                                         <?= $value;

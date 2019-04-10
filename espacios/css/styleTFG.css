@@ -1,4 +1,4 @@
-/* @import "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css";
+@import "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css";
 
 body {
 	font-family:'K2D','Open Sans', Arial, sans-serif;
@@ -9,6 +9,8 @@ body {
 	background-color:#FFF;
 	overflow-x:hidden; 
 }
+
+/* HEADER -> NAVBAR */
 
 header{
 	background-color: #FFF;
@@ -82,13 +84,13 @@ header{
 
 .logoPpal {
 	height: 40px;
-} */
+}
 
 
 
 /* FORM STRUCTURE */
 
-/* .container {
+.container {
 	margin: auto;
 }
 
@@ -107,53 +109,28 @@ header{
 	border-radius: 5px;
 }
 
-
-
 .center-block-content {
 	margin: auto;
 	margin-top: 5%;
 	margin-bottom: 7%;
 }
 
-*/
-
-
-
-#titleView{
-	margin: auto;
-	margin-top: 5%;
-	font-size: 32px;
-	text-align: center;
-	line-height: 100%; 
-}
-
-#subtitleView {
-	margin:auto;
-	margin-top:2%;
-	font-size: 14px;
-	text-align: center;
-	color: grey;
-}
-
-
-/* #group-form{
+#group-form{
 	margin-top: 10%;
 	margin-bottom: 5%;
-}  */
+} 
 
 
-/* INPUTS */
 
 /*STYLE INPUTS FORMS*/
 
-
-/* .input-container {
+.input-container {
 	position: relative;
-	height: 2.7em;
+	/* height: 2.7em; */
 	margin-bottom: 8%;
 }
 	
-.input-container > input[type="text"],[type="password"]{
+.input-container > input{
 	display: block;
 	position: absolute;
 	left: 10%;
@@ -212,21 +189,21 @@ header{
 
 @keyframes 
   labelIn {  
-	  0% { 
+	    0% { 
 			left: 1px;
 			opacity: 1;
 			bottom: 0px; 
 			font-size: 1em;
-   		font-weight: 300;
+   		    font-weight: 300;
   	}
-    50% {
+        50% {
 			left: 1em;
 			opacity: 0;
 			bottom: 0px; 
 			font-size: 1em;
    		font-weight: 300;
   	}
-   	50.01% {
+   	    50.01% {
 			font-size: 1em;
 			left: 1em;
 			opacity: 0;
@@ -234,7 +211,7 @@ header{
 			color:#636c72;
 			font-weight: 400;
   	}
-   	100% {
+   	    100% {
 			font-size: 1.00em;
 			opacity: 1;
 			left: 1px;
@@ -276,113 +253,12 @@ header{
 			color: #636c72;
 			font-weight: 400;
 		}
-	} */
-
-
-/*STYLE ONLYLOGIN VIEW */
-
-
-.loginContainer{
-	margin-top: 15%;
-}
-
-#loginContainer{
-	width: 50%;
-	margin: auto;
-}
-
-input#loginUsername, input#loginPassword{
-  width:100%;
-  border:2px solid #aaa;
-  border-radius:4px;
-  margin:8px 0;
-  outline:none;
-  padding:8px;
-  box-sizing:border-box;
-	transition:.3s;
-	height: 10%!important;
-}
-
-
-.inputWithIcon{
-	position:relative;
-}
-
-.inputWithIcon input#loginUsername,input#loginPassword{
-	padding-left:40px;
-	margin-bottom: 5%;
-}
-
-.inputWithIcon i{
-	position:absolute;
-	left:0;
-	top:9px;
-	padding:9px 8px;
-	color:#aaa;
-	transition:.3s;
-}
-
-.inputWithIcon.inputIconBg i{
-	background-color:#aaa;
-	color:#fff;
-	padding:9px 4px;
-	border-radius:4px 0 0 4px;
-}
-
-
-#logoLogin{
-	margin:auto;
-}
-
-.item-select{
-	margin-left:30%;
-	margin-bottom: 10%;
-}
-
-.fa-lg {
-  font-size: 1.6em;
-  line-height: 0.84em;
-}
-
-
-/*PASSWORD BOX  */
-
-
-.passwordAlert {
-	display: none;
-	margin-bottom:8% ;
-}
-
-.passwordAlert p{
-	text-align: inherit;
-	margin:auto;
-  margin-left: 35%;
-}
-
-.valid {
-	color: green;
-}
-  
-.valid:before {
-	position: relative;
-	left: -35px;
-	content: "✔";
-}
-  
-.invalid {
-	color: red;
-}
-  
-.invalid:before {
-	position: relative;
-	left: -35px;
-	content: "✖";
-}
-
+    }
+    
 
 /* CHECKBOX */
 
-/* .checkboxList{
+.checkboxList{
 	margin-top: 2%;
 }
 
@@ -443,177 +319,45 @@ input[type="checkbox"]:checked ~ label:before {
 input[type="checkbox"]:checked ~ label:before {
 	color: #fff;
 	background-color: #337ab7;
-} */
-
-
-/* BOTON ATRÁS + CAMPO BUSCAR*/
-
-#pnlBoxSearch{
-	margin-top: 2%;
-}
-
-.iconBack{
-	margin-left: 1%;
-	margin-top: 1.5%;
-}
-
-#searchBox {
-	background: url('../img/searchicon.png') no-repeat scroll 7px 7px;
-	padding-left:30px;
-  width: 25%;
-  font-size: 16px;
-  padding: 8px 5px 8px 40px;
-  border: 1px solid #ddd;
-  float: right;
 }
 
 
 
 /* BUTTONS */
 
-
-/* .icon-btn {
-	padding: 1px 15px 3px 2px;
-} */
-
-/*
 .btn-dark{
-	margin-top:20px;
-	margin-bottom:10px;
-	padding:8px;
-	font-size:14px;
-	background-color:#eeee;
-	color:#000;
-	border:none;
-	border-bottom:3px solid #19e6;
-	border-radius:8%;
-	float:right;
-} */
-
-.btn-dark-Plane{
-	padding:8px;
-	font-size:14px;
-	background-color:#eeee;
-	color:#000;
-	border:none;
-	border-bottom:3px solid #19e6;
-	border-radius:2px;
+    margin-top:20px;
+    margin-bottom:10px;
+    padding:8px;
+    font-size:14px;
+    background-color:#eeee;
+    color:#000;
+    border:none;
+    border-bottom:3px solid #19e6;
+    border-radius:8%;
+    float:right;
 }
-
-.loginButton {
-  width: 102%;
-  margin-bottom: 4%;
-}
-
-.btn-darkLogin {
-  margin-bottom: 30px;
-  padding: 8px;
-  font-size: 14px;
-  background-color: #eeee;
-  color: #000;
-  border: none;
-  border-bottom: 3px solid #19e6;
-	border-radius: 2px;
-}
-
+  
 
 /* HTML ELEMENTS */
 
- td{
-	/* text-align: center;  */
-	vertical-align: middle!important;
-}
-/*
-p{
+/* p{
 	margin-top:5%;
 	font-weight: bold;
 } */
 
 
-/* IMG ELEMENTS */
-
-.miniatureTable{
-	width: 40px;
-	height: 40px;
-}
-
-.avatarPlane{
-	margin-left: 30%;
-	width: 200px;
-	height: 200px;
-}
-
-.avatarUser{
-	width: 50px;
-	height: 50px;
-}
-
-
-
-/* PROFILE USER PHOTO */
-
-#profilePhoto-container {
-  width: 150px;
-	height: 150px;
-	margin:auto;
-	margin-bottom: 5%;
-	overflow: hidden;
-	border-radius: 50%;	
-	margin-bottom: 10%;
-	cursor: pointer;
-}
-
-.profilePhoto-frame {
-	border: 2px dashed rgba(0, 0, 0, 0.623);
-}
-
-#profilePhoto {
-  width: 150px;
-  height: 150px;
-}
-
-#imageUpload{
-  display: none;
-}
-
-
-
-/* CANVAS ELEMENTS*/
-#clearButtons {
-  margin: 0 auto;
-  width: 520px;
-  height: 32px;
-	margin-top: 4px;
-	font-size:14px;
-}
-
-#canvas{
-	margin-top:3%;
-	margin-bottom:3%;
-}
-
-#planeButtons{
-	position: fixed;
-	top: 45%;
-	margin-left: 3%;
-}
-
-#planeButtons li{
-	list-style:none;
-}
-
-
 
 /* FOOTER */
 
-/* .footer {
+.footer {
 	bottom:0%;
 	max-height: 50%;
 	width: 100%;
 	padding-top: 1.25rem;
 	padding-bottom: 1.25rem;
-  background-color: white;
-  color: #000;
+    background-color: white;
+    color: #000;
 	text-align: center; 
 	border-top: 2px solid black;
 	border-bottom: 2px solid black;
@@ -626,61 +370,4 @@ p{
 
 .copyright a {
 	color:#000;
-} */
-
-
-
-
-/* USER ADD*/
-
-.function{
-	display:none;
-	margin-bottom: 20px;
 }
-
-.boxx{
-	margin-bottom: 5%;
-	margin-left: 25%;
-	display: block;
-}
-
-
- 
-/* div input file */
-
-.buttonText {
-	font-size: 14px;
-}
-
-.form-control {
-	font-size: 15px;
-}
-
-.control-label {
-	color: #ACACAC;
-} 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
