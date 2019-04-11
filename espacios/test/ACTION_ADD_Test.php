@@ -1,7 +1,7 @@
 <?php 
 
 require_once(__DIR__.'..\..\model\ACTION_Model.php');
-require_once(__DIR__.'..\..\test\TEST_View.php');
+// require_once(__DIR__.'..\..\test\TEST_View.php');
 
 // $tests = array();
 
@@ -47,7 +47,7 @@ $tests['SM_ACTION_ADD_TEST3']["Result"] = $addAnswer;
 
 $tests['SM_ACTION_ADD_TEST4']=(['Functionality' => "SM_ACTION_ADD",
                 'Description' => "Test 4. Attempt to add action with action name's format incorrect",
-                'Expected' => 'Action name is invalid. Try again!',
+                'Expected' => 'Action name is invalid',
                 'Result' => 'Not executed']);
 
 $action = new ACTION_Model('','111111','descriptAction');
@@ -86,7 +86,7 @@ $tests['SM_ACTION_ADD_TEST6']["Result"] = $addAnswer;
 
 $tests['SM_ACTION_ADD_TEST7']=(['Functionality' => "SM_ACTION_ADD",
                 'Description' => "Test 7. Attempt to add action with action description's format incorrect",
-                'Expected' => 'Action description is invalid. Try again!',
+                'Expected' => 'Action description is invalid',
                 'Result' => 'Not executed']);
 
 $action = new ACTION_Model('','nameAction','111111');

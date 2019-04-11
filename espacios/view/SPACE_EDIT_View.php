@@ -59,7 +59,7 @@ class SPACE_EDIT{
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-cube"></span>
-										<input type="text" id="idSpace" name="idSpace" value="<?=$this->space['sm_idSpace']?>" onkeyup="checkSpaceId()" required>
+										<input type="text" id="idSpace" name="idSpace" value="<?=$this->space['sm_idSpace']?>" readonly>
 										<label for="idSpace"><?= $strings['What is the identifier of this space?']?></label>
 									</div>
 

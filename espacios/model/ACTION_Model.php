@@ -63,7 +63,7 @@ function findNameAction() {
 function addAction() {
 
     $errors = $this->checkIsValidForAdd();
-    if($errors == false){
+    if($errors === false){
         $sql = "INSERT INTO `SM_ACTION` (sm_nameAction, sm_descripAction) VALUES ('$this->nameAction', '$this->descripAction')";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
@@ -128,13 +128,13 @@ public function checkIsValidForAdd() {
     }else if (strlen(trim($this->nameAction)) > 225 ) {
         $errors = "Action name can not be that long";
     }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameAction)){
-        $errors = "Action name is invalid. Try again!";
+        $errors = "Action name is invalid";
     }else if (strlen(trim($this->descripAction)) == 0 ) {
         $errors= "Action description is mandatory";
     }else if (strlen(trim($this->descripAction)) > 225 ) {
         $errors = "Action description can not be that long";
     }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->descripAction)){
-        $errors = "Action description is invalid. Try again!";
+        $errors = "Action description is invalid";
     }
 
     return $errors;
@@ -156,13 +156,13 @@ public function checkIsValidForUpdate() {
     }else if (strlen(trim($this->nameAction)) > 225 ) {
         $errors = "Action name can not be that long";
     }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameAction)){
-        $errors = "Action name is invalid. Try again!";
+        $errors = "Action name is invalid";
     }else if (strlen(trim($this->descripAction)) == 0 ) {
         $errors= "Action description is mandatory";
     }else if (strlen(trim($this->descripAction)) > 225 ) {
         $errors = "Action description can not be that long";
     }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->descripAction)){
-        $errors = "Action description is invalid. Try again!";
+        $errors = "Action description is invalid";
     }
 
     return $errors;

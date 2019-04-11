@@ -1,7 +1,7 @@
 <?php 
 
 require_once(__DIR__.'..\..\model\ACTION_Model.php');
-require_once(__DIR__.'..\..\test\TEST_View.php');
+// require_once(__DIR__.'..\..\test\TEST_View.php');
 
 // $tests = array();
 
@@ -67,7 +67,7 @@ $tests['SM_ACTION_EDIT_TEST5']["Result"] = $editAnswer;
 
 $tests['SM_ACTION_EDIT_TEST6']=(['Functionality' => "SM_ACTION_EDIT",
                 'Description' => "Test 6. Attempt to edit action with action name's format incorrect",
-                'Expected' => 'Action name is invalid. Try again!',
+                'Expected' => 'Action name is invalid',
                 'Result' => 'Not executed']);
 
 $action = new ACTION_Model(1,'111111','descriptAction');
@@ -107,7 +107,7 @@ $tests['SM_ACTION_EDIT_TEST8']["Result"] = $editAnswer;
 
 $tests['SM_ACTION_EDIT_TEST9']=(['Functionality' => "SM_ACTION_EDIT",
                 'Description' => "Test 9. Attempt to edit action with action description's format incorrect",
-                'Expected' => 'Action description is invalid. Try again!',
+                'Expected' => 'Action description is invalid',
                 'Result' => 'Not executed']);
 
 $action = new ACTION_Model(1,'nameAction','111111');
@@ -133,26 +133,6 @@ if($editAnswer === true){
 } else {
     $tests['SM_ACTION_EDIT_TEST10']["Result"] = $addAnswer;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

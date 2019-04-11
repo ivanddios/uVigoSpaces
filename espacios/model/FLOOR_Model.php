@@ -102,13 +102,23 @@ function findLinkPlane() {
 
 
 function addFloor() {
-    $planeFloorBD =$this->dirPhoto.$this->getPlaneFloor('name');
-    $sql = "INSERT INTO `SM_FLOOR` (sm_idBuilding, sm_idFloor, sm_nameFloor, sm_planeFloor, sm_surfaceBuildingFloor, sm_surfaceUsefulFloor) VALUES ('$this->idBuilding', '$this->idFloor', '$this->nameFloor', '$planeFloorBD', $this->surfaceBuildingFloor, $this->surfaceUsefulFloor)";
-    if (!($resultado = $this->mysqli->query($sql))) {
-        return 'Error in the query on the database';
-    } else {
-        $this->updateDirPhoto();
-        return true;
+
+    $errors = $this->checkIsValidForAdd_Update();
+    if($errors === false){
+        if(!$this->existsFloor()){
+            $planeFloorBD =$this->dirPhoto.$this->getPlaneFloor('name');
+            $sql = "INSERT INTO `SM_FLOOR` (sm_idBuilding, sm_idFloor, sm_nameFloor, sm_planeFloor, sm_surfaceBuildingFloor, sm_surfaceUsefulFloor) VALUES ('$this->idBuilding', '$this->idFloor', '$this->nameFloor', '$planeFloorBD', $this->surfaceBuildingFloor, $this->surfaceUsefulFloor)";
+            if (!($resultado = $this->mysqli->query($sql))) {
+                return 'Error in the query on the database';
+            } else {
+                $this->updateDirPhoto();
+                return true;
+            }
+        }else{
+            return "There is already a floor with that id in this building";
+        }
+    }else {
+        return $errors;
     }
 }
 
@@ -179,9 +189,9 @@ function updateDirPhoto() {
 }
 
 
-public function checkIsValidForAdd() {
+public function checkIsValidForAdd_Update() {
 
-    $errors = array();
+    $errors = false;
 
     if (!preg_match('/^[0-9]{1,8}([.][0-9]{1,2}){0,1}?$/', $this->surfaceUsefulFloor)) {
         $this->setSurfaceUsefulFloor(0.0);
@@ -191,20 +201,21 @@ public function checkIsValidForAdd() {
         $this->setSurfaceBuildingFloor(0.0);
     }
 
+    var_dump($this->idFloor);
+    exit();
+
     if (strlen(trim($this->idBuilding)) == 0 ) {
         $errors= "Building id is mandatory";
     }else if (strlen(trim($this->idBuilding)) > 6 ) {
         $errors = "Building id can not be that long";
     }else if(!preg_match('/[A-Z0-9]/', $this->idBuilding)){
-        $errors = "Building id is invalid. Example: OSBI0";
+        $errors = "Building id is invalid";
     }elseif (strlen(trim($this->idFloor)) == 0 ) {
         $errors= "Floor id is mandatory";
     }else if (strlen(trim($this->idFloor)) > 2 ) {
         $errors = "Floor id can not be that long";
     }else if(!preg_match('/[A-Z0-9]/', $this->idFloor)){
-        $errors = "Floor id is invalid. Example: 00,S1";
-    }elseif($this->existsFloor($this->idBuilding, $this->idFloor)){
-        $errors = "There is already a floor with that id in this building";
+        $errors = "Floor id is invalid";
     }else if (strlen(trim($this->nameFloor)) == 0 ) {
         $errors= "Floor name is mandatory";
     }else if (strlen(trim($this->nameFloor)) > 225 ) {
@@ -219,70 +230,66 @@ public function checkIsValidForAdd() {
         $errors = "The usable surface can not be greater than the building surface.";
     }
 
-    if (sizeof($errors) > 0){
-        throw new Exception($errors);
-    }
+    return $errors;
 }
 
 
 
 
 
-public function existsFloorToEdit($idFloor) {
-	$sql = "SELECT * FROM `SM_FLOOR` WHERE (sm_idFloor, sm_idBuilding) NOT IN (SELECT sm_idFloor, sm_idBuilding FROM `SM_FLOOR` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor='$idFloor') AND sm_idBuilding='$this->idBuilding' AND sm_idFloor='$this->idFloor'";
-	$result = $this->mysqli->query($sql);
-	if ($result->num_rows >= 1) {
-		return true;
-	} else {
-		return false;
-	}
-}
+// public function existsFloorToEdit($idFloor) {
+// 	$sql = "SELECT * FROM `SM_FLOOR` WHERE (sm_idFloor, sm_idBuilding) NOT IN (SELECT sm_idFloor, sm_idBuilding FROM `SM_FLOOR` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor='$idFloor') AND sm_idBuilding='$this->idBuilding' AND sm_idFloor='$this->idFloor'";
+// 	$result = $this->mysqli->query($sql);
+// 	if ($result->num_rows >= 1) {
+// 		return true;
+// 	} else {
+// 		return false;
+// 	}
+// }
 
-public function checkIsValidForEdit($idFloor) {
+// public function checkIsValidForEdit($idFloor) {
 
-    $errors = array();
+//     $errors = array();
 
-    if (!preg_match('/^[0-9]{1,8}([.][0-9]{1,2}){0,1}?$/', $this->surfaceUsefulFloor)) {
-        $this->setSurfaceUsefulFloor(0.0);
-    }
+//     if (!preg_match('/^[0-9]{1,8}([.][0-9]{1,2}){0,1}?$/', $this->surfaceUsefulFloor)) {
+//         $this->setSurfaceUsefulFloor(0.0);
+//     }
 
-    if (!preg_match('/^[0-9]{1,8}([.][0-9]{1,2}){0,1}?$/', $this->surfaceBuildingFloor)) {
-        $this->setSurfaceBuildingFloor(0.0);
-    }
+//     if (!preg_match('/^[0-9]{1,8}([.][0-9]{1,2}){0,1}?$/', $this->surfaceBuildingFloor)) {
+//         $this->setSurfaceBuildingFloor(0.0);
+//     }
 
 
-    if (strlen(trim($this->idBuilding)) == 0 ) {
-        $errors= "Building id is mandatory";
-    }else if (strlen(trim($this->idBuilding)) > 6 ) {
-        $errors = "Building id can not be that long";
-    }else if(!preg_match('/[A-Z0-9]/', $this->idBuilding)){
-        $errors = "Building id is invalid. Example: OSBI0";
-    }elseif (strlen(trim($this->idFloor)) == 0 ) {
-        $errors= "Floor id is mandatory";
-    }else if (strlen(trim($this->idFloor)) > 2 ) {
-        $errors = "Floor id can not be that long";
-    }else if(!preg_match('/[A-Z0-9]/', $this->idFloor)){
-        $errors = "Floor id is invalid. Example: 00,S1";
-    }elseif($this->existsFloorToEdit($idFloor)){
-        $errors = "There is already a floor with that id in this building";
-    }else if (strlen(trim($this->nameFloor)) == 0 ) {
-        $errors= "Floor name is mandatory";
-    }else if (strlen(trim($this->nameFloor)) > 225 ) {
-        $errors = "Floor name can not be that long";
-    }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameFloor)){
-        $errors = "Floor name is invalid. Try again!";
-    }else if (strlen(trim($this->surfaceBuildingFloor)) > 99999999.99) {
-        $errors = "Floor surface can not be that long";
-    }else if (strlen(trim($this->surfaceUsefulFloor)) > 99999999.99) {
-        $errors = "Floor useful surface can not be that long";
-    }else if($this->getSurfaceUsefulFloor() > $this->getSurfaceBuildingFloor()){
-        $errors = "The usable surface can not be greater than the building surface.";
-    }
+//     if (strlen(trim($this->idBuilding)) == 0 ) {
+//         $errors= "Building id is mandatory";
+//     }else if (strlen(trim($this->idBuilding)) > 6 ) {
+//         $errors = "Building id can not be that long";
+//     }else if(!preg_match('/[A-Z0-9]/', $this->idBuilding)){
+//         $errors = "Building id is invalid. Example: OSBI0";
+//     }elseif (strlen(trim($this->idFloor)) == 0 ) {
+//         $errors= "Floor id is mandatory";
+//     }else if (strlen(trim($this->idFloor)) > 2 ) {
+//         $errors = "Floor id can not be that long";
+//     }else if(!preg_match('/[A-Z0-9]/', $this->idFloor)){
+//         $errors = "Floor id is invalid. Example: 00,S1";
+//     }else if (strlen(trim($this->nameFloor)) == 0 ) {
+//         $errors= "Floor name is mandatory";
+//     }else if (strlen(trim($this->nameFloor)) > 225 ) {
+//         $errors = "Floor name can not be that long";
+//     }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameFloor)){
+//         $errors = "Floor name is invalid. Try again!";
+//     }else if (strlen(trim($this->surfaceBuildingFloor)) > 99999999.99) {
+//         $errors = "Floor surface can not be that long";
+//     }else if (strlen(trim($this->surfaceUsefulFloor)) > 99999999.99) {
+//         $errors = "Floor useful surface can not be that long";
+//     }else if($this->getSurfaceUsefulFloor() > $this->getSurfaceBuildingFloor()){
+//         $errors = "The usable surface can not be greater than the building surface.";
+//     }
 
-    if (sizeof($errors) > 0){
-        throw new Exception($errors);
-    }
-}
+//     if (sizeof($errors) > 0){
+//         throw new Exception($errors);
+//     }
+// }
 
 
 

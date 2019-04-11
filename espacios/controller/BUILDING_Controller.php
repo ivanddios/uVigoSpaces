@@ -46,18 +46,17 @@ Switch ($_GET['action']){
 
         if (isset($_POST["submit"])) { 
             $buildingAdd = get_data_form();
+            $answerAdd = $buildingAdd->addBuilding();
 
-            try{
-                $buildingAdd->checkIsValidForAdd_Update(); 
+            if($answerAdd === true){
                 $buildingAdd->addBuilding();
                 $flashMessageSuccess = sprintf($strings["Building \"%s\" successfully added."], $buildingAdd->getNameBuilding());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("BUILDING_Controller.php", "index");
 
-            }catch(Exception $errors) {
-                $view->setFlashDanger($strings[$errors->getMessage()]);
+            }else{
+                $view->setFlashDanger($strings[$answerAdd]);
                 $view->redirect("BUILDING_Controller.php", $strings['Add']);
-
             }
                 
         } else {
@@ -87,17 +86,15 @@ Switch ($_GET['action']){
 
         if (isset($_POST["submit"])) { 
             $buildingEdit = get_data_form();
-
-            try{
-                $buildingEdit->checkIsValidForAdd_Update(); 
-                $buildingEdit->updateBuilding($buildingid);
+            $answerEdit = $buildingEdit->updateBuilding();
+            if($answerEdit === true){
+                $buildingAdd->updateBuilding();
                 $flashMessageSuccess = sprintf($strings["Building \"%s\" successfully updated."], $buildingEdit->getNameBuilding());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("BUILDING_Controller.php", "index");   
-
-            }catch(Exception $errors) {
-                $view->setFlashDanger($strings[$errors->getMessage()]);
-                $view->redirect("BUILDING_Controller.php", $strings['Edit'], 'building='.$buildingid);
+            }else{
+                $view->setFlashDanger($strings[$answerEdit]);
+                $view->redirect("BUILDING_Controller.php", $strings['Add']);
             }
         } else {
             $building = new BUILDING_Model($buildingid);

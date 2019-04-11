@@ -47,7 +47,7 @@ class USER_EDIT{
 								</div>
 								
 								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="username" name="username" placeholder="<?= $strings['What is the username of this user?']?>" value="<?=$this->user['username']?>" onkeyup="checkUser(this.id)" readonly>
+									<input type="text" id="username" name="username" placeholder="<?= $strings['What is the username of this user?']?>" value="<?=$this->user['username']?>"W readonly>
 									<i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
 								</div>
 

@@ -1,7 +1,7 @@
 
 <?php 
 require_once(__DIR__.'..\..\model\USER_Model.php');
-require_once(__DIR__.'..\..\test\TEST_View.php');
+// require_once(__DIR__.'..\..\test\TEST_View.php');
 
 $tests = array();
 
