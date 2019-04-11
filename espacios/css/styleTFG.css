@@ -21,7 +21,7 @@ header{
 	font-size: 25px;
 }
 .nav-link {
-    padding-left:0;
+  padding-left:0;
 }
 
 .nav-a{
@@ -33,7 +33,7 @@ header{
 }
 
 .navbar-brand {
-    color: #000;
+  color: #000;
 }
 
 .navbar-collapse{
@@ -45,7 +45,7 @@ header{
 }
 
 .navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
-     color: #000; 
+  color: #000; 
 }
 
 .navbar-light .navbar-nav .nav-link {

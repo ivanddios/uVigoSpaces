@@ -61,13 +61,22 @@ function findNameAction() {
 }
 
 function addAction() {
-    $sql = "INSERT INTO `SM_ACTION` (sm_nameAction, sm_descripAction) VALUES ('$this->nameAction', '$this->descripAction')";
-    if (!($resultado = $this->mysqli->query($sql))) {
-        throw new Exception('Error in the query on the database');
+
+    $errors = $this->checkIsValidForAdd();
+    if($errors == false){
+        $sql = "INSERT INTO `SM_ACTION` (sm_nameAction, sm_descripAction) VALUES ('$this->nameAction', '$this->descripAction')";
+        if (!($resultado = $this->mysqli->query($sql))) {
+            return 'Error in the query on the database';
+            //throw new Exception('Error in the query on the database');
+        } else {
+            return true;
+        }
+        return 'Error in the query on the database';
+        //throw new Exception('Error in the query on the database');
+
     } else {
-        return true;
+        return $errors;
     }
-    throw new Exception('Error in the query on the database');
 }
 
 
@@ -82,11 +91,17 @@ function deleteAction() {
 
 
 function updateAction() {
-    $sql = "UPDATE `SM_ACTION` SET sm_nameAction = '$this->nameAction', sm_descripAction = '$this->descripAction' WHERE sm_idAction = '$this->idAction'";
-    if (!($resultado = $this->mysqli->query($sql))) {
-        throw new Exception('Error in the query on the database');
+    $errors = $this->checkIsValidForUpdate();
+    if($errors == false){
+        $sql = "UPDATE `SM_ACTION` SET sm_nameAction = '$this->nameAction', sm_descripAction = '$this->descripAction' WHERE sm_idAction = '$this->idAction'";
+        if (!($resultado = $this->mysqli->query($sql))) {
+            return 'Error in the query on the database';
+            //throw new Exception('Error in the query on the database');
+        } else {
+            return true;
+        }
     } else {
-        return true;
+        return $errors;
     }
 }
 
@@ -102,40 +117,56 @@ public function existsAction() {
 }
 
 
-// public function checkIsValidForAdd_Update() {
+public function checkIsValidForAdd() {
 
-//     $errors = array();
+    $errors = false;
 
-//     if (strlen(trim($this->idBuilding)) == 0 ) {
-//         $errors= "Building id is mandatory";
-//     }else if (strlen(trim($this->idBuilding)) > 6 ) {
-//         $errors = "Building id can not be that long";
-//     }else if(!preg_match('/[A-Z0-9]/', $this->idBuilding)){
-//         $errors = "Building id is invalid. Example: OSBI0";
-//     }elseif($this->existsBuilding($this->idbuilding)){
-//         $errors = "There is already a building with that id";
-//     }else if (strlen(trim($this->nameBuilding)) == 0 ) {
-//         $errors= "Building name is mandatory";
-//     }else if (strlen(trim($this->nameBuilding)) > 225 ) {
-//         $errors = "Building name can not be that long";
-//     }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameBuilding)){
-//         $errors = "Building name is invalid. Try again!";
-//     }else if (strlen(trim($this->addressBuilding)) == 0 ) {
-//         $errors= "Building address is mandatory";
-//     }else if (strlen(trim($this->addressBuilding)) > 225 ) {
-//         $errors = "Building address can not be that long";
-//     }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->addressBuilding)){
-//         $errors = "Building address is invalid. Try again!";
-//     }else if (strlen(trim($this->phoneBuilding)) != 9 ) {
-//         $errors= "Building phone is incorrect. Example: 666777888";
-//     }else if(!preg_match('/^[9|6|7][0-9]{8}$/', $this->phoneBuilding)){
-//         $errors = "Building phone format is invalid. Example: 666777888";
-//     }
+    if (strlen(trim($this->nameAction)) == 0  && (strlen(trim($this->descripAction)) == 0 )){
+        $errors = "Action name and description are mandatory";
+    }else if (strlen(trim($this->nameAction)) == 0 ) {
+        $errors = "Action name is mandatory";
+    }else if (strlen(trim($this->nameAction)) > 225 ) {
+        $errors = "Action name can not be that long";
+    }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameAction)){
+        $errors = "Action name is invalid. Try again!";
+    }else if (strlen(trim($this->descripAction)) == 0 ) {
+        $errors= "Action description is mandatory";
+    }else if (strlen(trim($this->descripAction)) > 225 ) {
+        $errors = "Action description can not be that long";
+    }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->descripAction)){
+        $errors = "Action description is invalid. Try again!";
+    }
 
-//     if (sizeof($errors) > 0){
-//         throw new Exception($errors);
-//     }
-// }
+    return $errors;
+}
+
+
+public function checkIsValidForUpdate() {
+
+    $errors = false;
+
+    if(strlen(trim($this->idAction)) == 0){
+        $errors = "Action id are mandatory";
+    }else if($this->existsAction() !== true) {
+        $errors = "Action does not exists";
+    } else if (strlen(trim($this->nameAction)) == 0  && (strlen(trim($this->descripAction)) == 0 )){
+        $errors = "Action name and description are mandatory";
+    }else if (strlen(trim($this->nameAction)) == 0 ) {
+        $errors = "Action name is mandatory";
+    }else if (strlen(trim($this->nameAction)) > 225 ) {
+        $errors = "Action name can not be that long";
+    }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameAction)){
+        $errors = "Action name is invalid. Try again!";
+    }else if (strlen(trim($this->descripAction)) == 0 ) {
+        $errors= "Action description is mandatory";
+    }else if (strlen(trim($this->descripAction)) > 225 ) {
+        $errors = "Action description can not be that long";
+    }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->descripAction)){
+        $errors = "Action description is invalid. Try again!";
+    }
+
+    return $errors;
+}
 
 
 

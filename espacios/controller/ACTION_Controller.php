@@ -45,17 +45,16 @@ Switch ($_GET['action']){
 
         if (isset($_POST["submit"])) { 
             $ActionAdd = get_data_form();
-            try{
-                //$functionAdd->checkIsValidForAdd_Update(); 
-                $ActionAdd->addAction();
+            $answerAdd = $ActionAdd->addAction();
+            if($answerAdd === true){
                 $flashMessageSuccess = sprintf($strings["Action \"%s\" successfully added."], $ActionAdd->getNameAction());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("ACTION_Controller.php", "index");
-
-            }catch(Exception $errors) {
-                $view->setFlashDanger($strings[$errors->getMessage()]);
+            } else {
+                $view->setFlashDanger($strings[$answerAdd]);
                 $view->redirect("ACTION_Controller.php", $strings['Add']);
-            } 
+            }
+
         } else {
             new ACTION_ADD();
         }
@@ -83,15 +82,15 @@ Switch ($_GET['action']){
 
         if (isset($_POST["submit"])) { 
             $actionEdit = get_data_form();
-            try{
-                //$functionEdit->checkIsValidForAdd_Update();
+            $answerEdit = $actionEdit->updateAction();
+            if($answerEdit === true){
                 $actionEdit->updateAction();
                 $flashMessageSuccess = sprintf($strings["Action \"%s\" successfully updated."], $actionEdit->getNameAction());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("ACTION_Controller.php", "index");   
 
-            }catch(Exception $errors) {
-                $view->setFlashDanger($strings[$errors->getMessage()]);
+            }else{
+                $view->setFlashDanger($strings[$answerEdit]);
                 $view->redirect("ACTION_Controller.php", $strings['Edit'], 'accion='.$actionId);
             }
         } else {
