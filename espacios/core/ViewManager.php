@@ -56,7 +56,7 @@ class ViewManager {
 	}
 
 
-	public function redirect($controller, $action, $queryString=NULL) {
+	public function redirect($controller, $action=null, $queryString=null) {
 		if(empty($action)){
 			header("Location: $controller");
 		} else {

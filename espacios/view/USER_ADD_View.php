@@ -2,7 +2,10 @@
 
 class USER_ADD{
 
-    function __construct() {
+	private $groups;
+
+    function __construct($groups) {
+			$this->groups = $groups;
 			$this->render();
     }
     
@@ -45,11 +48,6 @@ class USER_ADD{
 									<label for="username"><?= $strings['What is the username of this user?']?></label>
 								</div>
 								
-								<!-- <div class="inputWithIcon inputIconBg">
-									<input type="text" id="username" name="username" placeholder="<?= $strings['What is the username of this user?']?>"   onkeyup="checkUser(this.id)" required>
-									<i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
-								</div> -->
-
 								<div class="input-container passHelp">
 									<span class="input-group-text fa fa-lock"></span>
 									<input type="password" id="password" name="password" onkeyup="checkPassword(this.id)" required/>
@@ -63,28 +61,12 @@ class USER_ADD{
 											<p id="number" class="invalid"><?=$strings['PasswordNumber']?></p>
 									</div>
 
-								<!-- <div class="inputWithIcon inputIconBg">
-									<input type="password" id="password" name="password" placeholder="<?= $strings['What is the password of this user?']?>" onkeyup="checkPassword(this.id)" required >
-									<i class="fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
-                    <div id="passwordAlert" class="alert alert-secondary passwordAlert" role="alert">
-											<p id="length" class="invalid"><?=$strings['PasswordCharacters']?></p>
-											<p id="lowercase" class="invalid"><?=$strings['PasswordLowercase']?></p>
-											<p id="uppercase" class="invalid"><?=$strings['PasswordUppercase']?></p>
-											<p id="number" class="invalid"><?=$strings['PasswordNumber']?></p>
-									</div>
-								</div> -->
-
 								<div class="input-container">
 									<span class="input-group-text fa fa-lock"></span>
 									<input type="password" id="passwordConfirm" name="passwordConfirm" onkeyup="checkConfirmPassword(this.id)" required/>
 									<label for="passwordConfirm"><?= $strings['Repeat password']?></label>
 								</div>
-								
-								<!-- <div class="inputWithIcon inputIconBg">
-									<input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="<?= $strings['Repeat password']?>" onkeyup="checkConfirmPassword(this.id)" required>
-									<i class="fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
-								</div> -->
-								
+						
 
 								<div class="input-container">
 									<span class="input-group-text fa fa-reorder"></span>
@@ -92,10 +74,6 @@ class USER_ADD{
 									<label for="name"><?= $strings['What is the name of the user?']?></label>
 								</div>
 
-								<!-- <div class="inputWithIcon inputIconBg">
-									<input type="text" id="name" name="name" placeholder="<?= $strings['What is the name of the user?']?>"  onkeyup="checkText(this.id)" required>
-									<i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
-								</div> -->
 
 								<div class="input-container">
 									<span class="input-group-text fa fa-reorder"></span>
@@ -103,47 +81,28 @@ class USER_ADD{
 									<label for="surname"><?= $strings["What are the user's surnames?"]?></label>
 								</div>
 
-								<!-- <div class="inputWithIcon inputIconBg">
-									<input type="text" id="surname" name="surname" placeholder="<?= $strings["What are the user's surnames?"]?>" onkeyup="checkText(this.id)" required>
-									<i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
-								</div> -->
-								
 								<div class="input-container">
 									<span class="input-group-text fa fa-id-card"></span>
 									<input type="text" id="dni" name="dni" onkeyup="checkText(this.id)" required/>
 									<label for="dni"><?= $strings['What is your ID?']?></label>
 								</div>
-
-                <!-- <div class="inputWithIcon inputIconBg">
-									<input type="text" id="dni" name="dni" placeholder="<?= $strings['What is your ID?']?>"  onkeyup="checkDNI(this.id)" required>
-									<i class="fa fa-id-card fa-lg fa-fw" aria-hidden="true"></i>
-								</div> -->
 								
 								<div class="input-container">
 									<span class="input-group-text fa fa-calendar"></span>
-									<input type="text" id="date-es" name="birthdate" class ="date" placeholder="<?= $strings['What is his birthdate?']?>" onchange="checkDate(this)" required>
-								</div>
-								
-                <!-- <div class="inputWithIcon inputIconBg">
 									<?php if($_SESSION['LANGUAGE'] === 'English'): ?>
-										<input type="text" id="date-eng" name="birthdate" class ="date" placeholder="<?= $strings['What is his birthdate?']?>" value="<?= $this->user['birthdate']?>"  onchange="checkDate(this)" required>
+										<input type="text" id="date-eng" name="birthdate" class ="date" onchange="checkDate(this)" required>
+										<label for="date-eng"><?= $strings['What is his birthdate?']?></label>
 									<?php else: ?>
-										<input type="text" id="date-es" name="birthdate" class ="date" placeholder="<?= $strings['What is his birthdate?']?>" value="<?= $this->user['birthdate']?>"  onchange="checkDate(this)" required>
+										<input type="text" id="date-es" name="birthdate" class ="date" onchange="checkDate(this)" required>
+										<label for="date-es"><?= $strings['What is his birthdate?']?></label>
 									<?php endif; ?>
-									<i class="fa fa-calendar fa-lg fa-fw" aria-hidden="true"></i>
-                </div> -->
-													
+								</div>
+														
 								<div class="input-container">
 									<span class="input-group-text fa fa-envelope"></span>
 									<input type="text" id="email" name="email" onkeyup="checkEmail(this.id)" required/>
 									<label for="email"><?= $strings['What is his email?']?></label>
 								</div>
-
-							<!-- <div class="inputWithIcon inputIconBg">
-									<input type="text" id="email" name="email" placeholder="<?= $strings['What is his email?']?>" onkeyup="checkEmail(this.id)" required>
-									<i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
-								</div> -->
-
 
 								<div class="input-container">
 									<span class="input-group-text fa fa-phone"></span>
@@ -151,21 +110,17 @@ class USER_ADD{
 									<label for="phone"><?= $strings['What is his phone?']?></label>
 								</div>
 
-								<!-- <div class="inputWithIcon inputIconBg">
-									<input type="text" id="phone" name="phone" placeholder="<?= $strings['What is his phone?']?>"  onkeyup="checkNumPhone(this.id)" required>
-									<i class="fa fa-phone fa-lg fa-fw" aria-hidden="true"></i>
-								</div>  -->
-								 
-
-								<!-- <div class="inputWithIcon inputIconBg">
-									<select class="custom-select">
-										<option selected>Open this select menu</option>
-										<option value="1">One</option>
-										<option value="2">Two</option>
-										<option value="3">Three</option>
+								
+								<div class="input-container">
+									<select class="custom-select" name="group" required>
+										<option selected disabled>Choose here</option>
+										<?php foreach($this->groups as $group): ?>
+											<option value="<?=$group['sm_idGroup']?>"><?=$group['sm_nameGroup'] ." - ". $group['sm_descripGroup']?></option>
+										<?php endforeach; ?>
 									</select>
-									<i class="fa fa-tag fa-lg fa-fw" aria-hidden="true"></i>
-								</div> -->
+									<i class="input-group-text fa fa-tag" aria-hidden="true"></i>
+								</div>
+						 
 
 								<button id="submitButton" type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
 							</div> 

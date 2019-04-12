@@ -47,12 +47,12 @@ Switch ($_REQUEST['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add floors requires login."]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if (!isset($_GET['building'])){
             $view->setFlashDanger($strings["Building id is mandatory"]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("BUILDING_Controller.php");
         }
         $buildingid = $_GET['building'];
 
@@ -77,7 +77,7 @@ Switch ($_REQUEST['action']){
                 $floorAdd->addFloor(); 
                 $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully added."], $floorAdd->getNameFloor());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("FLOOR_Controller.php", "index", "building=".$floorAdd->getIdBuilding());
+                $view->redirect("FLOOR_Controller.php", "building=".$floorAdd->getIdBuilding());
 
             }catch(Exception $errors) {
                 $view->setFlashDanger($strings[$errors->getMessage()]);
@@ -96,19 +96,19 @@ Switch ($_REQUEST['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Edit floors requires login."]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if (!isset($_GET['building']) && !isset($_GET['floor'])){
             $view->setFlashDanger($strings["Building and floor id is mandatory"]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("BUILDING_Controller.php");
         }
         $buildingid = $_GET["building"];
         $floorid = $_GET['floor'];
 
 		if(!checkRol('EDIT', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("FLOOR_Controller.php", "index", "building=".$buildingid);
+            $view->redirect("FLOOR_Controller.php", "building=".$buildingid);
         }
 
         
@@ -133,7 +133,7 @@ Switch ($_REQUEST['action']){
                 $floorEdit->updateFloor();
                 $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully updated."], $floorEdit->getNameFloor());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("FLOOR_Controller.php", "index", "building=".$floorEdit->getIdBuilding());
+                $view->redirect("FLOOR_Controller.php", "building=".$floorEdit->getIdBuilding());
             }catch(Exception $errors) {
                 $view->setFlashDanger($strings[$errors->getMessage()]);
                 $view->redirect("FLOOR_Controller.php", $strings['Edit'], "building=$buildingid&floor=".$floorid);
@@ -151,12 +151,12 @@ Switch ($_REQUEST['action']){
 
         // if (!isset($_SESSION['LOGIN'])){
         //     $view->setFlashDanger($strings["Not in session. Show the floors requires login"]);
-        //      $view->redirect("USER_Controller.php", "index");
+        //      $view->redirect("USER_Controller.php");
         // }
 
         if (!isset($_GET['building']) && !isset($_GET['floor'])){
             $view->setFlashDanger($strings["Building and floor id is mandatory"]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("BUILDING_Controller.php");
         }
         $buildingid = $_GET["building"];
         $floorid = $_GET['floor'];
@@ -177,7 +177,7 @@ Switch ($_REQUEST['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Delete floors requires login"]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if (!isset($_GET['building']) && !isset($_GET['floor'])){
@@ -189,13 +189,13 @@ Switch ($_REQUEST['action']){
 
         if(!checkRol('DELETE', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("FLOOR_Controller.php", "index", "building=".$buildingid);
+            $view->redirect("FLOOR_Controller.php", "building=".$buildingid);
         }
         $floor = new FLOOR_Model($buildingid, $floorid);
                 
         if (!$floor->existsFloor()) {
             $view->setFlashDanger($strings["No exist floor to delete"]);
-            $view->redirect("FLOOR_Controller.php", "index", "building=".$buildingid);
+            $view->redirect("FLOOR_Controller.php", "building=".$buildingid);
         }
 
         try{
@@ -203,10 +203,10 @@ Switch ($_REQUEST['action']){
             $floor->deleteFloor();
             $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully deleted."], $buildingid.$floorid);
             $view->setFlashSuccess($flashMessageSuccess);
-            $view->redirect("FLOOR_Controller.php", "index", "building=".$floor->getIdBuilding());
+            $view->redirect("FLOOR_Controller.php", "building=".$floor->getIdBuilding());
         }catch(Exception $errors) {
             $view->setFlashDanger($strings[$errors->getMessage()]);
-            $view->redirect("FLOOR_Controller.php", "index", "building=".$buildingid);
+            $view->redirect("FLOOR_Controller.php", "building=".$buildingid);
     }
 
     break;
@@ -215,12 +215,12 @@ Switch ($_REQUEST['action']){
 
         // if (!isset($_SESSION['LOGIN'])){
         //     $view->setFlashDanger($strings["Not in session. Show the floors requires login"]);
-        //     $view->redirect("USER_Controller.php", "index");
+        //     $view->redirect("USER_Controller.php");
         // }
 
         if (!isset($_GET['building']) && !isset($_GET['floor'])){
             $view->setFlashDanger($strings["Building and floor id is mandatory"]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("BUILDING_Controller.php");
         }
         $buildingid = $_GET["building"];
         $floorid = $_GET['floor'];
@@ -262,7 +262,7 @@ Switch ($_REQUEST['action']){
             new FLOOR_SHOWALL($floors, $buildingName);
         } else {
             $view->setFlashDanger($strings["Building id is mandatory"]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("BUILDING_Controller.php");
         }
                
     break;

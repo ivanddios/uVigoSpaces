@@ -34,13 +34,14 @@ class FLOOR_SHOWALL{
                                 <?php foreach ($listTitles as $title): ?>
                                     <th scope="col"><?=$strings[$title]?></th>
                                 <?php endforeach; ?>
-                                <?php  if(checkRol('ADD', 'FLOOR')): ?>
+                              
                                     <th scope="col">
-                                        <a href="FLOOR_Controller.php?&action=<?= $strings['Add']?>&building=<?= $_GET['building']?>">
-                                            <span title="<?= $strings['Add Floor']?>" class="btn btn-success btn-sm fa fa-plus"></span>
-                                        </a>
+                                        <?php  if(checkRol('ADD', 'FLOOR')): ?>
+                                            <a href="FLOOR_Controller.php?&action=<?= $strings['Add']?>&building=<?= $_GET['building']?>">
+                                                <span title="<?= $strings['Add Floor']?>" class="btn btn-success btn-sm fa fa-plus"></span>
+                                            </a>
+                                        <?php endif; ?>
                                     </th>
-                                <?php endif; ?>
                             </tr>
                         </thead>
 

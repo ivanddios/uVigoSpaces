@@ -30,13 +30,14 @@ class BUILDING_SHOWALL{
                                 <?php foreach ($listTitles as $title): ?>
                                     <th scope="col"><?=$strings[$title]?></th>
                                 <?php endforeach; ?>
-                                <?php  if(checkRol('ADD', 'BUILDING')): ?>
-                                    <th scope="col">
+                               
+                                <th scope="col">
+                                    <?php  if(checkRol('ADD', 'BUILDING')): ?>
                                         <a href="BUILDING_Controller.php?&action=<?= $strings['Add']?>">
                                             <span title="<?= $strings['Add Building']?>" class="btn btn-success btn-sm fa fa-plus"></span>
                                         </a>
-                                    </th>
-                                <?php endif; ?>
+                                    <?php endif; ?>
+                                </th>
                             </tr>
                         </thead>
 

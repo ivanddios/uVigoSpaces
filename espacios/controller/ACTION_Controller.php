@@ -35,12 +35,12 @@ Switch ($_GET['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add actions requires login."]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if(!checkRol('ADD', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("ACTION_Controller.php", "index");
+            $view->redirect("ACTION_Controller.php");
         }
 
         if (isset($_POST["submit"])) { 
@@ -49,7 +49,7 @@ Switch ($_GET['action']){
             if($answerAdd === true){
                 $flashMessageSuccess = sprintf($strings["Action \"%s\" successfully added."], $ActionAdd->getNameAction());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("ACTION_Controller.php", "index");
+                $view->redirect("ACTION_Controller.php");
             } else {
                 $view->setFlashDanger($strings[$answerAdd]);
                 $view->redirect("ACTION_Controller.php", $strings['Add']);
@@ -66,17 +66,17 @@ Switch ($_GET['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Edit actions requires login."]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if(!checkRol('EDIT', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("ACTION_Controller.php", "index");
+            $view->redirect("ACTION_Controller.php");
         }
 
         if (!isset($_GET['action'])){
             $view->setFlashDanger($strings["Action id is mandatory"]);
-            $view->redirect("ACTION_Controller.php", "index");
+            $view->redirect("ACTION_Controller.php");
         }
         $actionId = $_GET['accion'];
 
@@ -87,7 +87,7 @@ Switch ($_GET['action']){
                 $actionEdit->updateAction();
                 $flashMessageSuccess = sprintf($strings["Action \"%s\" successfully updated."], $actionEdit->getNameAction());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("ACTION_Controller.php", "index");   
+                $view->redirect("ACTION_Controller.php");   
 
             }else{
                 $view->setFlashDanger($strings[$answerEdit]);
@@ -132,24 +132,24 @@ Switch ($_GET['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Delete actions requires login."]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if(!checkRol('DELETE', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("ACTION_Controller.php", "index");
+            $view->redirect("ACTION_Controller.php");
         }
 
         if (!isset($_POST['action'])){
             $view->setFlashDanger($strings["Action id is mandatory"]);
-            $view->redirect("ACTION_Controller.php", "index");
+            $view->redirect("ACTION_Controller.php");
         }
         $actionId = $_POST['action'];
         $actionDelete = new ACTION_Model($actionId);
 
         if (!$actionDelete ->existsAction()) {
             $view->setFlashDanger($strings["No such action with this id"]);
-            $view->redirect("ACTION_Controller.php", "index");
+            $view->redirect("ACTION_Controller.php");
         }
 
         try{
@@ -157,10 +157,10 @@ Switch ($_GET['action']){
             $actionDelete->deleteAction();
             $flashMessageSuccess = sprintf($strings["Action \"%s\" successfully deleted."], $actionName);
             $view->setFlashSuccess($flashMessageSuccess);
-            $view->redirect("ACTION_Controller.php", "index");     
+            $view->redirect("ACTION_Controller.php");     
         }catch(Exception $errors) {
             $view->setFlashDanger($strings[$errors->getMessage()]);
-            $view->redirect("ACTION_Controller.php", "index");
+            $view->redirect("ACTION_Controller.php");
         }
             	
     break;
@@ -170,12 +170,12 @@ Switch ($_GET['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add actions requires login."]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if(!checkRol('SHOW ALL', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("BUILDING_Controller.php");
         }
 
         $action = new ACTION_Model();

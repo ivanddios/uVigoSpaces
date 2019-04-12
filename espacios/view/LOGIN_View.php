@@ -45,10 +45,10 @@ class Login{
                         <div class="row center-row">
                             <div class="col-lg-6 center-block loginContainer">
                                 <div id="titleView">
-                                    <a title="Home" class="logoLogin" href="#"><img class="logoPpal" src="../img/logo.png" alt="logo universidade de vigo"/></a>
+                                    <img class="logoPpal" src="../img/logo.png" alt="logo universidade de vigo"/>
                                 </div>
                                 <div class="col-lg-12 center-block">
-                                    <form method="POST" action="USER_Controller.php?action=Login">
+                                    <form method="POST" action="LOGIN_Controller.php?action=Login">
                                         <div id="loginContainer">
                                             <div class="inputWithIcon inputIconBg">
                                                 <input id="loginUsername" type="text" name="username" placeholder="Username" required>

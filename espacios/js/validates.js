@@ -215,7 +215,6 @@ function checkPassword(passwordId){
     
 
     if(passwordInput.value){
-
         if(passwordInput.value.length >= 8) {
             length.classList.remove("invalid");
             length.classList.add("valid");
@@ -256,7 +255,7 @@ function checkPassword(passwordId){
             passwordBox.style.display = 'none';
             passwordInput.previousElementSibling.style.backgroundColor = "green"; 
             passwordInput.style.borderColor = "green";
-            document.getElementById("passwordConfirm").type = "password";
+            document.getElementById("divChangePasswd").style.display = "block";
             return true;
         }
         else{
@@ -270,7 +269,7 @@ function checkPassword(passwordId){
         passwordBox.style.display = 'none';
         passwordInput.previousElementSibling.style.backgroundColor = "#aaa"; 
         passwordInput.style.borderColor =  "#aaa";
-        document.getElementById("passwordConfirm").type = "hidden";
+        document.getElementById("divChangePasswd").style.display = "none";
     }
 }
 

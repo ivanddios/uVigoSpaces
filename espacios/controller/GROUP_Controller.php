@@ -41,12 +41,12 @@ Switch ($_GET['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add groups requires login."]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if(!checkRol('ADD', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("GROUP_Controller.php", "index");
+            $view->redirect("GROUP_Controller.php");
         }
 
         if (isset($_POST["submit"])) {
@@ -57,7 +57,7 @@ Switch ($_GET['action']){
                 $groupAdd->addGroup($permissions);
                 $flashMessageSuccess = sprintf($strings["Group \"%s\" successfully added."], $groupAdd->getNameGroup());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("GROUP_Controller.php", "index");
+                $view->redirect("GROUP_Controller.php");
             }catch(Exception $errors) {
                 $view->setFlashDanger($strings[$errors->getMessage()]);
                 $view->redirect("GROUP_Controller.php", $strings['Add']);
@@ -79,17 +79,17 @@ Switch ($_GET['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Edit groups requires login."]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if(!checkRol('EDIT', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("GROUP_Controller.php", "index");
+            $view->redirect("GROUP_Controller.php");
         }
 
         if (!isset($_GET['group'])){
             $view->setFlashDanger($strings["Group id is mandatory"]);
-            $view->redirect("GROUP_Controller.php", "index");
+            $view->redirect("GROUP_Controller.php");
         }
         $groupId = $_GET['group'];
 
@@ -100,7 +100,7 @@ Switch ($_GET['action']){
                 $groupEdit->updateGroup();
                 $flashMessageSuccess = sprintf($strings["Group \"%s\" successfully updated."], $groupEdit->getNameGroup());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("GROUP_Controller.php", "index");   
+                $view->redirect("GROUP_Controller.php");   
 
             }catch(Exception $errors) {
                 $view->setFlashDanger($strings[$errors->getMessage()]);
@@ -145,24 +145,24 @@ Switch ($_GET['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Delete groups requires login."]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if(!checkRol('DELETE', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("GROUP_Controller.php", "index");
+            $view->redirect("GROUP_Controller.php");
         }
 
         if (!isset($_POST['group'])){
             $view->setFlashDanger($strings["Group id is mandatory"]);
-            $view->redirect("GROUP_Controller.php", "index");
+            $view->redirect("GROUP_Controller.php");
         }
         $groupid = $_POST['group'];
         $groupDelete = new GROUP_Model($groupid);
 
         if (!$groupDelete ->existsGroup()) {
             $view->setFlashDanger($strings["No such group with this id"]);
-            $view->redirect("GROUP_Controller.php", "index");
+            $view->redirect("GROUP_Controller.php");
         }
 
         try{
@@ -170,10 +170,10 @@ Switch ($_GET['action']){
             $groupDelete->deleteGroup();
             $flashMessageSuccess = sprintf($strings["Group \"%s\" successfully deleted."], $groupName);
             $view->setFlashSuccess($flashMessageSuccess);
-            $view->redirect("GROUP_Controller.php", "index");     
+            $view->redirect("GROUP_Controller.php");     
         }catch(Exception $errors) {
             $view->setFlashDanger($strings[$errors->getMessage()]);
-            $view->redirect("GROUP_Controller.php", "index");
+            $view->redirect("GROUP_Controller.php");
         }
             	
     break;
@@ -183,12 +183,12 @@ Switch ($_GET['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add groups requires login."]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if(!checkRol('SHOW ALL', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("BUILDING_Controller.php");
         }
 
         $group = new GROUP_Model();

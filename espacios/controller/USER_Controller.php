@@ -3,7 +3,6 @@
 require_once(__DIR__."..\..\core\ViewManager.php");
 require_once(__DIR__.'..\..\core\ACL.php');
 require_once(__DIR__.'..\..\model\USER_Model.php');
-require_once(__DIR__.'..\..\view\USER_LOGIN_View.php');
 require_once(__DIR__.'..\..\view\USER_SHOWALL_View.php');
 require_once(__DIR__.'..\..\view\USER_ADD_View.php');
 require_once(__DIR__.'..\..\view\USER_EDIT_View.php');
@@ -16,6 +15,7 @@ include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
 
 function get_data_form() {
 
+    
     $username = $_POST['username'];
     $password = $_POST['password'];
     $name = $_POST['name'];
@@ -24,9 +24,10 @@ function get_data_form() {
     $birthdate = $_POST['birthdate'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
+    $group = $_POST['group'];
     $photo = $_FILES['photo'];
 
-    $user = new USER_Model($username, $password, $name, $surname, $dni, $birthdate, $email, $phone, $photo);
+    $user = new USER_Model($username, $password, $name, $surname, $dni, $birthdate, $email, $phone, $photo, $group);
     return $user;
 }
 
@@ -36,57 +37,33 @@ if (!isset($_GET['action'])){
 }
 Switch ($_GET['action']){
 
-	case $strings['Login']:
-
-		if(!isset($_POST['submit'])){
-			new Login();
-		}else{
-			if(isset($_POST['username']) && isset($_POST['passwd'])){
-                $user = new USER_Model($_POST['username'], $_POST['passwd']);
-                $loginAnswer = $user->login();
-				if($loginAnswer === true){
-                    $_SESSION['LOGIN'] = $user->getUsername();
-                    $_SESSION['PERMISSIONS'] = $user->getPermissions();
-                    $_SESSION['LANGUAGE'] = $_POST['language'];
-                    $view->redirect("BUILDING_Controller.php", "index");
-                } else {
-                    $view->setFlashDanger($loginAnswer);
-                    $view->redirect("USER_Controller.php", $strings['Login']);
-                }
-			}
-		}
-	break;
-
 	case $strings['Add']:
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add users requires login."]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("BUILDING_Controller.php");
         }
 
         if(!checkRol('ADD', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if (isset($_POST["submit"])) { 
             $userAdd = get_data_form();
-
-            try{
-                $userAdd->checkIsValidForAdd();
-                $userAdd->addUser();
+            $answerAdd = $userAdd->addUser();
+            if($answerAdd === true){
                 $flashMessageSuccess = sprintf($strings["User \"%s\" successfully added."], $userAdd->getUsername());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("USER_Controller.php", "index");
-            }catch(Exception $errors) {
-                $view->setFlashDanger($strings[$errors->getMessage()]);
-                $valuesForm = json_encode($userAdd);
-                $view->setVariable("userForm", $valuesForm);
+                $view->redirect("USER_Controller.php");
+            }else {
+                $view->setFlashDanger($strings[$answerAdd]);
                 $view->redirect("USER_Controller.php", $strings['Add']);
             }
-                
-        } else {
-            new USER_ADD();
+        }else {
+            $group = new GROUP_Model();
+            $groupsValues = $group->showAllGroups();
+            new USER_ADD($groupsValues);
         }
            	       
     break;
@@ -95,33 +72,33 @@ Switch ($_GET['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Edit user requires login."]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("BUILDING_Controller.php");
         }
 
 		if(!checkRol('EDIT', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         $username = $_GET['user'];
 
         if (isset($_POST["submit"])) { 
             $userEdit = get_data_form();
-    
-            try{
-                $userEdit->checkIsValidForEdit(); 
-                $userEdit->updateUser($_FILES['photo']['tmp_name']);
+            $answerEdit = $userEdit->updateUser($_FILES['photo']['tmp_name']);
+            if($answerEdit === true){
                 $flashMessageSuccess = sprintf($strings["User \"%s\" successfully updated."], $userEdit->getUsername());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("USER_Controller.php", "index");
-            }catch(Exception $errors) {
-                $view->setFlashDanger($strings[$errors->getMessage()]);
+                $view->redirect("USER_Controller.php");
+            }else{
+                $view->setFlashDanger($strings[$answerEdit]);
                 $view->redirect("USER_Controller.php", $strings['Edit'],"user=$username");
             }
         } else {
             $user = new USER_Model($username);
-            $values = $user->findUser();
-            new USER_EDIT($values);
+            $userValues = $user->findUserWithGroup();
+            $group = new GROUP_Model();
+            $groupsValues = $group->showAllGroups();
+            new USER_EDIT($userValues, $groupsValues);
         }
     break;
 
@@ -129,35 +106,27 @@ Switch ($_GET['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Delete users requires login."]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("BUILDING_Controller.php");
         }
 
         if(!checkRol('DELETE', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if (!isset($_POST['username'])){
             $view->setFlashDanger($strings["Username is mandatory"]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
-        $username = $_POST['username'];
-        $userDelete = new USER_Model($username);
-
-        if (!$userDelete->findUser()) {
-            $view->setFlashDanger($strings["No such user with this id"]);
-            $view->redirect("USER_Controller.php", "index");
-        }
-
-        try{
-            rmdir('../document/Users/'.$username);
-            $userDelete->deleteUser();
-            $flashMessageSuccess = sprintf($strings["User \"%s\" successfully deleted."], $username);
+        $userDelete = new USER_Model($_POST['username']);
+        $answerDelete =  $userDelete->deleteUser();
+        if($answerDelete === true){
+            $flashMessageSuccess = sprintf($strings["User \"%s\" successfully deleted."], $userDelete->getUsername());
             $view->setFlashSuccess($flashMessageSuccess);
-            $view->redirect("USER_Controller.php", "index");     
-        }catch(Exception $errors) {
-            $view->setFlashDanger($strings[$errors->getMessage()]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");     
+        }else {
+            $view->setFlashDanger($strings[$answerDelete]);
+            $view->redirect("USER_Controller.php");
         }
             	
     break;
@@ -167,17 +136,17 @@ Switch ($_GET['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Show floors requires login."]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("BUILDING_Controller.php");
         }
 
         if(!checkRol('SHOW', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if (!isset($_GET['user'])){
             $view->setFlashDanger($strings["Username is mandatory"]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
         $username = $_GET['user'];
 
@@ -186,18 +155,13 @@ Switch ($_GET['action']){
         new USER_SHOW($values);
 
     break;
-
-
-    case $strings['Logout']:
-        session_destroy();
-        $view->redirect("../index.php", "index");
-    break;	
+	
 
     default:
     
         if(!checkRol('SHOW ALL', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("BUILDING_Controller.php");
 		} else {
 			$user = new USER_Model();
 			$users = $user->showAllUsers();

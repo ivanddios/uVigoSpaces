@@ -1,122 +1,10 @@
-/* @import "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css";
-
-body {
-	font-family:'K2D','Open Sans', Arial, sans-serif;
-	font-size:14px;
-	font-weight:300;
-	line-height:1.6em;
-	color:#000;
-	background-color:#FFF;
-	overflow-x:hidden; 
+#imgIndex {
+	display:block;
+	margin:auto;
+	margin-bottom: 5%;
+	opacity: 0.8;
+	border-radius: 3px;
 }
-
-header{
-	background-color: #FFF;
-	border-bottom: 2px solid #000;
-}
-
-.navbar-brand {
-	font-size: 25px;
-}
-.nav-link {
-    padding-left:0;
-}
-
-.nav-a{
-	color: #000;
-}
-
-.nav-a:focus, .nav-a:hover{
-	color: #000;
-}
-
-.navbar-brand {
-    color: #000;
-}
-
-.navbar-collapse{
-	margin-left: 3%;
-}
-
-.navbar-toggler {
-	border-color: #000;
-}
-
-.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
-     color: #000; 
-}
-
-.navbar-light .navbar-nav .nav-link {
-	color: #000; 
-}
-
-.dropdown-menu{
-	min-width: 0;
-	text-align: center;
-}
-
-#navbarDropdown{
-	color: #000;
-	margin-left: 10px;
-}
-
-#navbarDropdown:hover{
-	color: #000;
-}
-
-.dropdown-item.active, .dropdown-item:active {
-	color: #000;
-	text-decoration: none;
-	background-color: #fff;
-}
-
-.languages{
-	padding: 0.5rem;
-	margin-left: 4%;	
-}
-
-.languageFlag{
-	width: 32px;
-	height: 32px;
-}
-
-.logoPpal {
-	height: 40px;
-} */
-
-
-
-/* FORM STRUCTURE */
-
-/* .container {
-	margin: auto;
-}
-
-.center-row{
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.center-block{
-	float: none;
-	background-color: #FFF;
-	margin-top: 3%;
-	margin-bottom: 10%;
-	margin-left: auto;
-	margin-right: auto;
-	border-radius: 5px;
-}
-
-
-
-.center-block-content {
-	margin: auto;
-	margin-top: 5%;
-	margin-bottom: 7%;
-}
-
-*/
-
 
 
 #titleView{
@@ -134,149 +22,6 @@ header{
 	text-align: center;
 	color: grey;
 }
-
-
-/* #group-form{
-	margin-top: 10%;
-	margin-bottom: 5%;
-}  */
-
-
-/* INPUTS */
-
-/*STYLE INPUTS FORMS*/
-
-
-/* .input-container {
-	position: relative;
-	height: 2.7em;
-	margin-bottom: 8%;
-}
-	
-.input-container > input[type="text"],[type="password"]{
-	display: block;
-	position: absolute;
-	left: 10%;
-	bottom: 1%;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	width: 90%;
-	border:1px solid #aaa ;
-	border-width: 0 0 1px;
-	outline: none;
-	background: none;
-	z-index: 1;
-	padding: 1px;
-	letter-spacing: 0.012em;
-}
-
-
-.input-container > label {
-	display: block;
-	position: absolute;
-	margin-left: 10%;
-	padding: 1px;
-	letter-spacing: 0.012em;
-	color: #636c72;
-	font-size:24px;
-	-webkit-animation-name: labelIn;
-	animation-name: labelIn;
-	-webkit-animation-duration: 0.35s;
-	animation-duration: 0.35s;
-	-webkit-animation-direction: reverse;
-	animation-direction: reverse;
-	-webkit-animation-fill-mode: forwards;
-	animation-fill-mode: forwards;
-	-webkit-animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
-	animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
-}
-
-.input-container > input:valid + label, .input-container > input:focus + label, .input-container > input:read-only + label {
-  -webkit-animation-name: labelOut;
-  animation-name: labelOut;
-  -webkit-animation-duration: 0.35s;
-  animation-duration: 0.35s;
-  -webkit-animation-direction: normal;
-  animation-direction: normal;
- -webkit-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
-  -webkit-animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
-  animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
-}
-	
-.input-group-text {
-	width: 8%;
-	background-color: #aaa;
-	color: #fff;
-}
-
-@keyframes 
-  labelIn {  
-	  0% { 
-			left: 1px;
-			opacity: 1;
-			bottom: 0px; 
-			font-size: 1em;
-   		font-weight: 300;
-  	}
-    50% {
-			left: 1em;
-			opacity: 0;
-			bottom: 0px; 
-			font-size: 1em;
-   		font-weight: 300;
-  	}
-   	50.01% {
-			font-size: 1em;
-			left: 1em;
-			opacity: 0;
-			bottom: 45%; 
-			color:#636c72;
-			font-weight: 400;
-  	}
-   	100% {
-			font-size: 1.00em;
-			opacity: 1;
-			left: 1px;
-			bottom: 45%; 
-		  color: #636c72;
-			font-weight: 400;
-  	} 
-  }
-  
-@keyframes 
-	labelOut {
-		0% {
-			left: 1px;
-			opacity: 1;
-			bottom: 0px; 
-			font-size: 1em;
-			font-weight: 300;
-		}
-		50% {
-			font-size:0.9em;
-			left: 1em;
-			opacity: 0;
-			bottom: 0px; 
-			font-weight: 300;
-		}
-		50.01% {
-			font-size: 1em;
-			left: 1em;
-			opacity: 0;
-			bottom: 45%; 
-			color: #636c72;
-			font-weight: 400;
-		} 
-		100% {
-			font-size: 1em;
-			opacity: 1;
-			left: 1px;
-			bottom: 45%; 
-			color: #636c72;
-			font-weight: 400;
-		}
-	} */
 
 
 /*STYLE ONLYLOGIN VIEW */
@@ -379,71 +124,20 @@ input#loginUsername, input#loginPassword{
 	content: "✖";
 }
 
-
-/* CHECKBOX */
-
-/* .checkboxList{
-	margin-top: 2%;
-}
-
-.checkboxList > label {
-	width: 30%;
-	border-radius: 3px;
-	border: 1px solid #D1D3D4;
-}
-  
-input[type="checkbox"] {
+#divChangePasswd{
 	display: none;
 }
-  
-input[type="checkbox"]:empty ~ label {
-	margin-left:35%;
-	position: relative;
-	line-height: 2.5em;
-	text-indent: 3.25em;
-	margin-top: 0.5em;
-	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
-  
-input[type="checkbox"]:empty ~ label:before {
+
+
+/* SELECT INPUT*/
+
+.custom-select{
+	display:block;
 	position: absolute;
-	display: block;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	content: '';
-	width: 2.5em;
-	background: #D1D3D4;
-	border-radius: 3px 0 0 3px;
-	content: '\2717';
-	text-indent: .9em;
-	color: #C2C2C2;
+	width: 90%;
+	left: 10%;
+	font-size: 14px;
 }
-  
-input[type="checkbox"]:hover:not(:checked) ~ label:before {
-	content: '\2714';
-	text-indent: .9em;
-	color: #C2C2C2;
-} 
-  
-input[type="checkbox"]:checked ~ label {
-	color: #777;
-}
-  
-input[type="checkbox"]:checked ~ label:before {
-	content: '\2714';
-	text-indent: .9em;
-	color: #333;
-}
-  
-input[type="checkbox"]:checked ~ label:before {
-	color: #fff;
-	background-color: #337ab7;
-} */
 
 
 /* BOTON ATRÁS + CAMPO BUSCAR*/
@@ -471,24 +165,6 @@ input[type="checkbox"]:checked ~ label:before {
 
 /* BUTTONS */
 
-
-/* .icon-btn {
-	padding: 1px 15px 3px 2px;
-} */
-
-/*
-.btn-dark{
-	margin-top:20px;
-	margin-bottom:10px;
-	padding:8px;
-	font-size:14px;
-	background-color:#eeee;
-	color:#000;
-	border:none;
-	border-bottom:3px solid #19e6;
-	border-radius:8%;
-	float:right;
-} */
 
 .btn-dark-Plane{
 	padding:8px;
@@ -523,11 +199,12 @@ input[type="checkbox"]:checked ~ label:before {
 	/* text-align: center;  */
 	vertical-align: middle!important;
 }
-/*
+
+
 p{
 	margin-top:5%;
 	font-weight: bold;
-} */
+} 
 
 
 /* IMG ELEMENTS */
@@ -601,33 +278,6 @@ p{
 #planeButtons li{
 	list-style:none;
 }
-
-
-
-/* FOOTER */
-
-/* .footer {
-	bottom:0%;
-	max-height: 50%;
-	width: 100%;
-	padding-top: 1.25rem;
-	padding-bottom: 1.25rem;
-  background-color: white;
-  color: #000;
-	text-align: center; 
-	border-top: 2px solid black;
-	border-bottom: 2px solid black;
-}
-
-.copyright {
-	text-align:center;
-	color: #000;
-}
-
-.copyright a {
-	color:#000;
-} */
-
 
 
 

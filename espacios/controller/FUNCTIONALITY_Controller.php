@@ -36,12 +36,12 @@ Switch ($_GET['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add functionalities requires login."]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if(!checkRol('ADD', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("FUNCTIONALITY_Controller.php", "index");
+            $view->redirect("FUNCTIONALITY_Controller.php");
         }
 
         if (isset($_POST["submit"])) { 
@@ -52,7 +52,7 @@ Switch ($_GET['action']){
                 $functionAdd->addFunction($actions);
                 $flashMessageSuccess = sprintf($strings["Functionality \"%s\" successfully added."], $functionAdd->getNameFunction());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("FUNCTIONALITY_Controller.php", "index");
+                $view->redirect("FUNCTIONALITY_Controller.php");
 
             }catch(Exception $errors) {
                 $view->setFlashDanger($strings[$errors->getMessage()]);
@@ -75,17 +75,17 @@ Switch ($_GET['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Edit functionalities requires login."]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if(!checkRol('EDIT', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("FUNCTIONALITY_Controller.php", "index");
+            $view->redirect("FUNCTIONALITY_Controller.php");
         }
 
         if (!isset($_GET['function'])){
             $view->setFlashDanger($strings["Function id is mandatory"]);
-            $view->redirect("FUNCTIONALITY_Controller.php", "index");
+            $view->redirect("FUNCTIONALITY_Controller.php");
         }
         $functionId = $_GET['function'];
 
@@ -98,7 +98,7 @@ Switch ($_GET['action']){
                 $functionEdit->updateFunction($actions);
                 $flashMessageSuccess = sprintf($strings["Function \"%s\" successfully updated."], $functionEdit->getNameFunction());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("FUNCTIONALITY_Controller.php", "index");   
+                $view->redirect("FUNCTIONALITY_Controller.php");   
 
             }catch(Exception $errors) {
                 $view->setFlashDanger($strings[$errors->getMessage()]);
@@ -148,34 +148,34 @@ Switch ($_GET['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Delete functionalities requires login."]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if(!checkRol('DELETE', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("FUNCTIONALITY_Controller.php", "index");
+            $view->redirect("FUNCTIONALITY_Controller.php");
         }
 
         if (!isset($_POST['function'])){
             $view->setFlashDanger($strings["Function id is mandatory"]);
-            $view->redirect("FUNCTIONALITY_Controller.php", "index");
+            $view->redirect("FUNCTIONALITY_Controller.php");
         }
         $functionId = $_POST['function'];
         $functionDelete = new FUNCTIONALITY_Model($functionId);
 
         if (!$functionDelete->existsFunction()) {
             $view->setFlashDanger($strings["No such function with this id"]);
-            $view->redirect("FUNCTIONALITY_Controller.php", "index");
+            $view->redirect("FUNCTIONALITY_Controller.php");
         }
 
         try{
             $functionDelete->deleteFunction();
             $flashMessageSuccess = sprintf($strings["Function \"%s\" successfully deleted."], $functionId);
             $view->setFlashSuccess($flashMessageSuccess);
-            $view->redirect("FUNCTIONALITY_Controller.php", "index");     
+            $view->redirect("FUNCTIONALITY_Controller.php");     
         }catch(Exception $errors) {
             $view->setFlashDanger($strings[$errors->getMessage()]);
-            $view->redirect("FUNCTIONALITY_Controller.php", "index");
+            $view->redirect("FUNCTIONALITY_Controller.php");
         }
             	
     break;
@@ -185,12 +185,12 @@ Switch ($_GET['action']){
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add functionalities requires login."]);
-            $view->redirect("USER_Controller.php", "index");
+            $view->redirect("USER_Controller.php");
         }
 
         if(!checkRol('SHOW ALL', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("BUILDING_Controller.php", "index");
+            $view->redirect("BUILDING_Controller.php");
         }
 
         $function = new FUNCTIONALITY_Model();

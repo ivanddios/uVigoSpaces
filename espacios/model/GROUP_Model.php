@@ -10,7 +10,7 @@ class GROUP_Model {
 	private $mysqli;
 
 
-function __construct($idGroup=NULL, $nameGroup=NULL, $descripGroup=NULL)
+function __construct($idGroup=null, $nameGroup=null, $descripGroup=null)
 {
     $this->idGroup = $idGroup;
     $this->nameGroup =  $nameGroup; 
