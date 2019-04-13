@@ -144,22 +144,22 @@ Switch ($_GET['action']){
             $view->setFlashDanger($strings["Action id is mandatory"]);
             $view->redirect("ACTION_Controller.php");
         }
-        $actionId = $_POST['action'];
-        $actionDelete = new ACTION_Model($actionId);
 
-        if (!$actionDelete ->existsAction()) {
-            $view->setFlashDanger($strings["No such action with this id"]);
-            $view->redirect("ACTION_Controller.php");
-        }
+        $actionDelete = new ACTION_Model($_POST['action']);
+        $actionName = $actionDelete->findNameAction();
+        $answerDelete = $actionDelete->deleteAction();
 
-        try{
-            $actionName = $actionDelete->findNameAction();
-            $actionDelete->deleteAction();
+        // if (!$actionDelete ->existsAction()) {
+        //     $view->setFlashDanger($strings["No such action with this id"]);
+        //     $view->redirect("ACTION_Controller.php");
+        // }
+
+        if($answerDelete === true){
             $flashMessageSuccess = sprintf($strings["Action \"%s\" successfully deleted."], $actionName);
             $view->setFlashSuccess($flashMessageSuccess);
             $view->redirect("ACTION_Controller.php");     
-        }catch(Exception $errors) {
-            $view->setFlashDanger($strings[$errors->getMessage()]);
+        }else {
+            $view->setFlashDanger($strings[$answerDelete]);
             $view->redirect("ACTION_Controller.php");
         }
             	

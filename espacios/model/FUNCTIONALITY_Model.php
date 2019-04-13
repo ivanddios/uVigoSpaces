@@ -140,9 +140,9 @@ public function existsFunction() {
 //     }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->addressBuilding)){
 //         $errors = "Building address is invalid. Try again!";
 //     }else if (strlen(trim($this->phoneBuilding)) != 9 ) {
-//         $errors= "Building phone is incorrect. Example: 666777888";
+//         $errors= "Building phone is incorrect";
 //     }else if(!preg_match('/^[9|6|7][0-9]{8}$/', $this->phoneBuilding)){
-//         $errors = "Building phone format is invalid. Example: 666777888";
+//         $errors = "Building phone format is invalid";
 //     }
 
 //     if (sizeof($errors) > 0){

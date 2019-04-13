@@ -253,8 +253,8 @@ $strings = array(
     "Building address is mandatory" => "La dirección del edificio es obligatoria",
     "Building address can not be that long" => "La dirección del edificio es demasiado larga",
     "Building address is invalid. Try again!" => "El formato de la dirección del edificio es incorrecta",
-    "Building phone is incorrect. Example: 666777888" => "El teléfono del edificio es incorrecto. Ejemplo: 666777888",
-    "Building phone is invalid. Example: 666777888" => "El teléfono es inválido. Ejemplo: 666777888",
+    "Building phone is incorrect" => "El teléfono del edificio es incorrecto. Ejemplo: 666777888",
+    "Building phone is invalid" => "El teléfono es inválido. Ejemplo: 666777888",
     "Building responsible name can not be that long" => "El nombre del responsable del edificio es demasiado largo",
     "Building responsible name is invalid. Try again!" => "El nombre del responsable del edificio es inválido. Pruebe otra vez",
 
@@ -307,8 +307,8 @@ $strings = array(
     "Email can not be that long" => "El email es demasiado largo",
     "Email is invalid" => "Email inválido",
     "There is aready a user with that email" => "Ya existe un usuario con ese email",
-    "User phone is incorrect. Example: 666777888" => "El teléfono es inválido. Ejemplo: 666777888",
-    "User phone format is invalid. Example: 666777888" => "El formato del teléfono es inválido. Ejemplo: 666777888"
+    "User phone is incorrect" => "El teléfono es inválido. Ejemplo: 666777888",
+    "User phone format is invalid" => "El formato del teléfono es inválido. Ejemplo: 666777888"
 
 
 

@@ -110,7 +110,7 @@ $tests['SN_BUILDING_EDIT_TEST9']["Result"] = $editAnswer;
 
 $tests['SN_BUILDING_EDIT_TEST10']=(['Functionality' => "SN_BUILDING_EDIT",
                                 'Description' => "Test 10. Attempt to update building without building phone",
-                                'Expected' => 'Building phone is incorrect. Example: 666777888',
+                                'Expected' => 'Building phone is incorrect',
                                 'Result' => 'Not executed']);
 
 $building = new BUILDING_Model('OSBI1','nameBuilding','addressBuilding');
@@ -121,7 +121,7 @@ $tests['SN_BUILDING_EDIT_TEST10']["Result"] = $editAnswer;
 
 $tests['SN_BUILDING_EDIT_TEST11']=(['Functionality' => "SN_BUILDING_EDIT",
                                 'Description' => "Test 11. Attempt to update building with building phone bigger than 9 characters",
-                                'Expected' => 'Building phone is incorrect. Example: 666777888',
+                                'Expected' => 'Building phone is incorrect',
                                 'Result' => 'Not executed']);
 
 $building = new BUILDING_Model('OSBI1', 'nameBuilding', 'addressBuilding', 1234567890);
@@ -131,7 +131,7 @@ $tests['SN_BUILDING_EDIT_TEST11']["Result"] = $editAnswer;
 
 $tests['SN_BUILDING_EDIT_TEST12']=(['Functionality' => "SN_BUILDING_EDIT",
                                 'Description' => "Test 12. Attempt to update building with building phone format invalid",
-                                'Expected' => 'Building phone format is invalid. Example: 666777888',
+                                'Expected' => 'Building phone format is invalid',
                                 'Result' => 'Not executed']);
 
 $building = new BUILDING_Model('OSBI1','nameBuilding', 'addressBuilding', 101010101);

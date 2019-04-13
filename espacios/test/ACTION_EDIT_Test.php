@@ -18,7 +18,7 @@ $tests['SM_ACTION_EDIT_TEST1']["Result"] = $editAnswer;
 
 $tests['SM_ACTION_EDIT_TEST2']=(['Functionality' => "SM_ACTION_EDIT",
                 'Description' => 'Test 2. Attempt to edit action with incorrect id',
-                'Expected' => 'Action does not exists',
+                'Expected' => "Action doesn't exist",
                 'Result' => 'Not executed']);
 
 $action = new ACTION_Model('id');

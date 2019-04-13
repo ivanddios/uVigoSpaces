@@ -113,7 +113,7 @@ $tests['SM_BUILDING_ADD_TEST9']["Result"] = $addAnswer;
 
 $tests['SM_BUILDING_ADD_TEST10']=(['Functionality' => "SM_BUILDING_ADD",
                 'Description' => "Test 10. Attempt to add building without building phone",
-                'Expected' => 'Building phone is incorrect. Example: 666777888',
+                'Expected' => 'Building phone is incorrect',
                 'Result' => 'Not executed']);
 
 $building = new BUILDING_Model('OSBI1','nameBuilding','addressBuilding');
@@ -124,7 +124,7 @@ $tests['SM_BUILDING_ADD_TEST10']["Result"] = $addAnswer;
 
 $tests['SM_BUILDING_ADD_TEST11']=(['Functionality' => "SM_BUILDING_ADD",
                 'Description' => "Test 11. Attempt to add building with building phone bigger than 9 characters",
-                'Expected' => 'Building phone is incorrect. Example: 666777888',
+                'Expected' => 'Building phone is incorrect',
                 'Result' => 'Not executed']);
 
 $building = new BUILDING_Model('OSBI1', 'nameBuilding', 'addressBuilding', 1234567890);
@@ -134,7 +134,7 @@ $tests['SM_BUILDING_ADD_TEST11']["Result"] = $addAnswer;
 
 $tests['SM_BUILDING_ADD_TEST12']=(['Functionality' => "SM_BUILDING_ADD",
                 'Description' => "Test 12. Attempt to add building with building phone format invalid",
-                'Expected' => 'Building phone format is invalid. Example: 666777888',
+                'Expected' => 'Building phone format is invalid',
                 'Result' => 'Not executed']);
 
 $building = new BUILDING_Model('OSBI1','nameBuilding', 'addressBuilding', 101010101);

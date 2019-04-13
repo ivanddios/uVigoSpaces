@@ -6,6 +6,7 @@ require_once(__DIR__.'..\..\test\TEST_View.php');
 include  './USER_LOGIN_Test.php';
 include  './ACTION_ADD_Test.php';
 include  './ACTION_EDIT_Test.php';
+include  './ACTION_DELETE_Test.php';
 include  './BUILDING_ADD_Test.php';
 include  './BUILDING_EDIT_Test.php';
 
