@@ -55,7 +55,7 @@ class FLOOR_ADD{
 
 								<div class="input-file">
 									<label class="control-label"><?= $strings['Upload the floor plane']?></label>
-									<input type="file" class="filestyle">
+									<input type="file" name=planeFloor class="filestyle">
 								</div>
 
 							</div>	

@@ -435,7 +435,7 @@
 })(window.jQuery);
 
 
-$(window).on('load', function() {
+$(document).ready(function() {
     if(document.getElementById("planeFloorOriginal")){
 		$("#planeFloor").val(document.getElementById("planeFloorOriginal").value);
 	}

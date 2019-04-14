@@ -47,7 +47,7 @@ class BUILDING_ADD{
 								<button type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>
 							</div> 
 						</form>
-						<a href="../index.php"><?= $strings["Back"] ?></a>
+						<a href="../controller/BUILDING_Controller.php?"><?= $strings["Back"] ?></a>
 					</div>
 				</div>
 			</div>

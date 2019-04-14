@@ -13,7 +13,7 @@ class SPACE_Model {
     private $coordsPlane;
 	private $mysqli;
 
-    function __construct($idBuilding=NULL, $idFloor=NULL, $idSpace=NULL, $nameSpace=NULL, $surfaceSpace=NULL, $numberInventorySpace=NULL, $coordsPlane=NULL)
+    public function __construct($idBuilding=NULL, $idFloor=NULL, $idSpace=NULL, $nameSpace=NULL, $surfaceSpace=NULL, $numberInventorySpace=NULL, $coordsPlane=NULL)
     {
         $this->idBuilding =  $idBuilding; 
         $this->idFloor = $idFloor;
@@ -57,7 +57,7 @@ class SPACE_Model {
     }
 
 
-    function showAllSpaces() {
+    public function showAllSpaces() {
         $sql = "SELECT * FROM `SM_SPACE` WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'" ;
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
@@ -72,7 +72,7 @@ class SPACE_Model {
         }
     }
 
-    function findSpace() {
+    public function findSpace() {
         $sql = "SELECT * FROM `SM_SPACE` WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
@@ -83,7 +83,7 @@ class SPACE_Model {
     }
 
 
-    function findInfoSpace() {
+    public function findInfoSpace() {
         $sql = "SELECT SM_BUILDING.sm_nameBuilding, SM_FLOOR.sm_nameFloor, SM_SPACE.sm_nameSpace, SM_SPACE.sm_coordsPlane FROM `SM_BUILDING`, `SM_FLOOR`, `SM_SPACE` WHERE SM_BUILDING.sm_idBuilding = SM_FLOOR.sm_idBuilding AND SM_FLOOR.sm_idFloor = SM_SPACE.sm_idFloor AND SM_BUILDING.sm_idBuilding = '$this->idBuilding' AND SM_FLOOR.sm_idFloor = '$this->idFloor' AND SM_SPACE.sm_idSpace = '$this->idSpace'";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
@@ -93,13 +93,13 @@ class SPACE_Model {
         }
     }
 
-    function findNameSpace() {
+    public function findNameSpace() {
         $sql = "SELECT sm_nameSpace FROM `SM_SPACE` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
         $result = $this->mysqli->query($sql)->fetch_array();
         return $result['sm_nameSpace'];
     }
 
-    function findCoordsSpace() {
+    public function findCoordsSpace() {
         $sql = "SELECT sm_coordsPlane FROM `SM_SPACE` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
         $result = $this->mysqli->query($sql)->fetch_array();
         return $result['sm_coordsPlane'];
@@ -107,7 +107,7 @@ class SPACE_Model {
 
 
 
-    function addSpace() {
+    public function addSpace() {
         $sql = "INSERT INTO `SM_SPACE` (sm_idBuilding, sm_idFloor, sm_idSpace, sm_nameSpace, sm_surfaceSpace, sm_numberInventorySpace) VALUES ('$this->idBuilding', '$this->idFloor', '$this->idSpace', '$this->nameSpace', $this->surfaceSpace, '$this->numberInventorySpace')";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
@@ -117,7 +117,7 @@ class SPACE_Model {
     }
 
 
-    function addCoords() {
+    public function addCoords() {
         $sql = "UPDATE `SM_SPACE` SET sm_coordsPlane = '$this->coordsPlane' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
@@ -127,7 +127,7 @@ class SPACE_Model {
     }
 
 
-    function updateSpace($idBuilding, $idFloor, $idSpace) {
+    public function updateSpace($idBuilding, $idFloor, $idSpace) {
         $sql = "UPDATE `SM_SPACE` SET sm_idSpace = '$this->idSpace', nameSpace = '$this->nameSpace', sm_surfaceSpace = $this->surfaceSpace, sm_numberInventorySpace = '$this->numberInventorySpace' WHERE sm_idBuilding = '$idBuilding' AND sm_idFloor = '$idFloor' AND sm_idSpace = '$idSpace'";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
@@ -136,7 +136,7 @@ class SPACE_Model {
         }
     }
 
-    function deleteSpace() {
+    public function deleteSpace() {
         $sql = "DELETE FROM `SM_SPACE` WHERE sm_idBuilding ='$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';

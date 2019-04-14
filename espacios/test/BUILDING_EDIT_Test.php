@@ -5,7 +5,7 @@ require_once(__DIR__.'..\..\model\BUILDING_Model.php');
 
 $tests['SN_BUILDING_EDIT_TEST1']=(['Functionality' => "SN_BUILDING_EDIT",
                                     'Description' => 'Test 1. Attempt to update building without values',
-                                    'Expected' => 'Building id is mandatory',
+                                    'Expected' => 'Building identifier is mandatory',
                                     'Result' => 'Not executed']);
 
 $building = new BUILDING_Model();
@@ -16,8 +16,8 @@ $tests['SN_BUILDING_EDIT_TEST1']["Result"] = $editAnswer;
 //TESTS -> BUILDING ID
 
 $tests['SN_BUILDING_EDIT_TEST2']=(['Functionality' => "SN_BUILDING_EDIT",
-                                    'Description' => "Test 2. Attempt to update building with building's id bigget than 6 characters",
-                                    'Expected' => 'Building id can not be that long',
+                                    'Description' => "Test 2. Attempt to update building with identifier bigger than 5 characters",
+                                    'Expected' =>  "Building identifier can't be larger than 5 characters",
                                     'Result' => 'Not executed']);
 
 $building = new BUILDING_Model('1234567');
@@ -26,11 +26,11 @@ $tests['SN_BUILDING_EDIT_TEST2']["Result"] = $editAnswer;
 
 
 $tests['SN_BUILDING_EDIT_TEST3']=(['Functionality' => "SN_BUILDING_EDIT",
-                                    'Description' => "Test 3. Attempt to update building with building's id format invalid",
-                                    'Expected' => 'Building id is invalid. Example: OSBI0',
+                                    'Description' => "Test 3. Attempt to update building with identifier format invalid",
+                                    'Expected' => 'Building identifier format is invalid',
                                     'Result' => 'Not executed']);
 
-$building = new BUILDING_Model('¡¿?{');
+$building = new BUILDING_Model('¿?{');
 $editAnswer = $building->updateBuilding();
 $tests['SN_BUILDING_EDIT_TEST3']["Result"] = $editAnswer;
 
@@ -40,7 +40,7 @@ $tests['SN_BUILDING_EDIT_TEST3']["Result"] = $editAnswer;
 //TESTS -> BUILDING NAME
 
 $tests['SN_BUILDING_EDIT_TEST4']=(['Functionality' => "SN_BUILDING_EDIT",
-                                'Description' => "Test 4. Attempt to update building without building name",
+                                'Description' => "Test 4. Attempt to update building without name",
                                 'Expected' => 'Building name is mandatory',
                                 'Result' => 'Not executed']);
 
@@ -50,8 +50,8 @@ $tests['SN_BUILDING_EDIT_TEST4']["Result"] = $editAnswer;
 
 
 $tests['SN_BUILDING_EDIT_TEST5']=(['Functionality' => "SN_BUILDING_EDIT",
-                                'Description' => "Test 5. Attempt to update building with building name bigger than 255 characters",
-                                'Expected' => 'Building name can not be that long',
+                                'Description' => "Test 5. Attempt to update building with name bigger than 255 characters",
+                                'Expected' => "Building name can't be larger than 255 characters",
                                 'Result' => 'Not executed']);
 
 $building = new BUILDING_Model('OSBI1', 'uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
@@ -61,8 +61,8 @@ $tests['SN_BUILDING_EDIT_TEST5']["Result"] = $editAnswer;
 
 
 $tests['SN_BUILDING_EDIT_TEST6']=(['Functionality' => "SN_BUILDING_EDIT",
-                                'Description' => "Test 6. Attempt to update building with building name format invalid",
-                                'Expected' => 'Building name is invalid',
+                                'Description' => "Test 6. Attempt to update building with name format invalid",
+                                'Expected' => 'Building name format is invalid',
                                 'Result' => 'Not executed']);
 
 $building = new BUILDING_Model('OSBI1','111111');
@@ -74,7 +74,7 @@ $tests['SN_BUILDING_EDIT_TEST6']["Result"] = $editAnswer;
 //TESTS -> BUILDING ADDRESS
 
 $tests['SN_BUILDING_EDIT_TEST7']=(['Functionality' => "SN_BUILDING_EDIT",
-                                'Description' => "Test 7. Attempt to update building without building address",
+                                'Description' => "Test 7. Attempt to update without address",
                                 'Expected' => 'Building address is mandatory',
                                 'Result' => 'Not executed']);
 
@@ -85,8 +85,8 @@ $tests['SN_BUILDING_EDIT_TEST7']["Result"] = $editAnswer;
 
 
 $tests['SN_BUILDING_EDIT_TEST8']=(['Functionality' => "SN_BUILDING_EDIT",
-                            'Description' => "Test 8. Attempt to update building with building address bigger than 255 characters",
-                            'Expected' => 'Building address can not be that long',
+                            'Description' => "Test 8. Attempt to update building with address bigger than 255 characters",
+                            'Expected' => "Building address can't be larger than 255 characters",
                             'Result' => 'Not executed']);
 
 $building = new BUILDING_Model('OSBI1', 'nameBuilding', 'uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
@@ -96,8 +96,8 @@ $tests['SN_BUILDING_EDIT_TEST8']["Result"] = $editAnswer;
 
 
 $tests['SN_BUILDING_EDIT_TEST9']=(['Functionality' => "SN_BUILDING_EDIT",
-                                    'Description' => "Test 9. Attempt to update building with building address format invalid",
-                                    'Expected' => 'Building address is invalid',
+                                    'Description' => "Test 9. Attempt to update building with address format invalid",
+                                    'Expected' => 'Building address format is invalid',
                                     'Result' => 'Not executed']);
 
 $building = new BUILDING_Model('OSBI1','nameBuilding', '111111');
@@ -109,7 +109,7 @@ $tests['SN_BUILDING_EDIT_TEST9']["Result"] = $editAnswer;
 //TESTS BUILDING PHONE
 
 $tests['SN_BUILDING_EDIT_TEST10']=(['Functionality' => "SN_BUILDING_EDIT",
-                                'Description' => "Test 10. Attempt to update building without building phone",
+                                'Description' => "Test 10. Attempt to update building without phone",
                                 'Expected' => 'Building phone is incorrect',
                                 'Result' => 'Not executed']);
 
@@ -120,7 +120,7 @@ $tests['SN_BUILDING_EDIT_TEST10']["Result"] = $editAnswer;
 
 
 $tests['SN_BUILDING_EDIT_TEST11']=(['Functionality' => "SN_BUILDING_EDIT",
-                                'Description' => "Test 11. Attempt to update building with building phone bigger than 9 characters",
+                                'Description' => "Test 11. Attempt to update building with phone bigger than 9 characters",
                                 'Expected' => 'Building phone is incorrect',
                                 'Result' => 'Not executed']);
 
@@ -130,7 +130,7 @@ $tests['SN_BUILDING_EDIT_TEST11']["Result"] = $editAnswer;
 
 
 $tests['SN_BUILDING_EDIT_TEST12']=(['Functionality' => "SN_BUILDING_EDIT",
-                                'Description' => "Test 12. Attempt to update building with building phone format invalid",
+                                'Description' => "Test 12. Attempt to update building with phone format invalid",
                                 'Expected' => 'Building phone format is invalid',
                                 'Result' => 'Not executed']);
 
@@ -141,8 +141,8 @@ $tests['SN_BUILDING_EDIT_TEST12']["Result"] = $editAnswer;
 
 
 $tests['SN_BUILDING_EDIT_TEST13']=(['Functionality' => "SN_BUILDING_EDIT",
-                                'Description' => "Test 13. Attempt to update building with building's id that it does not exist in BD",
-                                'Expected' => 'There is not a building with that id',
+                                'Description' => "Test 13. Attempt to update building with identifier that it doesn't exist in BD",
+                                'Expected' => "There isn't a building with that identifier",
                                 'Result' => 'Not executed']);
 
 $building = new BUILDING_Model('OSVI0', 'nameBuilding', 'addressBuilding', 666777888);
@@ -159,8 +159,8 @@ $tests['SN_BUILDING_EDIT_TEST14']=(['Functionality' => "SN_BUILDING_EDIT",
                                 'Expected' => 'Building updated successfully',
                                 'Result' => 'Not executed']);
 
-
-$building = new BUILDING_Model('OSBI0', 'nameBuilding', 'addressBuilding', 666777888);
+                            
+$building = new BUILDING_Model($randId, 'nameBuildingUpdated', 'addressBuildingUpdated', 666777888);
 $editAnswer = $building->updateBuilding();
 if($editAnswer === true){
     $tests['SN_BUILDING_EDIT_TEST14']["Result"] = 'Building updated successfully';
@@ -174,7 +174,7 @@ if($editAnswer === true){
 
 
 // if(isset($argv[1])){
-//    echo "\t"."\t"."TESTING OVER ACTION_update" . "\n";
+//    echo "\t"."\t"."TESTING OVER BUILDING_EDIT" . "\n";
 //     foreach($tests as $test){
 //         if($test['Expected'] == $test['Result']){
 //             echo "\e[32m".$test['Description'] . "\t" ." Expected: " .$test['Expected']. "\t" . " Result: ". $test['Result'] ."\e[0m" . "\n";

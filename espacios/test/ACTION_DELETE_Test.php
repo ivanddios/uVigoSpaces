@@ -4,8 +4,8 @@ require_once(__DIR__.'..\..\model\ACTION_Model.php');
 
 
 $tests['SM_ACTION_DELETE_TEST1']=(['Functionality' => "SM_ACTION_DELETE",
-                'Description' => 'Test 1. Attempt to deletee action without identifier',
-                'Expected' => 'Action id are mandatory',
+                'Description' => 'Test 1. Attempt to delete action without identifier',
+                'Expected' => 'Action identifier is mandatory',
                 'Result' => 'Not executed']);
 
 $action = new ACTION_Model();
@@ -15,7 +15,7 @@ $tests['SM_ACTION_DELETE_TEST1']["Result"] = $deleteAnswer;
 
 $tests['SM_ACTION_DELETE_TEST2']=(['Functionality' => "SM_ACTION_DELETE",
                 'Description' => 'Test 2. Attempt to delete action with a identifier format invalid or incorrect',
-                'Expected' => 'The action identifier format is invalid',
+                'Expected' => 'Action identifier format is invalid',
                 'Result' => 'Not executed']);
 
 $action = new ACTION_Model('badActionId');
@@ -25,13 +25,32 @@ $tests['SM_ACTION_DELETE_TEST2']["Result"] = $deleteAnswer;
 
 
 $tests['SM_ACTION_DELETE_TEST3']=(['Functionality' => "SM_ACTION_DELETE",
-                'Description' => 'Test 3. Attempt to delete action with a identifier that does not exist in the DB',
+                'Description' => "Test 3. Attempt to delete action with a identifier that doesn't exist in the DB",
                 'Expected' => "Action doesn't exist",
                 'Result' => 'Not executed']);
 
 $action = new ACTION_Model(9999);
 $deleteAnswer = $action->deleteAction();
 $tests['SM_ACTION_DELETE_TEST3']["Result"] = $deleteAnswer;
+
+
+
+
+$tests['SM_ACTION_DELETE_TEST4']=(['Functionality' => "SM_ACTION_DELETE",
+                'Description' => "Test 4. Attempt to delete action with correct values",
+                'Expected' => 'Action successfully deleted',
+                'Result' => 'Not executed']);
+
+
+
+$actionLastId = ACTION_Model::findLastActionID();
+$action = new ACTION_Model($actionLastId);
+$deleteAnswer = $action->deleteAction();
+if($deleteAnswer === true){
+    $tests['SM_ACTION_DELETE_TEST4']["Result"] = 'Action successfully deleted';
+} else {
+    $tests['SM_ACTION_DELETE_TEST4']["Result"] = $deleteAnswer;
+}
 
 
 

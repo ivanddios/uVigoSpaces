@@ -136,21 +136,15 @@ Switch ($_GET['action']){
             $view->setFlashDanger($strings["Building id is mandatory"]);
             $view->redirect("BUILDING_Controller.php");
         }
-        $buildingid = $_POST['building'];
-        $buildingDelete = new BUILDING_Model($buildingid);
-
-        if (!$buildingDelete->findBuilding()) {
-            $view->setFlashDanger($strings["No such building with this id"]);
-            $view->redirect("BUILDING_Controller.php");
-        }
-
-        try{
-            $buildingDelete->deleteBuilding();
-            $flashMessageSuccess = sprintf($strings["Building \"%s\" successfully deleted."], $buildingid);
+        $buildingDelete = new BUILDING_Model($_POST['building']);
+        $buildingID = $buildingDelete->getIdBuilding();
+        $answerDelete = $buildingDelete->deleteBuilding();
+        if($answerDelete === true){
+            $flashMessageSuccess = sprintf($strings["Building \"%s\" successfully deleted."], $buildingID);
             $view->setFlashSuccess($flashMessageSuccess);
             $view->redirect("BUILDING_Controller.php");     
-        }catch(Exception $errors) {
-            $view->setFlashDanger($strings[$errors->getMessage()]);
+        }else{            
+            $view->setFlashDanger($strings[$answerDelete]);
             $view->redirect("BUILDING_Controller.php");
         }
           	

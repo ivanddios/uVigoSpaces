@@ -44,7 +44,7 @@ class BUILDING_SHOW{
 										<label for="phoneBuilding"><?= $strings['What is your phone?']?></label>
 									</div>
 								</div>
-							<a href="../index.php?"><?= $strings["Back"] ?></a>
+							<a href="../controller/BUILDING_Controller.php?"><?= $strings["Back"] ?></a>
 						</div>
 					</div>
 				</div>

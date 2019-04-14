@@ -1,9 +1,6 @@
 <?php 
 
 require_once(__DIR__.'..\..\model\ACTION_Model.php');
-// require_once(__DIR__.'..\..\test\TEST_View.php');
-
-// $tests = array();
 
 
 $tests['SM_ACTION_ADD_TEST1']=(['Functionality' => "SM_ACTION_ADD",
@@ -33,7 +30,7 @@ $tests['SM_ACTION_ADD_TEST2']["Result"] = $addAnswer;
 
 $tests['SM_ACTION_ADD_TEST3']=(['Functionality' => "SM_ACTION_ADD",
                 'Description' => 'Test 3. Attempt to add action with action name bigger than 255 characters',
-                'Expected' => 'Action name can not be that long',
+                'Expected' => "Action name can't be larger than 255 characters",
                 'Result' => 'Not executed']);
 
 $action = new ACTION_Model('','uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
@@ -47,7 +44,7 @@ $tests['SM_ACTION_ADD_TEST3']["Result"] = $addAnswer;
 
 $tests['SM_ACTION_ADD_TEST4']=(['Functionality' => "SM_ACTION_ADD",
                 'Description' => "Test 4. Attempt to add action with action name's format incorrect",
-                'Expected' => 'Action name is invalid',
+                'Expected' => 'Action name format is invalid',
                 'Result' => 'Not executed']);
 
 $action = new ACTION_Model('','111111','descriptAction');
@@ -71,7 +68,7 @@ $tests['SM_ACTION_ADD_TEST5']["Result"] = $addAnswer;
 
 $tests['SM_ACTION_ADD_TEST6']=(['Functionality' => "SM_ACTION_ADD",
                 'Description' => 'Test 6. Attempt to add action with action description bigger than 255 characters',
-                'Expected' => 'Action description can not be that long',
+                'Expected' => "Action description can't be larger than 255 characters",
                 'Result' => 'Not executed']);
 
 $action = new ACTION_Model('','nameAction','uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
@@ -81,12 +78,9 @@ $tests['SM_ACTION_ADD_TEST6']["Result"] = $addAnswer;
 
 
 
-
-
-
 $tests['SM_ACTION_ADD_TEST7']=(['Functionality' => "SM_ACTION_ADD",
                 'Description' => "Test 7. Attempt to add action with action description's format incorrect",
-                'Expected' => 'Action description is invalid',
+                'Expected' => 'Action description format is invalid',
                 'Result' => 'Not executed']);
 
 $action = new ACTION_Model('','nameAction','111111');
@@ -96,15 +90,14 @@ $tests['SM_ACTION_ADD_TEST7']["Result"] = $addAnswer;
 
 
 
-
 $tests['SM_ACTION_ADD_TEST8']=(['Functionality' => "SM_ACTION_ADD",
                 'Description' => "Test 8. Attempt to add action with correct values",
                 'Expected' => 'Action successfully added',
                 'Result' => 'Not executed']);
 
-$action = new ACTION_Model('','nameAction','111111');
+$action = new ACTION_Model('','nameActionAdded','descriptActionAdded');
 $addAnswer = $action->addAction();
-if($addAnswer == true){
+if($addAnswer === true){
     $tests['SM_ACTION_ADD_TEST8']["Result"] = 'Action successfully added';
 } else {
     $tests['SM_ACTION_ADD_TEST8']["Result"] = $addAnswer;

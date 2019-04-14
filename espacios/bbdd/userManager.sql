@@ -56,10 +56,10 @@ INSERT INTO `IM_ACTION` (`im_idAction`, `im_nameAction`, `im_descripAction`) VAL
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `IM_ACTION_FUNCTIONALITY`
+-- Estructura de tabla para la tabla `IM_FUNCTIONALITY_ACTION`
 --
 
-CREATE TABLE IF NOT EXISTS `IM_ACTION_FUNCTIONALITY` (
+CREATE TABLE IF NOT EXISTS `IM_FUNCTIONALITY_ACTION` (
   `im_idAction` int(11) NOT NULL,
   `im_idFunction` int(11) NOT NULL,
   PRIMARY KEY (`im_idAction`,`im_idFunction`),
@@ -67,10 +67,10 @@ CREATE TABLE IF NOT EXISTS `IM_ACTION_FUNCTIONALITY` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `IM_ACTION_FUNCTIONALITY`
+-- Volcado de datos para la tabla `IM_FUNCTIONALITY_ACTION`
 --
 
-INSERT INTO `IM_ACTION_FUNCTIONALITY` (`im_idAction`, `im_idFunction`) VALUES
+INSERT INTO `IM_FUNCTIONALITY_ACTION` (`im_idAction`, `im_idFunction`) VALUES
 (1, 1),
 (1, 2),
 (1, 3),
@@ -379,56 +379,56 @@ INSERT INTO `SM_ACTION` (`sm_idAction`, `sm_nameAction`, `sm_descripAction`) VAL
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `SM_ACTION_FUNCTIONALITY`
+-- Estructura de tabla para la tabla `SM_FUNCTIONALITY_ACTION`
 --
 
-CREATE TABLE IF NOT EXISTS `SM_ACTION_FUNCTIONALITY` (
-  `sm_idAction` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `SM_FUNCTIONALITY_ACTION` (
   `sm_idFunction` int(11) NOT NULL,
-  PRIMARY KEY (`sm_idAction`,`sm_idFunction`),
+    `sm_idAction` int(11) NOT NULL,
+  PRIMARY KEY (`sm_idFunction`, `sm_idAction`),
   KEY `sm_idFunction` (`sm_idFunction`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `SM_ACTION_FUNCTIONALITY`
+-- Volcado de datos para la tabla `SM_FUNCTIONALITY_ACTION`
 --
 
-INSERT INTO `SM_ACTION_FUNCTIONALITY` (`sm_idAction`, `sm_idFunction`) VALUES
+INSERT INTO `SM_FUNCTIONALITY_ACTION` (`sm_idFunction`,`sm_idAction`) VALUES
 (1, 1),
-(1, 2),
-(1, 3),
-(1, 4),
-(1, 5),
-(1, 6),
-(1, 7),
 (2, 1),
-(2, 2),
-(2, 3),
-(2, 4),
-(2, 5),
-(2, 6),
-(2, 7),
 (3, 1),
-(3, 2),
-(3, 3),
-(3, 4),
-(3, 5),
-(3, 6),
-(3, 7),
 (4, 1),
-(4, 2),
-(4, 3),
-(4, 4),
-(4, 5),
-(4, 6),
-(4, 7),
 (5, 1),
+(6, 1),
+(7, 1),
+(1, 2),
+(2, 2),
+(3, 2),
+(4, 2),
 (5, 2),
+(6, 2),
+(7, 2),
+(1, 3),
+(2, 3),
+(3, 3),
+(4, 3),
 (5, 3),
+(6, 3),
+(7, 3),
+(1, 4),
+(2, 4),
+(3, 4),
+(4, 4),
 (5, 4),
+(6, 4),
+(7, 4),
+(1, 5),
+(2, 5),
+(3, 5),
+(4, 5),
 (5, 5),
-(5, 6),
-(5, 7);
+(6, 5),
+(7, 5);
 
 -- --------------------------------------------------------
 
@@ -501,8 +501,8 @@ CREATE TABLE IF NOT EXISTS `SM_FUNCTIONALITY` (
 INSERT INTO `SM_FUNCTIONALITY` (`sm_idFunction`, `sm_nameFunction`, `sm_descripFunction`) VALUES
 (1, 'USER', 'Actions on the set of users'),
 (2, 'BUILDING', 'Actions on the set of buildings'),
-(3, 'FLOOR', 'Actions on the set of building\'s floor'),
-(4, 'SPACE', 'Actions on the set of floor\'s spaces'),
+(3, 'FLOOR', 'Actions on the set of floor'),
+(4, 'SPACE', 'Actions on the set of spaces'),
 (5, 'FUNCTIONALITY', 'Actions on the set of functionalities'),
 (6, 'GROUP', 'Actions on the set of groups'),
 (7, 'ACTION', 'Actions on the set of actions');
@@ -743,11 +743,11 @@ INSERT INTO `SM_USER_GROUP` (`sm_username`, `sm_idGroup`) VALUES
 --
 
 --
--- Filtros para la tabla `IM_ACTION_FUNCTIONALITY`
+-- Filtros para la tabla `IM_FUNCTIONALITY_ACTION`
 --
-ALTER TABLE `IM_ACTION_FUNCTIONALITY`
-   ADD CONSTRAINT `IM_ACTION_FUNCTIONALITY_ibfk_1` FOREIGN KEY (`im_idAction`) REFERENCES `IM_ACTION` (`im_idAction`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `IM_ACTION_FUNCTIONALITY_ibfk_2` FOREIGN KEY (`im_idFunction`) REFERENCES `IM_FUNCTIONALITY` (`im_idFunction`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `IM_FUNCTIONALITY_ACTION`
+   ADD CONSTRAINT `IM_FUNCTIONALITY_ACTION_ibfk_1` FOREIGN KEY (`im_idAction`) REFERENCES `IM_ACTION` (`im_idAction`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `IM_FUNCTIONALITY_ACTION_ibfk_2` FOREIGN KEY (`im_idFunction`) REFERENCES `IM_FUNCTIONALITY` (`im_idFunction`) ON DELETE CASCADE ON UPDATE CASCADE;
 --
 -- Filtros para la tabla `IM_NOTIFICATION`
 --
@@ -771,11 +771,12 @@ ALTER TABLE `IM_USER_GROUP`
   ADD CONSTRAINT `USER` FOREIGN KEY (`im_username`) REFERENCES `IM_USER` (`im_username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `SM_ACTION_FUNCTIONALITY`
+-- Filtros para la tabla `SM_FUNCTIONALITY_ACTION`
 --
-ALTER TABLE `SM_ACTION_FUNCTIONALITY`
-  ADD CONSTRAINT `SM_ACTION_FUNCTIONALITY_ibfk_1` FOREIGN KEY (`sm_idAction`) REFERENCES `SM_ACTION` (`sm_idAction`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `SM_ACTION_FUNCTIONALITY_ibfk_2` FOREIGN KEY (`sm_idFunction`) REFERENCES `SM_FUNCTIONALITY` (`sm_idFunction`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `SM_FUNCTIONALITY_ACTION`
+  ADD CONSTRAINT `SM_FUNCTIONALITY_ACTION_ibfk_1` FOREIGN KEY (`sm_idFunction`) REFERENCES `SM_FUNCTIONALITY` (`sm_idFunction`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `SM_FUNCTIONALITY_ACTION_ibfk_2` FOREIGN KEY (`sm_idAction`) REFERENCES `SM_ACTION` (`sm_idAction`) ON DELETE CASCADE ON UPDATE CASCADE;
+  
 
 --
 -- Filtros para la tabla `SM_FLOOR`
@@ -789,7 +790,8 @@ ALTER TABLE `SM_FLOOR`
 ALTER TABLE `SM_PERMISSION`
   ADD CONSTRAINT `SM_PERMISSION_ibfk_1` FOREIGN KEY (`sm_idGroup`) REFERENCES `SM_GROUP` (`sm_idGroup`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `SM_PERMISSION_ibfk_2` FOREIGN KEY (`sm_idFunction`) REFERENCES `SM_FUNCTIONALITY` (`sm_idFunction`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `SM_PERMISSION_ibfk_3` FOREIGN KEY (`sm_idAction`) REFERENCES `SM_ACTION` (`sm_idAction`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `SM_PERMISSION_ibfk_3` FOREIGN KEY (`sm_idAction`) REFERENCES `SM_ACTION` (`sm_idAction`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `SM_PERMISSION_ibfk_4` FOREIGN KEY (`sm_idFunction`) REFERENCES `SM_FUNCTIONALITY_ACTION` (`sm_idFunction`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `SM_SPACE`

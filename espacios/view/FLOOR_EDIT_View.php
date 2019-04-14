@@ -82,7 +82,7 @@ class FLOOR_EDIT{
 
 									<div class="input-file">
 										<label class="control-label"><?= $strings['Upload the floor plane']?></label>
-										<input type="file" name="planeFloor" class="filestyle">
+										<input type="file" name="planeFloor" class="filestyle" value="<?=$this->floor['sm_planeFloor']?>">
 										<input type="hidden" id="planeFloorOriginal" name="planeFloorOriginal" value="<?=$this->floor['sm_planeFloor']?>">
 									</div>
 								

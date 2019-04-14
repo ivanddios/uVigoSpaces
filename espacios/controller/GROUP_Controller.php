@@ -51,23 +51,22 @@ Switch ($_GET['action']){
 
         if (isset($_POST["submit"])) {
             $groupAdd = get_data_form();
-            try{
-                $permissions = json_decode($_POST['permissions']);
-                //$functionAdd->checkIsValidForAdd_Update(); 
-                $groupAdd->addGroup($permissions);
+            $permissions = json_decode($_POST['permissions']);
+            var_dump($permissions);
+            exit();
+            $addAnswer = $groupAdd->addGroup($permissions);
+            if($addAnswer === true){
                 $flashMessageSuccess = sprintf($strings["Group \"%s\" successfully added."], $groupAdd->getNameGroup());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("GROUP_Controller.php");
-            }catch(Exception $errors) {
-                $view->setFlashDanger($strings[$errors->getMessage()]);
+            }else{
+                $view->setFlashDanger($strings[$addAnswer]);
                 $view->redirect("GROUP_Controller.php", $strings['Add']);
             }
-                
-        } else {
+        }else{
             $function = new FUNCTIONALITY_Model();
-            $action = new ACTION_Model();
-            
             $functions = $function->showAllFunctions();
+            $action = new ACTION_Model();
             $actions = $action->showAllActions();
             new GROUP_ADD($functions, $actions);
         }
@@ -95,15 +94,13 @@ Switch ($_GET['action']){
 
         if (isset($_POST["submit"])) { 
             $groupEdit = get_data_form();
-            try{
-                //$functionEdit->checkIsValidForAdd_Update();
-                $groupEdit->updateGroup();
+            $updateAnswer = $groupEdit->updateGroup();
+            if($updateAnswer === true){
                 $flashMessageSuccess = sprintf($strings["Group \"%s\" successfully updated."], $groupEdit->getNameGroup());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("GROUP_Controller.php");   
-
-            }catch(Exception $errors) {
-                $view->setFlashDanger($strings[$errors->getMessage()]);
+            }else{
+                $view->setFlashDanger($strings[$updateAnswer]);
                 $view->redirect("GROUP_Controller.php", $strings['Edit'], 'group='.$groupId);
             }
         } else {
@@ -157,22 +154,16 @@ Switch ($_GET['action']){
             $view->setFlashDanger($strings["Group id is mandatory"]);
             $view->redirect("GROUP_Controller.php");
         }
-        $groupid = $_POST['group'];
-        $groupDelete = new GROUP_Model($groupid);
 
-        if (!$groupDelete ->existsGroup()) {
-            $view->setFlashDanger($strings["No such group with this id"]);
-            $view->redirect("GROUP_Controller.php");
-        }
-
-        try{
-            $groupName = $groupDelete->findNameGroup();
-            $groupDelete->deleteGroup();
+        $groupDelete = new GROUP_Model($_POST['group']);
+        $groupName = $groupDelete->findNameGroup();
+        $deleteAnswer = $groupDelete->deleteGroup();
+        if($deleteAnswer === true){
             $flashMessageSuccess = sprintf($strings["Group \"%s\" successfully deleted."], $groupName);
             $view->setFlashSuccess($flashMessageSuccess);
             $view->redirect("GROUP_Controller.php");     
-        }catch(Exception $errors) {
-            $view->setFlashDanger($strings[$errors->getMessage()]);
+        }else{
+            $view->setFlashDanger($strings[$deleteAnswer]);
             $view->redirect("GROUP_Controller.php");
         }
             	

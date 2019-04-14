@@ -19,7 +19,7 @@ class USER_Model {
 	private $mysqli;
 
 
-    function __construct($username=null, $password=null, $name=null, $surname=null, $dni=null, $birthdate=null, $email=null, $phone=null, $photo=null, $group=null)
+    public function __construct($username=null, $password=null, $name=null, $surname=null, $dni=null, $birthdate=null, $email=null, $phone=null, $photo=null, $group=null)
     {
         $this->username = $username; 
         $this->password = $password;
@@ -57,7 +57,7 @@ class USER_Model {
     }
 
 
-    function login() {
+    public function login() {
         if($this->getUsername() != null && $this->getPassword() != null){
             $sql = "SELECT * FROM `SM_USER` WHERE sm_username = '$this->username'";
             $result = $this->mysqli->query($sql);
@@ -69,7 +69,7 @@ class USER_Model {
                     return 'Password is incorrect';
                 }
             } else {
-                return 'The user does not exists';
+                return "The user doesn't exist";
             }
         }else{
             return 'Username and password are mandatory';
@@ -77,7 +77,7 @@ class USER_Model {
     }
 
 
-    function getPermissions(){
+    public function getPermissions(){
         $sql ="SELECT DISTINCT SM_ACTION.sm_nameAction, SM_FUNCTIONALITY.sm_nameFunction FROM `SM_GROUP`, `SM_USER_GROUP`, `SM_PERMISSION`, `SM_FUNCTIONALITY`, `SM_ACTION` WHERE SM_USER_GROUP.sm_username = '$this->username' AND SM_USER_GROUP.sm_idGroup = SM_GROUP.sm_idGroup AND SM_PERMISSION.sm_idFunction = SM_FUNCTIONALITY.sm_idFunction AND SM_PERMISSION.sm_idAction = SM_ACTION.sm_idAction";
         $result = $this->mysqli->query($sql);  
         $j = 0;
@@ -94,7 +94,7 @@ class USER_Model {
         }
     }
 
-    function findUser() {
+    public function findUser() {
         $sql = "SELECT * FROM `SM_USER` WHERE sm_username = '$this->username'";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
@@ -105,7 +105,7 @@ class USER_Model {
     }
 
 
-    function findUserWithGroup(){
+    public function findUserWithGroup(){
         $sql = "SELECT * FROM`SM_USER` U, `SM_USER_GROUP` UG, `SM_GROUP` G
                 WHERE U.sm_username = '$this->username' AND U.sm_username = UG.sm_username AND UG.sm_idGroup = G.sm_idGroup";
         if (!($resultado = $this->mysqli->query($sql))) {
@@ -116,14 +116,14 @@ class USER_Model {
         }
     }
 
-    function findLinkProfilePhoto() {
+    public function findLinkProfilePhoto() {
         $sql = "SELECT sm_photo FROM `SM_USER` WHERE sm_username='$this->username'";
         $result = $this->mysqli->query($sql)->fetch_array();
         return $result['photo'];
     }
 
 
-    function showAllUsers() {
+    public function showAllUsers() {
         $sql = "SELECT * FROM `SM_USER`";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
@@ -138,7 +138,7 @@ class USER_Model {
         }
     }
 
-    function addUser() {
+    public function addUser() {
 
         $errors = $this->checkIsValidForAdd();
         if($errors === false){
@@ -162,7 +162,7 @@ class USER_Model {
     }
 
 
-    function updateUser() {
+    public function updateUser() {
 
         $errors = $this->checkIsValidForEdit();
         if($errors === false){
@@ -193,7 +193,7 @@ class USER_Model {
         }
     }
 
-    function deleteUser() {
+    public function deleteUser() {
         if($this->existsUser()){
             $sql = "DELETE FROM `SM_USER` WHERE sm_username ='$this->username'";
             if (!($resultado = $this->mysqli->query($sql))) {
@@ -209,7 +209,7 @@ class USER_Model {
 
 
 
-    function addRoleUser() {
+    public function addRoleUser() {
         $sql = "INSERT INTO `SM_USER_GROUP` VALUES ('$this->username','$this->group')";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
@@ -221,14 +221,14 @@ class USER_Model {
 
 
 
-    function formatDate($date){
+    public function formatDate($date){
         $dateFormat = str_replace('/', '-', $date);
         $dateFormat = date('Y-m-d', strtotime($dateFormat));
         return $dateFormat;
     }
 
 
-    function updateDirPhoto() {
+    public function updateDirPhoto() {
         if ($this->getPhoto('name') !== '') {
             if (!file_exists($this->dirPhoto)) {
                 mkdir($this->dirPhoto, 0777, true);
@@ -238,7 +238,7 @@ class USER_Model {
     }
 
 
-    function existsUser() {
+    public function existsUser() {
         $sql = "SELECT * FROM `SM_USER` WHERE sm_username = '$this->username'";
         $result = $this->mysqli->query($sql);
         if ($result->num_rows == 1) {
@@ -248,7 +248,7 @@ class USER_Model {
         }
     }
 
-    function existsDNI() {
+    public function existsDNI() {
         $sql = "SELECT * FROM `SM_USER` WHERE sm_dni = '$this->dni'";
         $result = $this->mysqli->query($sql);
         if ($result->num_rows == 1) {
@@ -258,7 +258,7 @@ class USER_Model {
         }
     }
 
-    function existsEmail() {
+    public function existsEmail() {
         $sql = "SELECT * FROM `SM_USER` WHERE sm_email = '$this->email'";
         $result = $this->mysqli->query($sql);
         if ($result->num_rows == 1) {
@@ -269,7 +269,7 @@ class USER_Model {
     }
 
 
-    function validateletterDNI($dni) {
+    public function validateletterDNI($dni) {
 
         $letterDNI = substr($dni, -1, 1);
         $numberDNI = substr($dni, 0, 8);
@@ -286,19 +286,15 @@ class USER_Model {
     }
 
 
-    function validateDate($date)
+    public function validateDate($date)
     {
-
-      
         $day = (int) substr($date, 0, 2);
         $month = (int) substr($date, 3, 2);
         $year = (int) substr($date, 6, 12);
         $currentDate = date("d/m/Y");
         $currentYear = (int) substr($currentDate, 6, 12);
 
-  
         if(checkdate($month, $day, $year) && ($currentYear > $date) && ($currentYear - $year) >= 18){
-           
             return true;
         } else {
             return false;

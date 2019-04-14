@@ -10,7 +10,7 @@ class ACTION_Model {
 	private $mysqli;
 
 
-    function __construct($idAction=null, $nameAction=null, $descripAction=null)
+    public function __construct($idAction=null, $nameAction=null, $descripAction=null)
     {
         $this->idAction = $idAction;
         $this->nameAction =  $nameAction; 
@@ -25,7 +25,7 @@ class ACTION_Model {
 
     /* Principal functions*/
 
-    function showAllActions() {
+    public function showAllActions() {
         $sql = "SELECT * FROM `SM_ACTION`";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
@@ -42,7 +42,7 @@ class ACTION_Model {
 
 
 
-    function findAction() {
+    public function findAction() {
         $sql = "SELECT * FROM `SM_ACTION` WHERE sm_idAction = '$this->idAction'";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
@@ -53,7 +53,7 @@ class ACTION_Model {
     }
 
 
-    function updateAction() {
+    public function updateAction() {
 
         $errors = $this->checkIsValidForUpdate();
         if($errors === false){
@@ -69,7 +69,7 @@ class ACTION_Model {
     }
 
 
-    function addAction() {
+    public function addAction() {
 
         $errors = $this->checkIsValidForAdd();
         if($errors === false){
@@ -85,7 +85,7 @@ class ACTION_Model {
     }
 
 
-    function deleteAction() {
+    public function deleteAction() {
 
         $errors = $this->checkIsValidForDelete();
         if($errors === false){
@@ -103,7 +103,7 @@ class ACTION_Model {
 
     /* Auxilary functions*/
 
-    function findNameAction() {
+    public function findNameAction() {
         $sql = "SELECT sm_nameAction FROM `SM_ACTION` WHERE sm_idAction = '$this->idAction'";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
@@ -112,6 +112,22 @@ class ACTION_Model {
             return $result['nameAction'];
         }
     }
+
+    /*
+        This public function is only used in unit tests over ACTION_EDIT and ACTION_DELETE to get the last id action inserted (through the unit test ACTION_ADD_TEST), 
+        because of this the connection with DB is realized in the public function to be able to access it through an anonymous class.
+    */
+    public function findLastActionID() {
+        $mysqli = Connection::connectionBD();
+        $sql = "SELECT sm_idAction FROM `SM_ACTION` ORDER BY sm_idAction DESC LIMIT 1";
+        if (!($resultado = $mysqli->query($sql))) {
+            throw new Exception('Error in the query on the database');
+        } else {
+            $result = $resultado->fetch_array();
+            return $result['sm_idAction'];
+        }
+    }
+
 
 
     public function existsAction() {
@@ -134,18 +150,18 @@ class ACTION_Model {
 
         if (strlen(trim($this->nameAction)) == 0  && (strlen(trim($this->descripAction)) == 0 )){
             $errors = "Action name and description are mandatory";
-        }else if (strlen(trim($this->nameAction)) == 0 ) {
+        }else if (strlen(trim($this->nameAction)) == 0) {
             $errors = "Action name is mandatory";
-        }else if (strlen(trim($this->nameAction)) > 225 ) {
-            $errors = "Action name can not be that long";
+        }else if (strlen(trim($this->nameAction)) > 225) {
+            $errors = "Action name can't be larger than 255 characters";
         }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameAction)){
-            $errors = "Action name is invalid";
-        }else if (strlen(trim($this->descripAction)) == 0 ) {
+            $errors = "Action name format is invalid";
+        }else if (strlen(trim($this->descripAction)) == 0) {
             $errors= "Action description is mandatory";
-        }else if (strlen(trim($this->descripAction)) > 225 ) {
-            $errors = "Action description can not be that long";
+        }else if (strlen(trim($this->descripAction)) > 225) {
+            $errors = "Action description can't be larger than 255 characters";
         }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->descripAction)){
-            $errors = "Action description is invalid";
+            $errors = "Action description format is invalid";
         }
 
         return $errors;
@@ -157,23 +173,25 @@ class ACTION_Model {
         $errors = false;
 
         if(strlen(trim($this->idAction)) == 0){
-            $errors = "Action id are mandatory";
+            $errors = "Action identifier is mandatory";
+        }else if(!preg_match('/^\d+$/', $this->idAction)){
+            $errors = "Action identifier format is invalid";
         }else if($this->existsAction() !== true) {
-            $errors = "Action doesn't exist";
+                $errors = "Action doesn't exist";
         } else if (strlen(trim($this->nameAction)) == 0  && (strlen(trim($this->descripAction)) == 0 )){
             $errors = "Action name and description are mandatory";
-        }else if (strlen(trim($this->nameAction)) == 0 ) {
+        }else if (strlen(trim($this->nameAction)) == 0) {
             $errors = "Action name is mandatory";
-        }else if (strlen(trim($this->nameAction)) > 225 ) {
-            $errors = "Action name can not be that long";
+        }else if (strlen(trim($this->nameAction)) > 225) {
+            $errors = "Action name can't be larger than 255 characters";
         }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameAction)){
-            $errors = "Action name is invalid";
-        }else if (strlen(trim($this->descripAction)) == 0 ) {
+            $errors = "Action name format is invalid";
+        }else if (strlen(trim($this->descripAction)) == 0) {
             $errors= "Action description is mandatory";
-        }else if (strlen(trim($this->descripAction)) > 225 ) {
-            $errors = "Action description can not be that long";
+        }else if (strlen(trim($this->descripAction)) > 225) {
+            $errors = "Action description can't be larger than 255 characters";
         }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->descripAction)){
-            $errors = "Action description is invalid";
+            $errors = "Action description format is invalid";
         }
 
         return $errors;
@@ -184,9 +202,9 @@ class ACTION_Model {
         $errors = false;
 
         if(strlen(trim($this->idAction)) == 0){
-            $errors = "Action id are mandatory";
+            $errors = "Action identifier is mandatory";
         }else if(!preg_match('/^\d+$/', $this->idAction)){
-            $errors = "The action identifier format is invalid";
+            $errors = "Action identifier format is invalid";
         }else if($this->existsAction() !== true) {
             $errors = "Action doesn't exist";
         }

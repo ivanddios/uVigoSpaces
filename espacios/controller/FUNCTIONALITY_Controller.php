@@ -47,15 +47,16 @@ Switch ($_GET['action']){
         if (isset($_POST["submit"])) { 
             $functionAdd = get_data_form();
             $actions = json_decode($_POST["actions"]);
-            try{
-                // $functionAdd->checkIsValidForAdd_Update(); 
-                $functionAdd->addFunction($actions);
+            var_dump($actions);
+            exit();
+            $addAnswer = $functionAdd->addFunction($actions);
+            if($addAsnwer === true){
                 $flashMessageSuccess = sprintf($strings["Functionality \"%s\" successfully added."], $functionAdd->getNameFunction());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("FUNCTIONALITY_Controller.php");
 
-            }catch(Exception $errors) {
-                $view->setFlashDanger($strings[$errors->getMessage()]);
+            }else{
+                $view->setFlashDanger($strings[$addAsnwer]);
                 $view->redirect("BUILDING_Controller.php", $strings['Add']);
 
             }
@@ -92,17 +93,17 @@ Switch ($_GET['action']){
         if (isset($_POST["submit"])) { 
             $functionEdit = get_data_form();
             $actions = json_decode($_POST["actions"]);
-            try{
-                //$functionEdit->checkIsValidForAdd_Update();
-                var_dump("HO");
+            $editAnswer = $functionEdit->updateFunction($actions);
+            if($editAnswer === true){
                 $functionEdit->updateFunction($actions);
                 $flashMessageSuccess = sprintf($strings["Function \"%s\" successfully updated."], $functionEdit->getNameFunction());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("FUNCTIONALITY_Controller.php");   
 
-            }catch(Exception $errors) {
-                $view->setFlashDanger($strings[$errors->getMessage()]);
-                $view->redirect("FUNCTIONALITY_Controller.php", $strings['Edit'], 'function='.$functionId);
+            }else{
+                //$view->setFlashDanger($strings[$editAnswer]);
+                var_dump($editAnswer);
+                //$view->redirect("FUNCTIONALITY_Controller.php", $strings['Edit'], 'function='.$functionId);
             }
         } else {
 

@@ -9,6 +9,16 @@ include  './ACTION_EDIT_Test.php';
 include  './ACTION_DELETE_Test.php';
 include  './BUILDING_ADD_Test.php';
 include  './BUILDING_EDIT_Test.php';
+include  './BUILDING_DELETE_Test.php';
+include  './FLOOR_ADD_Test.php';
+include  './FLOOR_EDIT_Test.php';
+include  './FLOOR_DELETE_Test.php';
+include  './FUNCTIONALITY_ADD_Test.php';
+include  './FUNCTIONALITY_EDIT_Test.php';
+include  './FUNCTIONALITY_DELETE_Test.php';
+include  './GROUP_ADD_Test.php';
+include  './GROUP_EDIT_Test.php';
+include  './GROUP_DELETE_Test.php';
 
 
 

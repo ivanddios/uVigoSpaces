@@ -1,6 +1,8 @@
 <?php
 
 require_once(__DIR__."..\..\core\ConnectionBD.php");
+require_once(__DIR__."..\..\model\ACTION_Model.php");
+require_once(__DIR__."..\..\model\GROUP_Model.php");
 
 class FUNCTIONALITY_Model {
 
@@ -10,147 +12,259 @@ class FUNCTIONALITY_Model {
 	private $mysqli;
 
 
-function __construct($idFunction=null,$nameFunction=NULL, $descripFunction=NULL)
-{
-    $this->idFunction = $idFunction;
-    $this->nameFunction =  $nameFunction; 
-	$this->descripFunction = $descripFunction;
-    $this->mysqli = Connection::connectionBD();
-}
+    public function __construct($idFunction=null,$nameFunction=null, $descripFunction=null)
+    {
+        $this->idFunction = $idFunction;
+        $this->nameFunction =  $nameFunction; 
+        $this->descripFunction = $descripFunction;
+        $this->mysqli = Connection::connectionBD();
+    }
 
-public function getNameFunction(){
-    return $this->nameFunction;
-}
+    public function getNameFunction(){
+        return $this->nameFunction;
+    }
 
 
-function showAllFunctions() {
-    $sql = "SELECT * FROM `SM_FUNCTIONALITY`";
-    if (!($resultado = $this->mysqli->query($sql))) {
-        throw new Exception('Error in the query on the database');
-    } else {
-        $toret = array();
-        $i = 0;
-        while ($fila = $resultado->fetch_array()) {
-            $toret[$i] = $fila;
-            $i++;
+    public function showAllFunctions() {
+        $sql = "SELECT * FROM `SM_FUNCTIONALITY`";
+        if (!($resultado = $this->mysqli->query($sql))) {
+            throw new Exception('Error in the query on the database');
+        } else {
+            $toret = array();
+            $i = 0;
+            while ($fila = $resultado->fetch_array()) {
+                $toret[$i] = $fila;
+                $i++;
+            }
+            return $toret;
         }
-        return $toret;
     }
-}
 
-function showAllActionsForFunctionality() {
-    $sql = "SELECT sm_idAction FROM `SM_ACTION_FUNCTIONALITY` WHERE sm_idFunction = '$this->idFunction'";
-    if (!($resultado = $this->mysqli->query($sql))) {
-        throw new Exception('Error in the query on the database');
-    } else {
-        $toret = array();
-        $i = 0;
-        while ($fila = $resultado->fetch_array()) {
-            $toret[$i] = $fila['sm_idAction'];
-            $i++;
+    public function showAllActionsForFunctionality() {
+        $sql = "SELECT sm_idAction FROM `SM_FUNCTIONALITY_ACTION` WHERE sm_idFunction = '$this->idFunction'";
+        if (!($resultado = $this->mysqli->query($sql))) {
+            throw new Exception('Error in the query on the database');
+        } else {
+            $toret = array();
+            $i = 0;
+            while ($fila = $resultado->fetch_array()) {
+                $toret[$i] = $fila['sm_idAction'];
+                $i++;
+            }
+            return  $toret;
         }
-        return  $toret;
     }
-}
 
-function findFunctionality() {
-	$sql = "SELECT * FROM `SM_FUNCTIONALITY` WHERE sm_idFunction = '$this->idFunction'";
-    if (!($resultado = $this->mysqli->query($sql))) {
-        throw new Exception('Error in the query on the database');
-    } else {
-        $result = $resultado->fetch_array();
-        return $result;
+    public function findFunctionality() {
+        $sql = "SELECT * FROM `SM_FUNCTIONALITY` WHERE sm_idFunction =  '$this->idFunction'";
+        if (!($resultado = $this->mysqli->query($sql))) {
+            throw new Exception('Error in the query on the database');
+        } else {
+            $result = $resultado->fetch_array();
+            return $result;
+        }
     }
-}
 
-function addFunction($actions) {
-    $sqlFunction = "INSERT INTO `SM_FUNCTIONALITY` (sm_nameFunction, sm_descripFunction) VALUES ('$this->nameFunction', '$this->descripFunction')";
-    if (!($resultado = $this->mysqli->query($sqlFunction))) {
-        throw new Exception('Error in the query on the database');
-    } else {
-        $lastId = $this->mysqli->insert_id;
-        foreach($actions as $action){
-            $sqlFunctionAction = "INSERT INTO `SM_ACTION_FUNCTIONALITY` (sm_idAction, sm_idFunction) VALUES ($action->id, $lastId)";
-            if (!($resultado = $this->mysqli->query($sqlFunctionAction))) {
-                throw new Exception('Error in the query on the database');
+    public function addFunction($actions) {
+
+        $errors = $this->checkIsValidForAdd($actions);
+        if($errors === false){
+            $sqlFunction = "INSERT INTO `SM_FUNCTIONALITY` (sm_nameFunction, sm_descripFunction) VALUES ('$this->nameFunction', '$this->descripFunction')";
+            if (!($resultado = $this->mysqli->query($sqlFunction))) {
+                return 'Error in the query on the database';
+            } else {
+                $lastId = $this->mysqli->insert_id;
+                foreach($actions as $action){
+                    $sqlFunctionAction = "INSERT INTO `SM_FUNCTIONALITY_ACTION` (sm_idFunction, sm_idAction) VALUES ($lastId, $action->id)";
+                    if (!($resultado = $this->mysqli->query($sqlFunctionAction))) {
+                        return 'Error in the query on the database';
+                    }
+                }
+                return true;
+            }
+            return 'Error in the query on the database';
+        }else{
+            return $errors;
+        }
+    }
+
+
+    public function updateFunction($actions) {
+
+        $errors = $this->checkIsValidForUpdate($actions);
+        if($errors === false){
+            $sqlUpdate = "UPDATE `SM_FUNCTIONALITY` SET sm_nameFunction = '$this->nameFunction', sm_descripFunction = '$this->descripFunction' WHERE sm_idFunction = '$this->idFunction'";
+            if (!($resultado = $this->mysqli->query($sqlUpdate))) {
+                return 'Error in the query on the database';
+            } else {
+                $group = new GROUP_Model();
+                $groups = $group->getGroupsForPermission($this->idFunction, $actions);
+                $sqlDelete = "DELETE FROM `SM_FUNCTIONALITY_ACTION` WHERE sm_idFunction = '$this->idFunction'";
+                if (!($resultado = $this->mysqli->query($sqlDelete))) {
+                    return 'Error in the query on the database';
+                }else {
+                    foreach($actions as $action){
+                        $sqlFunctionAction = "INSERT INTO `SM_FUNCTIONALITY_ACTION` (sm_idFunction, sm_idAction) VALUES ($this->idFunction, $action->id)";
+                        if (!($resultado = $this->mysqli->query($sqlFunctionAction))) {
+                            return 'Error in the query on the databasea';
+                        }
+                        foreach($groups as $group){
+                            $sqlPermission = "INSERT INTO `SM_PERMISSION` (sm_idGroup, sm_idFunction, sm_idAction) VALUES ($group, $this->idFunction, $action->id)";
+                            if (!($resultado = $this->mysqli->query($sqlPermission))) {
+                                return 'Error in the query on the database';
+                            }
+                        }
+                    }
+                    return true;
+                }
+            }
+            return 'Error in the query on the database';
+        }else{
+            return $errors;
+        }
+    }
+
+
+    public function deleteFunction() {
+        $errors = $this->checkIsValidForDelete();
+        if($errors === false){
+            $sql = "DELETE FROM `SM_FUNCTIONALITY` WHERE sm_idFunction = '$this->idFunction'";
+            if (!($resultado = $this->mysqli->query($sql))) {
+                return 'Error in the query on the database';
+            } else {
+                return true;
+            }
+        } else{
+            return $errors;
+        }
+    }
+
+
+    /*
+        This public function is only used in unit tests over FUNCTION_EDIT and FUNCTION_DELETE to get the last id action inserted (through the unit test FUNCTION_ADD_TEST), 
+        because of this the connection with DB is realized in the public function to be able to access it through an anonymous class.
+    */
+    public function findLastFunctionID() {
+        $mysqli = Connection::connectionBD();
+        $sql = "SELECT sm_idFunction FROM `SM_FUNCTIONALITY` ORDER BY sm_idFunction DESC LIMIT 1";
+        if (!($resultado = $mysqli->query($sql))) {
+            throw new Exception('Error in the query on the database');
+        } else {
+            $result = $resultado->fetch_array();
+            return $result['sm_idFunction'];
+        }
+    }
+
+    public function existsFunction() {
+        $sql = "SELECT * FROM `SM_FUNCTIONALITY` WHERE sm_idFunction = '$this->idFunction'";
+        $result = $this->mysqli->query($sql);
+        if ($result->num_rows == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function existsFunctionAction($idFunction, $idAction) {
+        $sql = "SELECT * FROM `SM_FUNCTIONALITY_ACTION` WHERE sm_idFunction = '$idFunction' AND sm_idAction = '$idAction'";
+        $result = $this->mysqli->query($sql);
+        if ($result->num_rows >= 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+
+    /* Server validations functions*/
+
+    public function checkIsValidForAdd($actions) {
+
+        $errors = false;
+
+        if (strlen(trim($this->nameFunction)) == 0  && (strlen(trim($this->descripFunction)) == 0 )){
+            $errors = "Function name and description are mandatory";
+        }else if (strlen(trim($this->nameFunction)) == 0) {
+            $errors = "Function name is mandatory";
+        }else if (strlen(trim($this->nameFunction)) > 225) {
+            $errors = "Function name can't be larger than 255 characters";
+        }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameFunction)){
+            $errors = "Function name format is invalid";
+        }else if (strlen(trim($this->descripFunction)) == 0) {
+            $errors= "Function description is mandatory";
+        }else if (strlen(trim($this->descripFunction)) > 225) {
+            $errors = "Function description can't be larger than 255 characters";
+        }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->descripFunction)){
+            $errors = "Function description format is invalid";
+        }else if(!isset($actions)) {
+            $errors = "Access to some functionality is mandatory";
+        }else{
+            foreach($actions as $action){
+                $newAction = new ACTION_Model($action->id);
+                if(!$newAction->existsAction()){
+                    $errors = "Some action for functionality doesn't exist";
+                }
             }
         }
-        return true;
+
+        return $errors;
     }
-    throw new Exception('Error in the query on the database');
-}
 
+    public function checkIsValidForUpdate($actions) {
 
-function deleteFunction() {
-    $sql = "DELETE FROM `SM_FUNCTIONALITY` WHERE sm_idFunction ='$this->idFunction'";
-    if (!($resultado = $this->mysqli->query($sql))) {
-        throw new Exception('Error in the query on the database');
-    } else {
-        return true;
-    }
-}
+        $errors = false;
 
-
-function updateFunction($actions) {
-    $sql = "DELETE FROM `SM_FUNCTIONALITY` WHERE sm_idFunction ='$this->idFunction'";
-    if (($resultado = $this->mysqli->query($sql))) {
-        if(!$this->addFunction($actions)){
-            throw new Exception('Error in the query on the database'); 
+        if(strlen(trim($this->idFunction)) == 0){
+            $errors = "Function identifier is mandatory";
+        }else if(!preg_match('/^\d+$/', $this->idFunction)){
+            $errors = "Function identifier format is invalid";
+        }else if($this->existsFunction() !== true) {
+            $errors = "Function doesn't exist";
+        }else if (strlen(trim($this->nameFunction)) == 0  && (strlen(trim($this->descripFunction)) == 0 )){
+            $errors = "Function name and description are mandatory";
+        }else if (strlen(trim($this->nameFunction)) == 0) {
+            $errors = "Function name is mandatory";
+        }else if (strlen(trim($this->nameFunction)) > 225) {
+            $errors = "Function name can't be larger than 255 characters";
+        }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameFunction)){
+            $errors = "Function name format is invalid";
+        }else if (strlen(trim($this->descripFunction)) == 0) {
+            $errors= "Function description is mandatory";
+        }else if (strlen(trim($this->descripFunction)) > 225) {
+            $errors = "Function description can't be larger than 255 characters";
+        }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->descripFunction)){
+            $errors = "Function description format is invalid";
+        }else if(!isset($actions)) {
+            $errors = "Some action for functionality is mandatory";
+        }else{
+            foreach($actions as $action){
+                $newAction = new ACTION_Model($action->id);
+                if(!$newAction->existsAction()){
+                    $errors = "Some action for functionality doesn't exist";
+                }
+            }
         }
-    } else {
-        throw new Exception('Error in the query on the database'); 
+
+        return $errors;
     }
-    return true;
-}
 
 
-public function existsFunction() {
-	$sql = "SELECT * FROM `SM_FUNCTIONALITY` WHERE sm_idFunction = '$this->idFunction'";
-	$result = $this->mysqli->query($sql);
-	if ($result->num_rows == 1) {
-		return true;
-	} else {
-		return false;
-	}
-}
+    public function checkIsValidForDelete() {
 
+        $errors = false;
 
-// public function checkIsValidForAdd_Update() {
-
-//     $errors = array();
-
-//     if (strlen(trim($this->idBuilding)) == 0 ) {
-//         $errors= "Building id is mandatory";
-//     }else if (strlen(trim($this->idBuilding)) > 6 ) {
-//         $errors = "Building id can not be that long";
-//     }else if(!preg_match('/[A-Z0-9]/', $this->idBuilding)){
-//         $errors = "Building id is invalid. Example: OSBI0";
-//     }elseif($this->existsBuilding($this->idbuilding)){
-//         $errors = "There is already a building with that id";
-//     }else if (strlen(trim($this->nameBuilding)) == 0 ) {
-//         $errors= "Building name is mandatory";
-//     }else if (strlen(trim($this->nameBuilding)) > 225 ) {
-//         $errors = "Building name can not be that long";
-//     }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameBuilding)){
-//         $errors = "Building name is invalid. Try again!";
-//     }else if (strlen(trim($this->addressBuilding)) == 0 ) {
-//         $errors= "Building address is mandatory";
-//     }else if (strlen(trim($this->addressBuilding)) > 225 ) {
-//         $errors = "Building address can not be that long";
-//     }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->addressBuilding)){
-//         $errors = "Building address is invalid. Try again!";
-//     }else if (strlen(trim($this->phoneBuilding)) != 9 ) {
-//         $errors= "Building phone is incorrect";
-//     }else if(!preg_match('/^[9|6|7][0-9]{8}$/', $this->phoneBuilding)){
-//         $errors = "Building phone format is invalid";
-//     }
-
-//     if (sizeof($errors) > 0){
-//         throw new Exception($errors);
-//     }
-// }
-
-
+        if(strlen(trim($this->idFunction)) == 0){
+            $errors = "Function identifier is mandatory";
+        }else if(!preg_match('/^\d+$/', $this->idFunction)){
+            $errors = "Function identifier format is invalid";
+        }else if($this->existsFunction() !== true) {
+            $errors = "Function doesn't exist";
+        }
+            
+        return $errors;
+    }
 
 
 }

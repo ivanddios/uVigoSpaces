@@ -25,12 +25,6 @@ function get_data_form() {
     $surfaceBuildingFloor =  $_POST['surfaceBuildingFloor'];
     $surfaceUsefulFloor =  $_POST['surfaceUsefulFloor'];
     $planeFloor = $_FILES['planeFloor'];
-    
-    // if (isset($_FILES['planeFloor']['name']) && ($_FILES['planeFloor']['name'] !== '')) {
-    //     $planeFloor = '../document/Buildings/'.$idBuilding.'/'.$idBuilding.$idFloor.'/'.$_FILES['planeFloor']['name'];
-    // } else {
-    //     $planeFloor = $_POST['planeFloorOriginal'];
-    // }
 
     $floor = new FLOOR_Model($idBuilding, $idFloor, $nameFloor, $planeFloor, $surfaceBuildingFloor, $surfaceUsefulFloor);
     return $floor;
@@ -63,27 +57,15 @@ Switch ($_REQUEST['action']){
 
         if (isset($_POST["submit"])) { 
             $floorAdd = get_data_form();
-            try{
-                $floorAdd->checkIsValidForAdd(); 
-                // ////////////////////////////////////////METER EN UNA FUNCIÓN////////////////////////////////////////////////////////////
-                // $dirPlane = '../document/Buildings/'.$floorAdd->getIdBuilding().'/'.$floorAdd->getIdBuilding().$floorAdd->getIdFloor().'/';
-                // if ($_FILES['planeFloor']['name'] !== '') {
-                //     if (!file_exists($dirPlane)) {
-                //         mkdir($dirPlane, 0777, true);
-                //     }
-                //     move_uploaded_file($_FILES['planeFloor']['tmp_name'], $floorAdd->getPlaneFloor());
-                // }
-                // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                $floorAdd->addFloor(); 
+            $addAnswer =  $floorAdd->addFloor();
+            if($addAnswer === true){
                 $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully added."], $floorAdd->getNameFloor());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("FLOOR_Controller.php", "building=".$floorAdd->getIdBuilding());
-
-            }catch(Exception $errors) {
-                $view->setFlashDanger($strings[$errors->getMessage()]);
+                $view->redirect("FLOOR_Controller.php", "index&building=".$floorAdd->getIdBuilding());
+            }else{
+                $view->setFlashDanger($strings[$addAnswer]);
                 $view->redirect("FLOOR_Controller.php", $strings['Add'], "building=".$buildingid, "floor=".$strings['Add']);
             }
-
         } else {
             new FLOOR_ADD($buildingid);
         }
@@ -108,34 +90,19 @@ Switch ($_REQUEST['action']){
 
 		if(!checkRol('EDIT', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
-            $view->redirect("FLOOR_Controller.php", "building=".$buildingid);
+            $view->redirect("FLOOR_Controller.php", "index&building=".$buildingid);
         }
 
         
         if (isset($_POST["submit"])) { 
             $floorEdit = get_data_form();
-            
-            try{
-                $floorEdit->checkIsValidForEdit($floorid); 
-                ////////////////////////////////////////METER EN UNA FUNCIÓN////////////////////////////////////////////////////////////
-                // $dirPlane = '../document/Buildings/'.$floorEdit->getIdBuilding().'/'.$floorEdit->getIdBuilding().$floorEdit->getIdFloor().'/';
-                // if ($_FILES['planeFloor']['name'] !== '') {
-                //     if (!file_exists($dirPlane)) {
-                //         mkdir($dirPlane, 0777, true);
-                //     }
-                   
-                //     move_uploaded_file($_FILES['planeFloor']['tmp_name'],$floorEdit->getPlaneFloor());
-                //     $link = $floorEdit->findLinkPlane($buildingid, $floorid);
-                //     unlink($link);
-                // }
-                // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                $floorEdit->updateFloor();
+            $editAnswer =  $floorEdit->updateFloor();
+            if($editAnswer === true){
                 $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully updated."], $floorEdit->getNameFloor());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("FLOOR_Controller.php", "building=".$floorEdit->getIdBuilding());
-            }catch(Exception $errors) {
-                $view->setFlashDanger($strings[$errors->getMessage()]);
+                $view->redirect("FLOOR_Controller.php", "index&building=".$floorEdit->getIdBuilding());
+            }else {
+                $view->setFlashDanger($strings[$editAnswer]);
                 $view->redirect("FLOOR_Controller.php", $strings['Edit'], "building=$buildingid&floor=".$floorid);
             }
         } else {
@@ -149,23 +116,14 @@ Switch ($_REQUEST['action']){
 
     case  $strings['Show']:
 
-        // if (!isset($_SESSION['LOGIN'])){
-        //     $view->setFlashDanger($strings["Not in session. Show the floors requires login"]);
-        //      $view->redirect("USER_Controller.php");
-        // }
-
         if (!isset($_GET['building']) && !isset($_GET['floor'])){
             $view->setFlashDanger($strings["Building and floor id is mandatory"]);
             $view->redirect("BUILDING_Controller.php");
         }
+
         $buildingid = $_GET["building"];
         $floorid = $_GET['floor'];
 
-        // if(!checkRol('SHOW', $function)){
-        //     $view->setFlashDanger($strings["You do not have the necessary permits"]);
-        //     $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
-        // }
-        
         $floor = new FLOOR_Model($buildingid, $floorid);
         $values = $floor->findFloor();
         new FLOOR_SHOW($values);
@@ -192,21 +150,14 @@ Switch ($_REQUEST['action']){
             $view->redirect("FLOOR_Controller.php", "building=".$buildingid);
         }
         $floor = new FLOOR_Model($buildingid, $floorid);
-                
-        if (!$floor->existsFloor()) {
-            $view->setFlashDanger($strings["No exist floor to delete"]);
-            $view->redirect("FLOOR_Controller.php", "building=".$buildingid);
-        }
-
-        try{
-            rmdir('../document/Buildings/'.$floor->getIdBuilding().'/'.$floor->getIdBuilding().$floor->getIdFloor());
-            $floor->deleteFloor();
+        $deleteAnswer = $floor->deleteFloor();
+        if($deleteAnswer === true){
             $flashMessageSuccess = sprintf($strings["Floor \"%s\" successfully deleted."], $buildingid.$floorid);
             $view->setFlashSuccess($flashMessageSuccess);
-            $view->redirect("FLOOR_Controller.php", "building=".$floor->getIdBuilding());
-        }catch(Exception $errors) {
-            $view->setFlashDanger($strings[$errors->getMessage()]);
-            $view->redirect("FLOOR_Controller.php", "building=".$buildingid);
+            $view->redirect("FLOOR_Controller.php", "index&building=".$floor->getIdBuilding());
+        }else {
+            $view->setFlashDanger($strings[$deleteAnswer]);
+            $view->redirect("FLOOR_Controller.php", "index&building=".$buildingid);
     }
 
     break;
@@ -253,6 +204,7 @@ Switch ($_REQUEST['action']){
         //     $view->setFlashDanger($strings["You do not have the necessary permits"]);
         //     $view->redirect("BUILDING_Controller.php", "");
         // }
+
 
         if(isset($_GET['building'])){
             $floor = new FLOOR_Model($_GET['building']);
