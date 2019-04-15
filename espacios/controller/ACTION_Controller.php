@@ -95,7 +95,7 @@ Switch ($_GET['action']){
             }
         } else {
             $action = new ACTION_Model($actionId);
-            $actionValues = $action->findAction();
+            $actionValues = $action->getAction();
             new ACTION_EDIT($actionValues);
         }
             
@@ -122,7 +122,7 @@ Switch ($_GET['action']){
     // //     $buildingid = $_GET['building'];
 
     // //     $building = new BUILDING_Model($buildingid);
-    // //     $values = $building->fillInBuilding();
+    // //     $values = $building->getBuilding();
     // //     new BUILDING_SHOW($values);
 
     // // break;
@@ -179,7 +179,7 @@ Switch ($_GET['action']){
         }
 
         $action = new ACTION_Model();
-        $actions = $action->showAllActions();
+        $actions = $action->getAllActions();
         new ACTION_SHOWALL($actions);
             
     break;

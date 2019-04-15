@@ -26,7 +26,7 @@ class GROUP_Model {
 
     /* MAIN FUNCTIONS */
 
-    public function showAllGroups() {
+    public function getAllGroups() {
         $sql = "SELECT * FROM `SM_GROUP`";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
@@ -42,8 +42,7 @@ class GROUP_Model {
     }
 
 
-
-    public function findGroup() {
+    public function getGroup() {
         $sql = "SELECT * FROM `SM_GROUP` WHERE sm_idGroup = '$this->idGroup'";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
@@ -52,7 +51,6 @@ class GROUP_Model {
             return $result;
         }
     }
-
 
     public function addGroup($permissions) {
         $errors = $this->checkIsValidForAdd($permissions);
@@ -116,13 +114,13 @@ class GROUP_Model {
 
     /*AUXILARY FUNCTIONS */
 
-    public function existsGroup() {
-        $sql = "SELECT * FROM `SM_GROUP` WHERE sm_idGroup = '$this->idGroup'";
-        $result = $this->mysqli->query($sql);
-        if ($result->num_rows == 1) {
-            return true;
+    public function findNameGroup() {
+        $sql = "SELECT sm_nameGroup FROM `SM_GROUP` WHERE sm_idGroup = '$this->idGroup'";
+        if (!($resultado = $this->mysqli->query($sql))) {
+            throw new Exception('Error in the query on the database');
         } else {
-            return false;
+            $result = $resultado->fetch_array();
+            return $result['sm_nameGroup'];
         }
     }
 
@@ -152,6 +150,22 @@ class GROUP_Model {
         return true;
     }
 
+
+    public function getPermissionForGroup() {
+        $sql = "SELECT * FROM `SM_PERMISSION` WHERE sm_idGroup = '$this->idGroup'";
+        if (!($resultado = $this->mysqli->query($sql))) {
+            throw new Exception('Error in the query on the database');
+        } else {
+            $toret = array();
+            $i = 0;
+            while ($fila = $resultado->fetch_array()) {
+                $toret[$i] = $fila;
+                $i++;
+            }
+            return $toret;
+        }
+    }
+
     public function getGroupsForPermission($idFunction, $actions) {
         foreach($actions as $action){
             $sql = "SELECT sm_idGroup FROM `SM_PERMISSION` WHERE sm_idFunction = '$idFunction' AND sm_idGroup = '$action->id'";
@@ -167,6 +181,17 @@ class GROUP_Model {
             }
         }
         return $toret;
+    }
+
+
+        public function existsGroup() {
+        $sql = "SELECT * FROM `SM_GROUP` WHERE sm_idGroup = '$this->idGroup'";
+        $result = $this->mysqli->query($sql);
+        if ($result->num_rows == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

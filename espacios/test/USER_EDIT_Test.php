@@ -1,0 +1,312 @@
+<?php 
+
+require_once(__DIR__.'..\..\model\USER_Model.php');
+
+//TEST-> USERNAME
+$tests['SM_USER_EDIT_TEST1']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => 'Test 1. Attempt to update user without values',
+                'Expected' => 'Username is mandatory',
+                'Result' => 'Not executed']);
+
+$user = new USER_Model();
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST1']["Result"] = $updateAnswer;
+
+
+$tests['SM_USER_EDIT_TEST2']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 2. Attempt to update user with username bigger than 25 characters",
+                'Expected' => "Username can't be larger than 25 characters",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('012345678901234567890123456');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST2']["Result"] = $updateAnswer;
+
+
+$tests['SM_USER_EDIT_TEST3']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 3. Attempt to update user with username format invalid",
+                'Expected' => 'Username format is invalid',
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('¿?{');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST3']["Result"] = $updateAnswer;
+
+
+$tests['SM_USER_EDIT_TEST4']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 4. Attempt to update user with a username that not exists",
+                'Expected' => "There isn't a user with that username",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('admyn');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST4']["Result"] = $updateAnswer;
+
+
+
+$tests['SM_USER_EDIT_TEST5']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 5. Attempt to update user with password format invalid",
+                'Expected' => 'Password format is invalid',
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba','abd*¨Ç');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST5']["Result"] = $updateAnswer;
+
+
+//TEST -> USER NAME
+$tests['SM_USER_EDIT_TEST6']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 6. Attempt to update user without name",
+                'Expected' => "User name is mandatory",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST6']["Result"] = $updateAnswer;
+
+
+$tests['SM_USER_EDIT_TEST7']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 7. Attempt to update user with name bigger than 40 characters",
+                'Expected' => "User name can't be larger than 40 characters",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb', 'uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
+dE89t27sFO18FUUsXBcJeFCVo3ZzXo1oo1T5gVgWT4ffpW2y6zydJf6cU8EKC7Shi7PFlgynWFIZWdxsuiAJuA0jXgAe6IJgGtXH0lSfSYYCpmSXj3FnFMXDiYoDJCY');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST7']["Result"] = $updateAnswer;
+
+
+$tests['SM_USER_EDIT_TEST8']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 8. Attempt to update user with name format invalid",
+                'Expected' => "User name format is invalid",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','112211');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST8']["Result"] = $updateAnswer;
+
+
+//TEST-> SURNAMES
+
+$tests['SM_USER_EDIT_TEST9']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 9. Attempt to update user without surnames",
+                'Expected' => "User surnames are mandatory",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','nameUser');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST9']["Result"] = $updateAnswer;
+
+
+$tests['SM_USER_EDIT_TEST10']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 10. Attempt to update user with surnames bigger than 100 characters",
+                'Expected' => "User surnames can't be larger than 100 characters",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','nameUser','uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
+dE89t27sFO18FUUsXBcJeFCVo3ZzXo1oo1T5gVgWT4ffpW2y6zydJf6cU8EKC7Shi7PFlgynWFIZWdxsuiAJuA0jXgAe6IJgGtXH0lSfSYYCpmSXj3FnFMXDiYoDJCY');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST10']["Result"] = $updateAnswer;
+
+
+
+$tests['SM_USER_EDIT_TEST11']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 11. Attempt to update user with surnames format invalid",
+                'Expected' => "User surnames format is invalid",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 112233);
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST11']["Result"] = $updateAnswer;
+
+
+
+//TEST -> DNI
+
+$tests['SM_USER_EDIT_TEST12']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 12. Attempt to update user without National Identity Document",
+                'Expected' => "NID can't be different from 9 characters",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST12']["Result"] = $updateAnswer;
+
+
+
+$tests['SM_USER_EDIT_TEST13']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 13. Attempt to update user with a National Identity Document format invalid",
+                'Expected' => "User id format is invalid",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '4448879OY');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST13']["Result"] = $updateAnswer;
+
+
+$tests['SM_USER_EDIT_TEST14']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 14. Attempt to update user with National Identity Document letter incorrect",
+                'Expected' => "User id letter is incorrect",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '44488795Y');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST14']["Result"] = $updateAnswer;
+
+
+
+//TEST-> BIRTHDATE
+$tests['SM_USER_EDIT_TEST15']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 15. Attempt to update user without birthdate",
+                'Expected' => "Birthdate is mandatory",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST15']["Result"] = $updateAnswer;
+
+
+$tests['SM_USER_EDIT_TEST16']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 16. Attempt to update user with birthdate size too long",
+                'Expected' => "Birthdate can't be larger than 10 characters",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '200/12/2000');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST16']["Result"] = $updateAnswer;
+
+
+$tests['SM_USER_EDIT_TEST17']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 17. Attempt to update user with birthdate format invalid",
+                'Expected' => "Birthdate format is invalid",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '3103/2000');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST17']["Result"] = $updateAnswer;
+
+
+
+
+//TEST-> EMAIL
+$tests['SM_USER_EDIT_TEST18']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 18. Attempt to update user without email",
+                'Expected' => "Email is mandatory",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '25/04/1999');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST18']["Result"] = $updateAnswer;
+
+
+$tests['SM_USER_EDIT_TEST19']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 19. Attempt to update user with email size too long",
+                'Expected' => "Email can't be larger than 50 characters",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '25/04/1999','uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
+dE89t27sFO18FUUsXBcJeFCVo3ZzXo1oo1T5gVgWT4ffpW2y6zydJf6cU8EKC7Shi7PFlgynWFIZWdxsuiAJuA0jXgAe6IJgGtXH0lSfSYYCpmSXj3FnFMXDiYoDJCY');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST19']["Result"] = $updateAnswer;
+
+
+$tests['SM_USER_EDIT_TEST20']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 20. Attempt to update user with email format invalid",
+                'Expected' => "Email format is invalid",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '25/04/1999', 'asdasd@');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST20']["Result"] = $updateAnswer;
+
+
+
+//TEST->PHONE
+$tests['SM_USER_EDIT_TEST21']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 21. Attempt to update user without phone",
+                'Expected' => "User phone size is incorrect",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '25/04/1999', 'ivanddf1994@gmail.com');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST21']["Result"] = $updateAnswer;
+
+
+$tests['SM_USER_EDIT_TEST22']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 22. Attempt to update user with phone size invalid",
+                'Expected' => "User phone size is incorrect",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '25/04/1999','ivanddf1994@gmail.com', 98822222);
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST22']["Result"] = $updateAnswer;
+
+
+$tests['SM_USER_EDIT_TEST23']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 23. Attempt to update user with phone format invalid",
+                'Expected' => "User phone format is invalid",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '25/04/1999', 'ivanddf1994@gmail.com', 544444444);
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST23']["Result"] = $updateAnswer;
+
+
+//TEST->GROUP
+$tests['SM_USER_EDIT_TEST24']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 24. Attempt to update user with group format invalid",
+                'Expected' => "The role format is invalid",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '25/04/1999', 'ivanddf1994@gmail.com', 988252875, '', 'admin');
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST24']["Result"] = $updateAnswer;
+
+
+$tests['SM_USER_EDIT_TEST25']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 25. Attempt to update user with a group that not exists in DB",
+                'Expected' => "The role doesn't exist",
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '25/04/1999', 'ivanddf1994@gmail.com', 988252875, '', 999);
+$updateAnswer = $user->updateUser();
+$tests['SM_USER_EDIT_TEST25']["Result"] = $updateAnswer;
+
+
+
+
+
+// //FINAL TEST
+
+$tests['SM_USER_EDIT_TEST26']=(['Functionality' => "SM_USER_EDIT",
+                'Description' => "Test 26. Attempt to update user with correct values",
+                'Expected' => 'User updated successfully',
+                'Result' => 'Not executed']);
+
+$user = new USER_Model('prueba', 'Aa98ygb', 'nameUserUpdated', 'surnamesUserUpdated', '34950154K', '25/04/1999', 'ivanddf1994@gmail.com', 988252875, null, 1);
+$updateAnswer = $user->updateUser();
+if($updateAnswer === true){
+    $tests['SM_USER_EDIT_TEST26']["Result"] = 'User updated successfully';
+}else{
+    $tests['SM_USER_EDIT_TEST26']["Result"] = $updateAnswer;
+}
+
+
+
+
+// if(isset($argv[1])){
+//    echo "\t"."\t"."TESTING OVER USER_EDIT" . "\n";
+//     foreach($tests as $test){
+//         if($test['Expected'] == $test['Result']){
+//             echo "\e[32m".$test['Description'] . "\t" ." Expected: " .$test['Expected']. "\t" . " Result: ". $test['Result'] ."\e[0m" . "\n";
+//         } else {
+//             echo "\e[31m".$test['Description'] . "\t" ." Expected: " .$test['Expected']. "\t". " Result: ". $test['Result'] ."\e[0m" . "\n";
+//         }
+//     }
+// } else {
+//     new TEST_View($tests);
+// }
+
+
+
+?>

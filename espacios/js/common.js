@@ -46,15 +46,16 @@ function selectCoords(event) {
 };
 
 function convertCoords(coordsSpace){
-    var arrayCoords = coordsSpace.split(","),
+    var arrayCoords = coordsSpace.split(", "),
         arrayXYCoords,
         spacePoints = [];
 
     for(var i=0; i<arrayCoords.length; i++){
-        arrayXYCoords = ("" + arrayCoords[i]).split(" ");
+        arrayXYCoords = (arrayCoords[i]).split(" ");
         spacePoints[i] = {x: arrayXYCoords[0], y: arrayXYCoords[1]};
     }
 
+    console.log(spacePoints);
 
     return spacePoints;
 };
@@ -138,7 +139,7 @@ function selectSpace(srcImage) {
                 else
                 {
                     if(!isThereSpace){
-                        if(inputCoords.value != ' ' && inputCoords.value != null) {
+                        if(inputCoords.value !== '' && inputCoords.value !== null) {
                             inputCoords.value = inputCoords.value + ', ' + position.x + ' ' + position.y;
                         } else{
                             inputCoords.value = position.x + ' ' + position.y;
@@ -208,17 +209,19 @@ function editSpace(coordsSpace, srcImage) {
                 }
                 else
                 {
+                    
                     if(!isThereSpace){
-                        if(inputCoords.value != ' ' && inputCoords.value != null) {
-                            inputCoords.value = inputCoords.value + ',' + position.x + ' ' + position.y;
-                        } else{
+                        if(inputCoords.value.length === 1) {
                             inputCoords.value = position.x + ' ' + position.y;
+                        } else{
+                            inputCoords.value = inputCoords.value + ', ' + position.x + ' ' + position.y;
                         }
                         storedLines.push(position);
                         drawPoint(position, ctx);
                     } //else{
                     //     alert("You can only select a space");
                     // }
+                    
                 }
             break;
             

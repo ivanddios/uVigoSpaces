@@ -19,11 +19,17 @@ include  './FUNCTIONALITY_DELETE_Test.php';
 include  './GROUP_ADD_Test.php';
 include  './GROUP_EDIT_Test.php';
 include  './GROUP_DELETE_Test.php';
+include  './SPACE_ADD_Test.php';
+include  './SPACE_EDIT_Test.php';
+include  './SPACE_DELETE_Test.php';
+include  './USER_ADD_Test.php';
+include  './USER_EDIT_Test.php';
+include  './USER_DELETE_Test.php';
 
 
 
 if(isset($argv[1])){
-    echo "\t"."\t"."TESTING OVER LOGIN FUNCTIONALITY" . "\n";
+    echo "\t"."\t"."TESTING OVER SPACE MANAGER FUNCTIONALITIES" . "\n";
      foreach($tests as $test){
          if($test['Expected'] == $test['Result']){
              echo "\e[32m".$test['Description'] . "\t" ." Expected: " .$test['Expected']. "\t" . " Result: ". $test['Result'] ."\e[0m" . "\n";

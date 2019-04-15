@@ -24,8 +24,9 @@ class FUNCTIONALITY_Model {
         return $this->nameFunction;
     }
 
+    /* MAIN FUNCTIONS */
 
-    public function showAllFunctions() {
+    public function getAllFunctions() {
         $sql = "SELECT * FROM `SM_FUNCTIONALITY`";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
@@ -40,7 +41,19 @@ class FUNCTIONALITY_Model {
         }
     }
 
-    public function showAllActionsForFunctionality() {
+
+    public function getFunction() {
+        $sql = "SELECT * FROM `SM_FUNCTIONALITY` WHERE sm_idFunction =  '$this->idFunction'";
+        if (!($resultado = $this->mysqli->query($sql))) {
+            throw new Exception('Error in the query on the database');
+        } else {
+            $result = $resultado->fetch_array();
+            return $result;
+        }
+    }
+
+
+    public function getAllActionsForFunctionality() {
         $sql = "SELECT sm_idAction FROM `SM_FUNCTIONALITY_ACTION` WHERE sm_idFunction = '$this->idFunction'";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
@@ -55,15 +68,7 @@ class FUNCTIONALITY_Model {
         }
     }
 
-    public function findFunctionality() {
-        $sql = "SELECT * FROM `SM_FUNCTIONALITY` WHERE sm_idFunction =  '$this->idFunction'";
-        if (!($resultado = $this->mysqli->query($sql))) {
-            throw new Exception('Error in the query on the database');
-        } else {
-            $result = $resultado->fetch_array();
-            return $result;
-        }
-    }
+
 
     public function addFunction($actions) {
 
@@ -140,6 +145,8 @@ class FUNCTIONALITY_Model {
     }
 
 
+    /* AUXILIARY FUNCTIONS */
+
     /*
         This public function is only used in unit tests over FUNCTION_EDIT and FUNCTION_DELETE to get the last id action inserted (through the unit test FUNCTION_ADD_TEST), 
         because of this the connection with DB is realized in the public function to be able to access it through an anonymous class.
@@ -178,7 +185,7 @@ class FUNCTIONALITY_Model {
 
 
 
-    /* Server validations functions*/
+    /* SERVER VALIDATION FUNCTIONS*/
 
     public function checkIsValidForAdd($actions) {
 

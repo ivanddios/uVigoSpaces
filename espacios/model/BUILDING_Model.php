@@ -28,9 +28,9 @@ class BUILDING_Model {
     }
 
 
-
     /* MAIN FUCTIONS*/
-    public function showAllBuilding() {
+
+    public function getAllBuilding() {
         $sql = "SELECT * FROM `SM_BUILDING`";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
@@ -45,13 +45,13 @@ class BUILDING_Model {
         }
     }
 
-    public function findBuilding() {
+    public function getBuilding() {
         $sql = "SELECT * FROM `SM_BUILDING` WHERE sm_idBuilding = '$this->idBuilding'";
-        $result = $this->mysqli->query($sql);
-        if ($result->num_rows == 1) {
-            return true;
-        } else {
+        if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
+        } else {
+            $result = $resultado->fetch_array();
+            return $result;
         }
     }
 
@@ -74,30 +74,6 @@ class BUILDING_Model {
     }
 
 
-    public function deleteBuilding() {
-        $errors = $this->checkIsValidForDelete();
-        if($errors === false){
-            $sql = "DELETE FROM `SM_BUILDING` WHERE sm_idBuilding ='$this->idBuilding'";
-            if (!($resultado = $this->mysqli->query($sql))) {
-                return 'Error in the query on the database';
-            } else {
-                return true;
-            }
-        }else{
-            return $errors;
-        }
-    }
-
-    public function fillInBuilding() {
-        $sql = "SELECT * FROM `SM_BUILDING` WHERE sm_idBuilding = '$this->idBuilding'";
-        if (!($resultado = $this->mysqli->query($sql))) {
-            throw new Exception('Error in the query on the database');
-        } else {
-            $result = $resultado->fetch_array();
-            return $result;
-        }
-    }
-
     public function updateBuilding() {
         $errors = $this->checkIsValidForAdd_Update();
         if($errors === false){
@@ -116,10 +92,25 @@ class BUILDING_Model {
         }
     }
 
+    public function deleteBuilding() {
+        $errors = $this->checkIsValidForDelete();
+        if($errors === false){
+            $sql = "DELETE FROM `SM_BUILDING` WHERE sm_idBuilding ='$this->idBuilding'";
+            if (!($resultado = $this->mysqli->query($sql))) {
+                return 'Error in the query on the database';
+            } else {
+                return true;
+            }
+        }else{
+            return $errors;
+        }
+    }
+
+
 
     /* AUXILIARY FUCTIONS*/
 
-    public function findBuildingName() {
+    public function getBuildingName() {
         $sql = "SELECT sm_nameBuilding FROM `SM_BUILDING` WHERE sm_idBuilding='$this->idBuilding'";
         $result = $this->mysqli->query($sql)->fetch_array();
         return $result['sm_nameBuilding'];

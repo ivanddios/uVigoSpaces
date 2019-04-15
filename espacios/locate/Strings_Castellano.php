@@ -164,11 +164,13 @@ $strings = array(
     "What is his birthdate?" => "¿Cuál es la fecha de nacimiento del usuario?",
     "What is his email?" => "¿Cuál es el email del usuario? ",
     "What is his phone?" => "¿Cuál es el teléfono del usuario?",
+    "What is his group?" => "¿Cuál es su rol?",
     "Do you want to change the password?" => "¿Quieres cambiar la contraseña? ",
     "PasswordCharacters"=> "Mínimo 8 caracteres",
     "PasswordLowercase"=> "Una minúscula",
     "PasswordUppercase"=> "Una mayúscula",
     "PasswordNumber"=> "Un número",
+    "Choose" => "Selecciona uno",
 
     "Functionalities" => "Funcionalidades",
     "sm_nameFunction" => "Nombre",

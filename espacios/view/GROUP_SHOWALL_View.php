@@ -58,7 +58,7 @@ class GROUP_SHOWALL{
                                         
                                     <td>
                                 <!--    <?php  if(checkRol('EDIT', 'GROUP')): ?> -->
-                                            <a href="GROUP_Controller.php?action=<?= $strings['FindUsers']?>&group=<?= $this->groups[$j]['sm_idGroup']?>">
+                                            <a href="GROUP_Controller.php?action=<?= $strings['getUsers']?>&group=<?= $this->groups[$j]['sm_idGroup']?>">
                                                 <span title="<?= $strings['Show Users']?>" class="btn btn-warning btn-sm fa fa-users"></span>
                                             </a>
                                 <!--    <?php endif; ?> -->

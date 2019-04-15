@@ -41,7 +41,7 @@ $tests['SM_ACTION_EDIT_TEST4']=(['Functionality' => "SM_ACTION_EDIT",
                 'Expected' => 'Action name and description are mandatory',
                 'Result' => 'Not executed']);
 
-$actionID = ACTION_Model::findLastActionID();
+$actionID = ACTION_Model::getLastActionID();
 $action = new ACTION_Model($actionID);
 $editAnswer = $action->updateAction();
 $tests['SM_ACTION_EDIT_TEST4']["Result"] = $editAnswer;

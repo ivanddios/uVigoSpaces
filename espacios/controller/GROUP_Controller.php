@@ -8,8 +8,6 @@ require_once(__DIR__."../../model/GROUP_Model.php");
 require_once(__DIR__."../../view/GROUP_SHOWALL_View.php");
 require_once(__DIR__."../../view/GROUP_ADD_View.php");
 require_once(__DIR__."../../view/GROUP_EDIT_View.php");
-// require_once(__DIR__."../../view/BUILDING_SHOW_View.php");
-
 
 $function = "GROUP";
 $view = new ViewManager();
@@ -18,11 +16,7 @@ include '../locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
 
 function get_data_form() {
 
-    if(isset($_GET['group'])){
-        $idGroup = $_GET['group'];
-    }else{
-        $idGroup = null;
-    }
+    $idGroup = $_GET['group'];
     $nameGroup = $_POST['nameGroup'];
     $descripGroup = $_POST['descripGroup'];
    
@@ -52,8 +46,6 @@ Switch ($_GET['action']){
         if (isset($_POST["submit"])) {
             $groupAdd = get_data_form();
             $permissions = json_decode($_POST['permissions']);
-            var_dump($permissions);
-            exit();
             $addAnswer = $groupAdd->addGroup($permissions);
             if($addAnswer === true){
                 $flashMessageSuccess = sprintf($strings["Group \"%s\" successfully added."], $groupAdd->getNameGroup());
@@ -65,9 +57,11 @@ Switch ($_GET['action']){
             }
         }else{
             $function = new FUNCTIONALITY_Model();
-            $functions = $function->showAllFunctions();
+            $functions = $function->getAllFunctions();
+
             $action = new ACTION_Model();
-            $actions = $action->showAllActions();
+            $actions = $action->getAllActionsForFunction();
+
             new GROUP_ADD($functions, $actions);
         }
            	       
@@ -94,7 +88,8 @@ Switch ($_GET['action']){
 
         if (isset($_POST["submit"])) { 
             $groupEdit = get_data_form();
-            $updateAnswer = $groupEdit->updateGroup();
+            $permissions = json_decode($_POST['permissions']);
+            $updateAnswer = $groupEdit->updateGroup($permissions);
             if($updateAnswer === true){
                 $flashMessageSuccess = sprintf($strings["Group \"%s\" successfully updated."], $groupEdit->getNameGroup());
                 $view->setFlashSuccess($flashMessageSuccess);
@@ -105,8 +100,16 @@ Switch ($_GET['action']){
             }
         } else {
             $group = new GROUP_Model($groupId);
-            $groupValues = $group->findGroup();
-            new GROUP_EDIT($groupValues);
+            $groupValues = $group->getGroup();
+            $permissions = $group->getPermissionForGroup();
+
+            $function = new FUNCTIONALITY_Model();
+            $functions = $function->getAllFunctions();
+
+            $action = new ACTION_Model();
+            $actions = $action->getAllActionsForFunction();
+
+            new GROUP_EDIT($groupValues, $functions, $actions, $permissions);
         }
             
     break;
@@ -132,7 +135,7 @@ Switch ($_GET['action']){
     // //     $buildingid = $_GET['building'];
 
     // //     $building = new BUILDING_Model($buildingid);
-    // //     $values = $building->fillInBuilding();
+    // //     $values = $building->getBuilding();
     // //     new BUILDING_SHOW($values);
 
     // // break;
@@ -183,7 +186,7 @@ Switch ($_GET['action']){
         }
 
         $group = new GROUP_Model();
-        $groups = $group->showAllGroups();
+        $groups = $group->getAllGroups();
         new GROUP_SHOWALL($groups);
             
     break;

@@ -1,6 +1,8 @@
 <?php
 
 require_once(__DIR__."..\..\core\ConnectionBD.php");
+require_once(__DIR__."..\..\model\BUILDING_Model.php");
+require_once(__DIR__."..\..\model\FLOOR_Model.php");
 
 class SPACE_Model {
 
@@ -108,40 +110,69 @@ class SPACE_Model {
 
 
     public function addSpace() {
-        $sql = "INSERT INTO `SM_SPACE` (sm_idBuilding, sm_idFloor, sm_idSpace, sm_nameSpace, sm_surfaceSpace, sm_numberInventorySpace) VALUES ('$this->idBuilding', '$this->idFloor', '$this->idSpace', '$this->nameSpace', $this->surfaceSpace, '$this->numberInventorySpace')";
-        if (!($resultado = $this->mysqli->query($sql))) {
-            return 'Error in the query on the database';
-        } else {
-            return true;
+        $errors = $this->checkIsValidForAdd_Update();
+        if($errors === false){
+            if(!$this->existsSpace()){
+                $sql = "INSERT INTO `SM_SPACE` (sm_idBuilding, sm_idFloor, sm_idSpace, sm_nameSpace, sm_surfaceSpace, sm_numberInventorySpace) VALUES ('$this->idBuilding', '$this->idFloor', '$this->idSpace', '$this->nameSpace', $this->surfaceSpace, '$this->numberInventorySpace')";
+                if (!($resultado = $this->mysqli->query($sql))) {
+                    return 'Error in the query on the database';
+                } else {
+                    return true;
+                } 
+            }else{
+                return "There is already a space with that identifier in this floor";
+            }
+        } else{
+            return $errors;
         }
+    
     }
 
 
     public function addCoords() {
-        $sql = "UPDATE `SM_SPACE` SET sm_coordsPlane = '$this->coordsPlane' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
-        if (!($resultado = $this->mysqli->query($sql))) {
-            return 'Error in the query on the database';
-        } else {
-            return true;
+        $errors = $this->checkCoords();
+        if($errors === false){
+            $sql = "UPDATE `SM_SPACE` SET sm_coordsPlane = '$this->coordsPlane' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
+            if (!($resultado = $this->mysqli->query($sql))) {
+                return 'Error in the query on the database';
+            } else {
+                return true;
+            }
+        } else{
+            return $errors;
         }
     }
 
 
-    public function updateSpace($idBuilding, $idFloor, $idSpace) {
-        $sql = "UPDATE `SM_SPACE` SET sm_idSpace = '$this->idSpace', nameSpace = '$this->nameSpace', sm_surfaceSpace = $this->surfaceSpace, sm_numberInventorySpace = '$this->numberInventorySpace' WHERE sm_idBuilding = '$idBuilding' AND sm_idFloor = '$idFloor' AND sm_idSpace = '$idSpace'";
-        if (!($resultado = $this->mysqli->query($sql))) {
-            return 'Error in the query on the database';
-        } else {
-            return true;
+    public function updateSpace() {
+        $errors = $this->checkIsValidForAdd_Update();
+        if($errors === false){
+                if($this->existsSpace()){
+                $sql = "UPDATE `SM_SPACE` SET sm_nameSpace = '$this->nameSpace', sm_surfaceSpace = $this->surfaceSpace, sm_numberInventorySpace = '$this->numberInventorySpace' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
+                if (!($resultado = $this->mysqli->query($sql))) {
+                    return $this->mysqli->error;
+                } else {
+                    return true;
+                }
+            }else{
+                return "There isn't a space with that identifier in the floor";
+            }
+        }else{
+            return $errors;
         }
     }
 
     public function deleteSpace() {
-        $sql = "DELETE FROM `SM_SPACE` WHERE sm_idBuilding ='$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
-        if (!($resultado = $this->mysqli->query($sql))) {
-            return 'Error in the query on the database';
-        } else {
-            return true;
+        $errors = $this->checkIsValidForDelete();
+        if($errors === false){
+            $sql = "DELETE FROM `SM_SPACE` WHERE sm_idBuilding ='$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
+            if (!($resultado = $this->mysqli->query($sql))) {
+                return 'Error in the query on the database';
+            } else {
+                return true;
+            }
+        }else{
+            return $errors;
         }
     }
 
@@ -150,18 +181,6 @@ class SPACE_Model {
         $sql = "SELECT * FROM `SM_SPACE` WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSPace = '$this->idSpace'";
         $result = $this->mysqli->query($sql);
         if ($result->num_rows == 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function existsSpaceToEdit($idSpace) {
-        $sql = "SELECT * FROM `SM_SPACE` WHERE (sm_idBuilding, sm_idFloor, sm_idSpace) 
-                    NOT IN (SELECT sm_idBuilding, sm_idFloor, sm_idSpace FROM `SM_SPACE` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor='$this->idFloor' AND sm_idSpace='$idSpace') 
-                AND sm_idBuilding='$this->idBuilding' AND sm_idFloor='$this->idFloor' AND sm_idSpace='$this->idSpace'";
-        $result = $this->mysqli->query($sql);
-        if ($result->num_rows >= 1) {
             return true;
         } else {
             return false;
@@ -178,108 +197,102 @@ class SPACE_Model {
 
 
 
-    //SERVER VALIDATION
+    /*SERVER VALIDATIONS FUNCTIONS */
 
-    public function checkIsValidForAdd() {
+    public function checkIsValidForAdd_Update() {
 
-        $errors = array();
+        $errors = false;
 
-        if (!preg_match('/^[0-9]{1,8}([.][0-9]{1,2}){0,1}?$/', $this->surfaceSpace)) {
-            $this->setSurfaceSpace(0.0);
-        }
+        $building = new BUILDING_Model($this->idBuilding);
+        $floor = new FLOOR_Model($this->idBuilding, $this->idFloor);
 
-        if (!preg_match('/^([0-9]{6}|[#]{6})$/', $this->numberInventorySpace)) {
-            $this->setNumberInventorySpace("######");
-        }
-
-        if (strlen(trim($this->idBuilding)) == 0 ) {
-            $errors= "Building id is mandatory";
-        }else if (strlen(trim($this->idBuilding)) > 6 ) {
-            $errors = "Building id can not be that long";
+        if (strlen(trim($this->idBuilding)) == 0) {
+            $errors= "Building identifier is mandatory";
+        }else if (strlen(trim($this->idBuilding)) > 5) {
+            $errors = "Building identifier can't be larger than 5 characters";
         }else if(!preg_match('/[A-Z0-9]/', $this->idBuilding)){
-            $errors = "Building id is invalid. Example: OSBI0";
-        }else if (strlen(trim($this->idFloor)) == 0 ) {
-            $errors= "Floor id is mandatory";
-        }else if (strlen(trim($this->idFloor)) > 2 ) {
-            $errors = "Floor id can not be that long";
+            $errors = "Building identifier format is invalid";
+        }else if(!$building->existsBuilding()){
+            $errors = "There isn't a building with that identifier";
+        }else if (strlen(trim($this->idFloor)) == 0) {
+            $errors= "Floor identifier is mandatory";
+        }else if (strlen(trim($this->idFloor)) > 2) {
+            $errors = "Floor identifier can't be larger than 2 characters";
         }else if(!preg_match('/[A-Z0-9]/', $this->idFloor)){
-            $errors = "Floor id is invalid. Example: 00,S1";
+            $errors = "Floor identifier format is invalid";
+        }else if(!$floor->existsFloor()){
+            $errors= "There isn't a floor with that identifier in the building";
         }else if (strlen(trim($this->idSpace)) == 0 ) {
-            $errors= "Space id is mandatory";
-        }else if (strlen(trim($this->idSpace)) > 6 ) {
-            $errors = "Space id can not be that long";
+            $errors= "Space identifier is mandatory";
+        }else if (strlen(trim($this->idSpace)) > 5 ) {
+            $errors = "Space identifier can't be larger than 5 characters";
         }else if(!preg_match('/^[0-9]{5}$/', $this->idSpace)){
-            $errors = "Space id is invalid. Example: 000011";
-        }else if($this->existsSpace()){
-            $errors = "There is already a space with that id in this floor";
+            $errors = "Space identifier is invalid";
         }else if (strlen(trim($this->nameSpace)) == 0 ) {
             $errors= "Space name is mandatory";
         }else if (strlen(trim($this->nameSpace)) > 225 ) {
-            $errors = "Space name can not be that long";
-        }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameSpace)){
-            $errors = "Space name is invalid. Try again!";
-        }else if (strlen(trim($this->surfaceSpace)) > 99999999.99) {
-            $errors = "Space surface can not be that long";
-        }else if (strlen(trim($this->numberInventorySpace)) > 10) {
-            $errors = "Number inventory can not be that long";
-        }else if (strlen(trim($this->coordsPlane)) > 225) {
-            $errors = "Coords can not be that long";
+            $errors = "Space name can't be larger than 225 characters";
+        }else if(!preg_match('/^[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameSpace)){
+            $errors = "Space name format is invalid";
+        }else if ($this->surfaceSpace > 99999999.99) {
+            $errors = "Space surface can't be larger than 99999999.99";
+        }else if (strlen(trim($this->numberInventorySpace)) > 6) {
+            $errors = "Number inventory can't be larger than 6 characters";
         }
-
-        if (sizeof($errors) > 0){
-            throw new Exception($errors);
-        }
-
+        return $errors;
     }
 
-    public function checkIsValidForEdit($idSpace) {
 
-        $errors = array();
+    public function checkCoords(){
 
-        if (!preg_match('/^[0-9]{1,8}([.][0-9]{1,2}){0,1}?$/', $this->surfaceSpace)) {
-            $this->setSurfaceSpace(0.0);
+        $errors = false;
+
+        if(strlen(trim($this->coordsPlane)) > 225) {
+            $errors = "Coords can't be larger than 225 characters";
+        }else if($this->coordsPlane !== null){
+            if(!preg_match('/^[0-9]+ [0-9]+(, [0-9]+ [0-9]+)*$/', $this->coordsPlane)){
+                $errors = "Coords format is invalid";
+            }
         }
+       
+        return $errors;
+    }
 
-        if (!preg_match('/^([0-9]{6}|[#]{6})$/', $this->numberInventorySpace)) {
-            $this->setNumberInventorySpace("######");
-        }
 
-        if (strlen(trim($this->idBuilding)) == 0 ) {
-            $errors= "Building id is mandatory";
-        }else if (strlen(trim($this->idBuilding)) > 6 ) {
-            $errors = "Building id can not be that long";
+    public function checkIsValidForDelete() {
+
+        $errors = false;
+
+        $building = new BUILDING_Model($this->idBuilding);
+        $floor = new FLOOR_Model($this->idBuilding, $this->idFloor);
+
+        if (strlen(trim($this->idBuilding)) == 0) {
+            $errors= "Building identifier is mandatory";
+        }else if (strlen(trim($this->idBuilding)) > 5) {
+            $errors = "Building identifier can't be larger than 5 characters";
         }else if(!preg_match('/[A-Z0-9]/', $this->idBuilding)){
-            $errors = "Building id is invalid. Example: OSBI0";
-        }else if (strlen(trim($this->idFloor)) == 0 ) {
-            $errors= "Floor id is mandatory";
-        }else if (strlen(trim($this->idFloor)) > 2 ) {
-            $errors = "Floor id can not be that long";
+            $errors = "Building identifier format is invalid";
+        }else if(!$building->existsBuilding()){
+            $errors = "There isn't a building with that identifier";
+        }else if (strlen(trim($this->idFloor)) == 0) {
+            $errors= "Floor identifier is mandatory";
+        }else if (strlen(trim($this->idFloor)) > 2) {
+            $errors = "Floor identifier can't be larger than 2 characters";
         }else if(!preg_match('/[A-Z0-9]/', $this->idFloor)){
-            $errors = "Floor id is invalid. Example: 00,S1";
+            $errors = "Floor identifier format is invalid";
+        }else if (!$floor->existsFloor()) {
+            $errors= "There isn't a floor with that identifier in the building";
         }else if (strlen(trim($this->idSpace)) == 0 ) {
-            $errors= "Space id is mandatory";
-        }else if (strlen(trim($this->idSpace)) > 6 ) {
-            $errors = "Space id can not be that long";
+            $errors= "Space identifier is mandatory";
+        }else if (strlen(trim($this->idSpace)) > 5 ) {
+            $errors = "Space identifier can't be larger than 5 characters";
         }else if(!preg_match('/^[0-9]{5}$/', $this->idSpace)){
-            $errors = "Space id is invalid. Example: 000011";
-        }else if($this->existsSpaceToEdit($idSpace)){
-            $errors = "There is already a space with that id in this floor";
-        }else if (strlen(trim($this->nameSpace)) == 0 ) {
-            $errors= "Space name is mandatory";
-        }else if (strlen(trim($this->nameSpace)) > 225 ) {
-            $errors = "Space name can not be that long";
-        }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->nameSpace)){
-            $errors = "Space name is invalid. Try again!";
-        }else if (strlen(trim($this->surfaceSpace)) > 99999999.99) {
-            $errors = "Space surface can not be that long";
-        }else if (strlen(trim($this->numberInventorySpace)) > 10) {
-            $errors = "Number inventory can not be that long";
-        }else if (strlen(trim($this->coordsPlane)) > 225) {
-            $errors = "Coords can not be that long";
+            $errors = "Space identifier is invalid";
+        }else if (!$this->existsSpace()) {
+            $errors= "There isn't a space with that identifier in the floor";
         }
-        if (sizeof($errors) > 0){
-            throw new Exception($errors);
-        }
+
+        return $errors;
     }
 
 

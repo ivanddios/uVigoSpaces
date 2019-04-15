@@ -97,7 +97,7 @@ Switch ($_GET['action']){
             }
         } else {
             $building = new BUILDING_Model($buildingid);
-            $values = $building->fillInBuilding();
+            $values = $building->getBuilding();
             new BUILDING_EDIT($values);
         }
             
@@ -114,7 +114,7 @@ Switch ($_GET['action']){
         $buildingid = $_GET['building'];
 
         $building = new BUILDING_Model($buildingid);
-        $values = $building->fillInBuilding();
+        $values = $building->getBuilding();
         new BUILDING_SHOW($values);
 
     break;
@@ -153,7 +153,7 @@ Switch ($_GET['action']){
 
     default:
         $building = new BUILDING_Model();
-        $buildings = $building->showAllBuilding();
+        $buildings = $building->getAllBuilding();
         new BUILDING_SHOWALL($buildings);  
     break;
 }

@@ -33,7 +33,7 @@ class GROUP_ADD{
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-reorder"></span>
-										<input type="text" id="descripGroup" name="descripFunction" onkeyup="checkText(this.id)" required/>
+										<input type="text" id="descripGroup" name="descripGroup" onkeyup="checkText(this.id)" required/>
 										<label for="descripGroup"><?= $strings['What is the group about?']?></label>
 									</div>
 
@@ -41,12 +41,14 @@ class GROUP_ADD{
 								<?php foreach($this->functions as $function): ?>
 									<button id="<?=$function['sm_idFunction']?>" type="button" class="btn btn-primary boxx" onclick="showActions(this.id)"><?=$function['sm_nameFunction']?></button>
 									<div class="function id-<?=$function['sm_idFunction']?>">
-										<?php foreach($this->actions as $action): ?>
-											<div class="checkboxList checkbox-<?=$function['sm_idFunction']?><?=$action['sm_idAction']?>">
-													<input id="<?=$function['sm_idFunction']?><?=$action['sm_idAction']?>" type="checkbox" name="action" value="<?=$function['sm_idFunction']?>,<?=$action['sm_idAction']?>"/>
-													<label for="<?=$function['sm_idFunction']?><?=$action['sm_idAction']?>"><?=$action['sm_nameAction']?></label>
-											</div>
-										<?php endforeach; ?>
+										<?php foreach($this->actions as $action): 
+											if($function['sm_idFunction'] === $action['sm_idFunction']): ?>
+												<div class="checkboxList checkbox-<?=$function['sm_idFunction']?><?=$action['sm_idAction']?>">
+														<input id="<?=$function['sm_idFunction']?><?=$action['sm_idAction']?>" type="checkbox" name="action" value="<?=$function['sm_idFunction']?>,<?=$action['sm_idAction']?>"/>
+														<label for="<?=$function['sm_idFunction']?><?=$action['sm_idAction']?>"><?=$action['sm_nameAction']?></label>
+												</div>
+											<?php endif;
+										endforeach; ?>
 									</div>
 								<?php endforeach; ?>
 								<input type="hidden" id="permissions" name="permissions">

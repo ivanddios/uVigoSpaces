@@ -65,7 +65,7 @@ Switch ($_GET['action']){
             $function = new FUNCTIONALITY_Model();
             $action = new ACTION_Model();
 
-            $actions = $action->showAllActions();
+            $actions = $action->getAllActions();
             new FUNCTIONALITY_ADD($actions);
         }
            	       
@@ -110,9 +110,9 @@ Switch ($_GET['action']){
             $function = new FUNCTIONALITY_Model($functionId);
             $action = new ACTION_Model();
 
-            $functionValues = $function->findFunctionality();
-            $actions = $action->showAllActions();
-            $actionsForFunctionality = $function->showAllActionsForFunctionality();
+            $functionValues = $function->getFunction();
+            $actions = $action->getAllActions();
+            $actionsForFunctionality = $function->getAllActionsForFunctionality();
             new FUNCTIONALITY_EDIT($functionValues, $actions, $actionsForFunctionality);
         }
             
@@ -139,7 +139,7 @@ Switch ($_GET['action']){
     //     $buildingid = $_GET['building'];
 
     //     $building = new BUILDING_Model($buildingid);
-    //     $values = $building->fillInBuilding();
+    //     $values = $building->getBuilding();
     //     new BUILDING_SHOW($values);
 
     // break;

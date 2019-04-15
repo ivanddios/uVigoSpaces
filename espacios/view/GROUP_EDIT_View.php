@@ -2,10 +2,16 @@
 
 class GROUP_EDIT{
 
-    private $values;
+		private $groupValues;
+		private $functions;
+		private $actions;
+		private $permissions;
 
-    function __construct($values) {
-        $this->values = $values;
+    function __construct($groupValues, $functions, $actions, $permissions) {
+				$this->values = $groupValues;
+				$this->functions = $functions;
+				$this->actions = $actions;
+				$this->permissions = $permissions;
         $this->render();
     }
     
@@ -23,16 +29,6 @@ class GROUP_EDIT{
 						<form  method="POST" action="GROUP_Controller.php?action=<?= $strings['Edit']?>&group=<?=$this->values['sm_idGroup']?>">
 							<div id="group-form">
 
-								<!-- <div class="inputWithIcon inputIconBg">
-									<input type="text" id="nameGroup" name="nameGroup" placeholder="<?= $strings['What group is it?']?>" value="<?=$this->values['nameGroup']?>" onkeyup="checkText(this.id)" required>
-                                    <i class="fa fa-users fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
-
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" id="descripGroup" name="descripGroup" placeholder="<?= $strings['What is the group about?']?>" value="<?=$this->values['descripGroup']?>" onkeyup="checkText(this.id)" required>
-                                    <i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
-								</div> -->
-
 								<div class="input-container">
 										<span class="input-group-text fa fa-users"></span>
 										<input type="text" id="nameGroup" name="nameGroup" value="<?=$this->values['sm_nameGroup']?>" readonly/>
@@ -45,7 +41,34 @@ class GROUP_EDIT{
 										<label for="descripGroup"><?= $strings['What is the group about?']?></label>
 									</div>
                               
-								<button type="submit" name="submit" class="btn-dark" onsubmit="validateGroup()"><?= $strings["Save"]?></button>
+									<?=$strings['Functionalities']?>:
+								<?php foreach($this->functions as $function): ?>
+									<button id="<?=$function['sm_idFunction']?>" type="button" class="btn btn-primary boxx" onclick="showActions(this.id)"><?=$function['sm_nameFunction']?></button>
+									<div class="function id-<?=$function['sm_idFunction']?>">
+										<?php foreach($this->actions as $action):
+											$band = true; 
+											if($function['sm_idFunction'] === $action['sm_idFunction']): 
+												foreach($this->permissions as $permission): ?>
+													<div class="checkboxList checkbox-<?=$function['sm_idFunction']?><?=$action['sm_idAction']?>">
+														<?php if($function['sm_idFunction'] === $permission['sm_idFunction'] && $action['sm_idAction'] === $permission['sm_idAction']): ?>
+															<input id="<?=$function['sm_idFunction']?><?=$action['sm_idAction']?>" type="checkbox" name="action" value="<?=$function['sm_idFunction']?>,<?=$action['sm_idAction']?>" checked/>
+															<label for="<?=$function['sm_idFunction']?><?=$action['sm_idAction']?>"><?=$action['sm_nameAction']?></label>
+															<?php $band = false;
+														endif; ?>
+													</div>
+												<?php endforeach; 
+												if($band): ?>
+												<div class="checkboxList checkbox-<?=$function['sm_idFunction']?><?=$action['sm_idAction']?>">
+													<input id="<?=$function['sm_idFunction']?><?=$action['sm_idAction']?>" type="checkbox" name="action" value="<?=$function['sm_idFunction']?>,<?=$action['sm_idAction']?>"/>
+													<label for="<?=$function['sm_idFunction']?><?=$action['sm_idAction']?>"><?=$action['sm_nameAction']?></label>
+												</div>
+												<?php endif; ?>
+											<?php endif;
+										endforeach; ?>
+									</div>
+								<?php endforeach; ?>
+								<input type="hidden" id="permissions" name="permissions">
+								<button type="submit" name="submit" class="btn-dark" onclick="validatePermissions()"><?= $strings["Save"]?></button>
 							</div> 
 						</form>
 						<a href="GROUP_Controller.php"><?= $strings["Back"] ?></a>

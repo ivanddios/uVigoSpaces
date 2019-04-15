@@ -27,9 +27,8 @@ function get_data_form() {
     $nameSpace = $_POST['nameSpace'];
     $surfaceSpace = $_POST['surfaceSpace'];
     $numInventorySpace = $_POST['numberInventorySpace'];
-    $coordsPlane = $_POST['coordsSpace'];
    
-    $space = new SPACE_Model($idBuilding, $idFloor, $idSpace, $nameSpace, $surfaceSpace, $numInventorySpace, $coordsPlane);
+    $space = new SPACE_Model($idBuilding, $idFloor, $idSpace, $nameSpace, $surfaceSpace, $numInventorySpace);
     return $space;
 }
 
@@ -61,16 +60,14 @@ Switch ($_REQUEST['action']){
         }
 
         if (isset($_POST["submit"])) { 
-            $spaceAdd = get_data_form();
-            
-            try{
-                $spaceAdd->checkIsValidForAdd();
-                $spaceAdd->addSpace(); 
-                $flashMessageSuccess = sprintf($strings["Space \"%s\" successfully added."], $spaceAdd->getNameSpace());
+            $space = get_data_form();
+            $addAnswer = $space->addSpace();
+            if($addAnswer === true){
+                $flashMessageSuccess = sprintf($strings["Space \"%s\" successfully added."], $space->getNameSpace());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("SPACE_Controller.php", "SelectSpacePlane&building=".$buildingid, "&floor=".$floorid."&space=".$spaceAdd->getIdSpace());
-            }catch(Exception $errors) {
-                $view->setFlashDanger($strings[$errors->getMessage()]);
+                $view->redirect("SPACE_Controller.php", "SelectSpacePlane&building=".$buildingid, "&floor=".$floorid."&space=".$space->getIdSpace());
+            }else{
+                $view->setFlashDanger($strings[$addAnswer]);
                 $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
             }   
 
@@ -99,20 +96,19 @@ Switch ($_REQUEST['action']){
             $view->redirect("BUILDING_Controller.php");
         }
 
-        $buildingid = $_GET["building"];
+        $buildingid = $_GET['building'];
         $floorid = $_GET['floor'];
         $spaceid = $_GET['space'];
 
         if (isset($_POST["submit"])) { 
             $spaceEdit = get_data_form();
-            try{
-                $spaceEdit->checkIsValidForEdit($spaceid);
-                $spaceEdit->updateSpace($buildingid, $floorid, $spaceid);
+            $updateAnswer = $spaceEdit->updateSpace();
+            if($updateAnswer === true){
                 $flashMessageSuccess = sprintf($strings["Space \"%s\" successfully updated."], $spaceEdit->getNameSpace());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
-            }catch(Exception $errors) {
-                $view->setFlashDanger($strings[$errors->getMessage()]);
+            }else{
+                $view->setFlashDanger($strings[$updateAnswer]);
                 $view->redirect("SPACE_Controller.php", $strings['Edit']."&building=".$buildingid."&floor=".$floorid, "&space=".$spaceid);
             }
 
@@ -165,19 +161,13 @@ Switch ($_REQUEST['action']){
         $floorid = $_GET['floor'];
         $spaceid = $_GET['space'];
         $space = new SPACE_Model($buildingid, $floorid, $spaceid);
-                
-        if (!$space->existsSpace()) {
-            $view->setFlashDanger($strings["No exist space to delete"]);
-            $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
-        }
-
-        try{
-            $space->deleteSpace();
+        $deleteAnswer = $space->deleteSpace();
+        if($deleteAnswer === true){
             $flashMessageSuccess = sprintf($strings["Space \"%s\" successfully deleted."], $buildingid.$floorid.$spaceid);
             $view->setFlashSuccess($flashMessageSuccess);
             $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
-        }catch(Exception $errors) {
-            $view->setFlashDanger($strings[$errors->getMessage()]);
+        }else{
+            $view->setFlashDanger($strings[$deleteAnswer]);
             $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
         }
 
@@ -201,15 +191,13 @@ Switch ($_REQUEST['action']){
         $spaceid = $_GET['space'];
 
         if (isset($_POST["submit"])) { 
-          
-            $spacePlane = get_data_form();
-            
-            try{
-                $spacePlane->addCoords(); 
+            $spacePlane = new SPACE_Model($buildingid, $floorid, $spaceid,'','','', $_POST['coordsSpace']);
+            $answerCords = $spacePlane->addCoords();
+            if($answerCords === true){
                 $view->setFlashSuccess($strings["Plane successfully updated"]);
                 $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
-            }catch(Exception $errors) {
-                $view->setFlashDanger($strings[$errors->getMessage()]);
+            }else {
+                $view->setFlashDanger($strings[$answerCords]);
                 $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
             }   
         } else {
@@ -256,17 +244,16 @@ Switch ($_REQUEST['action']){
     $floorid = $_GET['floor'];
     $spaceid = $_GET['space'];
 
-    if (isset($_POST["submit"])) { 
-        $spacePlane = get_data_form();
-        
-        try{
-            $spacePlane->addCoords(); 
-            $view->setFlashSuccess($strings["Plane successfully updated"]);
-            $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
-        }catch(Exception $errors) {
-            $view->setFlashDanger($strings[$errors->getMessage()]);
-            $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
-        }   
+     if (isset($_POST["submit"])) { 
+            $spacePlane = new SPACE_Model($buildingid, $floorid, $spaceid,'','','', $_POST['coordsSpace']);
+            $answerCoords = $spacePlane->addCoords();
+            if($answerCoords === true){
+                $view->setFlashSuccess($strings["Plane successfully updated"]);
+                $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+            }else {
+                $view->setFlashDanger($strings[$answerCoords]);
+                $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+            }   
     } else {
         $space = new SPACE_Model($buildingid, $floorid, $spaceid);
         $spaceValues = $space->findSpace();
@@ -284,10 +271,10 @@ Switch ($_REQUEST['action']){
             $spaces = $spaces->showAllSpaces();
 
             $building = new BUILDING_Model($_GET['building']);
-            $buildingName = $building->findBuildingName();
+            $buildingName = $building->getBuildingName();
 
             $floor = new FLOOR_Model($_GET['building'], $_GET['floor']);
-            $floorName = $floor->findFloorName();
+            $floorName = $floor->getFloorName();
 
             new SPACE_SHOWALL($spaces, $buildingName, $floorName);
         } else {

@@ -131,12 +131,21 @@ input#loginUsername, input#loginPassword{
 
 /* SELECT INPUT*/
 
+.preSelect{
+	margin-bottom: 5%;
+}
+
 .custom-select{
 	display:block;
 	position: absolute;
 	width: 90%;
 	left: 10%;
 	font-size: 14px;
+}
+
+.labelSelect{
+	color: #636c72;
+    margin-left: 11%;
 }
 
 

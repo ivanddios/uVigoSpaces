@@ -164,8 +164,8 @@ $tests['SM_FLOOR_EDIT_TEST13']["Result"] = $editAnswer;
 //MOIDY FLOOR THAT NO EXIST
 
 $tests['SM_FLOOR_EDIT_TEST14']=(['Functionality' => "SM_FLOOR_EDIT",
-                'Description' => "Test 14. Attempt to edit floor that no exists in the building",
-                'Expected' => 'There is no floor with that identifier in the building',
+                'Description' => "Test 14. Attempt to edit floor that not exists in the building",
+                'Expected' => "There isn't a floor with that identifier in the building",
                 'Result' => 'Not executed']);
 
 $planeFile = (["name"=> "Planta Baja.jpeg"]); 

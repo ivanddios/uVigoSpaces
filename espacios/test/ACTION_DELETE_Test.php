@@ -43,7 +43,7 @@ $tests['SM_ACTION_DELETE_TEST4']=(['Functionality' => "SM_ACTION_DELETE",
 
 
 
-$actionLastId = ACTION_Model::findLastActionID();
+$actionLastId = ACTION_Model::getLastActionID();
 $action = new ACTION_Model($actionLastId);
 $deleteAnswer = $action->deleteAction();
 if($deleteAnswer === true){

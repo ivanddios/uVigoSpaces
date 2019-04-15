@@ -62,7 +62,7 @@ class USER_SHOWALL{
                                                                 </a> 
                                                             <?php } 
                                                     } elseif ($key === 'sm_username') {?>
-                                                        <a title="<?= $strings['Show User']?>" href='USER_Controller.php?action=<?= $strings['Show']?>&user=<?= $this->users[$j]['username']?>'><?= $value?></a>                
+                                                        <a title="<?= $strings['Show User']?>" href='USER_Controller.php?action=<?= $strings['Show']?>&user=<?= $this->users[$j]['sm_username']?>'><?= $value?></a>                
                                                     <?php }else { ?>
                                                         <?= $value;
                                                     } ?>

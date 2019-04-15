@@ -141,7 +141,7 @@ $tests['SN_BUILDING_EDIT_TEST12']["Result"] = $editAnswer;
 
 
 $tests['SN_BUILDING_EDIT_TEST13']=(['Functionality' => "SN_BUILDING_EDIT",
-                                'Description' => "Test 13. Attempt to update building with identifier that it doesn't exist in BD",
+                                'Description' => "Test 13. Attempt to update building with identifier that not exists in BD",
                                 'Expected' => "There isn't a building with that identifier",
                                 'Result' => 'Not executed']);
 

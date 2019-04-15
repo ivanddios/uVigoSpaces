@@ -120,7 +120,6 @@ $tests['SM_GROUP_ADD_TEST9']["Result"] = $addAnswer;
 
 
 //FINAL TEST
-
 $tests['SM_GROUP_ADD_TEST10']=(['Functionality' => "SM_GROUP_ADD",
                 'Description' => "Test 10. Attempt to add group with correct values",
                 'Expected' => 'Group successfully added',

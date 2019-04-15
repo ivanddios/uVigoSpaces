@@ -107,7 +107,7 @@ Switch ($_REQUEST['action']){
             }
         } else {
             $floor = new FLOOR_Model($buildingid, $floorid);
-            $values = $floor->findFloor();
+            $values = $floor->getFloor();
             new FLOOR_EDIT($values);
         }
 
@@ -125,7 +125,7 @@ Switch ($_REQUEST['action']){
         $floorid = $_GET['floor'];
 
         $floor = new FLOOR_Model($buildingid, $floorid);
-        $values = $floor->findFloor();
+        $values = $floor->getFloor();
         new FLOOR_SHOW($values);
          
     break;
@@ -185,8 +185,8 @@ Switch ($_REQUEST['action']){
         $spacesValues = $space->showAllSpaces();
         
         $floor = new FLOOR_Model($buildingid, $floorid);
-        $planeFloor = $floor->findLinkPlane();
-        $infoFloor = $floor->findInfoFloor();
+        $planeFloor = $floor->getLinkPlane();
+        $infoFloor = $floor->getInfoFloor();
 
         new FLOOR_SHOW_PLANE($spacesValues, $planeFloor, $infoFloor);
         
@@ -209,8 +209,8 @@ Switch ($_REQUEST['action']){
         if(isset($_GET['building'])){
             $floor = new FLOOR_Model($_GET['building']);
             $building = new BUILDING_Model($_GET['building']);
-            $buildingName = $building->findBuildingName();
-            $floors = $floor->showAllFloors();
+            $buildingName = $building->getBuildingName();
+            $floors = $floor->getAllFloors();
             new FLOOR_SHOWALL($floors, $buildingName);
         } else {
             $view->setFlashDanger($strings["Building id is mandatory"]);

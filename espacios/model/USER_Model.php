@@ -57,6 +57,8 @@ class USER_Model {
     }
 
 
+    /* MAIN FUNCTIONS */
+
     public function login() {
         if($this->getUsername() != null && $this->getPassword() != null){
             $sql = "SELECT * FROM `SM_USER` WHERE sm_username = '$this->username'";
@@ -78,7 +80,10 @@ class USER_Model {
 
 
     public function getPermissions(){
-        $sql ="SELECT DISTINCT SM_ACTION.sm_nameAction, SM_FUNCTIONALITY.sm_nameFunction FROM `SM_GROUP`, `SM_USER_GROUP`, `SM_PERMISSION`, `SM_FUNCTIONALITY`, `SM_ACTION` WHERE SM_USER_GROUP.sm_username = '$this->username' AND SM_USER_GROUP.sm_idGroup = SM_GROUP.sm_idGroup AND SM_PERMISSION.sm_idFunction = SM_FUNCTIONALITY.sm_idFunction AND SM_PERMISSION.sm_idAction = SM_ACTION.sm_idAction";
+        $sql ="SELECT DISTINCT A.sm_nameAction, F.sm_nameFunction 
+                FROM `SM_GROUP` AS G, `SM_USER_GROUP` AS UG, `SM_PERMISSION` AS P, `SM_FUNCTIONALITY` AS F, `SM_ACTION` AS A 
+                WHERE UG.sm_username = '$this->username' AND UG.sm_idGroup = G.sm_idGroup 
+                    AND P.sm_idFunction = F.sm_idFunction AND P.sm_idAction = A.sm_idAction";
         $result = $this->mysqli->query($sql);  
         $j = 0;
         if (!($resultado = $this->mysqli->query($sql))) {
@@ -94,36 +99,8 @@ class USER_Model {
         }
     }
 
-    public function findUser() {
-        $sql = "SELECT * FROM `SM_USER` WHERE sm_username = '$this->username'";
-        if (!($resultado = $this->mysqli->query($sql))) {
-            return 'Error in the query on the database';
-        } else {
-            $result = $resultado->fetch_array();
-            return $result;
-        }
-    }
 
-
-    public function findUserWithGroup(){
-        $sql = "SELECT * FROM`SM_USER` U, `SM_USER_GROUP` UG, `SM_GROUP` G
-                WHERE U.sm_username = '$this->username' AND U.sm_username = UG.sm_username AND UG.sm_idGroup = G.sm_idGroup";
-        if (!($resultado = $this->mysqli->query($sql))) {
-            return 'Error in the query on the database';
-        } else {
-            $result = $resultado->fetch_array();
-            return $result;
-        }
-    }
-
-    public function findLinkProfilePhoto() {
-        $sql = "SELECT sm_photo FROM `SM_USER` WHERE sm_username='$this->username'";
-        $result = $this->mysqli->query($sql)->fetch_array();
-        return $result['photo'];
-    }
-
-
-    public function showAllUsers() {
+    public function getAllUsers() {
         $sql = "SELECT * FROM `SM_USER`";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
@@ -138,8 +115,20 @@ class USER_Model {
         }
     }
 
-    public function addUser() {
+    public function getUser() {
+        $sql = "SELECT U.*, G.sm_nameGroup, G.sm_descripGroup 
+                FROM sm_user AS U, sm_user_group AS UG, sm_group AS G 
+                WHERE U.sm_username = '$this->username' AND U.sm_username = UG.sm_username AND UG.sm_idGroup = G.sm_idGroup";
+        if (!($resultado = $this->mysqli->query($sql))) {
+            return 'Error in the query on the database';
+        } else {
+            $result = $resultado->fetch_array();
+            return $result;
+        }
+    }
 
+
+    public function addUser() {
         $errors = $this->checkIsValidForAdd();
         if($errors === false){
             $passwordBD = md5($this->password);
@@ -163,24 +152,23 @@ class USER_Model {
 
 
     public function updateUser() {
-
         $errors = $this->checkIsValidForEdit();
         if($errors === false){
             $dateBD = $this->formatDate($this->birthdate);
             if($this->getPhoto('name') == '' && empty($this->password)){
                 $sql = "UPDATE `SM_USER` SET sm_name = '$this->name', sm_surname = '$this->surname', sm_dni = '$this->dni', sm_birthdate = '$dateBD', sm_email = '$this->email', sm_phone = '$this->phone' WHERE sm_username = '$this->username'";  
             }else if($this->getPhoto('name') == '' && !empty($this->password)){
-                $sql = "UPDATE `SM_USER` SET sm_password = '$this->password', sm_name = '$this->name', sm_surname = '$this->surname', sm_dni = '$this->dni', sm_birthdate = '$dateBD', sm_email = '$this->email', sm_phone = '$this->phone' WHERE sm_username = '$this->username'";  
+                $sql = "UPDATE `SM_USER` SET sm_passwd = '$this->password', sm_name = '$this->name', sm_surname = '$this->surname', sm_dni = '$this->dni', sm_birthdate = '$dateBD', sm_email = '$this->email', sm_phone = '$this->phone' WHERE sm_username = '$this->username'";  
             }else if($this->getPhoto('name') !== '' && empty($this->password)){
                 $photoBD =$this->dirPhoto.$this->getPhoto('name');
                 $sql = "UPDATE `SM_USER` SET sm_photo = '$photoBD', sm_name = '$this->name', sm_surname = '$this->surname', sm_dni = '$this->dni', sm_birthdate = '$dateBD', sm_email = '$this->email', sm_phone = '$this->phone' WHERE sm_username = '$this->username'";
                 $this->updateDirPhoto();
-                unlink($this->findLinkProfilePhoto());
+                unlink($this->getLinkProfilePhoto());
             } else {
                 $photoBD =$this->dirPhoto.$this->getPhoto('name'); 
-                $sql = "UPDATE `SM_USER` SET sm_photo = '$photoBD', sm_password = '$this->password', sm_name = '$this->name', sm_surname = '$this->surname', sm_dni = '$this->dni', sm_birthdate = '$dateBD', sm_email = '$this->email', sm_phone = '$this->phone' WHERE sm_username = '$this->username'";
+                $sql = "UPDATE `SM_USER` SET sm_photo = '$photoBD', sm_passwd = '$this->password', sm_name = '$this->name', sm_surname = '$this->surname', sm_dni = '$this->dni', sm_birthdate = '$dateBD', sm_email = '$this->email', sm_phone = '$this->phone' WHERE sm_username = '$this->username'";
                 $this->updateDirPhoto();
-                unlink($this->findLinkProfilePhoto());
+                unlink($this->getLinkProfilePhoto());
             }
 
             if (!($resultado = $this->mysqli->query($sql))) {
@@ -194,21 +182,27 @@ class USER_Model {
     }
 
     public function deleteUser() {
-        if($this->existsUser()){
+
+        $errors = $this->checkIsValidForDelete();
+        if($errors === false){
             $sql = "DELETE FROM `SM_USER` WHERE sm_username ='$this->username'";
             if (!($resultado = $this->mysqli->query($sql))) {
                 return 'Error in the query on the database';
             } else {
-                rmdir('../document/Users/'.$this->username);
+                if(is_file($this->getLinkProfilePhoto())){
+                    unlink($this->getLinkProfilePhoto());
+                }
+                rmdir($this->dirPhoto);
                 return true;
             }
         } else {
-            return 'No such user with this username';
+            return $errors;;
         }
     }
 
 
 
+    /*AUXLIARY FUNCTIONS  */
     public function addRoleUser() {
         $sql = "INSERT INTO `SM_USER_GROUP` VALUES ('$this->username','$this->group')";
         if (!($resultado = $this->mysqli->query($sql))) {
@@ -219,7 +213,11 @@ class USER_Model {
     }
 
 
-
+    public function getLinkProfilePhoto() {
+        $sql = "SELECT sm_photo FROM `SM_USER` WHERE sm_username='$this->username'";
+        $result = $this->mysqli->query($sql)->fetch_array();
+        return $result['sm_photo'];
+    }
 
     public function formatDate($date){
         $dateFormat = str_replace('/', '-', $date);
@@ -229,11 +227,12 @@ class USER_Model {
 
 
     public function updateDirPhoto() {
+        if (!is_dir($this->dirPhoto)) {
+            mkdir($this->dirPhoto, 0777);
+        }
+    
         if ($this->getPhoto('name') !== '') {
-            if (!file_exists($this->dirPhoto)) {
-                mkdir($this->dirPhoto, 0777, true);
-            }
-        move_uploaded_file($this->getPhoto('tmp_name'), $this->dirPhoto.$this->getPhoto('name'));
+            move_uploaded_file($this->getPhoto('tmp_name'), $this->dirPhoto.$this->getPhoto('name'));
         }
     }
 
@@ -270,7 +269,6 @@ class USER_Model {
 
 
     public function validateletterDNI($dni) {
-
         $letterDNI = substr($dni, -1, 1);
         $numberDNI = substr($dni, 0, 8);
     
@@ -286,8 +284,7 @@ class USER_Model {
     }
 
 
-    public function validateDate($date)
-    {
+    public function validateDate($date){
         $day = (int) substr($date, 0, 2);
         $month = (int) substr($date, 3, 2);
         $year = (int) substr($date, 6, 12);
@@ -303,6 +300,8 @@ class USER_Model {
     
 
 
+    /* SERVER VALIDATION FUNCTIONS*/
+
     public function checkIsValidForAdd() {
 
         $errors = false;
@@ -311,53 +310,59 @@ class USER_Model {
         if (strlen(trim($this->username)) == 0 ) {
             $errors= "Username is mandatory";
         }else if (strlen(trim($this->username)) > 25 ) {
-            $errors = "Username can not be that long";
+            $errors = "Username can't be larger than 25 characters";
         }else if(!preg_match('/^[a-zA-Z0-9, ]*$/', $this->username)){
-            $errors = "Username is invalid";
+            $errors = "Username format is invalid";
         }else if($this->existsUser()){
             $errors = "There is already a user with that username";
         }else if (strlen(trim($this->password)) == 0 ) {
             $errors= "Password is mandatory";
         }else if (strlen(trim(md5($this->password))) > 128 ) {
-            $errors = "Password can not be that long";
-        }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->password)){
-            $errors = "Password is invalid";
+            $errors = "Password can't be larger than 128 characters";
+        }else if(!preg_match('/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{5,15}$/', $this->password)){
+            $errors = "Password format is invalid";
         }else if (strlen(trim($this->name)) == 0 ) {
             $errors= "User name is mandatory";
         }else if (strlen(trim($this->name)) > 40 ) {
-            $errors = "User name can not be that long";
+            $errors = "User name can't be larger than 40 characters";
         }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->name)){
-            $errors = "User name is invalid";
+            $errors = "User name format is invalid";
         }else if (strlen(trim($this->surname)) == 0 ) {
             $errors= "User surnames are mandatory";
         }else if (strlen(trim($this->surname)) > 100 ) {
-            $errors = "User surnames can not be that long";
+            $errors = "User surnames can't be larger than 100 characters";
         }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->surname)){
-            $errors = "User surnames are invalid";
+            $errors = "User surnames format is invalid";
         }else if (strlen(trim($this->dni)) != 9 ) {
-            $errors= "DNI can not be that long";
+            $errors= "NID can't be different from 9 characters";;
+        }else if (!preg_match('/^\d{8}[a-zA-Z]$/', $this->dni)) {
+            $errors = "User id format is invalid";
+        }else if(!$this->validateletterDNI($this->dni)){
+            $errors = "User id letter is incorrect";
         }else if($this->existsDNI()){
             $errors = "There is already a user with that dni";
-        }else if (!preg_match('/^\d{8}[a-zA-Z]$/', $this->dni)) {
-            $errors = "User id is invalid";
-        }else if(!$this->validateletterDNI($this->dni)){
-            $errors = "User id letter is invalid";
+        }else if(strlen(trim($this->birthdate)) == 0){
+            $errors = "Birthdate is mandatory";
+        }else if(strlen(trim($this->birthdate)) > 10){
+            $errors = "Birthdate can't be larger than 10 characters";
         }else if(!$this->validateDate($this->birthdate)){
-            $errors = "Birthdate is incorrect";
+            $errors = "Birthdate format is invalid";
+        }else if (strlen(trim($this->email)) == 0) {
+            $errors= "Email is mandatory";
         }else if (strlen(trim($this->email)) > 50 ) {
-            $errors= "Email can not be that long";
+            $errors= "Email can't be larger than 50 characters";
         }else if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
-            $errors = "Email is invalid";
+            $errors = "Email format is invalid";
         }else if($this->existsEmail()){
             $errors = "There is already a user with that email";
         }else if (strlen(trim($this->phone)) != 9 ) {
-            $errors= "User phone is incorrect";
+            $errors= "User phone size is incorrect";
         }else if(!preg_match('/^[9|6|7][0-9]{8}$/', $this->phone)){
             $errors = "User phone format is invalid";
-        }else if(!$group->existsGroup()){
-            $errors = "The role doesn't exist";
         }else if(!preg_match('/^\d+$/', $this->group)){
             $errors = "The role format is invalid";
+        }else if(!$group->existsGroup()){
+            $errors = "The role doesn't exist";
         }
 
        return $errors;
@@ -372,47 +377,70 @@ class USER_Model {
         if (strlen(trim($this->username)) == 0 ) {
             $errors= "Username is mandatory";
         }else if (strlen(trim($this->username)) > 25 ) {
-            $errors = "Username can not be that long";
+            $errors = "Username can't be larger than 25 characters";
         }else if(!preg_match('/^[a-zA-Z0-9, ]*$/', $this->username)){
-            $errors = "Username is invalid";
-        }else if(strlen(trim($this->password)) > 0 ) {
-            if (strlen(trim(md5($this->password))) > 128 ) {
-                $errors = "Password can not be that long";
-            }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->password)){
-                $errors = "Password is invalid";
-            }
+            $errors = "Username format is invalid";
+        }else if(!$this->existsUser()){
+                $errors = "There isn't a user with that username";
+        }else if(strlen(trim($this->password)) > 0 && strlen(trim(md5($this->password))) > 128) {
+                $errors = "Password can't be larger than 128 characters";
+        }else if(strlen(trim($this->password)) > 0 && !preg_match('/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{5,15}$/', $this->password)){
+                $errors = 'Password format is invalid';
         }else if (strlen(trim($this->name)) == 0 ) {
             $errors= "User name is mandatory";
         }else if (strlen(trim($this->name)) > 40 ) {
-            $errors = "User name can not be that long";
+            $errors = "User name can't be larger than 40 characters";
         }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->name)){
-            $errors = "User name is invalid";
+            $errors = "User name format is invalid";
         }else if (strlen(trim($this->surname)) == 0 ) {
             $errors= "User surnames are mandatory";
         }else if (strlen(trim($this->surname)) > 100 ) {
-            $errors = "User surnames can not be that long";
+            $errors = "User surnames can't be larger than 100 characters";
         }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->surname)){
-            $errors = "User surnames are invalid";
+            $errors = "User surnames format is invalid";
         }else if (strlen(trim($this->dni)) != 9 ) {
-            $errors= "DNI can not be that long";
+            $errors= "NID can't be different from 9 characters";
         }else if (!preg_match('/^\d{8}[a-zA-Z]$/', $this->dni)) {
-            $errors = "User id is invalid";
+            $errors = "User id format is invalid";
         }elseif(!$this->validateletterDNI($this->dni)){
-            $errors = "User id letter is invalid";
+            $errors = "User id letter is incorrect";
+        }else if(strlen(trim($this->birthdate)) == 0){
+            $errors = "Birthdate is mandatory";
+        }else if(strlen(trim($this->birthdate)) > 10){
+            $errors = "Birthdate can't be larger than 10 characters";
         }else if(!$this->validateDate($this->birthdate)){
-            $errors = "Birthdate is incorrect";
+            $errors = "Birthdate format is invalid";
+        }else if (strlen(trim($this->email)) == 0) {
+            $errors= "Email is mandatory";
         }else if (strlen(trim($this->email)) > 50 ) {
-            $errors= "Email can not be that long";
-        }elseif(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
-            $errors = "Email is invalid";
+            $errors= "Email can't be larger than 50 characters";
+        }else if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
+            $errors = "Email format is invalid";
         }else if (strlen(trim($this->phone)) != 9 ) {
-            $errors= "User phone is incorrect";
+            $errors= "User phone size is incorrect";
         }else if(!preg_match('/^[9|6|7][0-9]{8}$/', $this->phone)){
             $errors = "User phone format is invalid";
-        }else if(!$group->existsGroup()){
-            $errors = "The role doesn't exist";
         }else if(!preg_match('/^\d+$/', $this->group)){
             $errors = "The role format is invalid";
+        }else if(!$group->existsGroup()){
+            $errors = "The role doesn't exist";
+        }
+
+       return $errors;      
+    }
+
+    public function checkIsValidForDelete() {
+
+        $errors = false;
+
+        if (strlen(trim($this->username)) == 0 ) {
+            $errors= "Username is mandatory";
+        }else if (strlen(trim($this->username)) > 25 ) {
+            $errors = "Username can't be larger than 25 characters";
+        }else if(!preg_match('/^[a-zA-Z0-9, ]*$/', $this->username)){
+            $errors = "Username format is invalid";
+        }else if(!$this->existsUser()){
+            $errors = "There isn't a user with that username";
         }
 
        return $errors;      

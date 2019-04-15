@@ -104,24 +104,23 @@ class USER_ADD{
 									<label for="email"><?= $strings['What is his email?']?></label>
 								</div>
 
-								<div class="input-container">
+								<div class="input-container preSelect">
 									<span class="input-group-text fa fa-phone"></span>
 									<input type="text" id="phone" name="phone" onkeyup="checkNumPhone(this.id)" required/>
 									<label for="phone"><?= $strings['What is his phone?']?></label>
 								</div>
 
-								
+								<label class="labelSelect"><?= $strings['What is his group?']?></label>
 								<div class="input-container">
 									<select class="custom-select" name="group" required>
-										<option selected disabled>Choose here</option>
+										<option selected disabled><?=$strings['Choose']?></option>
 										<?php foreach($this->groups as $group): ?>
 											<option value="<?=$group['sm_idGroup']?>"><?=$group['sm_nameGroup'] ." - ". $group['sm_descripGroup']?></option>
 										<?php endforeach; ?>
 									</select>
 									<i class="input-group-text fa fa-tag" aria-hidden="true"></i>
 								</div>
-						 
-
+				
 								<button id="submitButton" type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
 							</div> 
 						</form>

@@ -26,7 +26,7 @@ class SPACE_EDIT_PLANE{
 					<div id="planeButtons">
 						<li>
 							<ul><button id="saveButton" type="submit" name="submit" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i><?= $strings['Save']?></button></ul>
-							<ul><button id="clearButton" type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i><?= $strings['Delete']?></button></ul>
+							<ul><button id="clearButton" type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp<?= $strings['Delete']?></button></ul>
 						</li>
 					</div>
 				</form> 		 

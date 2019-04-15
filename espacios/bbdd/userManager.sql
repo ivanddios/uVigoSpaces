@@ -595,7 +595,7 @@ CREATE TABLE IF NOT EXISTS `SM_SPACE` (
   `sm_idSpace` char(5) COLLATE utf8_spanish_ci NOT NULL,
   `sm_nameSpace` varchar(225) COLLATE utf8_spanish_ci NOT NULL,
   `sm_surfaceSpace` decimal(10,2) DEFAULT '0.00',
-  `sm_numberInventorySpace` varchar(10) COLLATE utf8_spanish_ci DEFAULT '######',
+  `sm_numberInventorySpace` char(6) COLLATE utf8_spanish_ci DEFAULT '######',
   `sm_coordsPlane` varchar(225) COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`sm_idFloor`,`sm_idBuilding`,`sm_idSpace`),
   KEY `idBuilding` (`sm_idBuilding`)

@@ -36,7 +36,6 @@ $tests['SM_BUILDING_ADD_TEST3']["Result"] = $addAnswer;
 
 
 
-
 //TESTS -> BUILDING NAME
 
 $tests['SM_BUILDING_ADD_TEST4']=(['Functionality' => "SM_BUILDING_ADD",

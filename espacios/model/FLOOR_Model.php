@@ -47,30 +47,25 @@ class FLOOR_Model {
     }
 
 
-    public function getSurfaceBuildingFloor(){
-        return $this->surfaceBuildingFloor;
-    }
-
-
-    public function getSurfaceUsefulFloor(){
-        return $this->surfaceUsefulFloor;
-    }
-
-
     /* MAIN FUNCTIONS*/
 
-    public function findFloor() {
-        $sql = "SELECT * FROM `SM_FLOOR` WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
+    public function getAllFloors() {
+        $sql = "SELECT * FROM `SM_FLOOR` WHERE sm_idBuilding = '$this->idBuilding'";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
         } else {
-            $result = $resultado->fetch_array();
-            return $result;
+            $toret = array();
+            $i = 0;
+            while ($fila = $resultado->fetch_array()) {
+                $toret[$i] = $fila;
+                $i++;
+            }
+            return $toret;
         }
     }
 
-    public function findInfoFloor() {
-        $sql = "SELECT SM_BUILDING.sm_nameBuilding, SM_FLOOR.sm_nameFloor, SM_SPACE.sm_nameSpace, SM_SPACE.sm_coordsPlane FROM `SM_BUILDING`, `SM_FLOOR`, `SM_SPACE` WHERE  SM_BUILDING.sm_idBuilding = SM_FLOOR.sm_idBuilding AND SM_FLOOR.sm_idFloor = SM_SPACE.sm_idFloor AND SM_BUILDING.sm_idBuilding = '$this->idBuilding' AND SM_FLOOR.sm_idFloor = '$this->idFloor'";
+    public function getFloor() {
+        $sql = "SELECT * FROM `SM_FLOOR` WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
         } else {
@@ -109,8 +104,8 @@ class FLOOR_Model {
                 if($this->getPlaneFloor('name') == ''){
                     $sql = "UPDATE `SM_FLOOR` SET sm_idFloor = '$this->idFloor', sm_nameFloor = '$this->nameFloor', sm_surfaceBuildingFloor = '$this->surfaceBuildingFloor', sm_surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
                 } else {
-                    if(is_file($this->findLinkPlane())){
-                        unlink($this->findLinkPlane());
+                    if(is_file($this->getLinkPlane())){
+                        unlink($this->getLinkPlane());
                     }
                     rmdir($this->dirPhoto);
                     $planeFloorBD =$this->dirPhoto.$this->getPlaneFloor('name');
@@ -123,7 +118,7 @@ class FLOOR_Model {
                     return true;
                 }
             }else{
-                return 'There is no floor with that identifier in the building';
+                return "There isn't a floor with that identifier in the building";
             }
         } else{
             return $errors;
@@ -147,34 +142,34 @@ class FLOOR_Model {
     }
 
 
-    public function showAllFloors() {
-        $sql = "SELECT * FROM `SM_FLOOR` WHERE sm_idBuilding = '$this->idBuilding'";
-        if (!($resultado = $this->mysqli->query($sql))) {
-            return 'Error in the query on the database';
-        } else {
-            $toret = array();
-            $i = 0;
-            while ($fila = $resultado->fetch_array()) {
-                $toret[$i] = $fila;
-                $i++;
-            }
-            return $toret;
-        }
-    }
+
 
 
     /* AUXILIARY FUNCTIONS */
 
-    public function findFloorName() {
+    public function getFloorName() {
         $sql = "SELECT sm_nameFloor FROM `SM_FLOOR` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
         $result = $this->mysqli->query($sql)->fetch_array();
         return $result['sm_nameFloor'];
     }
 
-    public function findLinkPlane() {
+    public function getLinkPlane() {
         $sql = "SELECT sm_planeFloor FROM `SM_FLOOR` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
         $result = $this->mysqli->query($sql)->fetch_array();
         return $result['sm_planeFloor'];
+    }
+
+    public function getInfoFloor() {
+        $sql = "SELECT B.sm_nameBuilding, F.sm_nameFloor, S.sm_nameSpace, S.sm_coordsPlane 
+        FROM `SM_BUILDING` AS B, `SM_FLOOR` AS F, `SM_SPACE`AS S
+        WHERE  B.sm_idBuilding = F.sm_idBuilding AND F.sm_idFloor = S.sm_idFloor 
+               AND B.sm_idBuilding = '$this->idBuilding' AND F.sm_idFloor = '$this->idFloor'";
+        if (!($resultado = $this->mysqli->query($sql))) {
+            return 'Error in the query on the database';
+        } else {
+            $result = $resultado->fetch_array();
+            return $result;
+        }
     }
 
     public function updateDirPhoto() {
@@ -244,7 +239,7 @@ class FLOOR_Model {
             $errors = "Floor building surface can't be long than 99999999.99";
         }else if (!preg_match('/^[0-9]{1,8}([.][0-9]{1,2}){0,1}?$/', $this->surfaceUsefulFloor)) {
             $errors = "Floor useful surface can't be long than 99999999.99";
-        }else if($this->getSurfaceUsefulFloor() > $this->getSurfaceBuildingFloor()){
+        }else if($this->surfaceUsefulFloor > $this->surfaceBuildingFloor){
             $errors = "The usable surface can't be greater than the building surface";
         }else if($this->getPlaneFloor("name") !== ''){
             if(!$this->validateExtensionPlane()){
@@ -276,7 +271,7 @@ class FLOOR_Model {
         }else if(!preg_match('/[A-Z0-9]/', $this->idFloor)){
             $errors = "Floor identifier format is invalid";
         }else if (!$this->existsFloor()) {
-            $errors= "There is no floor with that identifier in the building";
+            $errors= "There isn't a floor with that identifier in the building";
         }
         return $errors;
     }

@@ -15,7 +15,6 @@ include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
 
 function get_data_form() {
 
-    
     $username = $_POST['username'];
     $password = $_POST['password'];
     $name = $_POST['name'];
@@ -56,13 +55,13 @@ Switch ($_GET['action']){
                 $flashMessageSuccess = sprintf($strings["User \"%s\" successfully added."], $userAdd->getUsername());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("USER_Controller.php");
-            }else {
+            }else{
                 $view->setFlashDanger($strings[$answerAdd]);
                 $view->redirect("USER_Controller.php", $strings['Add']);
             }
         }else {
             $group = new GROUP_Model();
-            $groupsValues = $group->showAllGroups();
+            $groupsValues = $group->getAllGroups();
             new USER_ADD($groupsValues);
         }
            	       
@@ -93,11 +92,11 @@ Switch ($_GET['action']){
                 $view->setFlashDanger($strings[$answerEdit]);
                 $view->redirect("USER_Controller.php", $strings['Edit'],"user=$username");
             }
-        } else {
+        } else{
             $user = new USER_Model($username);
-            $userValues = $user->findUserWithGroup();
+            $userValues = $user->getUser();
             $group = new GROUP_Model();
-            $groupsValues = $group->showAllGroups();
+            $groupsValues = $group->getAllGroups();
             new USER_EDIT($userValues, $groupsValues);
         }
     break;
@@ -124,7 +123,7 @@ Switch ($_GET['action']){
             $flashMessageSuccess = sprintf($strings["User \"%s\" successfully deleted."], $userDelete->getUsername());
             $view->setFlashSuccess($flashMessageSuccess);
             $view->redirect("USER_Controller.php");     
-        }else {
+        }else{
             $view->setFlashDanger($strings[$answerDelete]);
             $view->redirect("USER_Controller.php");
         }
@@ -151,7 +150,7 @@ Switch ($_GET['action']){
         $username = $_GET['user'];
 
         $user = new USER_Model($username);
-        $values = $user->findUser();
+        $values = $user->getUser();
         new USER_SHOW($values);
 
     break;
@@ -162,9 +161,9 @@ Switch ($_GET['action']){
         if(!checkRol('SHOW ALL', $function)){
             $view->setFlashDanger($strings["You do not have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php");
-		} else {
+		}else{
 			$user = new USER_Model();
-			$users = $user->showAllUsers();
+			$users = $user->getAllUsers();
 			new USER_SHOWALL($users);
         }
         

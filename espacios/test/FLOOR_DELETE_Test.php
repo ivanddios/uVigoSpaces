@@ -77,8 +77,8 @@ $tests['SM_FLOOR_DELETE_TEST6']["Result"] = $deleteAnswer;
 
 
 $tests['SM_FLOOR_DELETE_TEST7']=(['Functionality' => "SM_FLOOR_DELETE",
-                'Description' => "Test 7. Attempt to delete floor with floor indentifer no exists in that building",
-                'Expected' => 'There is no floor with that identifier in the building',
+                'Description' => "Test 7. Attempt to delete floor with floor indentifer not exists in the building",
+                'Expected' => "There isn't a floor with that identifier in the building",
                 'Result' => 'Not executed']);
 
 $floor = new FLOOR_Model('OSBI0','98');

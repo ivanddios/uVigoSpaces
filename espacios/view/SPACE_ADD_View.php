@@ -22,7 +22,7 @@ class SPACE_ADD{
 						<?=htmlentities($strings["Data of the new space"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form method="POST" action="SPACE_Controller.php?action=<?= $strings['Add']?>&building=<?= $this->building?>&floor=<?= $this->floor?>" enctype="multipart/form-data" onkeyup="validateSpace()">
+						<form method="POST" action="SPACE_Controller.php?action=<?= $strings['Add']?>&building=<?= $this->building?>&floor=<?= $this->floor?>" enctype="multipart/form-data">
 							<div id="group-form">
                       
 								<!--<div class="inputWithIcon inputIconBg">
@@ -78,7 +78,7 @@ class SPACE_ADD{
 								</div>
 
 							</div>	
-							<button type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>
+							<button type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
 						</form>
 						<a href="SPACE_Controller.php?building=<?= $this->building?>&floor=<?= $this->floor?>"><?= $strings["Back"] ?></a>
 					</div>

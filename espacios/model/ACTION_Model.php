@@ -23,9 +23,9 @@ class ACTION_Model {
     }
 
 
-    /* Principal functions*/
+    /*MAIN FUNCTIONS*/
 
-    public function showAllActions() {
+    public function getAllActions() {
         $sql = "SELECT * FROM `SM_ACTION`";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
@@ -41,8 +41,7 @@ class ACTION_Model {
     }
 
 
-
-    public function findAction() {
+    public function getAction() {
         $sql = "SELECT * FROM `SM_ACTION` WHERE sm_idAction = '$this->idAction'";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
@@ -53,11 +52,11 @@ class ACTION_Model {
     }
 
 
-    public function updateAction() {
+    public function addAction() {
 
-        $errors = $this->checkIsValidForUpdate();
+        $errors = $this->checkIsValidForAdd();
         if($errors === false){
-            $sql = "UPDATE `SM_ACTION` SET sm_nameAction = '$this->nameAction', sm_descripAction = '$this->descripAction' WHERE sm_idAction = '$this->idAction'";
+            $sql = "INSERT INTO `SM_ACTION` (sm_nameAction, sm_descripAction) VALUES ('$this->nameAction', '$this->descripAction')";
             if (!($resultado = $this->mysqli->query($sql))) {
                 return 'Error in the query on the database';
             } else {
@@ -68,12 +67,11 @@ class ACTION_Model {
         }
     }
 
+    public function updateAction() {
 
-    public function addAction() {
-
-        $errors = $this->checkIsValidForAdd();
+        $errors = $this->checkIsValidForUpdate();
         if($errors === false){
-            $sql = "INSERT INTO `SM_ACTION` (sm_nameAction, sm_descripAction) VALUES ('$this->nameAction', '$this->descripAction')";
+            $sql = "UPDATE `SM_ACTION` SET sm_nameAction = '$this->nameAction', sm_descripAction = '$this->descripAction' WHERE sm_idAction = '$this->idAction'";
             if (!($resultado = $this->mysqli->query($sql))) {
                 return 'Error in the query on the database';
             } else {
@@ -101,7 +99,7 @@ class ACTION_Model {
     }
 
 
-    /* Auxilary functions*/
+    /* AUXILIARY FUNCTIONS*/
 
     public function findNameAction() {
         $sql = "SELECT sm_nameAction FROM `SM_ACTION` WHERE sm_idAction = '$this->idAction'";
@@ -117,7 +115,7 @@ class ACTION_Model {
         This public function is only used in unit tests over ACTION_EDIT and ACTION_DELETE to get the last id action inserted (through the unit test ACTION_ADD_TEST), 
         because of this the connection with DB is realized in the public function to be able to access it through an anonymous class.
     */
-    public function findLastActionID() {
+    public function getLastActionID() {
         $mysqli = Connection::connectionBD();
         $sql = "SELECT sm_idAction FROM `SM_ACTION` ORDER BY sm_idAction DESC LIMIT 1";
         if (!($resultado = $mysqli->query($sql))) {
@@ -128,6 +126,24 @@ class ACTION_Model {
         }
     }
 
+
+    public function getAllActionsForFunction() {
+        $sql = "SELECT F.sm_idFunction,F.sm_nameFunction, A.sm_idAction, A.sm_nameAction
+                FROM `SM_FUNCTIONALITY` AS F, `SM_ACTION` AS A, `SM_FUNCTIONALITY_ACTION` AS FA
+                WHERE F.sm_idFunction = FA.sm_idFunction AND FA.sm_idAction = A.sm_idAction
+                ORDER BY A.sm_idAction";
+        if (!($resultado = $this->mysqli->query($sql))) {
+            throw new Exception('Error in the query on the database');
+        } else {
+            $toret = array();
+            $i = 0;
+            while ($fila = $resultado->fetch_array()) {
+                $toret[$i] = $fila;
+                $i++;
+            }
+            return $toret;
+        }
+    }
 
 
     public function existsAction() {
@@ -142,7 +158,7 @@ class ACTION_Model {
 
 
 
-    /* Server validations functions*/
+    /* SERVER VALIDATIONS FUNCTIONS*/
 
     public function checkIsValidForAdd() {
 

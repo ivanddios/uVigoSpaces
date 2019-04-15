@@ -110,16 +110,15 @@ class USER_EDIT{
 									<label for="email"><?= $strings['What is his email?']?></label>
 								</div>
 
-								<div class="input-container">
+								<div class="input-container preSelect">
 									<span class="input-group-text fa fa-phone"></span>
 									<input type="text" id="phone" name="phone" value="<?=$this->user['sm_phone']?>" onkeyup="checkNumPhone(this.id)" required/>
 									<label for="phone"><?= $strings['What is his phone?']?></label>
 								</div>
 
-								
+								<label class="labelSelect"><?= $strings['What is his group?']?></label>
 								<div class="input-container">
 									<select class="custom-select" name="group" required>
-										
 										<?php foreach($this->groups as $group): 
 											if($this->user['sm_idGroup'] === $group['sm_idGroup']): ?>
 												<option selected value="<?=$group['sm_idGroup']?>"><?=$group['sm_nameGroup'] ." - ". $group['sm_descripGroup']?></option>
@@ -130,7 +129,6 @@ class USER_EDIT{
 									</select>
 									<i class="input-group-text fa fa-tag" aria-hidden="true"></i>
 								</div>
-						 
 
 								<button id="submitButton" type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
 							</div> 
