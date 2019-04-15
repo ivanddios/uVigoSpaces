@@ -47,17 +47,14 @@ Switch ($_GET['action']){
         if (isset($_POST["submit"])) { 
             $functionAdd = get_data_form();
             $actions = json_decode($_POST["actions"]);
-            var_dump($actions);
-            exit();
             $addAnswer = $functionAdd->addFunction($actions);
-            if($addAsnwer === true){
+            if($addAnswer === true){
                 $flashMessageSuccess = sprintf($strings["Functionality \"%s\" successfully added."], $functionAdd->getNameFunction());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("FUNCTIONALITY_Controller.php");
-
             }else{
                 $view->setFlashDanger($strings[$addAsnwer]);
-                $view->redirect("BUILDING_Controller.php", $strings['Add']);
+                $view->redirect("FUNCTIONALITY_Controller.php", $strings['Add']);
 
             }
                 
@@ -103,7 +100,7 @@ Switch ($_GET['action']){
             }else{
                 //$view->setFlashDanger($strings[$editAnswer]);
                 var_dump($editAnswer);
-                //$view->redirect("FUNCTIONALITY_Controller.php", $strings['Edit'], 'function='.$functionId);
+                $view->redirect("FUNCTIONALITY_Controller.php", $strings['Edit'], 'function='.$functionId);
             }
         } else {
 
@@ -195,7 +192,7 @@ Switch ($_GET['action']){
         }
 
         $function = new FUNCTIONALITY_Model();
-        $functions = $function->showAllFunctions();
+        $functions = $function->getAllFunctions();
         new FUNCTIONALITY_SHOWALL($functions);
             
     break;

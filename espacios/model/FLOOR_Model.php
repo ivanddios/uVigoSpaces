@@ -104,10 +104,7 @@ class FLOOR_Model {
                 if($this->getPlaneFloor('name') == ''){
                     $sql = "UPDATE `SM_FLOOR` SET sm_idFloor = '$this->idFloor', sm_nameFloor = '$this->nameFloor', sm_surfaceBuildingFloor = '$this->surfaceBuildingFloor', sm_surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
                 } else {
-                    if(is_file($this->getLinkPlane())){
-                        unlink($this->getLinkPlane());
-                    }
-                    rmdir($this->dirPhoto);
+                    $this->deleteDirPhoto();
                     $planeFloorBD =$this->dirPhoto.$this->getPlaneFloor('name');
                     $sql = "UPDATE `SM_FLOOR` SET sm_idFloor = '$this->idFloor', sm_nameFloor = '$this->nameFloor', sm_planeFloor = '$planeFloorBD', sm_surfaceBuildingFloor = '$this->surfaceBuildingFloor', sm_surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
                     $this->updateDirPhoto();
@@ -126,14 +123,13 @@ class FLOOR_Model {
     }
 
     public function deleteFloor() {
-
         $errors = $this->checkIsValidForDelete();
         if($errors === false){
+            $this->deleteDirPhoto();
             $sql = "DELETE FROM `SM_FLOOR` WHERE sm_idBuilding ='$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
             if (!($resultado = $this->mysqli->query($sql))) {
                 return 'Error in the query on the database';
             } else {
-                rmdir($this->dirPhoto);
                 return true;
             }
         }else{
@@ -173,14 +169,19 @@ class FLOOR_Model {
     }
 
     public function updateDirPhoto() {
-
         if (!is_dir($this->dirPhoto)) {
-            mkdir($this->dirPhoto, 0777);
+            mkdir($this->dirPhoto, 0777, true);
         }
-
         if ($this->getPlaneFloor('name') !== '') {
             move_uploaded_file($this->getPlaneFloor('tmp_name'), $this->dirPhoto.$this->getPlaneFloor('name'));
         }
+    }
+
+    public function deleteDirPhoto() {
+        if(file_exists($this->getLinkPlane())){
+            unlink($this->getLinkPlane());
+        }
+        return (rmdir($this->dirPhoto));
     }
 
     public function existsFloor() {

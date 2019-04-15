@@ -162,15 +162,14 @@ class USER_Model {
             }else if($this->getPhoto('name') !== '' && empty($this->password)){
                 $photoBD =$this->dirPhoto.$this->getPhoto('name');
                 $sql = "UPDATE `SM_USER` SET sm_photo = '$photoBD', sm_name = '$this->name', sm_surname = '$this->surname', sm_dni = '$this->dni', sm_birthdate = '$dateBD', sm_email = '$this->email', sm_phone = '$this->phone' WHERE sm_username = '$this->username'";
-                $this->updateDirPhoto();
                 unlink($this->getLinkProfilePhoto());
+                $this->updateDirPhoto();
             } else {
                 $photoBD =$this->dirPhoto.$this->getPhoto('name'); 
                 $sql = "UPDATE `SM_USER` SET sm_photo = '$photoBD', sm_passwd = '$this->password', sm_name = '$this->name', sm_surname = '$this->surname', sm_dni = '$this->dni', sm_birthdate = '$dateBD', sm_email = '$this->email', sm_phone = '$this->phone' WHERE sm_username = '$this->username'";
-                $this->updateDirPhoto();
                 unlink($this->getLinkProfilePhoto());
+                $this->updateDirPhoto(); 
             }
-
             if (!($resultado = $this->mysqli->query($sql))) {
                 return 'Error in the query on the database';
             } else {
@@ -185,14 +184,11 @@ class USER_Model {
 
         $errors = $this->checkIsValidForDelete();
         if($errors === false){
+            $this->deleteDirPhoto();
             $sql = "DELETE FROM `SM_USER` WHERE sm_username ='$this->username'";
             if (!($resultado = $this->mysqli->query($sql))) {
                 return 'Error in the query on the database';
             } else {
-                if(is_file($this->getLinkProfilePhoto())){
-                    unlink($this->getLinkProfilePhoto());
-                }
-                rmdir($this->dirPhoto);
                 return true;
             }
         } else {
@@ -228,14 +224,19 @@ class USER_Model {
 
     public function updateDirPhoto() {
         if (!is_dir($this->dirPhoto)) {
-            mkdir($this->dirPhoto, 0777);
+            mkdir($this->dirPhoto, 0777, true);
         }
-    
-        if ($this->getPhoto('name') !== '') {
-            move_uploaded_file($this->getPhoto('tmp_name'), $this->dirPhoto.$this->getPhoto('name'));
+        if ($this->getPlaneFloor('name') !== '') {
+            move_uploaded_file($this->getPlaneFloor('tmp_name'), $this->dirPhoto.$this->getPlaneFloor('name'));
         }
     }
 
+    public function deleteDirPhoto() {
+        if(file_exists($this->getLinkPlane())){
+            unlink($this->getLinkPlane());
+        }
+        return (rmdir($this->dirPhoto));
+    }
 
     public function existsUser() {
         $sql = "SELECT * FROM `SM_USER` WHERE sm_username = '$this->username'";

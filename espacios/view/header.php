@@ -92,13 +92,13 @@
                             <?php } elseif($_SESSION['LANGUAGE'] === 'English') { ?>
                                 <img src="../img/uk.png" alt="lang" class="languageFlag">
                             <?php } else { ?>
-                                <img src="../img/galicia2.png" alt="lang" class="languageFlag">
+                                <img src="../img/galician.png" alt="lang" class="languageFlag">
                             <?php } ?>
                         </a>
                         <div class="dropdown-menu languages" aria-labelledby="navbarDropdownLang">
                             <?php if($_SESSION['LANGUAGE'] === 'Castellano') { ?>
                                 <a href="../core/CambioIdioma.php?idioma=Galego">
-                                    <img src="../img/galicia2.png" alt="lang" class="languageFlag">
+                                    <img src="../img/galician.png" alt="lang" class="languageFlag">
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a href="../core/CambioIdioma.php?idioma=English">
@@ -114,7 +114,7 @@
                                 </a>
                             <?php } elseif($_SESSION['LANGUAGE'] === 'English') { ?>
                                 <a href="../core/CambioIdioma.php?idioma=Galego">
-                                    <img src="../img/galician.gif" alt="lang" class="languageFlag">
+                                    <img src="../img/galician.png" alt="lang" class="languageFlag">
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a href="../core/CambioIdioma.php?idioma=Castellano">

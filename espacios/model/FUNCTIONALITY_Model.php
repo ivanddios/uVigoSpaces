@@ -77,7 +77,7 @@ class FUNCTIONALITY_Model {
             $sqlFunction = "INSERT INTO `SM_FUNCTIONALITY` (sm_nameFunction, sm_descripFunction) VALUES ('$this->nameFunction', '$this->descripFunction')";
             if (!($resultado = $this->mysqli->query($sqlFunction))) {
                 return 'Error in the query on the database';
-            } else {
+            }else {
                 $lastId = $this->mysqli->insert_id;
                 foreach($actions as $action){
                     $sqlFunctionAction = "INSERT INTO `SM_FUNCTIONALITY_ACTION` (sm_idFunction, sm_idAction) VALUES ($lastId, $action->id)";
@@ -87,7 +87,6 @@ class FUNCTIONALITY_Model {
                 }
                 return true;
             }
-            return 'Error in the query on the database';
         }else{
             return $errors;
         }

@@ -38,7 +38,7 @@ class USER_ADD{
 							<div id="group-form">
 
 								<div id="profilePhoto-container" class="profilePhoto-frame">
-									<img id="profilePhoto" alt="<?= $strings['ProfilePhoto']?>" src="../img/camera2.png" onclick="uploadProfilePhoto()"/>
+									<img id="profilePhoto" alt="<?= $strings['ProfilePhoto']?>" src="../img/camera.png" onclick="uploadProfilePhoto()"/>
 									<input id="imageUpload" type="file" name="photo" accept="image/*" onchange="previewProfilePhoto(this)">
 								</div> 
 

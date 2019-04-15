@@ -23,31 +23,6 @@ class SPACE_SHOW{
 					<div class="col-lg-12 center-block-content">
             <div id="group-form">
 
-								<!-- <div class="inputWithIcon inputIconBg">
-									<input type="text" name="idSpace" placeholder="<?= $strings['What is the identifier of this space?']?>" value="<?= $this->space['idBuilding'].$this->space['idFloor'].$this->space['idSpace']?>" readonly>
-									<i class="fa fa-cube fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
-
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="nameSpace" placeholder="<?= $strings['What space is it?']?>" value="<?=$this->space['nameSpace']?>" readonly>
-									<i class="fa fa-reorder fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
-
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="surfaceSpace" placeholder="<?= $strings['What is the surface of space?']?>" value="<?=$this->space['surfaceSpace']?>" readonly>
-									<i class="fa fa-area-chart fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
-
-								<div class="inputWithIcon inputIconBg">
-									<input type="text" name="numberInventorySpace" placeholder="<?= $strings['What is the number inventory?']?>" value="<?=$this->space['numberInventorySpace']?>" readonly>
-									<i class="fa fa-barcode fa-lg fa-fw" aria-hidden="true"></i>
-								</div>
-
-								<div class="inputWithIcon inputIconBg">
-									<a href="SPACE_Controller.php?action=<?= $strings['ShowSpacePlane']?>&building=<?= $this->space['idBuilding']?>&floor=<?= $this->space['idFloor']?>&space=<?= $this->space['idSpace']?>"><img src='<?= $this->plane; ?>' class="avatarPlane"></a>
-								</div> -->
-
-
 								<div class="input-container">
 									<span class="input-group-text fa fa-cube"></span>
 									<input type="text" id="idSpace" name="idSpace" value="<?=$this->space['sm_idSpace']?>" readonly>
@@ -72,6 +47,7 @@ class SPACE_SHOW{
 									<label for="numberInventorySpace"><?= $strings['sm_numberInventorySpace']?></label>
 								</div>
 
+								<label class="control-label"><?= $strings['Click to see the plane']?></label>
 								<div class="inputWithIcon inputIconBg">
 									<a href="SPACE_Controller.php?action=<?= $strings['ShowSpacePlane']?>&building=<?= $this->space['sm_idBuilding']?>&floor=<?= $this->space['sm_idFloor']?>&space=<?= $this->space['sm_idSpace']?>"><img src='<?= $this->plane; ?>' class="avatarPlane" onchange="validateUpdloadFile(this.id)"></a>
 								</div>

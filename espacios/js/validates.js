@@ -492,7 +492,8 @@ function validatePermissions() {
 
     for (var i = 0; i < checkbox.length; i++) {
         if (checkbox[i].checked) {
-            checkboxChecked.push({"idFunction":checkbox[i].value.substr(0,1), "idAction":checkbox[i].value.substr(2,3)});
+            var ids = checkbox[i].value.split(',');
+            checkboxChecked.push({"idFunction": ids[0], "idAction":ids[1]});
         }
     }
     document.getElementById("permissions").value = JSON.stringify(checkboxChecked);
