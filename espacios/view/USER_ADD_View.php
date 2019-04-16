@@ -11,20 +11,13 @@ class USER_ADD{
     
     function render() {
 			include 'header.php';
-			$this->view->setElement("%TITLE%", $strings["Add User"]);
-			$this->user = json_decode($this->view->getVariable("userForm"), true); ?>
+			$this->view->setElement("%TITLE%", $strings["Add User"]);?>
 
-			<script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
-			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.min.js"></script>
 			<script src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
 			<script src="../js/bootstrap-material-datetimepicker.js"></script>
 			<script src="../js/calendar.js"></script>
 
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/ripples.min.css"/>
 			<link rel="stylesheet" href="../css/bootstrap-material-datetimepicker.css"/>
-			<link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
 			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		
 		<div class="container">
@@ -34,7 +27,7 @@ class USER_ADD{
 						<?=htmlentities($strings["New user"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form name="userForm" method="POST" action="USER_Controller.php?action=<?= $strings['Add']?>" enctype="multipart/form-data">
+						<form method="POST" action="USER_Controller.php?action=<?= $strings['Add']?>" enctype="multipart/form-data">
 							<div id="group-form">
 
 								<div id="profilePhoto-container" class="profilePhoto-frame">

@@ -2,8 +2,8 @@
 
 class USER_EDIT{
 
-		private $user;
-		private $groups;
+	private $user;
+	private $groups;
 
     function __construct($user, $groups) {
 			$this->user = $user;
@@ -12,21 +12,15 @@ class USER_EDIT{
     }
     
     function render() {
-			include 'header.php';
-			$this->view->setElement("%TITLE%", $strings["Edit User"]); ?>
+		include 'header.php';
+		$this->view->setElement("%TITLE%", $strings["Edit User"]); ?>
 
-			<script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
-			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.min.js"></script>
-			<script src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
-			<script src="../js/bootstrap-material-datetimepicker.js"></script>
-			<script src="../js/calendar.js"></script>
+		<script src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
+		<script src="../js/bootstrap-material-datetimepicker.js"></script>
+		<script src="../js/calendar.js"></script>
 
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/ripples.min.css"/>
-			<link rel="stylesheet" href="../css/bootstrap-material-datetimepicker.css"/>
-			<link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
-			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="../css/bootstrap-material-datetimepicker.css"/>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		
 
 		<div class="container">
@@ -36,7 +30,7 @@ class USER_EDIT{
 						<?=htmlentities($strings["Edit User"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form name="userForm" method="POST" action="USER_Controller.php?action=<?= $strings['Edit']?>&user=<?= $this->user['sm_username']?>" enctype="multipart/form-data" onkeyup="validateEditUser()">
+						<form method="POST" action="USER_Controller.php?action=<?= $strings['Edit']?>&user=<?= $this->user['sm_username']?>" enctype="multipart/form-data" onkeyup="validateEditUser()">
 							<div id="group-form">
 
 								<div id="profilePhoto-container">
@@ -54,15 +48,9 @@ class USER_EDIT{
 									<label for="username"><?= $strings['What is the username of this user?']?></label>
 								</div>
 								
-								<!-- <div class="input-container">
-									<span class="input-group-text fa fa-lock"></span>
-									<input type="password" id="password" name="password" onkeyup="checkPassword(this.id)"/>
-									<label for="password"><?= $strings['Do you want to change the password?']?></label>
-								</div> -->
-
 								<div class="input-container">
 									<span class="input-group-text fa fa-lock"></span>
-									<input type="password" id="password" name="password" onkeyup="checkPassword(this.id)" required/>
+									<input type="password" id="password" name="password" onkeyup="checkPassword(this.id)" optional/>
 									<label for="password"><?= $strings['Do you want to change the password?']?></label>
 								</div>
 

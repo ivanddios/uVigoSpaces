@@ -143,7 +143,7 @@ Switch ($_GET['action']){
     // // break;
 
 
-    case  $strings['ShowUsersForGroup']:
+    case  $strings['Users']:
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Show floors requires login."]);
