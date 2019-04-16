@@ -17,7 +17,7 @@ class USER_SHOW{
 				<div class="row center-row">
 					<div class="col-lg-6 center-block">
 						<div id="titleView">
-							<?=htmlentities($strings["sm_username"])?>: <?= $this->user['sm_username']?>
+							<?=htmlentities($strings["User"])?>: <?= $this->user['sm_name']?>
 						</div>
 						<div class="col-lg-12 center-block-content">
 								<div id="group-form">
@@ -31,9 +31,9 @@ class USER_SHOW{
 									</div>
 									
 									<div class="input-container">
-										<span class="input-group-text fa fa-user"></span>
-										<input type="text" id="username" value="<?= $this->user['sm_username']?>" readonly/>
-										<label for="username"><?= $strings['What is the username of this user?']?></label>
+										<span class="input-group-text fa fa-envelope"></span>
+										<input type="text" id="email" value="<?=$this->user['sm_email']?>" readonly/>
+										<label for="email"><?= $strings['What is his email?']?></label>
 									</div>
 									
 									<div class="input-container">
@@ -59,13 +59,7 @@ class USER_SHOW{
 											<input type="text" id="date" value="<?= date('d/m/Y', strtotime($this->user['sm_birthdate']));?>"  readonly>
 											<label for="date"><?= $strings['What is his birthdate?']?></label>
 									</div>
-															
-									<div class="input-container">
-										<span class="input-group-text fa fa-envelope"></span>
-										<input type="text" id="email" value="<?=$this->user['sm_email']?>" readonly/>
-										<label for="email"><?= $strings['What is his email?']?></label>
-									</div>
-
+														
 									<div class="input-container">
 										<span class="input-group-text fa fa-phone"></span>
 										<input type="text" id="phone" value="<?=$this->user['sm_phone']?>" readonly/>

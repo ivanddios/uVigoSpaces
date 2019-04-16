@@ -31,7 +31,7 @@ include  './USER_DELETE_Test.php';
 if(isset($argv[1])){
     echo "\t"."\t"."TESTING OVER SPACE MANAGER FUNCTIONALITIES" . "\n";
      foreach($tests as $test){
-         if($test['Expected'] == $test['Result']){
+         if($test['Expected'] === $test['Result']){
              echo "\e[32m".$test['Description'] . "\t" ." Expected: " .$test['Expected']. "\t" . " Result: ". $test['Result'] ."\e[0m" . "\n";
          } else {
              echo "\e[31m".$test['Description'] . "\t" ." Expected: " .$test['Expected']. "\t". " Result: ". $test['Result'] ."\e[0m" . "\n";

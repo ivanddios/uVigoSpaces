@@ -13,7 +13,7 @@ class USER_SHOWALL{
         
         include 'header.php';
         $this->view->setElement("%TITLE%", $strings["Users"]); 
-        $listTitles = array('sm_photo', 'sm_username', 'sm_name', 'sm_surname', 'sm_dni', 'sm_email');?>
+        $listTitles = array('sm_photo', 'sm_email', 'sm_name', 'sm_surname', 'sm_dni');?>
 
         <div class="container">
             <div class="row center-row">
@@ -61,8 +61,8 @@ class USER_SHOWALL{
                                                                     <img src="../img/notUser.jpg" class='avatarUser'>
                                                                 </a> 
                                                             <?php } 
-                                                    } elseif ($key === 'sm_username') {?>
-                                                        <a title="<?= $strings['Show User']?>" href='USER_Controller.php?action=<?= $strings['Show']?>&user=<?= $this->users[$j]['sm_username']?>'><?= $value?></a>                
+                                                    } elseif ($key === 'sm_email') {?>
+                                                        <a title="<?= $strings['Show User']?>" href='USER_Controller.php?action=<?= $strings['Show']?>&user=<?= $this->users[$j]['sm_email']?>'><?= $value?></a>                
                                                     <?php }else { ?>
                                                         <?= $value;
                                                     } ?>
@@ -73,24 +73,24 @@ class USER_SHOWALL{
                                         
                                     <td>
                                         <?php  if(checkRol('EDIT', 'USER')): ?>
-                                            <a href="USER_Controller.php?action=<?= $strings['Edit']?>&user=<?= $this->users[$j]['sm_username']?>">
+                                            <a href="USER_Controller.php?action=<?= $strings['Edit']?>&user=<?= $this->users[$j]['sm_email']?>">
                                                 <span title="<?= $strings['Edit User']?>" class="btn btn-primary btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
                                         <?php  if(checkRol('DELETE', 'USER')): ?>
-                                            <i title="<?= $strings['Delete User']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->users[$j]['sm_username']?>"></i>
-                                            <div id="item-<?= $this->users[$j]['sm_username']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <i title="<?= $strings['Delete User']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->users[$j]['sm_email']?>"></i>
+                                            <div id="item-<?= $this->users[$j]['sm_email']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <?= $strings["Attention"]?>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <?= sprintf($strings["Are you sure you want to delete the user \"%s\" ?"], $this->users[$j]['sm_username'] )?>
+                                                            <?= sprintf($strings["Are you sure you want to delete the user \"%s\" ?"], $this->users[$j]['sm_email'] )?>
                                                             <p><?= $strings["The information that this user has will be lost"]?></p>
                                                         </div>
                                                         <form method="POST" action="USER_Controller.php?action=<?= htmlentities($strings['Delete'])?>">
-                                                            <input type="hidden" name="username" value="<?= $this->users[$j]['sm_username']?>" readonly>
+                                                            <input type="hidden" name="email" value="<?= $this->users[$j]['sm_email']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
                                                                 <button type="submit" name="submit" id="submit" class="btn btn-success success"><?= $strings["Ok"]?></button>

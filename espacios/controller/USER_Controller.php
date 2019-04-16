@@ -15,18 +15,17 @@ include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
 
 function get_data_form() {
 
-    $username = $_POST['username'];
+    $email = $_POST['email'];
     $password = $_POST['password'];
     $name = $_POST['name'];
     $surname = $_POST['surname'];
     $dni = $_POST['dni'];
     $birthdate = $_POST['birthdate'];
-    $email = $_POST['email'];
     $phone = $_POST['phone'];
     $photo = $_FILES['photo'];
     $group = $_POST['group'];
 
-    $user = new USER_Model($username, $password, $name, $surname, $dni, $birthdate, $email, $phone, $photo, $group);
+    $user = new USER_Model($email, $password, $name, $surname, $dni, $birthdate, $phone, $photo, $group);
     return $user;
 }
 
@@ -52,7 +51,7 @@ Switch ($_GET['action']){
             $userAdd = get_data_form();
             $answerAdd = $userAdd->addUser();
             if($answerAdd === true){
-                $flashMessageSuccess = sprintf($strings["User \"%s\" successfully added."], $userAdd->getUsername());
+                $flashMessageSuccess = sprintf($strings["User \"%s\" successfully added."], $userAdd->getEmail());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("USER_Controller.php");
             }else{
@@ -79,21 +78,23 @@ Switch ($_GET['action']){
             $view->redirect("USER_Controller.php");
         }
 
-        $username = $_GET['user'];
+        $email = $_GET['user'];
 
         if (isset($_POST["submit"])) { 
             $userEdit = get_data_form();
             $answerEdit = $userEdit->updateUser($_FILES['photo']['tmp_name']);
+            var_dump($answerEdit);
+            exit();
             if($answerEdit === true){
-                $flashMessageSuccess = sprintf($strings["User \"%s\" successfully updated."], $userEdit->getUsername());
+                $flashMessageSuccess = sprintf($strings["User \"%s\" successfully updated."], $userEdit->getEmail());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("USER_Controller.php");
             }else{
                 $view->setFlashDanger($strings[$answerEdit]);
-                $view->redirect("USER_Controller.php", $strings['Edit'],"user=$username");
+                $view->redirect("USER_Controller.php", $strings['Edit'],"user=$email");
             }
         } else{
-            $user = new USER_Model($username);
+            $user = new USER_Model($email);
             $userValues = $user->getUser();
             $group = new GROUP_Model();
             $groupsValues = $group->getAllGroups();
@@ -113,14 +114,14 @@ Switch ($_GET['action']){
             $view->redirect("USER_Controller.php");
         }
 
-        if (!isset($_POST['username'])){
-            $view->setFlashDanger($strings["Username is mandatory"]);
-            $view->redirect("USER_Controller.php");
-        }
-        $userDelete = new USER_Model($_POST['username']);
+        // if (!isset($_POST['email'])){
+        //     $view->setFlashDanger($strings["Email is mandatory"]);
+        //     $view->redirect("USER_Controller.php");
+        // }
+        $userDelete = new USER_Model($_POST['email']);
         $answerDelete =  $userDelete->deleteUser();
         if($answerDelete === true){
-            $flashMessageSuccess = sprintf($strings["User \"%s\" successfully deleted."], $userDelete->getUsername());
+            $flashMessageSuccess = sprintf($strings["User \"%s\" successfully deleted."], $userDelete->getEmail());
             $view->setFlashSuccess($flashMessageSuccess);
             $view->redirect("USER_Controller.php");     
         }else{
@@ -144,12 +145,12 @@ Switch ($_GET['action']){
         }
 
         if (!isset($_GET['user'])){
-            $view->setFlashDanger($strings["Username is mandatory"]);
+            $view->setFlashDanger($strings["Email is mandatory"]);
             $view->redirect("USER_Controller.php");
         }
-        $username = $_GET['user'];
+        $email = $_GET['user'];
 
-        $user = new USER_Model($username);
+        $user = new USER_Model($email);
         $values = $user->getUser();
         new USER_SHOW($values);
 

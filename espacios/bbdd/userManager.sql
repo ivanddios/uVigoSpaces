@@ -191,28 +191,28 @@ CREATE TABLE IF NOT EXISTS `IM_INCIDENCE` (
   `im_amount` int(11) DEFAULT NULL,
   `im_authorization` tinyint(4) NOT NULL DEFAULT '0',
   `im_finished` tinyint(4) NOT NULL DEFAULT '0',
-  `im_username` varchar(25) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `im_email` varchar(25) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `im_created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `im_updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`im_idIncidence`),
-  KEY `username` (`im_username`)
+  KEY `email` (`im_email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `IM_INCIDENCE`
 --
 
-INSERT INTO `IM_INCIDENCE` (`im_idIncidence`, `im_title`, `im_description`, `im_idLocation`, `im_images`, `im_okInfraResp`, `im_priority`, `im_budget`, `im_amount`, `im_authorization`, `im_finished`, `im_username`, `im_created_at`, `im_updated_at`) VALUES
-(1, 'prueba', 'wewewewewea', 1, '', 0, 0, '0', 0, 0, 0, 'admin', '2019-03-20 15:46:48', '2019-03-20 15:46:48'),
+INSERT INTO `IM_INCIDENCE` (`im_idIncidence`, `im_title`, `im_description`, `im_idLocation`, `im_images`, `im_okInfraResp`, `im_priority`, `im_budget`, `im_amount`, `im_authorization`, `im_finished`, `im_email`, `im_created_at`, `im_updated_at`) VALUES
+(1, 'prueba', 'wewewewewea', 1, '', 0, 0, '0', 0, 0, 0, 'ivanddf1994@hotmail.com', '2019-03-20 15:46:48', '2019-03-20 15:46:48'),
 (6, 'prueba2', 'wewewe', 1, '', 0, 0, '0', 0, 0, 0, 'pepe', '2019-03-20 15:37:39', '0000-00-00 00:00:00'),
-(7, 'prueba', '3', 1, '', 0, 0, '0', 0, 0, 1, 'admin', '2019-03-20 15:37:39', '0000-00-00 00:00:00'),
-(9, 'prueba', '4', 1, '', 0, 0, '0', 0, 0, 0, 'admin', '2019-03-20 15:37:39', '0000-00-00 00:00:00'),
-(24, 'prueba', 'prueba', 2, 'IncidencesFiles/24/', 0, 0, '0', 0, 0, 0, 'admin', '2019-04-04 15:26:00', '0000-00-00 00:00:00'),
-(26, 'prueba', 'prueba', 1, '', 0, 0, '0', 0, 0, 0, 'admin', '2019-04-04 15:35:03', '0000-00-00 00:00:00'),
-(33, 'p1', 'p1', 1, '../IncidencesFiles/33/images/', 0, 0, '0', 0, 0, 0, 'admin', '2019-04-04 20:44:21', '0000-00-00 00:00:00'),
-(34, '35', '35', 3, '../IncidencesFiles/34/images/', 0, 0, '0', 0, 0, 0, 'admin', '2019-04-08 12:57:27', '0000-00-00 00:00:00'),
-(35, 'p35', '35', 1, '../IncidencesFiles/35/images', 0, 0, '0', 0, 0, 0, 'admin', '2019-04-08 15:16:22', '0000-00-00 00:00:00'),
-(36, 'prueba', 'p', 1, '../IncidencesFiles/36/images', 0, 0, '../IncidencesFiles/36/docs', 0, 0, 0, 'admin', '2019-04-08 16:24:24', '0000-00-00 00:00:00');
+(7, 'prueba', '3', 1, '', 0, 0, '0', 0, 0, 1, 'ivanddf1994@hotmail.com', '2019-03-20 15:37:39', '0000-00-00 00:00:00'),
+(9, 'prueba', '4', 1, '', 0, 0, '0', 0, 0, 0, 'ivanddf1994@hotmail.com', '2019-03-20 15:37:39', '0000-00-00 00:00:00'),
+(24, 'prueba', 'prueba', 2, 'IncidencesFiles/24/', 0, 0, '0', 0, 0, 0, 'ivanddf1994@hotmail.com', '2019-04-04 15:26:00', '0000-00-00 00:00:00'),
+(26, 'prueba', 'prueba', 1, '', 0, 0, '0', 0, 0, 0, 'ivanddf1994@hotmail.com', '2019-04-04 15:35:03', '0000-00-00 00:00:00'),
+(33, 'p1', 'p1', 1, '../IncidencesFiles/33/images/', 0, 0, '0', 0, 0, 0, 'ivanddf1994@hotmail.com', '2019-04-04 20:44:21', '0000-00-00 00:00:00'),
+(34, '35', '35', 3, '../IncidencesFiles/34/images/', 0, 0, '0', 0, 0, 0, 'ivanddf1994@hotmail.com', '2019-04-08 12:57:27', '0000-00-00 00:00:00'),
+(35, 'p35', '35', 1, '../IncidencesFiles/35/images', 0, 0, '0', 0, 0, 0, 'ivanddf1994@hotmail.com', '2019-04-08 15:16:22', '0000-00-00 00:00:00'),
+(36, 'prueba', 'p', 1, '../IncidencesFiles/36/images', 0, 0, '../IncidencesFiles/36/docs', 0, 0, 0, 'ivanddf1994@hotmail.com', '2019-04-08 16:24:24', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -223,10 +223,10 @@ INSERT INTO `IM_INCIDENCE` (`im_idIncidence`, `im_title`, `im_description`, `im_
 CREATE TABLE IF NOT EXISTS `IM_NOTIFICATION` (
   `im_idNotification` int(11) NOT NULL AUTO_INCREMENT,
   `im_idIncidence` int(11) NOT NULL,
-  `im_username` varchar(25) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `im_email` varchar(25) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`im_idNotification`),
   KEY `Incidence` (`im_idIncidence`),
-  KEY `username` (`im_username`)
+  KEY `email` (`im_email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
@@ -309,27 +309,17 @@ INSERT INTO `IM_PERMISSION` (`im_idGroup`, `im_idFunction`, `im_idAction`) VALUE
 --
 
 CREATE TABLE IF NOT EXISTS `IM_USER` (
-  `im_username` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
-  `im_passwd` varchar(128) COLLATE utf8_spanish_ci NOT NULL,
-  `im_name` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
-  `im_surname` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `im_dni` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
-  `im_birthdate` date NOT NULL,
   `im_email` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `im_phone` int(15) DEFAULT NULL,
-  `im_photo` varchar(500) COLLATE utf8_spanish_ci DEFAULT NULL,
-  PRIMARY KEY (`im_username`),
-  UNIQUE KEY `dni` (`im_dni`),
-  UNIQUE KEY `email` (`im_email`)
+  PRIMARY KEY (`im_email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `IM_USER`
 --
 
-INSERT INTO `IM_USER` (`im_username`, `im_passwd`, `im_name`, `im_surname`, `im_dni`, `im_birthdate`, `im_email`, `im_phone`, `im_photo`) VALUES
-('admin', 'admin', 'Iván', 'de Dios Fernández', '44488795X', '0000-00-00', 'ivanddf1994@hotmail.com', 617129241, ''),
-('responsable', 'responsable', 'RespInfr1', 'Informatica', '232323232Y', '2019-03-03', 'info@responsable.es', 674949955, NULL);
+INSERT INTO `IM_USER` (`im_email`) VALUES
+('ivanddf1994@hotmail.com'),
+('info@responsable.es');
 
 -- --------------------------------------------------------
 
@@ -338,9 +328,9 @@ INSERT INTO `IM_USER` (`im_username`, `im_passwd`, `im_name`, `im_surname`, `im_
 --
 
 CREATE TABLE IF NOT EXISTS `IM_USER_GROUP` (
-  `im_username` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
+  `im_email` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `im_idGroup` int(11) NOT NULL,
-  PRIMARY KEY (`im_username`,`im_idGroup`),
+  PRIMARY KEY (`im_email`,`im_idGroup`),
   KEY `GROUP` (`im_idGroup`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -348,9 +338,9 @@ CREATE TABLE IF NOT EXISTS `IM_USER_GROUP` (
 -- Volcado de datos para la tabla `IM_USER_GROUP`
 --
 
-INSERT INTO `IM_USER_GROUP` (`im_username`, `im_idGroup`) VALUES
-('admin', 1),
-('admin', 3);
+INSERT INTO `IM_USER_GROUP` (`im_email`, `im_idGroup`) VALUES
+('ivanddf1994@hotmail.com', 1),
+('ivanddf1994@hotmail.com', 3);
 
 -- --------------------------------------------------------
 
@@ -697,26 +687,16 @@ INSERT INTO `SM_SPACE` (`sm_idBuilding`, `sm_idFloor`, `sm_idSpace`, `sm_nameSpa
 --
 
 CREATE TABLE IF NOT EXISTS `SM_USER` (
-  `sm_photo` varchar(500) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `sm_username` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
-  `sm_passwd` varchar(128) COLLATE utf8_spanish_ci NOT NULL,
-  `sm_name` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
-  `sm_surname` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `sm_dni` varchar(9) COLLATE utf8_spanish_ci NOT NULL,
-  `sm_birthdate` date NOT NULL,
   `sm_email` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `sm_phone` int(9) DEFAULT NULL,
-  PRIMARY KEY (`sm_username`),
-  UNIQUE KEY `dni` (`sm_dni`),
-  UNIQUE KEY `email` (`sm_email`)
+  PRIMARY KEY (`sm_email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `SM_USER`
+-- Volcado de datos para la tabla `USER`
 --
 
-INSERT INTO `SM_USER` (`sm_photo`, `sm_username`, `sm_passwd`, `sm_name`, `sm_surname`, `sm_dni`, `sm_birthdate`, `sm_email`, `sm_phone`) VALUES
-('../document/Users/admin/ivan.jpg', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Iván', 'de Dios Fernández', '44488795X', '1994-03-26', 'ivanddf1994@hotmail.com', 617129241);
+INSERT INTO `SM_USER` (`sm_email`) VALUES
+('ivanddf1994@hotmail.com');
 
 -- --------------------------------------------------------
 
@@ -725,9 +705,9 @@ INSERT INTO `SM_USER` (`sm_photo`, `sm_username`, `sm_passwd`, `sm_name`, `sm_su
 --
 
 CREATE TABLE IF NOT EXISTS `SM_USER_GROUP` (
-  `sm_username` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
+  `sm_email` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `sm_idGroup` int(11) NOT NULL,
-  PRIMARY KEY (`sm_username`,`sm_idGroup`),
+  PRIMARY KEY (`sm_email`,`sm_idGroup`),
   KEY `idGroup` (`sm_idGroup`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -735,8 +715,37 @@ CREATE TABLE IF NOT EXISTS `SM_USER_GROUP` (
 -- Volcado de datos para la tabla `SM_USER_GROUP`
 --
 
-INSERT INTO `SM_USER_GROUP` (`sm_username`, `sm_idGroup`) VALUES
-('admin', 1);
+INSERT INTO `SM_USER_GROUP` (`sm_email`, `sm_idGroup`) VALUES
+('ivanddf1994@hotmail.com', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `USER`
+--
+
+CREATE TABLE IF NOT EXISTS `USER` (
+  `photo` varchar(500) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `email` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `passwd` varchar(128) COLLATE utf8_spanish_ci NOT NULL,
+  `name` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
+  `surname` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `dni` varchar(9) COLLATE utf8_spanish_ci NOT NULL,
+  `birthdate` date NOT NULL,
+  `phone` int(9) DEFAULT NULL,
+  PRIMARY KEY (`email`),
+  UNIQUE KEY `dni` (`dni`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `USER`
+--
+
+INSERT INTO `USER` (`photo`, `email`, `passwd`, `name`, `surname`, `dni`, `birthdate`, `phone`) VALUES
+('../document/Users/admin/ivan.jpg', 'ivanddf1994@hotmail.com', 'bb4e90a7639add09cf8629499638760c', 'Iván', 'de Dios Fernández', '44488795X', '1994-03-26', 617129241),
+(null, 'info@responsable.es', 'responsable', 'RespInfr1', 'Informatica', '232323232Y', '2019-03-03', 674949955);
+
+-- --------------------------------------------------------
 
 --
 -- Restricciones para tablas volcadas
@@ -746,14 +755,15 @@ INSERT INTO `SM_USER_GROUP` (`sm_username`, `sm_idGroup`) VALUES
 -- Filtros para la tabla `IM_FUNCTIONALITY_ACTION`
 --
 ALTER TABLE `IM_FUNCTIONALITY_ACTION`
-   ADD CONSTRAINT `IM_FUNCTIONALITY_ACTION_ibfk_1` FOREIGN KEY (`im_idAction`) REFERENCES `IM_ACTION` (`im_idAction`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `IM_FUNCTIONALITY_ACTION_ibfk_1` FOREIGN KEY (`im_idAction`) REFERENCES `IM_ACTION` (`im_idAction`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `IM_FUNCTIONALITY_ACTION_ibfk_2` FOREIGN KEY (`im_idFunction`) REFERENCES `IM_FUNCTIONALITY` (`im_idFunction`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 --
 -- Filtros para la tabla `IM_NOTIFICATION`
 --
 ALTER TABLE `IM_NOTIFICATION`
   ADD CONSTRAINT `Incidence` FOREIGN KEY (`im_idIncidence`) REFERENCES `IM_INCIDENCE` (`im_idIncidence`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `username` FOREIGN KEY (`im_username`) REFERENCES `IM_USER` (`im_username`);
+  ADD CONSTRAINT `email` FOREIGN KEY (`im_email`) REFERENCES `IM_USER` (`im_email`);
 
 --
 -- Filtros para la tabla `IM_PERMISSION`
@@ -761,14 +771,23 @@ ALTER TABLE `IM_NOTIFICATION`
 ALTER TABLE `IM_PERMISSION`
   ADD CONSTRAINT `IM_PERMISSION_ibfk_1` FOREIGN KEY (`im_idGroup`) REFERENCES `IM_GROUP` (`im_idGroup`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `IM_PERMISSION_ibfk_2` FOREIGN KEY (`im_idFunction`) REFERENCES `IM_FUNCTIONALITY` (`im_idFunction`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `IM_PERMISSION_ibfk_3` FOREIGN KEY (`im_idAction`) REFERENCES `IM_ACTION` (`im_idAction`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `IM_PERMISSION_ibfk_3` FOREIGN KEY (`im_idAction`) REFERENCES `IM_ACTION` (`im_idAction`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `IM_PERMISSION_ibfk_4` FOREIGN KEY (`im_idFunction`) REFERENCES `IM_FUNCTIONALITY_ACTION` (`im_idFunction`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `IM_USER`
+--
+ALTER TABLE `IM_USER`
+  ADD CONSTRAINT `IM_USER_ibfk_1` FOREIGN KEY (`im_email`) REFERENCES `USER` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
 
 --
 -- Filtros para la tabla `IM_USER_GROUP`
 --
 ALTER TABLE `IM_USER_GROUP`
   ADD CONSTRAINT `GROUP` FOREIGN KEY (`im_idGroup`) REFERENCES `IM_GROUP` (`im_idGroup`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `USER` FOREIGN KEY (`im_username`) REFERENCES `IM_USER` (`im_username`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `USER` FOREIGN KEY (`im_email`) REFERENCES `IM_USER` (`im_email`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `SM_FUNCTIONALITY_ACTION`
@@ -800,11 +819,19 @@ ALTER TABLE `SM_SPACE`
   ADD CONSTRAINT `SM_SPACE_ibfk_1` FOREIGN KEY (`sm_idBuilding`) REFERENCES `SM_BUILDING` (`sm_idBuilding`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `SM_SPACE_ibfk_2` FOREIGN KEY (`sm_idFloor`) REFERENCES `SM_FLOOR` (`sm_idFloor`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+
+--
+-- Filtros para la tabla `SM_USER`
+--
+ALTER TABLE `SM_USER`
+  ADD CONSTRAINT `SM_USER_ibfk_1` FOREIGN KEY (`sm_email`) REFERENCES `USER` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
 --
 -- Filtros para la tabla `SM_USER_GROUP`
 --
 ALTER TABLE `SM_USER_GROUP`
-  ADD CONSTRAINT `SM_USER_GROUP_ibfk_1` FOREIGN KEY (`sm_username`) REFERENCES `SM_USER` (`sm_username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `SM_USER_GROUP_ibfk_1` FOREIGN KEY (`sm_email`) REFERENCES `SM_USER` (`sm_email`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `SM_USER_GROUP_ibfk_2` FOREIGN KEY (`sm_idGroup`) REFERENCES `SM_GROUP` (`sm_idGroup`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 

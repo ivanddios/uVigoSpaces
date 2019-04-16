@@ -51,7 +51,7 @@ class Login{
                                     <form method="POST" action="LOGIN_Controller.php?action=Login">
                                         <div id="loginContainer">
                                             <div class="inputWithIcon inputIconBg">
-                                                <input id="loginUsername" type="text" name="username" placeholder="Username" required>
+                                                <input id="loginUsername" type="text" name="email" placeholder="Email" required>
                                                 <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
                                             </div>
 
@@ -66,13 +66,6 @@ class Login{
                                                 <?php endif; ?>
                                             </div>
 
-                                            <!-- <div class="item-select">
-                                                <p><select name="language">
-                                                    <option value="Castellano"><?=$strings["Spanish"]?></option>
-                                                    <option value="Galego"><?=$strings["Galician"]?></option>
-                                                    <option value="English"><?=$strings["English"]?></option>
-                                                </select></p>
-                                            </div> -->
                                             <div class="input-container item-select">
                                                 <select class="custom-select select-login" name="language" required>
                                                     <option selected value="Castellano"><?=$strings["Spanish"]?></option>

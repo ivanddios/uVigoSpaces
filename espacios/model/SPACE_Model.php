@@ -144,18 +144,20 @@ class SPACE_Model {
     }
 
 
-    public function updateSpace() {
+    public function updateSpace($idSpaceOriginal) {
+
         $errors = $this->checkIsValidForAdd_Update();
         if($errors === false){
-                if($this->existsSpace()){
-                $sql = "UPDATE `SM_SPACE` SET sm_nameSpace = '$this->nameSpace', sm_surfaceSpace = $this->surfaceSpace, sm_numberInventorySpace = '$this->numberInventorySpace' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
+            $exists = $this->existsSpaceForEdit($idSpaceOriginal);
+            if($exists === false){
+                $sql = "UPDATE `SM_SPACE` SET sm_idSpace = '$this->idSpace', sm_nameSpace = '$this->nameSpace', sm_surfaceSpace = $this->surfaceSpace, sm_numberInventorySpace = '$this->numberInventorySpace' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$idSpaceOriginal'";
                 if (!($resultado = $this->mysqli->query($sql))) {
                     return $this->mysqli->error;
                 } else {
                     return true;
                 }
             }else{
-                return "There isn't a space with that identifier in the floor";
+                return $exists;
             }
         }else{
             return $errors;
@@ -184,6 +186,36 @@ class SPACE_Model {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function existsSpaceForEdit($idSpaceOriginal) {
+        $sql = "SELECT sm_idSpace 
+                FROM `SM_SPACE` 
+                WHERE sm_idSpace NOT IN (
+                                        SELECT sm_idSpace 
+                                        FROM `SM_SPACE` 
+                                        WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace='$idSpaceOriginal'
+                                        )
+                AND sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
+
+        if (!($resultado = $this->mysqli->query($sql))) {
+            return 'Error in the query on the database';
+        } else {
+            $toret = array();
+            $i = 0;
+            while ($fila = $resultado->fetch_array()) {
+                $toret[$i] = $fila;
+                $i++;
+            }
+
+            $errors = false;
+            foreach($toret as $space){
+                if($space['sm_idSpace'] == $this->idSpace){
+                    $errors = "There already is a space with that identifier in the floor";
+                }
+            }
+            return $errors;
         }
     }
 

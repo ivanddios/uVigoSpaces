@@ -2,45 +2,46 @@
 
 require_once(__DIR__.'..\..\model\USER_Model.php');
 
-//TEST-> USERNAME
+//TEST-> EMAIL
 $tests['SM_USER_DELETE_TEST1']=(['Functionality' => "SM_USER_DELETE",
-                'Description' => 'Test 1. Attempt to delete user without values',
-                'Expected' => 'Username is mandatory',
+                'Description' => "Test 1. Attempt to update user without email",
+                'Expected' => "Email is mandatory",
                 'Result' => 'Not executed']);
 
 $user = new USER_Model();
-$deleteAnswer = $user->deleteUser();
-$tests['SM_USER_DELETE_TEST1']["Result"] = $deleteAnswer;
+$updateAnswer = $user->deleteUser();
+$tests['SM_USER_DELETE_TEST1']["Result"] = $updateAnswer;
 
 
 $tests['SM_USER_DELETE_TEST2']=(['Functionality' => "SM_USER_DELETE",
-                'Description' => "Test 2. Attempt to delete user with username bigger than 25 characters",
-                'Expected' => "Username can't be larger than 25 characters",
+                'Description' => "Test 2. Attempt to update user with email size too long",
+                'Expected' => "Email can't be larger than 50 characters",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('012345678901234567890123456');
-$deleteAnswer = $user->deleteUser();
-$tests['SM_USER_DELETE_TEST2']["Result"] = $deleteAnswer;
+$user = new USER_Model('uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
+dE89t27sFO18FUUsXBcJeFCVo3ZzXo1oo1T5gVgWT4ffpW2y6zydJf6cU8EKC7Shi7PFlgynWFIZWdxsuiAJuA0jXgAe6IJgGtXH0lSfSYYCpmSXj3FnFMXDiYoDJCY');
+$updateAnswer = $user->deleteUser();
+$tests['SM_USER_DELETE_TEST2']["Result"] = $updateAnswer;
 
 
 $tests['SM_USER_DELETE_TEST3']=(['Functionality' => "SM_USER_DELETE",
-                'Description' => "Test 3. Attempt to delete user with username format invalid",
-                'Expected' => 'Username format is invalid',
+                'Description' => "Test 3. Attempt to update user with email format invalid",
+                'Expected' => "Email format is invalid",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('¿?{');
-$deleteAnswer = $user->deleteUser();
-$tests['SM_USER_DELETE_TEST3']["Result"] = $deleteAnswer;
+$user = new USER_Model('ivanddf@.com');
+$updateAnswer = $user->deleteUser();
+$tests['SM_USER_DELETE_TEST3']["Result"] = $updateAnswer;
 
 
 $tests['SM_USER_DELETE_TEST4']=(['Functionality' => "SM_USER_DELETE",
-                'Description' => "Test 4. Attempt to delete user with a username that not exists",
-                'Expected' => "There isn't a user with that username",
+                'Description' => "Test 4. Attempt to update user with email that not exists in DB",
+                'Expected' => "There isn't a user with that email",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('admyn');
-$deleteAnswer = $user->deleteUser();
-$tests['SM_USER_DELETE_TEST4']["Result"] = $deleteAnswer;
+$user = new USER_Model('ivanddf@yahoo.com');
+$updateAnswer = $user->deleteUser();
+$tests['SM_USER_DELETE_TEST4']["Result"] = $updateAnswer;
 
 
 
@@ -52,7 +53,7 @@ $tests['SM_USER_DELETE_TEST5']=(['Functionality' => "SM_USER_DELETE",
                 'Expected' => 'User deleted successfully',
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba');
+$user = new USER_Model('ivanddf1994@gmail.com');
 $deleteAnswer = $user->deleteUser();
 if($deleteAnswer === true){
     $tests['SM_USER_DELETE_TEST5']["Result"] = 'User deleted successfully';

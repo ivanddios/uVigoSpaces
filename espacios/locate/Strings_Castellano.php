@@ -129,7 +129,6 @@ $strings = array(
     "Not in session. Delete space requires login." => "Para eliminar un espacio debes estar logueado",
 
     "sm_photo" => "Foto",
-    "sm_username" => "Usuario",
     "sm_passwd" => "Contraseña",
     "sm_name" => "Nombre",
     "sm_surname"=> "Apellidos",
@@ -147,7 +146,7 @@ $strings = array(
     "Not in session. Add users requires login." => "Para añadir usuarios debes estar logueado",
     "Not in session. Edit user requires login." => "Para editar un usuario debes estar logueado",
     "Not in session. Add users requires login." => "Para eliminar usuarios debes estar logueado",
-    "No such user with this id" => "No existe ningún usuario con ese username",
+    "No such user with this id" => "No existe ningún usuario con ese email",
     "Are you sure you want to delete the user \"%s\" ?" => "¿Está seguro de querer eliminar el usuario \"%s\" ?",
     "The information that this user has will be lost" => "La información que tiene este usuario se perderá",
     "Add User" => "Añadir usuario",
@@ -155,7 +154,7 @@ $strings = array(
     "Edit User" => "Editar usuario",
     "Delete User" => "Eliminar usuario",
     "New user" => "Nuevo usuario",
-    "What is the username of this user?" => "¿Cuál es el username?",
+    "What is the email of this user?" => "¿Cuál es el email?",
     "What is the password of this user?" => "¿Cuál es la contraseña del usuario?",
     "Repeat password" => "Vuelva a escribir la contraseña",
     "Repeat new password" => "Vuelva a escribir la contraseña",
@@ -289,11 +288,11 @@ $strings = array(
 
 
     //USER
-    "Username or password is incorrect" => "El username o la contraseña es incorrecto",
-    "Username is mandatory" => "El nick de usuario es obligatorio",
-    "Username can not be that long" => "El nick de usuario no puede ser tan largo",
-    "Username is invalid" => "El nick de usuario es inválido",
-    "There is already a user with that username" => "Ya existe un usuario con ese nick",
+    "Email or password is incorrect" => "El email o la contraseña es incorrecto",
+    "Email is mandatory" => "El nick de usuario es obligatorio",
+    "Email can not be that long" => "El nick de usuario no puede ser tan largo",
+    "Email is invalid" => "El nick de usuario es inválido",
+    "There is already a user with that email" => "Ya existe un usuario con ese email",
     "Password is mandatory" => "La contraseña es obligatoria",
     "Password can not be that long" => "La contraseña no puede ser tan larga",
     "Password is invalid. Try again!" => "La contraseña es inválida. ¡Prueba otra vez!",

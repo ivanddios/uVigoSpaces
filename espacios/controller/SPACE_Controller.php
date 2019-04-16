@@ -102,14 +102,14 @@ Switch ($_REQUEST['action']){
 
         if (isset($_POST["submit"])) { 
             $spaceEdit = get_data_form();
-            $updateAnswer = $spaceEdit->updateSpace();
+            $updateAnswer = $spaceEdit->updateSpace($spaceid);
             if($updateAnswer === true){
                 $flashMessageSuccess = sprintf($strings["Space \"%s\" successfully updated."], $spaceEdit->getNameSpace());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
+                $view->redirect("SPACE_Controller.php", "index&building=".$spaceEdit->getIdBuilding(), "&floor=".$spaceEdit->getIdFloor());
             }else{
                 $view->setFlashDanger($strings[$updateAnswer]);
-                $view->redirect("SPACE_Controller.php", $strings['Edit']."&building=".$buildingid."&floor=".$floorid, "&space=".$spaceid);
+                $view->redirect("SPACE_Controller.php", $strings['Edit']."&building=".$spaceEdit->getIdBuilding()."&floor=".$spaceEdit->getIdFloor(), "&space=".$spaceid);
             }
 
         } else {

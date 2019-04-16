@@ -116,14 +116,14 @@ function checkNumberInventory(numInventoryId){
     var expr =/^([0-9]{6}|[#]{6})$/;
     var numInventoryInput = document.getElementById(numInventoryId);
 
-    if(numInventory.value.length == 0){
+    if(numInventoryInput.value.length == 0){
         numInventoryInput.previousElementSibling.style.backgroundColor = "grey"; 
         numInventoryInput.style.borderColor = "grey";
         return true;
     }
     
-    if(numInventory.value.length > 0){
-        if (expr.test(numInventory.value) && numInventory.value.length < 7){
+    if(numInventoryInput.value.length > 0){
+        if (expr.test(numInventoryInput.value) && numInventoryInput.value.length < 7){
             numInventoryInput.previousElementSibling.style.backgroundColor = "green"; 
             numInventoryInput.style.borderColor = "green";
             return true;
@@ -180,22 +180,22 @@ function validateUpdloadFile(imgId) {
 
 
 
-function checkUser(usernameId){
+// function checkUser(usernameId){
     
-   var expr = /[A-Za-z0-9]*$/;
-   var usernameInput = document.getElementById(usernameId);
+//    var expr = /[A-Za-z0-9]*$/;
+//    var usernameInput = document.getElementById(usernameId);
    
-   if (expr.test(username.value) && username.value.length > 0 && username.value.length < 225){
-        usernameInput.previousElementSibling.style.backgroundColor = "green"; 
-        usernameInput.style.borderColor = "green";
-       return true;
-   }
-   else{
-        usernameInput.previousElementSibling.style.backgroundColor = "red";  
-        usernameInput.style.borderColor = "red";
-       return false;
-   }
-}
+//    if (expr.test(username.value) && username.value.length > 0 && username.value.length < 225){
+//         usernameInput.previousElementSibling.style.backgroundColor = "green"; 
+//         usernameInput.style.borderColor = "green";
+//        return true;
+//    }
+//    else{
+//         usernameInput.previousElementSibling.style.backgroundColor = "red";  
+//         usernameInput.style.borderColor = "red";
+//        return false;
+//    }
+// }
 
 
 
@@ -414,8 +414,8 @@ function validateSpace() {
 
 function validateAddUser() {
 
-    if(checkUser("username") && checkPassword("password") && checkConfirmPassword("passwordConfirm") && checkText("name") && checkText("surname") && checkDNI("dni") 
-     && checkDate(document.getElementsByClassName("date")[0]) && checkEmail("email") && checkNumPhone("phone")) { 
+    if(checkEmail("email") && checkPassword("password") && checkConfirmPassword("passwordConfirm") && checkText("name") && checkText("surname") && checkDNI("dni") 
+     && checkDate(document.getElementsByClassName("date")[0]) && checkNumPhone("phone")) { 
         document.getElementsByName("submit")[0].disabled = false;
         return true;
     }else{
@@ -429,8 +429,8 @@ function validateAddUser() {
 
 function validateEditUser() {
 
-    if(checkUser("username") && checkText("name") && checkText("surname") && checkDNI("dni") 
-     && checkDate(document.getElementsByClassName("date")[0]) && checkEmail("email") && checkNumPhone("phone")) {
+    if(checkEmail("email") && checkText("name") && checkText("surname") && checkDNI("dni") 
+     && checkDate(document.getElementsByClassName("date")[0]) && checkNumPhone("phone")) {
         if(document.getElementsByName("password")[0].value) {
             if(checkPassword("password") && checkConfirmPassword("passwordConfirm")){
                 document.getElementsByName("submit")[0].disabled = false;

@@ -47,7 +47,7 @@ class TEST_VIEW{
 
                             <tbody>
                             <?php foreach ($this->testValues as $test => $values) : 
-                                    if($values['Expected'] == $values['Result']){ ?>
+                                    if($values['Expected'] === $values['Result']){ ?>
                                         <tr style="color: green; font-weight: bold;">
                                     <?php } else { ?>
                                         <tr style="color: red; font-weight: bold;">

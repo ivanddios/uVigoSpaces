@@ -10,7 +10,7 @@ $tests['SM_SPACE_EDIT_TEST1']=(['Functionality' => "SM_SPACE_EDIT",
                 'Result' => 'Not executed']);
 
 $space = new SPACE_Model();
-$updateAnswer = $space->updateSpace();
+$updateAnswer = $space->updateSpace('99999');
 $tests['SM_SPACE_EDIT_TEST1']["Result"] = $updateAnswer;
 
 
@@ -20,7 +20,7 @@ $tests['SM_SPACE_EDIT_TEST2']=(['Functionality' => "SM_SPACE_EDIT",
                 'Result' => 'Not executed']);
 
 $space = new SPACE_Model('1234567');
-$updateAnswer = $space->updateSpace();
+$updateAnswer = $space->updateSpace('99999');
 $tests['SM_SPACE_EDIT_TEST2']["Result"] = $updateAnswer;
 
 
@@ -30,7 +30,7 @@ $tests['SM_SPACE_EDIT_TEST3']=(['Functionality' => "SM_SPACE_EDIT",
                 'Result' => 'Not executed']);
 
 $space = new SPACE_Model('¿?{');
-$updateAnswer = $space->updateSpace();
+$updateAnswer = $space->updateSpace('99999');
 $tests['SM_SPACE_EDIT_TEST3']["Result"] = $updateAnswer;
 
 
@@ -40,7 +40,7 @@ $tests['SM_SPACE_EDIT_TEST4']=(['Functionality' => "SM_SPACE_EDIT",
                 'Result' => 'Not executed']);
 
 $space = new SPACE_Model('0');
-$updateAnswer = $space->updateSpace();
+$updateAnswer = $space->updateSpace('99999');
 $tests['SM_SPACE_EDIT_TEST4']["Result"] = $updateAnswer;
 
 
@@ -52,7 +52,7 @@ $tests['SM_SPACE_EDIT_TEST5']=(['Functionality' => "SM_SPACE_EDIT",
                 'Result' => 'Not executed']);
 
 $space = new SPACE_Model('OSBI0');
-$updateAnswer = $space->updateSpace();
+$updateAnswer = $space->updateSpace('99999');
 $tests['SM_SPACE_EDIT_TEST5']["Result"] = $updateAnswer;
 
 
@@ -62,7 +62,7 @@ $tests['SM_SPACE_EDIT_TEST5']=(['Functionality' => "SM_SPACE_EDIT",
                 'Result' => 'Not executed']);
 
 $space = new SPACE_Model('OSBI0', '123');
-$updateAnswer = $space->updateSpace();
+$updateAnswer = $space->updateSpace('99999');
 $tests['SM_SPACE_EDIT_TEST5']["Result"] = $updateAnswer;
 
 
@@ -72,7 +72,7 @@ $tests['SM_SPACE_EDIT_TEST6']=(['Functionality' => "SM_SPACE_EDIT",
                 'Result' => 'Not executed']);
 
 $space = new SPACE_Model('OSBI0','!');
-$updateAnswer = $space->updateSpace();
+$updateAnswer = $space->updateSpace('99999');
 $tests['SM_SPACE_EDIT_TEST6']["Result"] = $updateAnswer;
 
 
@@ -83,7 +83,7 @@ $tests['SM_SPACE_EDIT_TEST7']=(['Functionality' => "SM_SPACE_EDIT",
                 'Result' => 'Not executed']);
 
 $space = new SPACE_Model('OSBI0', 'SD');
-$updateAnswer = $space->updateSpace();
+$updateAnswer = $space->updateSpace('99999');
 $tests['SM_SPACE_EDIT_TEST7']["Result"] = $updateAnswer;
 
 
@@ -94,7 +94,7 @@ $tests['SM_SPACE_EDIT_TEST8']=(['Functionality' => "SM_SPACE_EDIT",
                 'Result' => 'Not executed']);
 
 $space = new SPACE_Model('OSBI0', '00');
-$updateAnswer = $space->updateSpace();
+$updateAnswer = $space->updateSpace('99999');
 $tests['SM_SPACE_EDIT_TEST8']["Result"] = $updateAnswer;
 
 
@@ -104,7 +104,7 @@ $tests['SM_SPACE_EDIT_TEST9']=(['Functionality' => "SM_SPACE_EDIT",
                 'Result' => 'Not executed']);
 
 $space = new SPACE_Model('OSBI0', '00', '123456');
-$updateAnswer = $space->updateSpace();
+$updateAnswer = $space->updateSpace('99999');
 $tests['SM_SPACE_EDIT_TEST9']["Result"] = $updateAnswer;
 
 
@@ -114,7 +114,7 @@ $tests['SM_SPACE_EDIT_TEST10']=(['Functionality' => "SM_SPACE_EDIT",
                 'Result' => 'Not executed']);
 
 $space = new SPACE_Model('OSBI0', '00', 'abcd');
-$updateAnswer = $space->updateSpace();
+$updateAnswer = $space->updateSpace('99999');
 $tests['SM_SPACE_EDIT_TEST10']["Result"] = $updateAnswer;
 
 
@@ -126,7 +126,7 @@ $tests['SM_SPACE_EDIT_TEST11']=(['Functionality' => "SM_SPACE_EDIT",
                 'Result' => 'Not executed']);
 
 $space = new SPACE_Model('OSBI0', '00', '12345');
-$updateAnswer = $space->updateSpace();
+$updateAnswer = $space->updateSpace('99999');
 $tests['SM_SPACE_EDIT_TEST11']["Result"] = $updateAnswer;
 
 
@@ -137,7 +137,7 @@ $tests['SM_SPACE_EDIT_TEST12']=(['Functionality' => "SM_SPACE_EDIT",
 
 $space = new SPACE_Model('OSBI0', '00', '12345', 'uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
                         dE89t27sFO18FUUsXBcJeFCVo3ZzXo1oo1T5gVgWT4ffpW2y6zydJf6cU8EKC7Shi7PFlgynWFIZWdxsuiAJuA0jXgAe6IJgGtXH0lSfSYYCpmSXj3FnFMXDiYoDJCY');
-$updateAnswer = $space->updateSpace();
+$updateAnswer = $space->updateSpace('99999');
 $tests['SM_SPACE_EDIT_TEST12']["Result"] = $updateAnswer;
 
 
@@ -147,7 +147,7 @@ $tests['SM_SPACE_EDIT_TEST13']=(['Functionality' => "SM_SPACE_EDIT",
                 'Result' => 'Not executed']);
 
 $space = new SPACE_Model('OSBI0', '00', '12345', '111111');
-$updateAnswer = $space->updateSpace();
+$updateAnswer = $space->updateSpace('99999');
 $tests['SM_SPACE_EDIT_TEST13']["Result"] = $updateAnswer;
 
 
@@ -159,7 +159,7 @@ $tests['SM_SPACE_EDIT_TEST14']=(['Functionality' => "SM_SPACE_EDIT",
                 'Result' => 'Not executed']);
 
 $space = new SPACE_Model('OSBI0', '00', '12345', 'nameSpace', 100000000.00);
-$updateAnswer = $space->updateSpace();
+$updateAnswer = $space->updateSpace('99999');
 $tests['SM_SPACE_EDIT_TEST14']["Result"] = $updateAnswer;
 
 
@@ -171,17 +171,17 @@ $tests['SM_SPACE_EDIT_TEST15']=(['Functionality' => "SM_SPACE_EDIT",
                 'Result' => 'Not executed']);
 
 $space = new SPACE_Model('OSBI0', '00', '12345', 'nameSpace', 99.9, '1234567');
-$updateAnswer = $space->updateSpace();
+$updateAnswer = $space->updateSpace('99999');
 $tests['SM_SPACE_EDIT_TEST15']["Result"] = $updateAnswer;
 
 
 $tests['SM_SPACE_EDIT_TEST16']=(['Functionality' => "SM_SPACE_EDIT",
-                'Description' => "Test 16. Attempt to update space with space identifier that not exists in this floor's building",
-                'Expected' => "There isn't a space with that identifier in the floor",
+                'Description' => "Test 16. Attempt to update the space id for another one that is associated with another space",
+                'Expected' => "There already is a space with that identifier in the floor",
                 'Result' => 'Not executed']);
 
-$space = new SPACE_Model('OSBI0', '00', '12345', 'nameSpace', 99.9, '######');
-$updateAnswer = $space->updateSpace();
+$space = new SPACE_Model('OSBI0', '00', '00001', 'nameSpace', 99.9, '######');
+$updateAnswer = $space->updateSpace('99999');
 $tests['SM_SPACE_EDIT_TEST16']["Result"] = $updateAnswer;
 
 
@@ -193,7 +193,7 @@ $tests['SM_SPACE_EDIT_TEST17']=(['Functionality' => "SM_SPACE_EDIT",
                 'Result' => 'Not executed']);
 
 $space = new SPACE_Model('OSBI0', '00', '99999', 'nameSpaceUpdated', 88.8, '######');
-$updateAnswer = $space->updateSpace();
+$updateAnswer = $space->updateSpace('99999');
 if($updateAnswer === true){
     $tests['SM_SPACE_EDIT_TEST17']["Result"] = 'Space successfully updated';
 } else {

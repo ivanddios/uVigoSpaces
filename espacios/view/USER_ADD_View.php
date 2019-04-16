@@ -36,11 +36,11 @@ class USER_ADD{
 								</div> 
 
 								<div class="input-container">
-									<span class="input-group-text fa fa-user"></span>
-									<input type="text" id="username" name="username" onkeyup="checkUser(this.id)" required/>
-									<label for="username"><?= $strings['What is the username of this user?']?></label>
+									<span class="input-group-text fa fa-envelope"></span>
+									<input type="text" id="email" name="email" onkeyup="checkEmail(this.id)" required/>
+									<label for="email"><?= $strings['What is his email?']?></label>
 								</div>
-								
+
 								<div class="input-container passHelp">
 									<span class="input-group-text fa fa-lock"></span>
 									<input type="password" id="password" name="password" onkeyup="checkPassword(this.id)" required/>
@@ -91,12 +91,6 @@ class USER_ADD{
 									<?php endif; ?>
 								</div>
 														
-								<div class="input-container">
-									<span class="input-group-text fa fa-envelope"></span>
-									<input type="text" id="email" name="email" onkeyup="checkEmail(this.id)" required/>
-									<label for="email"><?= $strings['What is his email?']?></label>
-								</div>
-
 								<div class="input-container preSelect">
 									<span class="input-group-text fa fa-phone"></span>
 									<input type="text" id="phone" name="phone" onkeyup="checkNumPhone(this.id)" required/>

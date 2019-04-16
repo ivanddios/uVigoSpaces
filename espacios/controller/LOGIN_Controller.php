@@ -20,11 +20,11 @@ Switch ($_GET['action']){
 		if(!isset($_POST['submit'])){
 			new Login();
 		}else{
-			if(isset($_POST['username']) && isset($_POST['passwd'])){
-                $user = new USER_Model($_POST['username'], $_POST['passwd']);
+			if(isset($_POST['email']) && isset($_POST['passwd'])){
+                $user = new USER_Model($_POST['email'], $_POST['passwd']);
                 $loginAnswer = $user->login();
 				if($loginAnswer === true){
-                    $_SESSION['LOGIN'] = $user->getUsername();
+                    $_SESSION['LOGIN'] = $user->getEmail();
                     $_SESSION['PERMISSIONS'] = $user->getPermissions();
                     $_SESSION['LANGUAGE'] = $_POST['language'];
                     $view->redirect("BUILDING_Controller.php");
