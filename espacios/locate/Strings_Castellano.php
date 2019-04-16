@@ -1,6 +1,7 @@
 <?php
 //CADENAS UTILIZADAS EN CASTELLANO
 $strings = array(
+    "Welcome"=> "Bienvenido",
     "Add"=> "Añadir",
     "Edit" => "Edit",
     "Show" => "Ver",
@@ -206,6 +207,7 @@ $strings = array(
     "Delete Group" => "Eliminar Rol",
     "Edit Group" => "Editar Rol",
     "Show Group" => "Ver Rol",
+    "ShowUsersForGroup" => "ShowUsersForGroup",
     "Are you sure you want to delete the group \"%s\" ?" => "¿Está seguro de querer eliminar el rol \"%s\" ?",
     "The information that this group has will be lost" => "La información de este rol se perderá",
     "Group \"%s\" successfully added." => "El rol \"%s\" se ha añadido con éxito",

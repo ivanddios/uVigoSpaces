@@ -54,9 +54,15 @@ class USER_EDIT{
 									<label for="username"><?= $strings['What is the username of this user?']?></label>
 								</div>
 								
-								<div class="input-container">
+								<!-- <div class="input-container">
 									<span class="input-group-text fa fa-lock"></span>
 									<input type="password" id="password" name="password" onkeyup="checkPassword(this.id)"/>
+									<label for="password"><?= $strings['Do you want to change the password?']?></label>
+								</div> -->
+
+								<div class="input-container">
+									<span class="input-group-text fa fa-lock"></span>
+									<input type="password" id="password" name="password" onkeyup="checkPassword(this.id)" required/>
 									<label for="password"><?= $strings['Do you want to change the password?']?></label>
 								</div>
 
@@ -133,7 +139,7 @@ class USER_EDIT{
 								<button id="submitButton" type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
 							</div> 
 						</form>
-						<a href="../controller/USER_Controller.php"><?= $strings["Back"] ?></a>
+						<a href="<?=$_SERVER["HTTP_REFERER"]?>"><?= $strings["Back"] ?></a>
 					</div>
 				</div>
 			</div>

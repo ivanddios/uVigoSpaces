@@ -60,7 +60,7 @@ $tests['SM_USER_EDIT_TEST6']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "User name is mandatory",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb');
+$user = new USER_Model('prueba', 'Aa98ygbgh');
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST6']["Result"] = $updateAnswer;
 
@@ -70,7 +70,7 @@ $tests['SM_USER_EDIT_TEST7']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "User name can't be larger than 40 characters",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb', 'uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
+$user = new USER_Model('prueba', 'Aa98ygbgh', 'uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
 dE89t27sFO18FUUsXBcJeFCVo3ZzXo1oo1T5gVgWT4ffpW2y6zydJf6cU8EKC7Shi7PFlgynWFIZWdxsuiAJuA0jXgAe6IJgGtXH0lSfSYYCpmSXj3FnFMXDiYoDJCY');
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST7']["Result"] = $updateAnswer;
@@ -81,7 +81,7 @@ $tests['SM_USER_EDIT_TEST8']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "User name format is invalid",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','112211');
+$user = new USER_Model('prueba', 'Aa98ygbgh','112211');
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST8']["Result"] = $updateAnswer;
 
@@ -93,7 +93,7 @@ $tests['SM_USER_EDIT_TEST9']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "User surnames are mandatory",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','nameUser');
+$user = new USER_Model('prueba', 'Aa98ygbgh','nameUser');
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST9']["Result"] = $updateAnswer;
 
@@ -103,7 +103,7 @@ $tests['SM_USER_EDIT_TEST10']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "User surnames can't be larger than 100 characters",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','nameUser','uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
+$user = new USER_Model('prueba', 'Aa98ygbgh','nameUser','uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
 dE89t27sFO18FUUsXBcJeFCVo3ZzXo1oo1T5gVgWT4ffpW2y6zydJf6cU8EKC7Shi7PFlgynWFIZWdxsuiAJuA0jXgAe6IJgGtXH0lSfSYYCpmSXj3FnFMXDiYoDJCY');
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST10']["Result"] = $updateAnswer;
@@ -115,7 +115,7 @@ $tests['SM_USER_EDIT_TEST11']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "User surnames format is invalid",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 112233);
+$user = new USER_Model('prueba', 'Aa98ygbgh','nameUser', 112233);
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST11']["Result"] = $updateAnswer;
 
@@ -128,7 +128,7 @@ $tests['SM_USER_EDIT_TEST12']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "NID can't be different from 9 characters",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser');
+$user = new USER_Model('prueba', 'Aa98ygbgh','nameUser', 'surnamesUser');
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST12']["Result"] = $updateAnswer;
 
@@ -139,7 +139,7 @@ $tests['SM_USER_EDIT_TEST13']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "User id format is invalid",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '4448879OY');
+$user = new USER_Model('prueba', 'Aa98ygbgh','nameUser', 'surnamesUser', '4448879OY');
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST13']["Result"] = $updateAnswer;
 
@@ -149,7 +149,7 @@ $tests['SM_USER_EDIT_TEST14']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "User id letter is incorrect",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '44488795Y');
+$user = new USER_Model('prueba', 'Aa98ygbgh','nameUser', 'surnamesUser', '44488795Y');
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST14']["Result"] = $updateAnswer;
 
@@ -161,7 +161,7 @@ $tests['SM_USER_EDIT_TEST15']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "Birthdate is mandatory",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K');
+$user = new USER_Model('prueba', 'Aa98ygbgh','nameUser', 'surnamesUser', '34950154K');
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST15']["Result"] = $updateAnswer;
 
@@ -171,7 +171,7 @@ $tests['SM_USER_EDIT_TEST16']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "Birthdate can't be larger than 10 characters",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '200/12/2000');
+$user = new USER_Model('prueba', 'Aa98ygbgh','nameUser', 'surnamesUser', '34950154K', '200/12/2000');
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST16']["Result"] = $updateAnswer;
 
@@ -181,7 +181,7 @@ $tests['SM_USER_EDIT_TEST17']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "Birthdate format is invalid",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '3103/2000');
+$user = new USER_Model('prueba', 'Aa98ygbgh','nameUser', 'surnamesUser', '34950154K', '3103/2000');
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST17']["Result"] = $updateAnswer;
 
@@ -194,7 +194,7 @@ $tests['SM_USER_EDIT_TEST18']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "Email is mandatory",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '25/04/1999');
+$user = new USER_Model('prueba', 'Aa98ygbgh','nameUser', 'surnamesUser', '34950154K', '25/04/1999');
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST18']["Result"] = $updateAnswer;
 
@@ -204,7 +204,7 @@ $tests['SM_USER_EDIT_TEST19']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "Email can't be larger than 50 characters",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '25/04/1999','uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
+$user = new USER_Model('prueba', 'Aa98ygbgh','nameUser', 'surnamesUser', '34950154K', '25/04/1999','uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
 dE89t27sFO18FUUsXBcJeFCVo3ZzXo1oo1T5gVgWT4ffpW2y6zydJf6cU8EKC7Shi7PFlgynWFIZWdxsuiAJuA0jXgAe6IJgGtXH0lSfSYYCpmSXj3FnFMXDiYoDJCY');
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST19']["Result"] = $updateAnswer;
@@ -215,7 +215,7 @@ $tests['SM_USER_EDIT_TEST20']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "Email format is invalid",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '25/04/1999', 'asdasd@');
+$user = new USER_Model('prueba', 'Aa98ygbgh','nameUser', 'surnamesUser', '34950154K', '25/04/1999', 'asdasd@');
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST20']["Result"] = $updateAnswer;
 
@@ -227,7 +227,7 @@ $tests['SM_USER_EDIT_TEST21']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "User phone size is incorrect",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '25/04/1999', 'ivanddf1994@gmail.com');
+$user = new USER_Model('prueba', 'Aa98ygbgh','nameUser', 'surnamesUser', '34950154K', '25/04/1999', 'ivanddf1994@gmail.com');
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST21']["Result"] = $updateAnswer;
 
@@ -237,7 +237,7 @@ $tests['SM_USER_EDIT_TEST22']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "User phone size is incorrect",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '25/04/1999','ivanddf1994@gmail.com', 98822222);
+$user = new USER_Model('prueba', 'Aa98ygbgh','nameUser', 'surnamesUser', '34950154K', '25/04/1999','ivanddf1994@gmail.com', 98822222);
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST22']["Result"] = $updateAnswer;
 
@@ -247,7 +247,7 @@ $tests['SM_USER_EDIT_TEST23']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "User phone format is invalid",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '25/04/1999', 'ivanddf1994@gmail.com', 544444444);
+$user = new USER_Model('prueba', 'Aa98ygbgh','nameUser', 'surnamesUser', '34950154K', '25/04/1999', 'ivanddf1994@gmail.com', 544444444);
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST23']["Result"] = $updateAnswer;
 
@@ -258,7 +258,7 @@ $tests['SM_USER_EDIT_TEST24']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "The role format is invalid",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '25/04/1999', 'ivanddf1994@gmail.com', 988252875, '', 'admin');
+$user = new USER_Model('prueba', 'Aa98ygbgh','nameUser', 'surnamesUser', '34950154K', '25/04/1999', 'ivanddf1994@gmail.com', 988252875, '', 'admin');
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST24']["Result"] = $updateAnswer;
 
@@ -268,7 +268,7 @@ $tests['SM_USER_EDIT_TEST25']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => "The role doesn't exist",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb','nameUser', 'surnamesUser', '34950154K', '25/04/1999', 'ivanddf1994@gmail.com', 988252875, '', 999);
+$user = new USER_Model('prueba', 'Aa98ygbgh','nameUser', 'surnamesUser', '34950154K', '25/04/1999', 'ivanddf1994@gmail.com', 988252875, '', 999);
 $updateAnswer = $user->updateUser();
 $tests['SM_USER_EDIT_TEST25']["Result"] = $updateAnswer;
 
@@ -283,7 +283,7 @@ $tests['SM_USER_EDIT_TEST26']=(['Functionality' => "SM_USER_EDIT",
                 'Expected' => 'User updated successfully',
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('prueba', 'Aa98ygb', 'nameUserUpdated', 'surnamesUserUpdated', '34950154K', '25/04/1999', 'ivanddf1994@gmail.com', 988252875, null, 1);
+$user = new USER_Model('prueba', 'Aa98ygbgh', 'nameUserUpdated', 'surnamesUserUpdated', '34950154K', '25/04/1999', 'ivanddf1994@gmail.com', 988252875, null, 1);
 $updateAnswer = $user->updateUser();
 if($updateAnswer === true){
     $tests['SM_USER_EDIT_TEST26']["Result"] = 'User updated successfully';

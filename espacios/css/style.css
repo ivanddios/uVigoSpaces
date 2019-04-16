@@ -1,3 +1,5 @@
+
+
 #imgIndex {
 	display:block;
 	margin:auto;
@@ -79,8 +81,16 @@ input#loginUsername, input#loginPassword{
 	margin:auto;
 }
 
+.select-login{
+	position: inherit !important;
+	width: 90%;
+	left: 10%;
+}
+
 .item-select{
-	margin-left:30%;
+	width: 50%;
+	margin: 0 auto;
+	margin-top: 5%;
 	margin-bottom: 10%;
 }
 
@@ -145,7 +155,7 @@ input#loginUsername, input#loginPassword{
 
 .labelSelect{
 	color: #636c72;
-    margin-left: 11%;
+  margin-left: 11%;
 }
 
 

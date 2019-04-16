@@ -270,6 +270,7 @@ function checkPassword(passwordId){
         passwordInput.previousElementSibling.style.backgroundColor = "#aaa"; 
         passwordInput.style.borderColor =  "#aaa";
         document.getElementById("divChangePasswd").style.display = "none";
+        document.getElementById("passwordConfirm").value = "";
     }
 }
 
@@ -343,7 +344,6 @@ function checkDate(dateId){
 }
 
 function checkDate(dateInput){
-    // var dateInput = document.getElementById(dateId);
     var expr = /^(0[1-9]|[12][0-9]|3[01])[\- \/.](?:(0[1-9]|1[012])[\- \/.](19|20)[0-9]{2})$/;
     var dateArray = dateInput.value.split("/");
     var dateConvert = dateArray[1] + '/' + dateArray[0] + '/' + dateArray[2];

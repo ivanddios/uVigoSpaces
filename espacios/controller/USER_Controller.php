@@ -23,8 +23,8 @@ function get_data_form() {
     $birthdate = $_POST['birthdate'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
-    $group = $_POST['group'];
     $photo = $_FILES['photo'];
+    $group = $_POST['group'];
 
     $user = new USER_Model($username, $password, $name, $surname, $dni, $birthdate, $email, $phone, $photo, $group);
     return $user;

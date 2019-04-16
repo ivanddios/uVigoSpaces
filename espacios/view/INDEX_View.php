@@ -8,27 +8,19 @@ class INDEX{
     
     function render() {
 		include 'header.php';
-		$this->view->setElement("%TITLE%", $strings["Add Action"]);?>
+		$this->view->setElement("%TITLE%", $strings["Welcome"]);?>
 		
-		<!-- <div class="container">
-        <img id="imgIndex" src="../img/uvigo.jpg">
-    </div> -->
-    
-
-    <div class="container">
+        <div class="container">
 			<div class="row center-row">
 				<div class="col-lg-6 center-block">
 					<div id="titleView">
-						<?=htmlentities($strings["Datas of the new functionality"])?>
-          </div>
-          </div>
-    </div>
-    </div>
-          <img id="imgIndex" src="../img/uvigo.jpg">
-				
-		
- <?php
-  } 
+						<?=htmlentities($strings["Welcome"])?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img id="imgIndex" src="../img/uvigo.jpg">	
+ <?php } 
 }
 
 ?>

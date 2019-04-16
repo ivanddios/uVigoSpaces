@@ -57,11 +57,11 @@ class GROUP_SHOWALL{
                                     endforeach;?>
                                         
                                     <td>
-                                <!--    <?php  if(checkRol('EDIT', 'GROUP')): ?> -->
-                                            <a href="GROUP_Controller.php?action=<?= $strings['getUsers']?>&group=<?= $this->groups[$j]['sm_idGroup']?>">
+                                        <?php  if(checkRol('EDIT', 'GROUP')): ?> 
+                                            <a href="GROUP_Controller.php?action=<?= $strings['ShowUsersForGroup']?>&group=<?= $this->groups[$j]['sm_idGroup']?>">
                                                 <span title="<?= $strings['Show Users']?>" class="btn btn-warning btn-sm fa fa-users"></span>
                                             </a>
-                                <!--    <?php endif; ?> -->
+                                        <?php endif; ?> 
                                         <?php  if(checkRol('EDIT', 'GROUP')): ?>
                                             <a href="GROUP_Controller.php?action=<?= $strings['Edit']?>&group=<?= $this->groups[$j]['sm_idGroup']?>">
                                                 <span title="<?= $strings['Edit Group']?>" class="btn btn-primary btn-sm fa fa-pencil"></span>

@@ -54,9 +54,6 @@ function convertCoords(coordsSpace){
         arrayXYCoords = (arrayCoords[i]).split(" ");
         spacePoints[i] = {x: arrayXYCoords[0], y: arrayXYCoords[1]};
     }
-
-    console.log(spacePoints);
-
     return spacePoints;
 };
 
@@ -67,14 +64,14 @@ function isInitialPoint(position) {
     if(storedLines[0] != null){
         start = storedLines[0]
     }
-        dx = position.x - start.x,
-        dy = position.y - start.y;
+    dx = position.x - start.x,
+    dy = position.y - start.y;
+
     return (dx * dx + dy * dy < radius * radius)
 };
 
 function drawPoint(position, ctx) {
     ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
-    // ctx.strokeStyle = "#4F95EA";
     ctx.strokeStyle = 'rgb(255,20,20)';
     ctx.lineWidth = 1;
     ctx.beginPath();
@@ -94,9 +91,7 @@ function drawPoint(position, ctx) {
 };
 
 function drawPolygon(polyLines, ctx) {
-    // ctx.fillStyle = "rgba(143, 143, 143, 0.5)";
     ctx.fillStyle = "rgb(255,20,20,0.3)";
-    // ctx.strokeStyle = "#4F95EA";
     ctx.strokeStyle = 'rgb(255,20,20)';
     ctx.lineWidth = 1;
     ctx.beginPath();
@@ -135,9 +130,7 @@ function selectSpace(srcImage) {
                     }
                     isThereSpace = true;
                     savedButton.disabled = false;
-                }
-                else
-                {
+                }else{
                     if(!isThereSpace){
                         if(inputCoords.value !== '' && inputCoords.value !== null) {
                             inputCoords.value = inputCoords.value + ', ' + position.x + ' ' + position.y;
@@ -146,9 +139,7 @@ function selectSpace(srcImage) {
                         }
                         storedLines.push(position);
                         drawPoint(position, ctx);
-                    } //else{
-                    //     alert("You can only select a space");
-                    // }
+                    } 
                 }
             break;
             
@@ -188,12 +179,20 @@ function editSpace(coordsSpace, srcImage) {
         savedButton =  document.getElementById("saveButton"),
         clearButton =  document.getElementById("clearButton"),
         storedLines = [],
-        spacePoints = convertCoords(coordsSpace),
-        isThereSpace = true,
+        isThereSpace = false,
         radius = 10;
-    loadImageWithSelectSpace(srcImage, spacePoints, ctx);
         
-
+        if(!coordsSpace){
+            var polyLines = [];
+            savedButton.disabled = true;
+            clearButton.disabled = true;
+            loadImage(srcImage, ctx)
+        } else{
+            spacePoints = convertCoords(coordsSpace),
+            loadImageWithSelectSpace(srcImage, spacePoints, ctx);
+        }
+    
+        
     $("#canvas").mousedown(function (event) {
         switch (event.which) {
             case 1:
@@ -206,10 +205,7 @@ function editSpace(coordsSpace, srcImage) {
                     }
                     isThereSpace = true;
                     savedButton.disabled = false;
-                }
-                else
-                {
-                    
+                }else{
                     if(!isThereSpace){
                         if(inputCoords.value.length === 1) {
                             inputCoords.value = position.x + ' ' + position.y;
@@ -218,10 +214,7 @@ function editSpace(coordsSpace, srcImage) {
                         }
                         storedLines.push(position);
                         drawPoint(position, ctx);
-                    } //else{
-                    //     alert("You can only select a space");
-                    // }
-                    
+                    } 
                 }
             break;
             

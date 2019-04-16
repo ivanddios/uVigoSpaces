@@ -66,12 +66,19 @@ class Login{
                                                 <?php endif; ?>
                                             </div>
 
-                                            <div class="item-select">
+                                            <!-- <div class="item-select">
                                                 <p><select name="language">
                                                     <option value="Castellano"><?=$strings["Spanish"]?></option>
                                                     <option value="Galego"><?=$strings["Galician"]?></option>
                                                     <option value="English"><?=$strings["English"]?></option>
                                                 </select></p>
+                                            </div> -->
+                                            <div class="input-container item-select">
+                                                <select class="custom-select select-login" name="language" required>
+                                                    <option selected value="Castellano"><?=$strings["Spanish"]?></option>
+                                                    <option value="Galego"><?=$strings["Galician"]?></option>
+                                                    <option value="English"><?=$strings["English"]?></option>
+                                                </select>
                                             </div>
                                             <button type="submit" name="submit" class="loginButton btn btn-darkLogin"><?=$strings["Login"]?></button>
                                         </div>

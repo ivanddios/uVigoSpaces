@@ -4,10 +4,12 @@ require_once(__DIR__."../../core/ViewManager.php");
 require_once(__DIR__."../../core/ACL.php");
 require_once(__DIR__."../../model/FUNCTIONALITY_Model.php");
 require_once(__DIR__."../../model/ACTION_Model.php");
+require_once(__DIR__."../../model/USER_Model.php");
 require_once(__DIR__."../../model/GROUP_Model.php");
 require_once(__DIR__."../../view/GROUP_SHOWALL_View.php");
 require_once(__DIR__."../../view/GROUP_ADD_View.php");
 require_once(__DIR__."../../view/GROUP_EDIT_View.php");
+require_once(__DIR__."../../view/USER_SHOWALL_View.php");
 
 $function = "GROUP";
 $view = new ViewManager();
@@ -139,6 +141,31 @@ Switch ($_GET['action']){
     // //     new BUILDING_SHOW($values);
 
     // // break;
+
+
+    case  $strings['ShowUsersForGroup']:
+
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Show floors requires login."]);
+            $view->redirect("LOGIN_Controller.php");
+        }
+
+        if(!checkRol('SHOW ALL', 'USER')){
+            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->redirect("GROUP_Controller.php");
+        }
+
+        if (!isset($_GET['group'])){
+            $view->setFlashDanger($strings["Group id is mandatory"]);
+            $view->redirect("GROUP_Controller.php");
+        }
+        $groupid = $_GET['group'];
+
+        $user = new USER_Model('','','','','','','','','',$groupid);
+        $users = $user->getUsersForGroup();
+        new USER_SHOWALL($users);
+
+    break;
 
 
     case  $strings['Delete']:
