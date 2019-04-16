@@ -178,7 +178,7 @@ class FLOOR_Model {
     }
 
     public function deleteDirPhoto() {
-        if(file_exists($this->getLinkPlane())){
+        if(is_file($this->getLinkPlane())){
             unlink($this->getLinkPlane());
         }
         return (rmdir($this->dirPhoto));

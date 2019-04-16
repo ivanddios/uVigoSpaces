@@ -226,14 +226,14 @@ class USER_Model {
         if (!is_dir($this->dirPhoto)) {
             mkdir($this->dirPhoto, 0777, true);
         }
-        if ($this->getPlaneFloor('name') !== '') {
-            move_uploaded_file($this->getPlaneFloor('tmp_name'), $this->dirPhoto.$this->getPlaneFloor('name'));
+        if ($this->getLinkProfilePhoto('name') !== '') {
+            move_uploaded_file($this->getLinkProfilePhoto('tmp_name'), $this->dirPhoto.$this->getLinkProfilePhoto('name'));
         }
     }
 
     public function deleteDirPhoto() {
-        if(file_exists($this->getLinkPlane())){
-            unlink($this->getLinkPlane());
+        if(is_file($this->getLinkProfilePhoto())){
+            unlink($this->getLinkProfilePhoto());
         }
         return (rmdir($this->dirPhoto));
     }
