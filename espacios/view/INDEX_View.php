@@ -19,7 +19,7 @@ class INDEX{
                 </div>
             </div>
         </div>
-        <img id="imgIndex" src="../img/uvigo.jpg">	
+        <img id="imgIndex" src="../view/img/uvigo.jpg">	
  <?php } 
 }
 

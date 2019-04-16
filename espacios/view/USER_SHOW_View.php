@@ -26,7 +26,7 @@ class USER_SHOW{
 										<?php if($this->user['sm_photo']): ?>
 											<img id="profilePhoto" alt="<?= $strings['ProfilePhoto']?>" src="<?=$this->user['sm_photo']?>"/>
 										<?php else: ?>
-											<img id="profilePhoto" alt="<?= $strings['ProfilePhoto']?>" src="../img/notUser.jpg"/>
+											<img id="profilePhoto" alt="<?= $strings['ProfilePhoto']?>" src="../view/img/notUser.jpg"/>
 										<?php endif; ?>
 									</div>
 									

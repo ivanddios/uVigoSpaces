@@ -25,7 +25,7 @@ class FLOOR_SHOWALL{
                         <?= $strings["Information about the building's floors"] ?>
                     </div>
                     <div id="pnlBoxSearch">
-                        <a href="BUILDING_Controller.php"><img src="../img/iconback.png" alt="<?= $strings["Back"]?>" class="iconBack"></a>
+                        <a href="BUILDING_Controller.php"><img src="../view/img/iconback.png" alt="<?= $strings["Back"]?>" class="iconBack"></a>
                         <input type="text" id="searchBox" onkeyup="searchInTable()" placeholder="<?= $strings["Search"]?>">
                     </div>
                     <table id="dataTable" class="table text-center">
@@ -56,7 +56,7 @@ class FLOOR_SHOWALL{
                                                         <a title="<?= $strings['Show']?>" href='FLOOR_Controller.php?action=<?= $strings['Show']?>&building=<?= $this->floors[$j]['sm_idBuilding']?>&floor=<?= $this->floors[$j]['sm_idFloor']?>'> <?= $this->floors[$j]['sm_idBuilding'].$this->floors[$j]['sm_idFloor']?></a> 
                                                     <?php elseif($key === 'sm_planeFloor'): ?>
                                                         <?php if($value === ''): ?>
-                                                            <img src="../img/noPlane.png" width="25px" height="25px">
+                                                            <img src="../view/img/noPlane.png" width="25px" height="25px">
                                                         <?php else: ?>
                                                             <a href="<?= $this->floors[$j]['sm_planeFloor']?>" target="_blank"><img src="<?= $this->floors[$j]['sm_planeFloor']?>" alt="plane" class="miniatureTable"></a>
                                                         <?php endif; ?>   

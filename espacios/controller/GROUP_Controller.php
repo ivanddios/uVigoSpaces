@@ -14,7 +14,7 @@ require_once(__DIR__."../../view/USER_SHOWALL_View.php");
 $function = "GROUP";
 $view = new ViewManager();
 
-include '../locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
+include '../view/locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
 
 function get_data_form() {
 

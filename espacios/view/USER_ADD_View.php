@@ -14,10 +14,10 @@ class USER_ADD{
 			$this->view->setElement("%TITLE%", $strings["Add User"]);?>
 
 			<script src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
-			<script src="../js/bootstrap-material-datetimepicker.js"></script>
-			<script src="../js/calendar.js"></script>
+			<script src="../view/js/bootstrap-material-datetimepicker.js"></script>
+			<script src="../view/js/calendar.js"></script>
 
-			<link rel="stylesheet" href="../css/bootstrap-material-datetimepicker.css"/>
+			<link rel="stylesheet" href="../view/css/bootstrap-material-datetimepicker.css"/>
 			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		
 		<div class="container">
@@ -31,7 +31,7 @@ class USER_ADD{
 							<div id="group-form">
 
 								<div id="profilePhoto-container" class="profilePhoto-frame">
-									<img id="profilePhoto" alt="<?= $strings['ProfilePhoto']?>" src="../img/camera.png" onclick="uploadProfilePhoto()"/>
+									<img id="profilePhoto" alt="<?= $strings['ProfilePhoto']?>" src="../view/img/camera.png" onclick="uploadProfilePhoto()"/>
 									<input id="imageUpload" type="file" name="photo" accept="image/*" onchange="previewProfilePhoto(this)">
 								</div> 
 

@@ -14,13 +14,13 @@ class Login{
     }
     
     function render(){ 
-        include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php'; ?>
+        include '../view/locate/Strings_' . $_SESSION['LANGUAGE'] . '.php'; ?>
         
         <!DOCTYPE html>
             <html lang="es">
                 <head>
                     <title><?=$strings["Login"]?></title>
-                    <link rel="shortcut icon" href="../img/favicon.png"/>
+                    <link rel="shortcut icon" href="../view/img/favicon.png"/>
                     <meta charset="utf-8"/>
 
                     <!-- Fonts -->
@@ -36,8 +36,8 @@ class Login{
                         crossorigin="anonymous"></script>
                     
                     <!-- Our CSS -->
-                    <link rel="stylesheet" href="../css/styleTFG.css">
-                    <link rel="stylesheet" href="../css/style.css">
+                    <link rel="stylesheet" href="../view/css/styleTFG.css">
+                    <link rel="stylesheet" href="../view/css/style.css">
                 </head>
 
                 <body>
@@ -45,7 +45,7 @@ class Login{
                         <div class="row center-row">
                             <div class="col-lg-6 center-block loginContainer">
                                 <div id="titleView">
-                                    <img class="logoPpal" src="../img/logo.png" alt="logo universidade de vigo"/>
+                                    <img class="logoPpal" src="../view/img/logo.png" alt="logo universidade de vigo"/>
                                 </div>
                                 <div class="col-lg-12 center-block">
                                     <form method="POST" action="LOGIN_Controller.php?action=Login">

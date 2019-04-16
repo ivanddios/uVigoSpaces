@@ -57,7 +57,7 @@ class FLOOR_SHOW{
 										
 										<a target='_blank' href="FLOOR_Controller.php?action=<?= $strings['Show Plane']?>&building=<?= $this->floor['sm_idBuilding']?>&floor=<?= $this->floor['sm_idFloor']?>">
 											<img id="view-plane" src='<?= $this->floor['sm_planeFloor']; ?>' class="avatarPlane">
-											<img id= "icon-view" src = "../img/iconPlane.png">
+											<img id= "icon-view" src = "../view/img/iconPlane.png">
 										</a>
 									</div>
 									</div>

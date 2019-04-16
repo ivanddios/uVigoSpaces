@@ -7,7 +7,7 @@ require_once(__DIR__.'..\..\view\LOGIN_View.php');
 
 $view = new ViewManager();
 
-include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
+include '../view/locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
 
 
 if (!isset($_GET['action'])){

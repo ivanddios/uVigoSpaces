@@ -99,7 +99,7 @@ class USER_Model {
 
 
     public function getAllUsers() {
-        $sql = "SELECT * FROM `SM_USER`";
+        $sql = "SELECT U.* FROM `USER` AS U, `SM_USER` AS SMU WHERE U.email = SMU.sm_email";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
         } else {
@@ -115,8 +115,8 @@ class USER_Model {
 
     public function getUser() {
         $sql = "SELECT U.*, G.sm_nameGroup, G.sm_descripGroup 
-                FROM sm_user AS U, sm_user_group AS UG, sm_group AS G 
-                WHERE U.sm_email = '$this->email' AND U.sm_email = UG.sm_email AND UG.sm_idGroup = G.sm_idGroup";
+                FROM user AS U, sm_user AS SMU, sm_user_group AS UG, sm_group AS G 
+                WHERE U.email = SMU.sm_email AND SMU.sm_email = '$this->email' AND SMU.sm_email = UG.sm_email AND UG.sm_idGroup = G.sm_idGroup";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
         } else {

@@ -28,7 +28,7 @@ class SPACE_SHOWALL{
                         <?= $strings["Information about the building's spaces"] ?>
                     </div>
                     <div id="pnlBoxSearch">
-                        <a href="FLOOR_Controller.php?building=<?= $this->spaces[0]['sm_idBuilding']?>"><img src="../img/iconback.png" alt="<?= $strings["Back"]?>" class="iconBack"></a>
+                        <a href="FLOOR_Controller.php?building=<?= $this->spaces[0]['sm_idBuilding']?>"><img src="../view/img/iconback.png" alt="<?= $strings["Back"]?>" class="iconBack"></a>
                         <input type="text" id="searchBox" onkeyup="searchInTable()" placeholder="<?= $strings["Search"]?>">
                     </div>
                     <table id="dataTable" class="table text-center">

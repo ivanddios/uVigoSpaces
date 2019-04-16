@@ -16,7 +16,7 @@ require_once(__DIR__."../../view/SPACE_SHOW_PLANE_View.php");
 $function = "SPACE";
 $view = new ViewManager();
 
-include '../locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
+include '../view/locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
 
 
 function get_data_form() {

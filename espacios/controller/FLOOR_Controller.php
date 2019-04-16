@@ -14,7 +14,7 @@ require_once(__DIR__."../../view/FLOOR_SHOW_PLANE_View.php");
 $function = "FLOOR";
 $view = new ViewManager();
 
-include '../locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
+include '../view/locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
 
 
 function get_data_form() {

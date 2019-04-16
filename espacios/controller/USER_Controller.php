@@ -11,7 +11,7 @@ require_once(__DIR__.'..\..\view\USER_SHOW_View.php');
 $view = new ViewManager();
 $function = "USER";
 
-include '../locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
+include '../view/locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
 
 function get_data_form() {
 
