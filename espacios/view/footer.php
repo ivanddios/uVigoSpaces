@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="copyright">
-                            <span>&copy;Spaces 2018. Let's do it! By </span><a href="" target="_blank">Iván de Dios Fernández</a>
+                            <span>&copy;Spaces 2019. Space Manager. By </span><a href="#">Iván de Dios Fernández</a>
                         </div>
                     </div>
                 </div>
