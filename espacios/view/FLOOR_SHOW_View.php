@@ -54,7 +54,11 @@ class FLOOR_SHOW{
 									<div class="input-file">
 										<label class="control-label"><?= $strings['Click to see the plane']?></label>
 										<div class="inputWithIcon inputIconBg">
-										<a target='_blank' href="FLOOR_Controller.php?action=<?= $strings['Show Plane']?>&building=<?= $this->floor['sm_idBuilding']?>&floor=<?= $this->floor['sm_idFloor']?>"><img src='<?= $this->floor['sm_planeFloor']; ?>' class="avatarPlane"></a>
+										
+										<a target='_blank' href="FLOOR_Controller.php?action=<?= $strings['Show Plane']?>&building=<?= $this->floor['sm_idBuilding']?>&floor=<?= $this->floor['sm_idFloor']?>">
+											<img id="view-plane" src='<?= $this->floor['sm_planeFloor']; ?>' class="avatarPlane">
+											<img id= "icon-view" src = "../img/iconPlane.png">
+										</a>
 									</div>
 									</div>
 								

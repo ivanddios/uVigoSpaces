@@ -332,9 +332,24 @@ p{
 
 
 
+#view-plane{
+	z-index: 1;
+}
 
+#icon-view{
+	position: absolute;
+    z-index: 1;
+    left: 45%;
+    bottom: 30%;
+	width: 70px;
+	/* opacity: 1;  */
+}
 
-
+#icon-view:hover{
+	/* opacity:100; */
+	-webkit-filter: saturate(250%);
+filter: saturate(250%);
+} 
 
 
 
