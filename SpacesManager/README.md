@@ -1,0 +1,1 @@
+README DE Gestor de Espacios (Ivan)
