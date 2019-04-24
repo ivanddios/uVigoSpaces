@@ -137,8 +137,7 @@ class USER_Model {
                         $photoBD =$this->dirPhoto.$this->getPhoto('name');
                         $sqlUser = "INSERT INTO `USER` VALUES ('$photoBD', '$this->email', '$passwordBD', '$this->name', '$this->surname', '$this->dni', '$dateBD', '$this->phone')";
                         if (!($resultado = $this->mysqli->query($sqlUser))) {
-                            // return 'Error in the query on the database';
-                            return $this->mysqli->error;
+                            return 'Error in the query on the database';
                         }   
                     }else{
                         return 'There is another user with that DNI in the DB';
@@ -146,15 +145,13 @@ class USER_Model {
                 } 
                 $sqlSM_USER = "INSERT INTO `SM_USER` VALUES ('$this->email')";
                 if (!($resultado = $this->mysqli->query($sqlSM_USER))) {
-                    // return 'Error in the query on the database';
-                    return $this->mysqli->error;
+                    return 'Error in the query on the database';
                 } else {
                     if($this->addRoleUser() === true){
                         $this->updateDirPhoto();
                         return true;
                     }else {
-                        // return 'Error in the query on the database';
-                        return $this->mysqli->error;
+                        return 'Error in the query on the database';
                     }
                 }  
             }   
@@ -186,8 +183,7 @@ class USER_Model {
                 $this->updateDirPhoto(); 
             }
             if (!($resultado = $this->mysqli->query($sql))) {
-                // return 'Error in the query on the database';
-                return $this->mysqli->error;
+                return 'Error in the query on the database';
             } else {
                 return true;
             }
@@ -213,6 +209,31 @@ class USER_Model {
     }
 
 
+
+    public function searchUser() {
+
+        $dateBD = $this->formatDate($this->birthdate);
+        $sqlUser = "SELECT U.* FROM `USER` AS U, `SM_USER` AS SMU, `SM_USER_GROUP` AS SMUG WHERE
+                    U.email LIKE '%$this->email%' AND
+                    U.name LIKE '%$this->name%' AND
+                    U.surname LIKE '%$this->surname%' AND
+                    U.dni LIKE '%$this->dni%' AND
+                    U.birthdate LIKE '%$this->birthdate%' AND
+                    U.phone LIKE '%$this->phone%' AND
+                    U.email = SMU.sm_email";
+           
+        if (!($resultado = $this->mysqli->query($sqlUser))) {
+            return 'Error in the query on the database';
+        } else {
+            $toret = array();
+            $i = 0;
+            while ($fila = $resultado->fetch_array()) {
+                $toret[$i] = $fila;
+                $i++;
+            }
+            return $toret;
+        }
+    }
 
     /*AUXLIARY FUNCTIONS*/
 
@@ -257,8 +278,9 @@ class USER_Model {
 
 
     public function getUsersForGroup() {
-        $sql = "SELECT U.* FROM `SM_USER` AS U, `SM_USER_GROUP`AS UG, `SM_GROUP` AS G 
-        WHERE U.sm_email = UG.sm_email AND UG.sm_idGroup = G.sm_idGroup AND G.sm_idGroup = 1";
+        $sql = "SELECT U.* FROM `USER` AS U, `SM_USER` AS SMU, `SM_USER_GROUP`AS SMUG, `SM_GROUP` AS SMG 
+                WHERE U.email = SMU.sm_email AND SMU.sm_email = SMUG.sm_email AND SMUG.sm_idGroup = SMG.sm_idGroup 
+                AND SMG.sm_idGroup = '$this->group'";
         if (!($resultado = $this->mysqli->query($sql))) {
             throw new Exception('Error in the query on the database');
         } else {
@@ -400,9 +422,9 @@ class USER_Model {
         }else if (strlen(trim($this->dni)) != 9 ) {
             $errors= "NID can't be different from 9 characters";;
         }else if (!preg_match('/^\d{8}[a-zA-Z]$/', $this->dni)) {
-            $errors = "User id format is invalid";
+            $errors = "User NID format is invalid";
         }else if(!$this->validateletterDNI($this->dni)){
-            $errors = "User id letter is incorrect";
+            $errors = "User NID letter is incorrect";
         }else if(strlen(trim($this->birthdate)) == 0){
             $errors = "Birthdate is mandatory";
         }else if(strlen(trim($this->birthdate)) > 10){
@@ -455,9 +477,9 @@ class USER_Model {
         }else if (strlen(trim($this->dni)) != 9 ) {
             $errors= "NID can't be different from 9 characters";
         }else if (!preg_match('/^\d{8}[a-zA-Z]$/', $this->dni)) {
-            $errors = "User id format is invalid";
+            $errors = "User NID format is invalid";
         }elseif(!$this->validateletterDNI($this->dni)){
-            $errors = "User id letter is incorrect";
+            $errors = "User NID letter is incorrect";
         }else if(strlen(trim($this->birthdate)) == 0){
             $errors = "Birthdate is mandatory";
         }else if(strlen(trim($this->birthdate)) > 10){

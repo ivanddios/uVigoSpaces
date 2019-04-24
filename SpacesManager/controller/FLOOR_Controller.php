@@ -9,7 +9,7 @@ require_once(__DIR__."../../view/FLOOR_SHOWALL_View.php");
 require_once(__DIR__."../../view/FLOOR_ADD_View.php");
 require_once(__DIR__."../../view/FLOOR_EDIT_View.php");
 require_once(__DIR__."../../view/FLOOR_SHOW_View.php");
-require_once(__DIR__."../../view/FLOOR_SHOW_PLANE_View.php");
+require_once(__DIR__."../../view/FLOOR_SHOW_PLAN_View.php");
 
 $function = "FLOOR";
 $view = new ViewManager();
@@ -24,9 +24,9 @@ function get_data_form() {
     $nameFloor = $_POST['nameFloor'];
     $surfaceBuildingFloor =  $_POST['surfaceBuildingFloor'];
     $surfaceUsefulFloor =  $_POST['surfaceUsefulFloor'];
-    $planeFloor = $_FILES['planeFloor'];
+    $planFloor = $_FILES['planFloor'];
 
-    $floor = new FLOOR_Model($idBuilding, $idFloor, $nameFloor, $planeFloor, $surfaceBuildingFloor, $surfaceUsefulFloor);
+    $floor = new FLOOR_Model($idBuilding, $idFloor, $nameFloor, $planFloor, $surfaceBuildingFloor, $surfaceUsefulFloor);
     return $floor;
 }
 
@@ -51,7 +51,7 @@ Switch ($_REQUEST['action']){
         $buildingid = $_GET['building'];
 
         if(!checkRol('ADD', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
         }
 
@@ -82,14 +82,14 @@ Switch ($_REQUEST['action']){
         }
 
         if (!isset($_GET['building']) && !isset($_GET['floor'])){
-            $view->setFlashDanger($strings["Building and floor id is mandatory"]);
+            $view->setFlashDanger($strings["Building and floor id are mandatory"]);
             $view->redirect("BUILDING_Controller.php");
         }
         $buildingid = $_GET["building"];
         $floorid = $_GET['floor'];
 
 		if(!checkRol('EDIT', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("FLOOR_Controller.php", "index&building=".$buildingid);
         }
 
@@ -117,7 +117,7 @@ Switch ($_REQUEST['action']){
     case  $strings['Show']:
 
         if (!isset($_GET['building']) && !isset($_GET['floor'])){
-            $view->setFlashDanger($strings["Building and floor id is mandatory"]);
+            $view->setFlashDanger($strings["Building and floor id are mandatory"]);
             $view->redirect("BUILDING_Controller.php");
         }
 
@@ -146,7 +146,7 @@ Switch ($_REQUEST['action']){
         $floorid = $_GET['floor'];
 
         if(!checkRol('DELETE', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("FLOOR_Controller.php", "building=".$buildingid);
         }
         $floor = new FLOOR_Model($buildingid, $floorid);
@@ -162,7 +162,7 @@ Switch ($_REQUEST['action']){
 
     break;
 
-    case  $strings['Show Plane']:
+    case  $strings['Show Plan']:
 
         // if (!isset($_SESSION['LOGIN'])){
         //     $view->setFlashDanger($strings["Not in session. Show the floors requires login"]);
@@ -170,14 +170,14 @@ Switch ($_REQUEST['action']){
         // }
 
         if (!isset($_GET['building']) && !isset($_GET['floor'])){
-            $view->setFlashDanger($strings["Building and floor id is mandatory"]);
+            $view->setFlashDanger($strings["Building and floor id are mandatory"]);
             $view->redirect("BUILDING_Controller.php");
         }
         $buildingid = $_GET["building"];
         $floorid = $_GET['floor'];
 
         // if(!checkRol('SHOW', $function)){
-        //     $view->setFlashDanger($strings["You do not have the necessary permits"]);
+        //     $view->setFlashDanger($strings["You don't have the necessary permits"]);
         //     $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
         // }
         
@@ -185,10 +185,10 @@ Switch ($_REQUEST['action']){
         $spacesValues = $space->showAllSpaces();
         
         $floor = new FLOOR_Model($buildingid, $floorid);
-        $planeFloor = $floor->getLinkPlane();
+        $planFloor = $floor->getLinkplan();
         $infoFloor = $floor->getInfoFloor();
 
-        new FLOOR_SHOW_PLANE($spacesValues, $planeFloor, $infoFloor);
+        new FLOOR_SHOW_plan($spacesValues, $planFloor, $infoFloor);
         
     break;
     
@@ -201,7 +201,7 @@ Switch ($_REQUEST['action']){
         // }
 
         // if(!checkRol('SHOW ALL', $function)){
-        //     $view->setFlashDanger($strings["You do not have the necessary permits"]);
+        //     $view->setFlashDanger($strings["You don't have the necessary permits"]);
         //     $view->redirect("BUILDING_Controller.php", "");
         // }
 

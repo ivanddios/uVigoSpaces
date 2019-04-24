@@ -8,18 +8,18 @@ class FLOOR_Model {
     private $idBuilding;
 	private $idFloor;
 	private $nameFLoor;
-	private $planeFloor;
+	private $planFloor;
 	private $surfaceBuildingFloor;
     private $surfaceUsefulFloor;
     private $dirPhoto;
 	private $mysqli;
 
-    public function __construct($idBuilding=NULL, $idFloor=NULL, $nameFloor=NULL, $planeFloor=NULL, $surfaceBuildingFloor=NULL, $surfaceUsefulFloor=NULL)
+    public function __construct($idBuilding=NULL, $idFloor=NULL, $nameFloor=NULL, $planFloor=NULL, $surfaceBuildingFloor=NULL, $surfaceUsefulFloor=NULL)
     {
         $this->idBuilding =  $idBuilding; 
         $this->idFloor = $idFloor;
         $this->nameFloor = $nameFloor;
-        $this->planeFloor = $planeFloor;
+        $this->planFloor = $planFloor;
         $this->surfaceBuildingFloor =  $surfaceBuildingFloor;
         $this->surfaceUsefulFloor =  $surfaceUsefulFloor;
         $this->dirPhoto = '../document/Buildings/'.$this->getIdBuilding().'/'.$this->getIdBuilding().$this->getIdFloor().'/';
@@ -38,11 +38,11 @@ class FLOOR_Model {
         return $this->nameFloor;
     }
 
-    public function getPlaneFloor($option=null){
-        if($option !== null && isset($this->planeFloor[$option])){
-            return $this->planeFloor[$option];
+    public function getplanFloor($option=null){
+        if($option !== null && isset($this->planFloor[$option])){
+            return $this->planFloor[$option];
         } else {
-            return $this->planeFloor;
+            return $this->planFloor;
         }   
     }
 
@@ -80,8 +80,8 @@ class FLOOR_Model {
         $errors = $this->checkIsValidForAdd_Update();
         if($errors === false){
             if(!$this->existsFloor()){
-                $planeFloorBD = $this->dirPhoto.$this->getPlaneFloor('name');
-                $sql = "INSERT INTO `SM_FLOOR` (sm_idBuilding, sm_idFloor, sm_nameFloor, sm_planeFloor, sm_surfaceBuildingFloor, sm_surfaceUsefulFloor) VALUES ('$this->idBuilding', '$this->idFloor', '$this->nameFloor', '$planeFloorBD', $this->surfaceBuildingFloor, $this->surfaceUsefulFloor)";
+                $planFloorBD = $this->dirPhoto.$this->getplanFloor('name');
+                $sql = "INSERT INTO `SM_FLOOR` (sm_idBuilding, sm_idFloor, sm_nameFloor, sm_planFloor, sm_surfaceBuildingFloor, sm_surfaceUsefulFloor) VALUES ('$this->idBuilding', '$this->idFloor', '$this->nameFloor', '$planFloorBD', $this->surfaceBuildingFloor, $this->surfaceUsefulFloor)";
                 if (!($resultado = $this->mysqli->query($sql))) {
                     return 'Error in the query on the database';
                 } else {
@@ -101,12 +101,12 @@ class FLOOR_Model {
         $errors = $this->checkIsValidForAdd_Update();
         if($errors === false){
             if($this->existsFloor()){
-                if($this->getPlaneFloor('name') == ''){
+                if($this->getplanFloor('name') == ''){
                     $sql = "UPDATE `SM_FLOOR` SET sm_idFloor = '$this->idFloor', sm_nameFloor = '$this->nameFloor', sm_surfaceBuildingFloor = '$this->surfaceBuildingFloor', sm_surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
                 } else {
                     $this->deleteDirPhoto();
-                    $planeFloorBD =$this->dirPhoto.$this->getPlaneFloor('name');
-                    $sql = "UPDATE `SM_FLOOR` SET sm_idFloor = '$this->idFloor', sm_nameFloor = '$this->nameFloor', sm_planeFloor = '$planeFloorBD', sm_surfaceBuildingFloor = '$this->surfaceBuildingFloor', sm_surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
+                    $planFloorBD =$this->dirPhoto.$this->getplanFloor('name');
+                    $sql = "UPDATE `SM_FLOOR` SET sm_idFloor = '$this->idFloor', sm_nameFloor = '$this->nameFloor', sm_planFloor = '$planFloorBD', sm_surfaceBuildingFloor = '$this->surfaceBuildingFloor', sm_surfaceUsefulFloor = '$this->surfaceUsefulFloor' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
                     $this->updateDirPhoto();
                 }
                 if (!($resultado = $this->mysqli->query($sql))) {
@@ -149,14 +149,14 @@ class FLOOR_Model {
         return $result['sm_nameFloor'];
     }
 
-    public function getLinkPlane() {
-        $sql = "SELECT sm_planeFloor FROM `SM_FLOOR` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
+    public function getLinkplan() {
+        $sql = "SELECT sm_planFloor FROM `SM_FLOOR` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
         $result = $this->mysqli->query($sql)->fetch_array();
-        return $result['sm_planeFloor'];
+        return $result['sm_planFloor'];
     }
 
     public function getInfoFloor() {
-        $sql = "SELECT B.sm_nameBuilding, F.sm_nameFloor, S.sm_nameSpace, S.sm_coordsPlane 
+        $sql = "SELECT B.sm_nameBuilding, F.sm_nameFloor, S.sm_nameSpace, S.sm_coordsplan 
         FROM `SM_BUILDING` AS B, `SM_FLOOR` AS F, `SM_SPACE`AS S
         WHERE  B.sm_idBuilding = F.sm_idBuilding AND F.sm_idFloor = S.sm_idFloor 
                AND B.sm_idBuilding = '$this->idBuilding' AND F.sm_idFloor = '$this->idFloor'";
@@ -172,14 +172,14 @@ class FLOOR_Model {
         if (!is_dir($this->dirPhoto)) {
             mkdir($this->dirPhoto, 0777, true);
         }
-        if ($this->getPlaneFloor('name') !== '') {
-            move_uploaded_file($this->getPlaneFloor('tmp_name'), $this->dirPhoto.$this->getPlaneFloor('name'));
+        if ($this->getplanFloor('name') !== '') {
+            move_uploaded_file($this->getplanFloor('tmp_name'), $this->dirPhoto.$this->getplanFloor('name'));
         }
     }
 
     public function deleteDirPhoto() {
-        if(is_file($this->getLinkPlane())){
-            unlink($this->getLinkPlane());
+        if(is_file($this->getLinkplan())){
+            unlink($this->getLinkplan());
         }
         return (rmdir($this->dirPhoto));
     }
@@ -194,10 +194,10 @@ class FLOOR_Model {
         }
     }
 
-    public function validateExtensionPlane(){
+    public function validateExtensionplan(){
 
         $allowed =  array('jpeg', 'jpg');
-        $filename = $this->getPlaneFloor('name');
+        $filename = $this->getplanFloor('name');
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
         if(!in_array($ext,$allowed)) {
             return false;
@@ -242,9 +242,9 @@ class FLOOR_Model {
             $errors = "Floor useful surface can't be long than 99999999.99";
         }else if($this->surfaceUsefulFloor > $this->surfaceBuildingFloor){
             $errors = "The usable surface can't be greater than the building surface";
-        }else if($this->getPlaneFloor("name") !== ''){
-            if(!$this->validateExtensionPlane()){
-                $errors = "Floor plane extension is invalid";
+        }else if($this->getplanFloor("name") !== ''){
+            if(!$this->validateExtensionplan()){
+                $errors = "Floor plan extension is invalid";
             }
         }
         return $errors;

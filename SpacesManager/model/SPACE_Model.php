@@ -12,17 +12,17 @@ class SPACE_Model {
 	private $nameSpace;
 	private $surfaceSpace;
     private $numberInventorySpace;
-    private $coordsPlane;
+    private $coordsplan;
 	private $mysqli;
 
-    public function __construct($idBuilding=NULL, $idFloor=NULL, $idSpace=NULL, $nameSpace=NULL, $surfaceSpace=NULL, $numberInventorySpace=NULL, $coordsPlane=NULL)
+    public function __construct($idBuilding=null, $idFloor=null, $idSpace=null, $nameSpace=null, $surfaceSpace=null, $numberInventorySpace=null, $coordsplan=null)
     {
         $this->idBuilding =  $idBuilding; 
         $this->idFloor = $idFloor;
         $this->idSpace = $idSpace;
         $this->nameSpace = $nameSpace;
         $this->surfaceSpace = $surfaceSpace;
-        $this->coordsPlane = $coordsPlane;
+        $this->coordsplan = $coordsplan;
         $this->mysqli = Connection::connectionBD();
 
         if(empty($numberInventorySpace)){
@@ -85,7 +85,7 @@ class SPACE_Model {
 
 
     public function findInfoSpace() {
-        $sql = "SELECT SM_BUILDING.sm_nameBuilding, SM_FLOOR.sm_nameFloor, SM_SPACE.sm_nameSpace, SM_SPACE.sm_coordsPlane FROM `SM_BUILDING`, `SM_FLOOR`, `SM_SPACE` WHERE SM_BUILDING.sm_idBuilding = SM_FLOOR.sm_idBuilding AND SM_FLOOR.sm_idFloor = SM_SPACE.sm_idFloor AND SM_BUILDING.sm_idBuilding = '$this->idBuilding' AND SM_FLOOR.sm_idFloor = '$this->idFloor' AND SM_SPACE.sm_idSpace = '$this->idSpace'";
+        $sql = "SELECT SM_BUILDING.sm_nameBuilding, SM_FLOOR.sm_nameFloor, SM_SPACE.sm_nameSpace, SM_SPACE.sm_coordsplan FROM `SM_BUILDING`, `SM_FLOOR`, `SM_SPACE` WHERE SM_BUILDING.sm_idBuilding = SM_FLOOR.sm_idBuilding AND SM_FLOOR.sm_idFloor = SM_SPACE.sm_idFloor AND SM_BUILDING.sm_idBuilding = '$this->idBuilding' AND SM_FLOOR.sm_idFloor = '$this->idFloor' AND SM_SPACE.sm_idSpace = '$this->idSpace'";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
         } else {
@@ -101,9 +101,9 @@ class SPACE_Model {
     }
 
     public function findCoordsSpace() {
-        $sql = "SELECT sm_coordsPlane FROM `SM_SPACE` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
+        $sql = "SELECT sm_coordsplan FROM `SM_SPACE` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
         $result = $this->mysqli->query($sql)->fetch_array();
-        return $result['sm_coordsPlane'];
+        return $result['sm_coordsplan'];
     }
 
 
@@ -131,7 +131,7 @@ class SPACE_Model {
     public function addCoords() {
         $errors = $this->checkCoords();
         if($errors === false){
-            $sql = "UPDATE `SM_SPACE` SET sm_coordsPlane = '$this->coordsPlane' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
+            $sql = "UPDATE `SM_SPACE` SET sm_coordsplan = '$this->coordsplan' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
             if (!($resultado = $this->mysqli->query($sql))) {
                 return 'Error in the query on the database';
             } else {
@@ -211,7 +211,7 @@ class SPACE_Model {
             $errors = false;
             foreach($toret as $space){
                 if($space['sm_idSpace'] == $this->idSpace){
-                    $errors = "There already is a space with that identifier in the floor";
+                    $errors = "There is already a space with that identifier in this floor";
                 }
             }
             return $errors;
@@ -219,10 +219,10 @@ class SPACE_Model {
     }
 
 
-    public function findPlane() {
-        $sql = "SELECT sm_planeFloor FROM `SM_FLOOR` WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
+    public function findplan() {
+        $sql = "SELECT sm_planFloor FROM `SM_FLOOR` WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
         $result = $this->mysqli->query($sql)->fetch_array();
-        return $result['sm_planeFloor'];
+        return $result['sm_planFloor'];
     }
 
 
@@ -238,7 +238,7 @@ class SPACE_Model {
         $floor = new FLOOR_Model($this->idBuilding, $this->idFloor);
 
         if (strlen(trim($this->idBuilding)) == 0) {
-            $errors= "Building identifier is mandatory";
+            $errors = "Building identifier is mandatory";
         }else if (strlen(trim($this->idBuilding)) > 5) {
             $errors = "Building identifier can't be larger than 5 characters";
         }else if(!preg_match('/[A-Z0-9]/', $this->idBuilding)){
@@ -246,15 +246,15 @@ class SPACE_Model {
         }else if(!$building->existsBuilding()){
             $errors = "There isn't a building with that identifier";
         }else if (strlen(trim($this->idFloor)) == 0) {
-            $errors= "Floor identifier is mandatory";
+            $errors = "Floor identifier is mandatory";
         }else if (strlen(trim($this->idFloor)) > 2) {
             $errors = "Floor identifier can't be larger than 2 characters";
         }else if(!preg_match('/[A-Z0-9]/', $this->idFloor)){
             $errors = "Floor identifier format is invalid";
         }else if(!$floor->existsFloor()){
-            $errors= "There isn't a floor with that identifier in the building";
+            $errors = "There isn't a floor with that identifier in the building";
         }else if (strlen(trim($this->idSpace)) == 0 ) {
-            $errors= "Space identifier is mandatory";
+            $errors = "Space identifier is mandatory";
         }else if (strlen(trim($this->idSpace)) > 5 ) {
             $errors = "Space identifier can't be larger than 5 characters";
         }else if(!preg_match('/^[0-9]{5}$/', $this->idSpace)){
@@ -282,10 +282,10 @@ class SPACE_Model {
 
         $errors = false;
 
-        if(strlen(trim($this->coordsPlane)) > 225) {
-            $errors = "Coords can't be larger than 225 characters";
-        }else if($this->coordsPlane !== null){
-            if(!preg_match('/^[0-9]+ [0-9]+(, [0-9]+ [0-9]+)*$/', $this->coordsPlane)){
+        if(strlen(trim($this->coordsplan)) > 500) {
+            $errors = "Coords can't be larger than 500 characters";
+        }else if($this->coordsplan !== null){
+            if(!preg_match('/^[0-9]+ [0-9]+(, [0-9]+ [0-9]+)*$/', $this->coordsplan)){
                 $errors = "Coords format is invalid";
             }
         }

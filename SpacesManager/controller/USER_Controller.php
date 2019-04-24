@@ -7,6 +7,7 @@ require_once(__DIR__.'..\..\view\USER_SHOWALL_View.php');
 require_once(__DIR__.'..\..\view\USER_ADD_View.php');
 require_once(__DIR__.'..\..\view\USER_EDIT_View.php');
 require_once(__DIR__.'..\..\view\USER_SHOW_View.php');
+require_once(__DIR__.'..\..\view\USER_SEARCH_View.php');
 
 $view = new ViewManager();
 $function = "USER";
@@ -16,8 +17,8 @@ include '../view/locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
 function get_data_form() {
 
     $email = $_POST['email'];
-    $password = $_POST['password'];
     $name = $_POST['name'];
+    $password = $_POST['password'];
     $surname = $_POST['surname'];
     $dni = $_POST['dni'];
     $birthdate = $_POST['birthdate'];
@@ -26,6 +27,20 @@ function get_data_form() {
     $group = $_POST['group'];
 
     $user = new USER_Model($email, $password, $name, $surname, $dni, $birthdate, $phone, $photo, $group);
+    return $user;
+}
+
+function get_data_form_search() {
+
+    $email = $_POST['email'];
+    $name = $_POST['name'];
+    $surname = $_POST['surname'];
+    $dni = $_POST['dni'];
+    $birthdate = $_POST['birthdate'];
+    $phone = $_POST['phone'];
+    $group = $_POST['group'];
+
+    $user = new USER_Model($email, '', $name, $surname, $dni, $birthdate, $phone, '', $group);
     return $user;
 }
 
@@ -43,7 +58,7 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('ADD', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("USER_Controller.php");
         }
 
@@ -74,7 +89,7 @@ Switch ($_GET['action']){
         }
 
 		if(!checkRol('EDIT', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("USER_Controller.php");
         }
 
@@ -108,14 +123,10 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('DELETE', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("USER_Controller.php");
         }
 
-        // if (!isset($_POST['email'])){
-        //     $view->setFlashDanger($strings["Email is mandatory"]);
-        //     $view->redirect("USER_Controller.php");
-        // }
         $userDelete = new USER_Model($_POST['email']);
         $answerDelete =  $userDelete->deleteUser();
         if($answerDelete === true){
@@ -138,7 +149,7 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('SHOW', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("USER_Controller.php");
         }
 
@@ -153,12 +164,38 @@ Switch ($_GET['action']){
         new USER_SHOW($values);
 
     break;
+
+
+    case $strings['Search']:
+
+
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Search users requires login."]);
+            $view->redirect("BUILDING_Controller.php");
+        }
+
+        if(!checkRol('SEARCH', $function)){
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
+            $view->redirect("USER_Controller.php");
+        }
+
+        if (isset($_POST["submit"])) { 
+            $user = get_data_form_search();
+            $answerSearch = $user->searchUser();
+            new USER_SHOWALL($answerSearch);
+        }else {
+            $group = new GROUP_Model();
+            $groupsValues = $group->getAllGroups();
+            new USER_SEARCH($groupsValues);
+        }
+           	       
+    break;
 	
 
     default:
     
         if(!checkRol('SHOW ALL', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php");
 		}else{
 			$user = new USER_Model();

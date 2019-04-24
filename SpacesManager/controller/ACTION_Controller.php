@@ -6,7 +6,7 @@ require_once(__DIR__."../../model/ACTION_Model.php");
 require_once(__DIR__."../../view/ACTION_SHOWALL_View.php");
 require_once(__DIR__."../../view/ACTION_ADD_View.php");
 require_once(__DIR__."../../view/ACTION_EDIT_View.php");
-// require_once(__DIR__."../../view/BUILDING_SHOW_View.php");
+require_once(__DIR__."../../view/ACTION_SHOW_View.php");
 
 
 $function = "ACTION";
@@ -39,7 +39,7 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('ADD', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("ACTION_Controller.php");
         }
 
@@ -70,7 +70,7 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('EDIT', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("ACTION_Controller.php");
         }
 
@@ -103,29 +103,30 @@ Switch ($_GET['action']){
 
 
 
-    // // case  $strings['Show']:
+    case  $strings['Show']:
 
-    // //     // if (!isset($_SESSION['LOGIN'])){
-    // //     //     $view->setFlashDanger($strings["Not in session. Show floors requires login."]);
-    // //     //     $view->redirect("USER_Controller.php", "");
-    // //     // }
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Show action requires login."]);
+            $view->redirect("USER_Controller.php");
+        }
 
-    // //     // if(!checkRol('SHOW', $function)){
-    // //     //     $view->setFlashDanger($strings["You do not have the necessary permits"]);
-    // //     //     $view->redirect("BUILDING_Controller.php", "");
-    // //     // }
+        if(!checkRol('SHOW', $function)){
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
+            $view->redirect("ACTION_Controller.php");
+        }
 
-    // //     if (!isset($_GET['building'])){
-    // //         $view->setFlashDanger($strings["Building id is mandatory"]);
-    // //         $view->redirect("BUILDING_Controller.php", "");
-    // //     }
-    // //     $buildingid = $_GET['building'];
+        if (!isset($_GET['action'])){
+            $view->setFlashDanger($strings["Action identifier is mandatory"]);
+            $view->redirect("ACTION_Controller.php");
+        }
+        $actionId = $_GET['id'];
 
-    // //     $building = new BUILDING_Model($buildingid);
-    // //     $values = $building->getBuilding();
-    // //     new BUILDING_SHOW($values);
+        $action = new ACTION_Model($actionId);
+        $actionValues = $action->getAction();
+        
+        new ACTION_SHOW($actionValues);
 
-    // // break;
+    break;
 
 
     case  $strings['Delete']:
@@ -136,7 +137,7 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('DELETE', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("ACTION_Controller.php");
         }
 
@@ -148,11 +149,6 @@ Switch ($_GET['action']){
         $actionDelete = new ACTION_Model($_POST['action']);
         $actionName = $actionDelete->findNameAction();
         $answerDelete = $actionDelete->deleteAction();
-
-        // if (!$actionDelete ->existsAction()) {
-        //     $view->setFlashDanger($strings["No such action with this id"]);
-        //     $view->redirect("ACTION_Controller.php");
-        // }
 
         if($answerDelete === true){
             $flashMessageSuccess = sprintf($strings["Action \"%s\" successfully deleted."], $actionName);
@@ -174,7 +170,7 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('SHOW ALL', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php");
         }
 

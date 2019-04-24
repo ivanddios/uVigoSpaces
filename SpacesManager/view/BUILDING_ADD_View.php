@@ -35,13 +35,13 @@ class BUILDING_ADD{
 								<div class="input-container">
 										<span class="input-group-text fa fa-map-marker"></span>
 										<input type="text" id="addressBuilding" name="addressBuilding" onkeyup="checkText(this)" required/>
-										<label for="addressBuilding"><?= $strings['What is your postal address?']?></label>
+										<label for="addressBuilding"><?= $strings['What is its postal address?']?></label>
 								</div>
 
 								<div class="input-container">
 										<span class="input-group-text fa fa-phone"></span>
 										<input type="text" id="phoneBuilding" name="phoneBuilding" onkeyup="checkNumPhone(this)" required/>
-										<label for="phoneBuilding"><?= $strings['What is your phone?']?></label>
+										<label for="phoneBuilding"><?= $strings['What is its phone?']?></label>
 								</div>
 
 								<button id="saveButton" type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>

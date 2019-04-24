@@ -30,20 +30,20 @@ class GROUP_EDIT{
 							<div id="group-form">
 
 								<div class="input-container">
-										<span class="input-group-text fa fa-users"></span>
-										<input type="text" id="nameGroup" name="nameGroup" value="<?=$this->values['sm_nameGroup']?>" onkeyup="checkText(this)" required/>
-										<label for="nameGroup"><?= $strings['What group is it?']?></label>
-									</div>
+									<span class="input-group-text fa fa-users"></span>
+									<input type="text" id="nameGroup" name="nameGroup" value="<?=$this->values['sm_nameGroup']?>" onkeyup="checkText(this)" required/>
+									<label for="nameGroup"><?= $strings['What group is it?']?></label>
+								</div>
 
-									<div class="input-container">
-										<span class="input-group-text fa fa-reorder"></span>
-										<input type="text" id="descripGroup" name="descripGroup" value="<?=$this->values['sm_descripGroup']?>" onkeyup="checkText(this)" required/>
-										<label for="descripGroup"><?= $strings['What is the group about?']?></label>
-									</div>
+								<div class="input-container">
+									<span class="input-group-text fa fa-reorder"></span>
+									<input type="text" id="descripGroup" name="descripGroup" value="<?=$this->values['sm_descripGroup']?>" onkeyup="checkText(this)" required/>
+									<label for="descripGroup"><?= $strings['What is the group about?']?></label>
+								</div>
                               
-									<?=$strings['Functionalities']?>:
+								<label class="control-label"><?=$strings['Functionalities']?></label>
 								<?php foreach($this->functions as $function): ?>
-									<button id="<?=$function['sm_idFunction']?>" type="button" class="btn btn-primary boxx" onclick="showActions(this.id)"><?=$function['sm_nameFunction']?></button>
+									<button id="<?=$function['sm_idFunction']?>" type="button" class="btn btn-primary orderBlock" onclick="showActions(this.id)"><?=$function['sm_nameFunction']?></button>
 									<div class="function id-<?=$function['sm_idFunction']?>">
 										<?php foreach($this->actions as $action):
 											$band = true; 

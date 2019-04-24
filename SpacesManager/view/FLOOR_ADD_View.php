@@ -27,7 +27,7 @@ class FLOOR_ADD{
 								<div class="input-container">
 										<span class="input-group-text fa fa-lock"></span>
 										<input type="text" id="idBuilding" name="idBuilding" value="<?= $this->building?>" readonly/>
-										<label for="idBuilding"><?= $strings['What is the identifier of this building?']?></label>
+										<label for="idBuilding"><?= $strings['idBuilding']?></label>
 								</div>
 
 								<div class="input-container">
@@ -56,8 +56,8 @@ class FLOOR_ADD{
 
 								<div class="input-file">
 									<i class="input-group-text fileInput fa fa-file-image-o" aria-hidden="true"></i>
-									<label class="control-label"><?= $strings['Upload the floor plane']?></label>
-									<input type="file" name=planeFloor class="filestyle" onchange="validateUpdloadFile(this)">
+									<label class="control-label"><?= $strings['Is there a plan for this floor?']?></label>
+									<input type="file" name=planFloor class="filestyle" onchange="validateUpdloadFile(this)">
 								</div>
 
 							</div>	

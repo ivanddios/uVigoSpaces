@@ -21,8 +21,7 @@
             <link rel="stylesheet" href="../view/css/style.css">
 
             <!-- Bootstrap JavaScript -->
-            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-                crossorigin="anonymous"></script>
+            <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
                 crossorigin="anonymous"></script>
 
@@ -32,12 +31,10 @@
         </head>
 
 
-        <?php if(get_class($this) === 'SPACE_SHOW_PLANE'){ ?>
-            <body onload = "viewSpace('<?= $this->space['sm_coordsPlane'] ?>','<?= $this->plane ?>')">
-        <?php }else if(get_class($this) === 'SPACE_EDIT_PLANE'){ ?>
-            <body onload = "editSpace('<?= $this->space['sm_coordsPlane'] ?>','<?= $this->plane ?>')"> 
-        <?php } else if(get_class($this) === 'SPACE_SELECT_PLANE'){ ?>
-            <body onload = "selectSpace('<?= $this->plane ?>')"> 
+        <?php if(get_class($this) === 'SPACE_SHOW_PLAN'){ ?>
+            <body onload = "viewSpace('<?= $this->space['sm_coordsplan'] ?>','<?= $this->plan ?>')">
+        <?php } else if(get_class($this) === 'SPACE_SELECT_PLAN'){ ?>
+            <body onload = "selectSpace('<?= $this->space['sm_coordsplan'] ?>','<?= $this->plan ?>')"> 
         <?php } else { ?>
              <body>
         <?php } ?>
@@ -54,7 +51,6 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <li><a class="nav-link" href="../controller/BUILDING_Controller.php"><?=$strings['Show Buildings']?></a></li>&nbsp;&nbsp;
                         <?php  if(checkRol('SHOW ALL', 'USER')): ?>
                             <div class="nav-item dropdown">
                                 <a id="navbarDropdown-User" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?=$strings['Admin']?></a>
@@ -68,7 +64,8 @@
                                     <a class="dropdown-item" href="../controller/USER_CONTROLLER.php"><?=$strings['Users']?></a>    
                                 </div>
                             </div>
-                        <?php endif; ?>     
+                        <?php endif; ?>   
+                        <li><a class="nav-link" href="../controller/BUILDING_Controller.php"><?=$strings['Show Buildings']?></a></li>&nbsp;&nbsp;  
                     </ul>
 
                     <?php if(isset($_SESSION['LOGIN'])): ?>

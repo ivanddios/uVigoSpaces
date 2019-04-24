@@ -86,7 +86,7 @@ class GROUP_Model {
                     foreach($permissions as $permission){
                         $sqlPermissions = "INSERT INTO `SM_PERMISSION` (sm_idGroup, sm_idFunction, sm_idAction) VALUES ($this->idGroup, $permission->idFunction, $permission->idAction)";
                         if (!($resultado = $this->mysqli->query($sqlPermissions))) {
-                            return 'Error in the query on the databasea';
+                            return 'Error in the query on the database';
                         }
                     }
                     return true;
@@ -166,16 +166,18 @@ class GROUP_Model {
         }
     }
 
-    public function getGroupsForPermission($idFunction, $actions) {
+    public function getGroupsActionsForPermission($idFunction, $actions) {
+        $toret = array();
+        $i = 0;
         foreach($actions as $action){
-            $sql = "SELECT sm_idGroup FROM `SM_PERMISSION` WHERE sm_idFunction = '$idFunction' AND sm_idGroup = '$action->id'";
+            $sql = "SELECT sm_idGroup, sm_idAction FROM `SM_PERMISSION` WHERE sm_idFunction = '$idFunction' AND sm_idAction = '$action->id'";
             if (!($resultado = $this->mysqli->query($sql))) {
                 throw new Exception('Error in the query on the database');
-            } else {
-                $toret = array();
-                $i = 0;
-                while ($fila = $resultado->fetch_array()) {
-                    $toret[$i] = $fila['sm_idGroup'];
+            }else {
+                $fila = $resultado->fetch_array();
+                if($fila['sm_idGroup'] !== null){
+                    $toret[$i] =(['idGroup' => $fila['sm_idGroup'],
+                                'idAction' => $fila['sm_idAction']]);
                     $i++;
                 }
             }

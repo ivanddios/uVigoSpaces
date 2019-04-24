@@ -20,6 +20,7 @@ class INDEX{
             </div>
         </div>
         <img id="imgIndex" src="../view/img/uvigo.jpg">	
+        <!-- <img id="imgIndex" src="../view/img/uvigo.jpg" onload="loadWelcomeImg()">	 -->
  <?php } 
 }
 

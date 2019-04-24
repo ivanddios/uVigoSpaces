@@ -147,15 +147,15 @@ $tests['SM_FLOOR_ADD_TEST12']["Result"] = $addAnswer;
 
 
 
-//TESTS FLOOR PLANE
+//TESTS FLOOR plan
 
 $tests['SM_FLOOR_ADD_TEST13']=(['Functionality' => "SM_FLOOR_ADD",
-                'Description' => "Test 13. Attempt to add floor with plane file extension invalid",
-                'Expected' => "Floor plane extension is invalid",
+                'Description' => "Test 13. Attempt to add floor with plan file extension invalid",
+                'Expected' => "Floor plan extension is invalid",
                 'Result' => 'Not executed']);
 
-$badPlaneFile = (["name"=> "Planta Baja.pdf"]); 
-$floor = new FLOOR_Model('OSBI0', '99', 'nameFloor', $badPlaneFile, 10.05, 10.03);
+$badplanFile = (["name"=> "Planta Baja.pdf"]); 
+$floor = new FLOOR_Model('OSBI0', '99', 'nameFloor', $badplanFile, 10.05, 10.03);
 $addAnswer = $floor->addFloor();
 $tests['SM_FLOOR_ADD_TEST13']["Result"] = $addAnswer;
 
@@ -168,8 +168,8 @@ $tests['SM_FLOOR_ADD_TEST14']=(['Functionality' => "SM_FLOOR_ADD",
                 'Expected' => "There is already a floor with that id in this building",
                 'Result' => 'Not executed']);
 
-$planeFile = (["name"=> "Planta Baja.jpg", "type"=> "image/jpeg", "tmp_name"=> "C:\xampp\tmp\php8622.tmp", "error"=> 0, "size"=> 1392574]);
-$floor = new FLOOR_Model('OSBI0', '00', 'nameFloor', $planeFile, 10.05, 10.03);
+$planFile = (["name"=> "Planta Baja.jpg", "type"=> "image/jpeg", "tmp_name"=> "C:\xampp\tmp\php8622.tmp", "error"=> 0, "size"=> 1392574]);
+$floor = new FLOOR_Model('OSBI0', '00', 'nameFloor', $planFile, 10.05, 10.03);
 $addAnswer = $floor->addFloor();
 $tests['SM_FLOOR_ADD_TEST14']["Result"] = $addAnswer;
 

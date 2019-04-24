@@ -147,15 +147,15 @@ $tests['SM_FLOOR_EDIT_TEST12']["Result"] = $editAnswer;
 
 
 
-//TESTS FLOOR PLANE
+//TESTS FLOOR plan
 
 $tests['SM_FLOOR_EDIT_TEST13']=(['Functionality' => "SM_FLOOR_EDIT",
-                'Description' => "Test 13. Attempt to edit floor with plane file extension invalid",
-                'Expected' => "Floor plane extension is invalid",
+                'Description' => "Test 13. Attempt to edit floor with plan file extension invalid",
+                'Expected' => "Floor plan extension is invalid",
                 'Result' => 'Not executed']);
 
-$badPlaneFile = (["name"=> "Planta Baja.pdf"]); 
-$floor = new FLOOR_Model('OSBI0', '99', 'nameFloor', $badPlaneFile, 10.05, 10.03);
+$badplanFile = (["name"=> "Planta Baja.pdf"]); 
+$floor = new FLOOR_Model('OSBI0', '99', 'nameFloor', $badplanFile, 10.05, 10.03);
 $editAnswer = $floor->updateFloor();
 $tests['SM_FLOOR_EDIT_TEST13']["Result"] = $editAnswer;
 
@@ -168,8 +168,8 @@ $tests['SM_FLOOR_EDIT_TEST14']=(['Functionality' => "SM_FLOOR_EDIT",
                 'Expected' => "There isn't a floor with that identifier in the building",
                 'Result' => 'Not executed']);
 
-$planeFile = (["name"=> "Planta Baja.jpeg"]); 
-$floor = new FLOOR_Model('OSBI0', 'SD', 'nameFloor', $planeFile, 10.05, 10.03);
+$planFile = (["name"=> "Planta Baja.jpeg"]); 
+$floor = new FLOOR_Model('OSBI0', 'SD', 'nameFloor', $planFile, 10.05, 10.03);
 $editAnswer = $floor->updateFloor();
 $tests['SM_FLOOR_EDIT_TEST14']["Result"] = $editAnswer;
 
@@ -182,7 +182,7 @@ $tests['SM_FLOOR_EDIT_TEST15']=(['Functionality' => "SM_FLOOR_EDIT",
                 'Expected' => 'Floor updated successfully',
                 'Result' => 'Not executed']);
 
-$floor = new FLOOR_Model('OSBI0', '99', 'nameFloor', $planeFile, 10.05, 10.03);
+$floor = new FLOOR_Model('OSBI0', '99', 'nameFloor', $planFile, 10.05, 10.03);
 $editAnswer = $floor->updateFloor();
 if($editAnswer === true){
     $tests['SM_FLOOR_EDIT_TEST15']["Result"] = 'Floor updated successfully';

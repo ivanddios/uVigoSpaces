@@ -1,6 +1,4 @@
 
-
-
 /* HEADER ELEMENTS */
 
 .navProfile{
@@ -212,7 +210,8 @@ input#loginUsername, input#loginPassword{
   font-size: 16px;
   padding: 8px 5px 8px 40px;
   border: 1px solid #ddd;
-  float: right;
+	float: right;
+	margin-bottom: 1%;
 }
 
 
@@ -220,7 +219,7 @@ input#loginUsername, input#loginPassword{
 /* BUTTONS */
 
 
-.btn-dark-Plane{
+.btn-dark-plan{
 	padding:8px;
 	font-size:14px;
 	background-color:#eeee;
@@ -249,16 +248,15 @@ input#loginUsername, input#loginPassword{
 
 /* HTML ELEMENTS */
 
- td{
-	/* text-align: center;  */
+td{
 	vertical-align: middle!important;
 }
-
 
 p{
 	margin-top:5%;
 	font-weight: bold;
 } 
+
 
 
 /* IMG ELEMENTS */
@@ -268,7 +266,7 @@ p{
 	height: 40px;
 }
 
-.avatarPlane{
+.avatarplan{
 	margin-left: 30%;
 	width: 200px;
 	height: 200px;
@@ -323,26 +321,29 @@ p{
 	margin-bottom:3%;
 }
 
-#planeButtons{
+#planButtons{
 	position: fixed;
 	top: 45%;
 	margin-left: 3%;
 }
 
-#planeButtons li{
+#planButtons li{
 	list-style:none;
 }
 
+#resizeButton{
+	display: none;
+}
 
 
 /* USER ADD*/
 
-.function{
+/* .function{
 	display:none;
 	margin-bottom: 20px;
-}
+} */
 
-.boxx{
+.orderBlock{
 	margin-bottom: 5%;
 	margin-left: 25%;
 	display: block;
@@ -350,7 +351,7 @@ p{
 
 
  
-/* div input file */
+/*DIV INPUT FILE*/
 
 .fileInputEdit{
 	position: absolute;
@@ -380,23 +381,20 @@ p{
 
 
 
-#view-plane{
+#view-plan{
 	z-index: 1;
 }
 
 #icon-view{
 	position: absolute;
-    z-index: 1;
-    left: 45%;
-    bottom: 30%;
+  z-index: 1;
+  left: 45%;
+  bottom: 30%;
 	width: 70px;
-	/* opacity: 1;  */
 }
 
 #icon-view:hover{
-	/* opacity:100; */
-	-webkit-filter: saturate(250%);
-filter: saturate(250%);
+	filter: brightness(100%);
 } 
 
 

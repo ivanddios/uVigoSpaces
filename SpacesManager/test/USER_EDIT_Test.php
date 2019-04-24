@@ -137,7 +137,7 @@ $tests['SM_USER_EDIT_TEST12']["Result"] = $updateAnswer;
 
 $tests['SM_USER_EDIT_TEST13']=(['Functionality' => "SM_USER_EDIT",
                 'Description' => "Test 13. Attempt to update user with a National Identity Document format invalid",
-                'Expected' => "User id format is invalid",
+                'Expected' => "User NID format is invalid",
                 'Result' => 'Not executed']);
 
 $user = new USER_Model('ivanddf1994@gmail.com', 'Aa98ygbgh','nameUser', 'surnamesUser', '4448879OY');
@@ -147,7 +147,7 @@ $tests['SM_USER_EDIT_TEST13']["Result"] = $updateAnswer;
 
 $tests['SM_USER_EDIT_TEST14']=(['Functionality' => "SM_USER_EDIT",
                 'Description' => "Test 14. Attempt to update user with National Identity Document letter incorrect",
-                'Expected' => "User id letter is incorrect",
+                'Expected' => "User NID letter is incorrect",
                 'Result' => 'Not executed']);
 
 $user = new USER_Model('ivanddf1994@gmail.com', 'Aa98ygbgh','nameUser', 'surnamesUser', '44488795Y');

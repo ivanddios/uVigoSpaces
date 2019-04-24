@@ -82,7 +82,7 @@ class USER_EDIT{
 								<div class="input-container">
 									<span class="input-group-text fa fa-id-card"></span>
 									<input type="text" id="dni" name="dni" value="<?=$this->user['dni']?>" onkeyup="checkDNI(this)" required/>
-									<label for="dni"><?= $strings['What is your ID?']?></label>
+									<label for="dni"><?= $strings['What is its ID?']?></label>
 								</div>
 								
 								<div class="input-container">

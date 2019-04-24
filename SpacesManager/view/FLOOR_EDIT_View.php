@@ -51,10 +51,10 @@ class FLOOR_EDIT{
 
 									<div class="input-file">
 										<i class="input-group-text fileInputEdit fa fa-file-image-o" aria-hidden="true"></i>
-										<label class="control-label"><?= $strings['Upload the floor plane']?></label>
-										<input type="file" name="planeFloor" class="filestyle" value="<?=$this->floor['sm_planeFloor']?>" onchange="validateUpdloadFile(this)">
+										<label class="control-label"><?= $strings['Is there a plan for this floor?']?></label>
+										<input type="file" name="planFloor" class="filestyle" value="<?=$this->floor['sm_planFloor']?>" onchange="validateUpdloadFile(this)">
 									</div>
-									<input type="hidden" id="planeFloorOriginal" name="planeFloorOriginal" value="<?=$this->floor['sm_planeFloor']?>">
+									<input type="hidden" id="planFloorOriginal" name="planFloorOriginal" value="<?=$this->floor['sm_planFloor']?>">
 								
 								</div>
 								<button id="saveButton" type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>

@@ -21,7 +21,7 @@ class ACTION_ADD{
 							<div id="group-form">
 
 								<div class="input-container">
-									<span class="input-group-text fa fa-users"></span>
+									<span class="input-group-text fa fa-reorder"></span>
 									<input type="text" id="nameAction" name="nameAction" onkeyup="checkText(this)" required/>
 									<label for="nameAction"><?= $strings['What action is it?']?></label>
 								</div>
@@ -35,7 +35,7 @@ class ACTION_ADD{
 								<button id="saveButton" type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>
 							</div> 
 						</form>
-						<a href="GROUP_Controller.php"><?= $strings["Back"] ?></a>
+						<a href="ACTION_Controller.php"><?= $strings["Back"] ?></a>
 					</div>
 				</div>
 			</div>

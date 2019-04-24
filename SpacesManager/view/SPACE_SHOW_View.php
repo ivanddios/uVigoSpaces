@@ -2,11 +2,11 @@
 
 class SPACE_SHOW{
 		private $space;
-		private $plane;
+		private $plan;
 
-    function __construct($space, $plane) {
+    function __construct($space, $plan) {
 				$this->space = $space;
-				$this->plane = $plane;
+				$this->plan = $plan;
         $this->render();
     }
     
@@ -47,9 +47,12 @@ class SPACE_SHOW{
 									<label for="numberInventorySpace"><?= $strings['sm_numberInventorySpace']?></label>
 								</div>
 
-								<label class="control-label"><?= $strings['Click to see the plane']?></label>
+								<label class="control-label"><?= $strings['Click to see the space in the plan']?></label>
 								<div class="inputWithIcon inputIconBg">
-									<a href="SPACE_Controller.php?action=<?= $strings['ShowSpacePlane']?>&building=<?= $this->space['sm_idBuilding']?>&floor=<?= $this->space['sm_idFloor']?>&space=<?= $this->space['sm_idSpace']?>"><img src='<?= $this->plane; ?>' class="avatarPlane" onchange="validateUpdloadFile(this)"></a>
+									<a href="SPACE_Controller.php?action=<?= $strings['ShowSpacePlan']?>&building=<?= $this->space['sm_idBuilding']?>&floor=<?= $this->space['sm_idFloor']?>&space=<?= $this->space['sm_idSpace']?>">
+										<img id="view-plan" src='<?= $this->plan; ?>' class="avatarplan" onchange="validateUpdloadFile(this)">
+										<img id="icon-view" src="../view/img/iconTouch.png">
+									</a>
 								</div>
 								
 							</div>

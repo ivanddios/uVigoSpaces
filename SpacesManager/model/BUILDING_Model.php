@@ -66,7 +66,7 @@ class BUILDING_Model {
                     return true;
                 }
             } else {
-                return 'There is already a building with that identifier';
+                return "There is already a building with that identifier";
             }
         } else {
             return $errors;
@@ -174,7 +174,7 @@ class BUILDING_Model {
         }else if(!preg_match('/[A-Z0-9]/', $this->idBuilding)){
             $errors = "Building identifier format is invalid";
         }else if($this->existsBuilding() !== true) {
-            $errors = "Building doesn't exist";
+            $errors = "There isn't a building with that identifier";
         }
             
         return $errors;

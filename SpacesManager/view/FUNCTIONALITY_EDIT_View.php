@@ -39,7 +39,7 @@ class FUNCTIONALITY_EDIT{
 									<label for="descripFunction"><?= $strings['What is the functionality about?']?></label>
 								</div>
                               
-                                <?=$strings['Check the actions:']?>
+                                <label class="control-label"><?=$strings['Check the actions:']?></label>
                                     <?php foreach($this->actions as $action): ?>
                                         <div class="checkboxList">
                                             <?php if (in_array($action['sm_idAction'], $this->actionsForFunction)): ?>

@@ -34,11 +34,18 @@ class USER_SHOWALL{
                                         <th scope="col"><?=$strings[$title]?></th>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
-                                <?php  if(checkRol('ADD', 'USER')): ?>
+                                <?php if(isset($_SESSION['LOGIN'])): ?>
                                     <th scope="col">
-                                        <a href="USER_Controller.php?action=<?= $strings['Add']?>">
-                                            <span title="<?= $strings['Add User']?>" class="btn btn-success btn-sm fa fa-plus"></span>
-                                        </a>
+                                        <?php  if(checkRol('ADD', 'USER')): ?>
+                                            <a href="USER_Controller.php?action=<?= $strings['Add']?>">
+                                                <span title="<?= $strings['Add User']?>" class="btn btn-success btn-sm fa fa-plus"></span>
+                                            </a>
+                                        <?php endif; ?>
+                                        <?php  if(checkRol('SEARCH', 'USER')): ?>    
+                                            <a href="USER_Controller.php?action=<?= $strings['Search']?>">
+                                                <span title="<?= $strings['Search User']?>" class="btn btn-info btn-sm fa fa-search"></span>
+                                            </a>
+                                        <?php endif; ?>
                                     </th>
                                 <?php endif; ?>
                             </tr>
@@ -72,7 +79,7 @@ class USER_SHOWALL{
                                     <td>
                                         <?php  if(checkRol('EDIT', 'USER')): ?>
                                             <a href="USER_Controller.php?action=<?= $strings['Edit']?>&user=<?= $this->users[$j]['email']?>">
-                                                <span title="<?= $strings['Edit User']?>" class="btn btn-primary btn-sm fa fa-pencil"></span>
+                                                <span title="<?= $strings['Edit User']?>" class="btn btn-warning btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
                                         <?php  if(checkRol('DELETE', 'USER')): ?>
@@ -91,7 +98,7 @@ class USER_SHOWALL{
                                                             <input type="hidden" name="email" value="<?= $this->users[$j]['email']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
-                                                                <button type="submit" name="submit" id="submit" class="btn btn-success success"><?= $strings["Ok"]?></button>
+                                                                <button type="submit" name="submit" id="submit" class="btn btn-primary success"><?= $strings["Ok"]?></button>
                                                             </div>
                                                         </form>
                                                     </div>

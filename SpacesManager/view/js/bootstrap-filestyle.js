@@ -392,8 +392,8 @@
 	};
 
 	$.fn.filestyle.defaults = {
-		'id' : 'planeFloor',
-		'name' : 'planeFloor',
+		'id' : 'planFloor',
+		'name' : 'planFloor',
 		'text' : '',
 		'htmlIcon' : '⇧',
 		'btnClass' : 'btn-secondary',
@@ -436,7 +436,7 @@
 
 
 $(document).ready(function() {
-    if(document.getElementById("planeFloorOriginal")){
-		$("#planeFloor").val(document.getElementById("planeFloorOriginal").value);
+    if(document.getElementById("planFloorOriginal")){
+		$("#planFloor").val(document.getElementById("planFloorOriginal").value);
 	}
 });

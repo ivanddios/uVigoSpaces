@@ -60,11 +60,11 @@ class BUILDING_SHOWALL{
                                         
                                     <td>
                                         <a href="FLOOR_Controller.php?building=<?= htmlentities($this->buildings[$j]['sm_idBuilding'])?>">
-                                            <span title="<?= $strings['Show Floors']?>" class="btn btn-success btn-sm fa fa-building"></span>
+                                            <span title="<?= $strings['Show Floors']?>" class="btn btn-primary btn-sm fa fa-building"></span>
                                         </a>
                                         <?php  if(checkRol('EDIT', 'BUILDING')): ?>
                                             <a href="BUILDING_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->buildings[$j]['sm_idBuilding']?>">
-                                                <span title="<?= $strings['Edit Building']?>" class="btn btn-primary btn-sm fa fa-pencil"></span>
+                                                <span title="<?= $strings['Edit Building']?>" class="btn btn-warning btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
                                         <?php  if(checkRol('DELETE', 'BUILDING')): ?>
@@ -83,7 +83,7 @@ class BUILDING_SHOWALL{
                                                             <input type="hidden" name="building" value="<?= $this->buildings[$j]['sm_idBuilding']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
-                                                                <button type="submit" name="submit" id="submit" class="btn btn-success success"><?= $strings["Ok"]?></button>
+                                                                <button type="submit" name="submit" id="submit" class="btn btn-primary success"><?= $strings["Ok"]?></button>
                                                             </div>
                                                         </form>
                                                     </div>

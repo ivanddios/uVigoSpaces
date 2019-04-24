@@ -59,12 +59,12 @@ class GROUP_SHOWALL{
                                     <td>
                                         <?php  if(checkRol('SHOW ALL', 'USER')): ?> 
                                             <a href="GROUP_Controller.php?action=<?= $strings['Users']?>&group=<?= $this->groups[$j]['sm_idGroup']?>">
-                                                <span title="<?= $strings['Show Users']?>" class="btn btn-warning btn-sm fa fa-users"></span>
+                                                <span title="<?= $strings['Show Users']?>" class="btn btn-primary btn-sm fa fa-users"></span>
                                             </a>
                                         <?php endif; ?> 
                                         <?php  if(checkRol('EDIT', 'GROUP')): ?>
                                             <a href="GROUP_Controller.php?action=<?= $strings['Edit']?>&group=<?= $this->groups[$j]['sm_idGroup']?>">
-                                                <span title="<?= $strings['Edit Group']?>" class="btn btn-primary btn-sm fa fa-pencil"></span>
+                                                <span title="<?= $strings['Edit Group']?>" class="btn btn-warning btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
                                         <?php  if(checkRol('DELETE', 'GROUP')): ?>
@@ -83,7 +83,7 @@ class GROUP_SHOWALL{
                                                             <input type="hidden" name="group" value="<?=$this->groups[$j]['sm_idGroup']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
-                                                                <button type="submit" name="submit" id="submit" class="btn btn-success success"><?= $strings["Ok"]?></button>
+                                                                <button type="submit" name="submit" id="submit" class="btn btn-primary success"><?= $strings["Ok"]?></button>
                                                             </div>
                                                         </form>
                                                     </div>

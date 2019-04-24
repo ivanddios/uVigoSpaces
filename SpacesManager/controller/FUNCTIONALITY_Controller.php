@@ -7,7 +7,7 @@ require_once(__DIR__."../../model/FUNCTIONALITY_Model.php");
 require_once(__DIR__."../../view/FUNCTIONALITY_SHOWALL_View.php");
 require_once(__DIR__."../../view/FUNCTIONALITY_ADD_View.php");
 require_once(__DIR__."../../view/FUNCTIONALITY_EDIT_View.php");
-// require_once(__DIR__."../../view/BUILDING_SHOW_View.php");
+require_once(__DIR__."../../view/FUNCTIONALITY_SHOW_View.php");
 
 
 $function = "FUNCTIONALITY";
@@ -40,7 +40,7 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('ADD', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("FUNCTIONALITY_Controller.php");
         }
 
@@ -77,7 +77,7 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('EDIT', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("FUNCTIONALITY_Controller.php");
         }
 
@@ -98,16 +98,14 @@ Switch ($_GET['action']){
                 $view->redirect("FUNCTIONALITY_Controller.php");   
 
             }else{
-                //$view->setFlashDanger($strings[$editAnswer]);
-                var_dump($editAnswer);
+                $view->setFlashDanger($strings[$editAnswer]);
                 $view->redirect("FUNCTIONALITY_Controller.php", $strings['Edit'], 'function='.$functionId);
             }
         } else {
 
             $function = new FUNCTIONALITY_Model($functionId);
-            $action = new ACTION_Model();
-
             $functionValues = $function->getFunction();
+            $action = new ACTION_Model();
             $actions = $action->getAllActions();
             $actionsForFunctionality = $function->getAllActionsForFunctionality();
             new FUNCTIONALITY_EDIT($functionValues, $actions, $actionsForFunctionality);
@@ -117,29 +115,32 @@ Switch ($_GET['action']){
 
 
 
-    // case  $strings['Show']:
+    case  $strings['Show']:
 
-    //     // if (!isset($_SESSION['LOGIN'])){
-    //     //     $view->setFlashDanger($strings["Not in session. Show floors requires login."]);
-    //     //     $view->redirect("USER_Controller.php", "");
-    //     // }
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Show function requires login."]);
+            $view->redirect("USER_Controller.php");
+        }
 
-    //     // if(!checkRol('SHOW', $function)){
-    //     //     $view->setFlashDanger($strings["You do not have the necessary permits"]);
-    //     //     $view->redirect("BUILDING_Controller.php", "");
-    //     // }
+        if(!checkRol('SHOW', $function)){
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
+            $view->redirect("FUNCTIONALITY_Controller.php");
+        }
 
-    //     if (!isset($_GET['building'])){
-    //         $view->setFlashDanger($strings["Building id is mandatory"]);
-    //         $view->redirect("BUILDING_Controller.php", "");
-    //     }
-    //     $buildingid = $_GET['building'];
+        if (!isset($_GET['function'])){
+            $view->setFlashDanger($strings["Function identifier is mandatory"]);
+            $view->redirect("FUNCTIONALITY_Controller.php");
+        }
+        $functionId = $_GET['function'];
 
-    //     $building = new BUILDING_Model($buildingid);
-    //     $values = $building->getBuilding();
-    //     new BUILDING_SHOW($values);
+        $function = new FUNCTIONALITY_Model($functionId);
+        $functionValues = $function->getFunction();
+        $action = new ACTION_Model();
+        $actions = $action->getAllActions();
+        $actionsForFunctionality = $function->getAllActionsForFunctionality();
+        new FUNCTIONALITY_SHOW($functionValues, $actions, $actionsForFunctionality);
 
-    // break;
+    break;
 
 
     case  $strings['Delete']:
@@ -150,7 +151,7 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('DELETE', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("FUNCTIONALITY_Controller.php");
         }
 
@@ -187,7 +188,7 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('SHOW ALL', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php");
         }
 

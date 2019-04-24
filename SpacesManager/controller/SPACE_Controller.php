@@ -9,9 +9,8 @@ require_once(__DIR__."../../view/SPACE_SHOWALL_View.php");
 require_once(__DIR__."../../view/SPACE_ADD_View.php");
 require_once(__DIR__."../../view/SPACE_EDIT_View.php");
 require_once(__DIR__."../../view/SPACE_SHOW_View.php");
-require_once(__DIR__."../../view/SPACE_SELECT_PLANE_View.php");
-require_once(__DIR__."../../view/SPACE_EDIT_PLANE_View.php");
-require_once(__DIR__."../../view/SPACE_SHOW_PLANE_View.php");
+require_once(__DIR__."../../view/SPACE_SELECT_PLAN_View.php");
+require_once(__DIR__."../../view/SPACE_SHOW_PLAN_View.php");
 
 $function = "SPACE";
 $view = new ViewManager();
@@ -47,7 +46,7 @@ Switch ($_REQUEST['action']){
         } 
 
         if(!isset($_GET['building']) && !isset($_GET['floor'])){
-            $view->setFlashDanger($strings["Building and floor id is mandatory"]);
+            $view->setFlashDanger($strings["Building and floor id are mandatory"]);
             $view->redirect("BUILDING_Controller.php");
         }
 
@@ -55,7 +54,7 @@ Switch ($_REQUEST['action']){
         $floorid = $_GET['floor'];
 
         if(!checkRol('ADD', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("SPACE_Controller.php", $strings['Add']."&building=".$buildingid, "&floor=".$floorid);
         }
 
@@ -65,7 +64,7 @@ Switch ($_REQUEST['action']){
             if($addAnswer === true){
                 $flashMessageSuccess = sprintf($strings["Space \"%s\" successfully added."], $space->getNameSpace());
                 $view->setFlashSuccess($flashMessageSuccess);
-                $view->redirect("SPACE_Controller.php", "SelectSpacePlane&building=".$buildingid, "&floor=".$floorid."&space=".$space->getIdSpace());
+                $view->redirect("SPACE_Controller.php", "SelectSpacePlan&building=".$buildingid, "&floor=".$floorid."&space=".$space->getIdSpace());
             }else{
                 $view->setFlashDanger($strings[$addAnswer]);
                 $view->redirect("SPACE_Controller.php", $strings['Add']."&building=".$buildingid, "&floor=".$floorid."&space=".$space->getIdSpace());
@@ -87,7 +86,7 @@ Switch ($_REQUEST['action']){
         }
 
 		if(!checkRol('EDIT', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
         }
                 
@@ -115,8 +114,8 @@ Switch ($_REQUEST['action']){
         } else {
             $space = new SPACE_Model($buildingid, $floorid, $spaceid);
             $values = $space->findSpace();
-            $floorPlane = $space->findPlane();
-            new SPACE_EDIT($values, $floorPlane);
+            $floorplan = $space->findplan();
+            new SPACE_EDIT($values, $floorplan);
         }
 
     break;
@@ -134,8 +133,8 @@ Switch ($_REQUEST['action']){
         $spaceid = $_GET['space'];
         $space = new SPACE_Model($buildingid, $floorid, $spaceid);
         $values = $space->findSpace();
-        $floorPlane = $space->findPlane();
-        new SPACE_SHOW($values, $floorPlane);
+        $floorplan = $space->findplan();
+        new SPACE_SHOW($values, $floorplan);
          
     break;
 
@@ -148,7 +147,7 @@ Switch ($_REQUEST['action']){
         }
 
         if(!checkRol('DELETE', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
         }
 
@@ -174,7 +173,7 @@ Switch ($_REQUEST['action']){
     break;
 
 
-    case  $strings['SelectSpacePlane']:
+    case  $strings['SelectSpacePlan']:
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add space requires login."]);
@@ -182,7 +181,7 @@ Switch ($_REQUEST['action']){
         } 
 
         if(!isset($_GET['building']) && !isset($_GET['floor'])){
-            $view->setFlashDanger($strings["Building and floor id is mandatory"]);
+            $view->setFlashDanger($strings["Building and floor id are mandatory"]);
             $view->redirect("BUILDING_Controller.php");
         }
 
@@ -191,10 +190,10 @@ Switch ($_REQUEST['action']){
         $spaceid = $_GET['space'];
 
         if (isset($_POST["submit"])) { 
-            $spacePlane = new SPACE_Model($buildingid, $floorid, $spaceid,'','','', $_POST['coordsSpace']);
-            $answerCords = $spacePlane->addCoords();
+            $spaceplan = new SPACE_Model($buildingid, $floorid, $spaceid,'','','', $_POST['coordsSpace']);
+            $answerCords = $spaceplan->addCoords();
             if($answerCords === true){
-                $view->setFlashSuccess($strings["Plane successfully updated"]);
+                $view->setFlashSuccess($strings["Space successfully updated in plan"]);
                 $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
             }else {
                 $view->setFlashDanger($strings[$answerCords]);
@@ -203,16 +202,16 @@ Switch ($_REQUEST['action']){
         } else {
                 $space = new SPACE_Model($buildingid, $floorid, $spaceid);
                 $spaceValues = $space->findSpace();
-                $floorPlane = $space->findPlane();
-                new SPACE_SELECT_PLANE($spaceValues, $floorPlane);
+                $floorplan = $space->findplan();
+                new SPACE_SELECT_PLAN($spaceValues, $floorplan);
         }
 
     break;
 
-    case  $strings['ShowSpacePlane']:
+    case  $strings['ShowSpacePlan']:
 
         if(!isset($_GET['building']) && !isset($_GET['floor'])){
-            $view->setFlashDanger($strings["Building and floor id is mandatory"]);
+            $view->setFlashDanger($strings["Building and floor id are mandatory"]);
             $view->redirect("BUILDING_Controller.php");
         }
 
@@ -222,13 +221,13 @@ Switch ($_REQUEST['action']){
 
         $space = new SPACE_Model($buildingid, $floorid, $spaceid);
         $spaceValues = $space->findInfoSpace();
-        $floorPlane = $space->findPlane();
-        new SPACE_SHOW_PLANE($spaceValues, $floorPlane);
+        $floorplan = $space->findplan();
+        new SPACE_SHOW_PLAN($spaceValues, $floorplan);
 
     break;
 
 
-    case  $strings['EditSpacePlane']:
+    case  $strings['EditSpacePlan']:
 
     if (!isset($_SESSION['LOGIN'])){
         $view->setFlashDanger($strings["Not in session. Add space requires login."]);
@@ -236,7 +235,7 @@ Switch ($_REQUEST['action']){
     } 
 
     if(!isset($_GET['building']) && !isset($_GET['floor'])){
-        $view->setFlashDanger($strings["Building and floor id is mandatory"]);
+        $view->setFlashDanger($strings["Building and floor id are mandatory"]);
         $view->redirect("BUILDING_Controller.php", "");
     }
 
@@ -245,10 +244,10 @@ Switch ($_REQUEST['action']){
     $spaceid = $_GET['space'];
 
      if (isset($_POST["submit"])) { 
-            $spacePlane = new SPACE_Model($buildingid, $floorid, $spaceid,'','','', $_POST['coordsSpace']);
-            $answerCoords = $spacePlane->addCoords();
+            $spaceplan = new SPACE_Model($buildingid, $floorid, $spaceid,'','','', $_POST['coordsSpace']);
+            $answerCoords = $spaceplan->addCoords();
             if($answerCoords === true){
-                $view->setFlashSuccess($strings["Plane successfully updated"]);
+                $view->setFlashSuccess($strings["Space successfully updated in plan"]);
                 $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
             }else {
                 $view->setFlashDanger($strings[$answerCoords]);
@@ -257,8 +256,8 @@ Switch ($_REQUEST['action']){
     } else {
         $space = new SPACE_Model($buildingid, $floorid, $spaceid);
         $spaceValues = $space->findSpace();
-        $floorPlane = $space->findPlane();
-        new SPACE_EDIT_PLANE($spaceValues, $floorPlane);
+        $floorplan = $space->findplan();
+        new SPACE_SELECT_PLAN($spaceValues, $floorplan);
     }
 
     break;

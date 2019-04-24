@@ -59,7 +59,7 @@ class FUNCTIONALITY_SHOWALL{
                                     <td>
                                         <?php  if(checkRol('EDIT', 'FUNCTIONALITY')): ?>
                                             <a href="FUNCTIONALITY_Controller.php?action=<?= $strings['Edit']?>&function=<?= $this->functions[$j]['sm_idFunction']?>">
-                                                <span title="<?= $strings['Edit Functionality']?>" class="btn btn-primary btn-sm fa fa-pencil"></span>
+                                                <span title="<?= $strings['Edit Functionality']?>" class="btn btn-warning btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
                                         <?php  if(checkRol('DELETE', 'FUNCTIONALITY')): ?>
@@ -78,7 +78,7 @@ class FUNCTIONALITY_SHOWALL{
                                                             <input type="hidden" name="function" value="<?=$this->functions[$j]['sm_idFunction']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
-                                                                <button type="submit" name="submit" id="submit" class="btn btn-success success"><?= $strings["Ok"]?></button>
+                                                                <button type="submit" name="submit" id="submit" class="btn btn-primary success"><?= $strings["Ok"]?></button>
                                                             </div>
                                                         </form>
                                                     </div>

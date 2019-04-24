@@ -29,7 +29,6 @@ function searchInTable() {
 }
 
 
-
 function uploadProfilePhoto(){
     $("#imageUpload").click();
 }
@@ -45,7 +44,6 @@ function previewProfilePhoto(uploader) {
 }
 
 
-
 function showActions(idFunction){
     divFunction = document.getElementsByClassName('id-'.concat(idFunction));
     for(i=0; i<divFunction.length; i++){
@@ -56,7 +54,6 @@ function showActions(idFunction){
         }      
     }
 }
-
 
 
 function highlightNumberInventoryAndSurface(){
@@ -75,3 +72,9 @@ function highlightNumberInventoryAndSurface(){
         }
     }
 }
+
+
+// function loadWelcomeImg(){
+//     img = document.getElementById("imgIndex");
+
+// }

@@ -39,7 +39,7 @@ $tests['SM_BUILDING_DELETE_TEST3']["Result"] = $deleteAnswer;
 
 $tests['SM_BUILDING_DELETE_TEST4']=(['Functionality' => "SM_BUILDING_DELETE",
                 'Description' => "Test 4. Attempt to delete building with a identifier that not exists in the DB",
-                'Expected' => "Building doesn't exist",
+                'Expected' => "There isn't a building with that identifier",
                 'Result' => 'Not executed']);
 
 $building = new BUILDING_Model('0');

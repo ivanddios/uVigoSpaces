@@ -177,7 +177,7 @@ $tests['SM_SPACE_EDIT_TEST15']["Result"] = $updateAnswer;
 
 $tests['SM_SPACE_EDIT_TEST16']=(['Functionality' => "SM_SPACE_EDIT",
                 'Description' => "Test 16. Attempt to update the space id for another one that is associated with another space",
-                'Expected' => "There already is a space with that identifier in the floor",
+                'Expected' => "There is already a space with that identifier in this floor",
                 'Result' => 'Not executed']);
 
 $space = new SPACE_Model('OSBI0', '00', '00001', 'nameSpace', 99.9, '######');

@@ -23,25 +23,25 @@ class BUILDING_SHOW{
 									<div class="input-container">
 											<span class="input-group-text fa fa-lock"></span>
 											<input type="text" id="idBuilding" name="idBuilding" value="<?=$this->building['sm_idBuilding']?>" readonly/>
-											<label for="idBuilding"><?= $strings['What is the identifier of this building?']?></label>
+											<label for="idBuilding"><?= $strings['idBuilding']?></label>
 									</div>
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-building"></span>
 										<input type="text" id="nameBuilding" name="nameBuilding" value="<?=$this->building['sm_nameBuilding']?>" readonly/>
-										<label for="nameBuilding"><?= $strings['What is the identifier of this building?']?></label>
+										<label for="nameBuilding"><?= $strings['nameBuilding']?></label>
 									</div>
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-map-marker"></span>
 										<input type="text" id="addressBuilding" name="addressBuilding" value="<?=$this->building['sm_addressBuilding']?>" readonly/>
-										<label for="addressBuilding"><?= $strings['What is your postal address?']?></label>
+										<label for="addressBuilding"><?= $strings['addressBuilding']?></label>
 									</div>
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-phone"></span>
 										<input type="text" id="phoneBuilding" name="phoneBuilding" value="<?=$this->building['sm_phoneBuilding']?>" readonly/>
-										<label for="phoneBuilding"><?= $strings['What is your phone?']?></label>
+										<label for="phoneBuilding"><?= $strings['phoneBuilding']?></label>
 									</div>
 								</div>
 							<a href="../controller/BUILDING_Controller.php?"><?= $strings["Back"] ?></a>

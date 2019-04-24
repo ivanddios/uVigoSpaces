@@ -3,11 +3,11 @@
 class SPACE_EDIT{
 	
 	private $space;
-	private $plane;
+	private $plan;
 
-	function __construct($space, $plane) {
+	function __construct($space, $plan) {
 			$this->space = $space;
-			$this->plane = $plane;
+			$this->plan = $plan;
 			
 			$this->render();
     }
@@ -53,9 +53,11 @@ class SPACE_EDIT{
 										<label for="numberInventorySpace"><?= $strings['What is the number inventory?']?></label>
 									</div>
 
+									<label class="control-label"><?= $strings['Click to edit the space in the plan']?></label>
 									<div class="inputWithIcon inputIconBg">
-										<a href="SPACE_Controller.php?action=<?= $strings['EditSpacePlane']?>&building=<?= $this->space['sm_idBuilding']?>&floor=<?= $this->space['sm_idFloor']?>&space=<?= $this->space['sm_idSpace']?>">
-											<img src='<?= $this->plane; ?>' class="avatarPlane">
+										<a href="SPACE_Controller.php?action=<?= $strings['EditSpacePlan']?>&building=<?= $this->space['sm_idBuilding']?>&floor=<?= $this->space['sm_idFloor']?>&space=<?= $this->space['sm_idSpace']?>">
+											<img id="view-plan" src='<?= $this->plan; ?>' class="avatarplan">
+											<img id="icon-view" src="../view/img/iconTouch.png">
 										</a>
 									</div>
 

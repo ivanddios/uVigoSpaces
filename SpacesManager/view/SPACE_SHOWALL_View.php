@@ -74,7 +74,7 @@ class SPACE_SHOWALL{
                                         <td>
                                             <?php  if(checkRol('EDIT', 'SPACE')): ?>
                                                 <a href="SPACE_Controller.php?action=<?php echo $strings['Edit']?>&building=<?= $this->spaces[$j]['sm_idBuilding']?>&floor=<?= $this->spaces[$j]['sm_idFloor']?>&space=<?= $this->spaces[$j]['sm_idSpace']?>">
-                                                    <span title="<?= $strings['Edit Space']?>" class="btn btn-primary btn-sm fa fa-pencil"></span>
+                                                    <span title="<?= $strings['Edit Space']?>" class="btn btn-warning btn-sm fa fa-pencil"></span>
                                                 </a>
                                             <?php endif; ?>
                                             <?php  if(checkRol('DELETE', 'SPACE')): ?>
@@ -92,7 +92,7 @@ class SPACE_SHOWALL{
                                                             <div class="modal-footer">
                                                                 <form method="POST" action="SPACE_Controller.php?action=<?= htmlentities($strings['Delete'])?>&building=<?= htmlentities($this->spaces[$j]['sm_idBuilding'])?>&floor=<?= $this->spaces[$j]['sm_idFloor']?>&space=<?= $this->spaces[$j]['sm_idSpace']?>">
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
-                                                                    <button type="submit" name="submit" class="btn btn-success success"><?= $strings["Ok"]?></button> 
+                                                                    <button type="submit" name="submit" class="btn btn-primary success"><?= $strings["Ok"]?></button> 
                                                                 </form>
                                                             </div>
                                                         </div>

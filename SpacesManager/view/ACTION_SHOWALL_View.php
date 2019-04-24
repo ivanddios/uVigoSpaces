@@ -47,7 +47,7 @@ class ACTION_SHOWALL{
                                             if ($key === $listTitles[$i]) : ?>
                                                 <td>
                                                     <?php if ($key === 'sm_nameAction') {?>
-                                                        <a title="<?= $strings['Show Action']?>" href='ACTION_Controller.php?action=<?= $strings['Show']?>&action=<?= $this->actions[$j]['sm_idAction']?>'><?= $value?></a>                
+                                                        <a title="<?= $strings['Show Action']?>" href="ACTION_Controller.php?action=<?= $strings['Show']?>&id=<?= $this->actions[$j]['sm_idAction']?>"><?=$value?></a>                
                                                     <?php }else {
                                                         echo $value;
                                                     } ?>
@@ -59,7 +59,7 @@ class ACTION_SHOWALL{
                                     <td>
                                         <?php  if(checkRol('EDIT', 'ACTION')): ?>
                                             <a href="ACTION_Controller.php?action=<?= $strings['Edit']?>&accion=<?= $this->actions[$j]['sm_idAction']?>">
-                                                <span title="<?= $strings['Edit Action']?>" class="btn btn-primary btn-sm fa fa-pencil"></span>
+                                                <span title="<?= $strings['Edit Action']?>" class="btn btn-warning btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
                                         <?php  if(checkRol('DELETE', 'ACTION')): ?>
@@ -78,7 +78,7 @@ class ACTION_SHOWALL{
                                                             <input type="hidden" name="action" value="<?=$this->actions[$j]['sm_idAction']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
-                                                                <button type="submit" name="submit" id="submit" class="btn btn-success success"><?= $strings["Ok"]?></button>
+                                                                <button type="submit" name="submit" id="submit" class="btn btn-primary success"><?= $strings["Ok"]?></button>
                                                             </div>
                                                         </form>
                                                     </div>

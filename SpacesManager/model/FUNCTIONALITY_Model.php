@@ -102,7 +102,8 @@ class FUNCTIONALITY_Model {
                 return 'Error in the query on the database';
             } else {
                 $group = new GROUP_Model();
-                $groups = $group->getGroupsForPermission($this->idFunction, $actions);
+                $groupsActions = $group->getGroupsActionsForPermission($this->idFunction, $actions);
+
                 $sqlDelete = "DELETE FROM `SM_FUNCTIONALITY_ACTION` WHERE sm_idFunction = '$this->idFunction'";
                 if (!($resultado = $this->mysqli->query($sqlDelete))) {
                     return 'Error in the query on the database';
@@ -112,11 +113,13 @@ class FUNCTIONALITY_Model {
                         if (!($resultado = $this->mysqli->query($sqlFunctionAction))) {
                             return 'Error in the query on the databasea';
                         }
-                        foreach($groups as $group){
-                            $sqlPermission = "INSERT INTO `SM_PERMISSION` (sm_idGroup, sm_idFunction, sm_idAction) VALUES ($group, $this->idFunction, $action->id)";
-                            if (!($resultado = $this->mysqli->query($sqlPermission))) {
-                                return 'Error in the query on the database';
-                            }
+                    }
+                    foreach($groupsActions as $groupAction){    
+                        $idGroup = $groupAction['idGroup'];
+                        $idAction = $groupAction['idAction'];
+                        $sqlPermission = "INSERT INTO `SM_PERMISSION` (sm_idGroup, sm_idFunction, sm_idAction) VALUES ($idGroup, $this->idFunction, $idAction)";
+                        if (!($resultado = $this->mysqli->query($sqlPermission))) {
+                            return 'Error in the query on the database';
                         }
                     }
                     return true;

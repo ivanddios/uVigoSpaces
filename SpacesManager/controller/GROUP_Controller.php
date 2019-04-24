@@ -41,7 +41,7 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('ADD', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("GROUP_Controller.php");
         }
 
@@ -78,7 +78,7 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('EDIT', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("GROUP_Controller.php");
         }
 
@@ -126,7 +126,7 @@ Switch ($_GET['action']){
     // //     // }
 
     // //     // if(!checkRol('SHOW', $function)){
-    // //     //     $view->setFlashDanger($strings["You do not have the necessary permits"]);
+    // //     //     $view->setFlashDanger($strings["You don't have the necessary permits"]);
     // //     //     $view->redirect("BUILDING_Controller.php", "");
     // //     // }
 
@@ -151,7 +151,7 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('SHOW ALL', 'USER')){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("GROUP_Controller.php");
         }
 
@@ -161,7 +161,7 @@ Switch ($_GET['action']){
         }
         $groupid = $_GET['group'];
 
-        $user = new USER_Model('','','','','','','','','',$groupid);
+        $user = new USER_Model('','','','','','','','', $groupid);
         $users = $user->getUsersForGroup();
         new USER_SHOWALL($users);
 
@@ -176,7 +176,7 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('DELETE', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("GROUP_Controller.php");
         }
 
@@ -208,7 +208,7 @@ Switch ($_GET['action']){
         }
 
         if(!checkRol('SHOW ALL', $function)){
-            $view->setFlashDanger($strings["You do not have the necessary permits"]);
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php");
         }
 
