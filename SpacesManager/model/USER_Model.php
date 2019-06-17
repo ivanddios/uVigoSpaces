@@ -1,7 +1,7 @@
 <?php
 
-require_once(__DIR__."..\..\core\ConnectionBD.php");
-require_once(__DIR__.'..\..\model\GROUP_Model.php');
+require_once("../core/ConnectionBD.php");
+require_once("../model/GROUP_Model.php");
 
 class USER_Model {
 
@@ -81,11 +81,12 @@ class USER_Model {
         $sql ="SELECT DISTINCT A.sm_nameAction, F.sm_nameFunction 
                 FROM `SM_GROUP` AS G, `SM_USER_GROUP` AS UG, `SM_PERMISSION` AS P, `SM_FUNCTIONALITY` AS F, `SM_ACTION` AS A 
                 WHERE UG.sm_email = '$this->email' AND UG.sm_idGroup = G.sm_idGroup 
+                    AND G.sm_idGroup = P.sm_idGroup
                     AND P.sm_idFunction = F.sm_idFunction AND P.sm_idAction = A.sm_idAction";
         $result = $this->mysqli->query($sql);  
         $j = 0;
         if (!($resultado = $this->mysqli->query($sql))) {
-            throw new Exception('Error in the query on the database');
+            return 'Error in the query on the database';
         } else {
             $toret = array();
             $i = 0;
@@ -101,7 +102,7 @@ class USER_Model {
     public function getAllUsers() {
         $sql = "SELECT U.* FROM `USER` AS U, `SM_USER` AS SMU WHERE U.email = SMU.sm_email";
         if (!($resultado = $this->mysqli->query($sql))) {
-            throw new Exception('Error in the query on the database');
+            return 'Error in the query on the database';
         } else {
             $toret = array();
             $i = 0;
@@ -130,8 +131,8 @@ class USER_Model {
         $errors = $this->checkIsValidForAdd();
         if($errors === false){
             if(!$this->existsUserInSM()){
-                if(!$this->existsUser()){
-                    if(!$this->existsDNI()){
+                if(!$this->existsDNI()){
+                    if(!$this->existsUser()){
                         $passwordBD = md5($this->password);
                         $dateBD = $this->formatDate($this->birthdate);
                         $photoBD =$this->dirPhoto.$this->getPhoto('name');
@@ -139,9 +140,9 @@ class USER_Model {
                         if (!($resultado = $this->mysqli->query($sqlUser))) {
                             return 'Error in the query on the database';
                         }   
-                    }else{
-                        return 'There is another user with that DNI in the DB';
                     }
+                }else{
+                    return 'There is another user with that DNI in the DB';
                 } 
                 $sqlSM_USER = "INSERT INTO `SM_USER` VALUES ('$this->email')";
                 if (!($resultado = $this->mysqli->query($sqlSM_USER))) {
@@ -154,7 +155,9 @@ class USER_Model {
                         return 'Error in the query on the database';
                     }
                 }  
-            }   
+            }else{
+                return 'This user already is in Spaces application';
+            }  
         }else {
             return $errors;
         }
@@ -185,6 +188,10 @@ class USER_Model {
             if (!($resultado = $this->mysqli->query($sql))) {
                 return 'Error in the query on the database';
             } else {
+                $sqlGroup = "UPDATE `SM_USER_GROUP` SET sm_idGroup = '$this->group' WHERE sm_email = '$this->email'";
+                if (!($resultado = $this->mysqli->query($sqlGroup))) {
+                    return 'Error in the query on the database';
+                }
                 return true;
             }
         } else {
@@ -213,15 +220,28 @@ class USER_Model {
     public function searchUser() {
 
         $dateBD = $this->formatDate($this->birthdate);
-        $sqlUser = "SELECT U.* FROM `USER` AS U, `SM_USER` AS SMU, `SM_USER_GROUP` AS SMUG WHERE
-                    U.email LIKE '%$this->email%' AND
-                    U.name LIKE '%$this->name%' AND
-                    U.surname LIKE '%$this->surname%' AND
-                    U.dni LIKE '%$this->dni%' AND
-                    U.birthdate LIKE '%$this->birthdate%' AND
-                    U.phone LIKE '%$this->phone%' AND
-                    U.email = SMU.sm_email";
-           
+        if($this->group !== '0'){
+            $sqlUser = "SELECT DISTINCT U.* FROM `USER` AS U, `SM_USER` AS SMU, `SM_USER_GROUP` AS SMUG 
+            WHERE U.email LIKE '%$this->email%' 
+                AND U.name LIKE '%$this->name%' 
+                AND U.surname LIKE '%$this->surname%' 
+                AND U.dni LIKE '%$this->dni%' 
+                AND U.birthdate LIKE '%$this->birthdate%' 
+                AND U.phone LIKE '%$this->phone%' 
+                AND U.email = SMU.sm_email
+                AND SMU.sm_email = SMUG.sm_email
+                AND SMUG.sm_idGroup = '$this->group'";
+        } else{
+            $sqlUser = "SELECT DISTINCT U.* FROM `USER` AS U, `SM_USER` AS SMU, `SM_USER_GROUP` AS SMUG 
+            WHERE U.email LIKE '%$this->email%' 
+                AND U.name LIKE '%$this->name%' 
+                AND U.surname LIKE '%$this->surname%' 
+                AND U.dni LIKE '%$this->dni%' 
+                AND U.birthdate LIKE '%$this->birthdate%' 
+                AND U.phone LIKE '%$this->phone%'
+                AND U.email = SMU.sm_email ";
+        }
+        
         if (!($resultado = $this->mysqli->query($sqlUser))) {
             return 'Error in the query on the database';
         } else {
@@ -273,7 +293,11 @@ class USER_Model {
         if(is_file($this->getLinkProfilePhoto())){
             unlink($this->getLinkProfilePhoto());
         }
-        return (rmdir($this->dirPhoto));
+        
+        if(is_dir($this->dirPhoto)){
+            return (rmdir($this->dirPhoto));
+        }
+       
     }
 
 
@@ -282,7 +306,7 @@ class USER_Model {
                 WHERE U.email = SMU.sm_email AND SMU.sm_email = SMUG.sm_email AND SMUG.sm_idGroup = SMG.sm_idGroup 
                 AND SMG.sm_idGroup = '$this->group'";
         if (!($resultado = $this->mysqli->query($sql))) {
-            throw new Exception('Error in the query on the database');
+            return 'Error in the query on the database';
         } else {
             $toret = array();
             $i = 0;
@@ -317,16 +341,16 @@ class USER_Model {
     public function existsDNI() {
         $sqlDNI = "SELECT * FROM `USER` WHERE dni = '$this->dni'";
         $resultDNI = $this->mysqli->query($sqlDNI);
-        if ($resultDNI->num_rows == 1) {
+        if ($resultDNI->num_rows == 0) {
             $sqlDNIforEmail = "SELECT * FROM `USER` WHERE email = '$this->email' AND dni = '$this->dni'";
             $resultDNIforEmail = $this->mysqli->query($sqlDNIforEmail);
             if ($resultDNIforEmail->num_rows == 1) {
-                return false;
-            } else{
                 return true;
+            } else{
+                return false;
             }
         } else {
-            return false;
+            return true;
         }
     }
 
@@ -517,4 +541,5 @@ class USER_Model {
     }
 
 }
-    ?>
+
+?>

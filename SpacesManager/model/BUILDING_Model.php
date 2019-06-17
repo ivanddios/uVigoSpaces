@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__."..\..\core\ConnectionBD.php");
+require_once("../core/ConnectionBD.php");
 
 class BUILDING_Model {
 
@@ -33,7 +33,7 @@ class BUILDING_Model {
     public function getAllBuilding() {
         $sql = "SELECT * FROM `SM_BUILDING`";
         if (!($resultado = $this->mysqli->query($sql))) {
-            throw new Exception('Error in the query on the database');
+            return 'Error in the query on the database';
         } else {
             $toret = array();
             $i = 0;
@@ -48,7 +48,7 @@ class BUILDING_Model {
     public function getBuilding() {
         $sql = "SELECT * FROM `SM_BUILDING` WHERE sm_idBuilding = '$this->idBuilding'";
         if (!($resultado = $this->mysqli->query($sql))) {
-            throw new Exception('Error in the query on the database');
+            return 'Error in the query on the database';
         } else {
             $result = $resultado->fetch_array();
             return $result;
@@ -180,7 +180,6 @@ class BUILDING_Model {
         return $errors;
     }
 
+}
 
-
-
-    }
+?>

@@ -1,6 +1,6 @@
 <?php 
 
-require_once(__DIR__.'..\..\model\ACTION_Model.php');
+require_once("../model/ACTION_Model.php");
 
 
 $tests['SM_ACTION_ADD_TEST1']=(['Functionality' => "SM_ACTION_ADD",

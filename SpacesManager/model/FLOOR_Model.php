@@ -1,7 +1,7 @@
 <?php
 
-require_once(__DIR__."..\..\core\ConnectionBD.php");
-require_once(__DIR__."..\..\model\BUILDING_Model.php");
+require_once("../core/ConnectionBD.php");
+require_once("../model/BUILDING_Model.php");
 
 class FLOOR_Model {
 
@@ -138,9 +138,6 @@ class FLOOR_Model {
     }
 
 
-
-
-
     /* AUXILIARY FUNCTIONS */
 
     public function getFloorName() {
@@ -195,7 +192,6 @@ class FLOOR_Model {
     }
 
     public function validateExtensionplan(){
-
         $allowed =  array('jpeg', 'jpg');
         $filename = $this->getplanFloor('name');
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
@@ -247,6 +243,7 @@ class FLOOR_Model {
                 $errors = "Floor plan extension is invalid";
             }
         }
+
         return $errors;
     }
 
@@ -274,8 +271,10 @@ class FLOOR_Model {
         }else if (!$this->existsFloor()) {
             $errors= "There isn't a floor with that identifier in the building";
         }
+
         return $errors;
     }
 
-
 }
+
+?>

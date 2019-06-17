@@ -1,6 +1,6 @@
 <?php 
 
-require_once(__DIR__.'..\..\model\FUNCTIONALITY_Model.php');
+require_once("../model/FUNCTIONALITY_Model.php");
 
 $lastFunctionID = FUNCTIONALITY_Model::findLastFunctionID();
 
@@ -13,7 +13,7 @@ $tests['SM_FUNCTIONALITY_EDIT_TEST1']=(['Functionality' => "SM_FUNCTIONALITY_EDI
                 'Result' => 'Not executed']);
 
 $function = new FUNCTIONALITY_Model();
-$editAnswer = $function->updateFunction(null);
+$editAnswer = $function->updateFunction();
 $tests['SM_FUNCTIONALITY_EDIT_TEST1']["Result"] = $editAnswer;
 
 
@@ -25,7 +25,7 @@ $tests['SM_FUNCTIONALITY_EDIT_TEST2']=(['Functionality' => "SM_FUNCTIONALITY_EDI
                 'Result' => 'Not executed']);
 
 $function = new FUNCTIONALITY_Model('abc');
-$editAnswer = $function->updateFunction(null);
+$editAnswer = $function->updateFunction();
 $tests['SM_FUNCTIONALITY_EDIT_TEST2']["Result"] = $editAnswer;
 
 
@@ -36,7 +36,7 @@ $tests['SM_FUNCTIONALITY_EDIT_TEST3']=(['Functionality' => "SM_FUNCTIONALITY_EDI
                 'Result' => 'Not executed']);
 
 $function = new FUNCTIONALITY_Model(999);
-$editAnswer = $function->updateFunction(null);
+$editAnswer = $function->updateFunction();
 $tests['SM_FUNCTIONALITY_EDIT_TEST3']["Result"] = $editAnswer;
 
 
@@ -48,7 +48,7 @@ $tests['SM_FUNCTIONALITY_EDIT_TEST4']=(['Functionality' => "SM_FUNCTIONALITY_EDI
                 'Result' => 'Not executed']);
 
 $function = new FUNCTIONALITY_Model($lastFunctionID);
-$editAnswer = $function->updateFunction(null);
+$editAnswer = $function->updateFunction();
 $tests['SM_FUNCTIONALITY_EDIT_TEST4']["Result"] = $editAnswer;
 
 
@@ -60,7 +60,7 @@ $tests['SM_FUNCTIONALITY_EDIT_TEST5']=(['Functionality' => "SM_FUNCTIONALITY_EDI
                 'Result' => 'Not executed']);
 
 $function = new FUNCTIONALITY_Model($lastFunctionID,'','descriptFunction');
-$editAnswer = $function->updateFunction(null);
+$editAnswer = $function->updateFunction();
 $tests['SM_FUNCTIONALITY_EDIT_TEST5']["Result"] = $editAnswer;
 
 
@@ -72,7 +72,7 @@ $tests['SM_FUNCTIONALITY_EDIT_TEST6']=(['Functionality' => "SM_FUNCTIONALITY_EDI
 
 $function = new FUNCTIONALITY_Model($lastFunctionID,'uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
                             dE89t27sFO18FUUsXBcJeFCVo3ZzXo1oo1T5gVgWT4ffpW2y6zydJf6cU8EKC7Shi7PFlgynWFIZWdxsuiAJuA0jXgAe6IJgGtXH0lSfSYYCpmSXj3FnFMXDiYoDJCY','descriptFunction');
-$editAnswer = $function->updateFunction(null);
+$editAnswer = $function->updateFunction();
 $tests['SM_FUNCTIONALITY_EDIT_TEST6']["Result"] = $editAnswer;
 
 
@@ -83,7 +83,7 @@ $tests['SM_FUNCTIONALITY_EDIT_TEST7']=(['Functionality' => "SM_FUNCTIONALITY_EDI
                 'Result' => 'Not executed']);
 
 $function = new FUNCTIONALITY_Model($lastFunctionID,'111111','descriptFunction');
-$editAnswer = $function->updateFunction(null);
+$editAnswer = $function->updateFunction();
 $tests['SM_FUNCTIONALITY_EDIT_TEST7']["Result"] = $editAnswer;
 
 
@@ -96,7 +96,7 @@ $tests['SM_FUNCTIONALITY_EDIT_TEST8']=(['Functionality' => "SM_FUNCTIONALITY_EDI
                 'Result' => 'Not executed']);
 
 $function = new FUNCTIONALITY_Model($lastFunctionID,'nameFunction');
-$editAnswer = $function->updateFunction(null);
+$editAnswer = $function->updateFunction();
 $tests['SM_FUNCTIONALITY_EDIT_TEST8']["Result"] = $editAnswer;
 
 
@@ -108,7 +108,7 @@ $tests['SM_FUNCTIONALITY_EDIT_TEST9']=(['Functionality' => "SM_FUNCTIONALITY_EDI
 
 $function = new FUNCTIONALITY_Model($lastFunctionID,'nameFunction','uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
 dE89t27sFO18FUUsXBcJeFCVo3ZzXo1oo1T5gVgWT4ffpW2y6zydJf6cU8EKC7Shi7PFlgynWFIZWdxsuiAJuA0jXgAe6IJgGtXH0lSfSYYCpmSXj3FnFMXDiYoDJCY');
-$editAnswer = $function->updateFunction(null);
+$editAnswer = $function->updateFunction();
 $tests['SM_FUNCTIONALITY_EDIT_TEST9']["Result"] = $editAnswer;
 
 
@@ -119,7 +119,7 @@ $tests['SM_FUNCTIONALITY_EDIT_TEST10']=(['Functionality' => "SM_FUNCTIONALITY_ED
                 'Result' => 'Not executed']);
 
 $function = new FUNCTIONALITY_Model($lastFunctionID,'nameFunction','111111');
-$editAnswer = $function->updateFunction(null);
+$editAnswer = $function->updateFunction();
 $tests['SM_FUNCTIONALITY_EDIT_TEST10']["Result"] = $editAnswer;
 
 
@@ -132,7 +132,7 @@ $tests['SM_FUNCTIONALITY_EDIT_TEST11']=(['Functionality' => "SM_FUNCTIONALITY_ED
                 'Result' => 'Not executed']);
 
 $function = new FUNCTIONALITY_Model($lastFunctionID,'nameFunction','descripFunction');
-$editAnswer = $function->updateFunction(null);
+$editAnswer = $function->updateFunction();
 $tests['SM_FUNCTIONALITY_EDIT_TEST11']["Result"] = $editAnswer;
 
 
@@ -142,31 +142,23 @@ $tests['SM_FUNCTIONALITY_EDIT_TEST12']=(['Functionality' => "SM_FUNCTIONALITY_ED
                 'Expected' => "Some action for functionality doesn't exist",
                 'Result' => 'Not executed']);
 
-$actions = array(array('id'=>1000),array("id"=>2),array("id"=>3),array("id"=>4),array("id"=>5));
-$actions = json_encode($actions);
-$actions = json_decode($actions);
-
-$function = new FUNCTIONALITY_Model($lastFunctionID,'nameFunction','descripFunction');
-$editAnswer = $function->updateFunction($actions);
+$actions = array('1000', '3', '1');
+$function = new FUNCTIONALITY_Model($lastFunctionID,'nameFunction','descripFunction', $actions);
+$editAnswer = $function->updateFunction();
 $tests['SM_FUNCTIONALITY_EDIT_TEST12']["Result"] = $editAnswer;
 
 
 
 //FINAL TEST
-
 $tests['SM_FUNCTIONALITY_EDIT_TEST13']=(['Functionality' => "SM_FUNCTIONALITY_EDIT",
                 'Description' => "Test 13. Attempt to edit functionality with correct values",
                 'Expected' => 'Function successfully updated',
                 'Result' => 'Not executed']);
 
         
-$actions = array(array('id'=>1),array("id"=>2),array("id"=>3),array("id"=>4),array("id"=>5));
-$actions = json_encode($actions);
-$actions = json_decode($actions);
-
-
-$function = new FUNCTIONALITY_Model($lastFunctionID,'nameFunctionUpdated','descriptFunctionUpdated');
-$editAnswer = $function->updateFunction($actions);
+$actions = array('4', '3', '1');
+$function = new FUNCTIONALITY_Model($lastFunctionID,'nameFunctionUpdated','descriptFunctionUpdated', $actions);
+$editAnswer = $function->updateFunction();
 if($editAnswer === true){
     $tests['SM_FUNCTIONALITY_EDIT_TEST13']["Result"] = 'Function successfully updated';
 } else {

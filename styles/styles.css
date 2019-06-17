@@ -1,13 +1,11 @@
 @import "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css";
 
 body {
-	font-family:'K2D','Open Sans', Arial, sans-serif;
-	font-size:14px;
-	font-weight:300;
-	line-height:1.6em;
-	color:#000;
-	background-color:#FFF;
-	/* overflow-x:hidden;  */
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	font-weight: 400;
+	line-height: 1.6em;
+	color: #000;
+	background-color: #FFF;
 }
 
 /* HEADER -> NAVBAR */
@@ -164,7 +162,9 @@ header{
 	animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-.input-container > input:focus + label, .input-container > input:read-only + label, .input-container > input:valid + label {
+ 
+.input-container > input:focus + label,
+.input-container > input:valid + label {
   -webkit-animation-name: labelOut;
   animation-name: labelOut;
   -webkit-animation-duration: 0.35s;
@@ -174,32 +174,56 @@ header{
  -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
   -webkit-animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
-  animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+	animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
 }
-	
+
+
+.input-container > input:-moz-read-only + label
+ {
+  animation-name: labelOut;
+  animation-duration: 0.35s;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+	animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+
+.input-container > input:read-only + label
+{
+  -webkit-animation-name: labelOut;
+  -webkit-animation-duration: 0.35s;
+  -webkit-animation-direction: normal;
+ 	-webkit-animation-fill-mode: forwards;
+  -webkit-animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+
+
+
 .input-group-text {
 	width: 8%;
 	background-color: #aaa;
 	color: #fff;
 }
 
-@keyframes 
+
+ @keyframes 
   labelIn {  
-	    0% { 
+	  0% { 
 			left: 1px;
 			opacity: 1;
 			bottom: 0px; 
 			font-size: 1em;
-   		    font-weight: 300;
+   		font-weight: 300;
   	}
-        50% {
+    50% {
 			left: 1em;
 			opacity: 0;
 			bottom: 0px; 
 			font-size: 1em;
    		font-weight: 300;
   	}
-   	    50.01% {
+   	50.01% {
 			font-size: 1em;
 			left: 1em;
 			opacity: 0;
@@ -249,7 +273,9 @@ header{
 			color: #636c72;
 			font-weight: 400;
 		}
-	}
+	} 
+
+
 
 /* CHECKBOX */
 
@@ -296,7 +322,7 @@ input[type="checkbox"]:empty ~ label:before {
 }
   
 input[type="checkbox"]:hover:not(:checked) ~ label:before {
-	content: '\2714';
+	content: '\2713';
 	text-indent: .9em;
 	color: #C2C2C2;
 } 
@@ -306,7 +332,7 @@ input[type="checkbox"]:checked ~ label {
 }
   
 input[type="checkbox"]:checked ~ label:before {
-	content: '\2714';
+	content: '\2713';
 	text-indent: .9em;
 	color: #333;
 }
@@ -316,7 +342,15 @@ input[type="checkbox"]:checked ~ label:before {
 	background-color: #337ab7;
 }
 
+/* MODAL */
 
+.modal-header{
+	background-color: #337ab7;
+	color: #FFF;
+}
+.modal-body{
+	margin-top: 4%;
+}
 
 /* BUTTONS */
 
@@ -342,8 +376,8 @@ input[type="checkbox"]:checked ~ label:before {
 	width: 100%;
 	padding-top: 1.25rem;
 	padding-bottom: 1.25rem;
-  background-color: white;
-  color: #000;
+  	background-color: white;
+  	color: #000;
 	text-align: center; 
 	border-top: 2px solid black;
 	border-bottom: 2px solid black;
@@ -356,4 +390,23 @@ input[type="checkbox"]:checked ~ label:before {
 
 .copyright a {
 	color:#000;
+}
+
+
+
+
+/* TESTS */
+
+.resume{
+	font-weight: bold;
+}
+
+.test-valid{
+	color: green; 
+	font-weight: bold;
+}
+
+.test-invalid{
+	color: red; 
+	font-weight: bold;
 }

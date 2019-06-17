@@ -31,7 +31,7 @@ class FUNCTIONALITY_SHOWALL{
                                 <?php endforeach; ?>
                                 <?php  if(checkRol('ADD', 'FUNCTIONALITY')): ?>
                                     <th scope="col">
-                                        <a href="FUNCTIONALITY_Controller.php?action=<?= $strings['Add']?>">
+                                        <a href="FUNCTIONALITY_Controller.php?action=Add">
                                             <span title="<?= $strings['Add Functionality']?>" class="btn btn-success btn-sm fa fa-plus"></span>
                                         </a>
                                     </th>

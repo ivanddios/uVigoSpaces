@@ -1,6 +1,6 @@
 <?php 
 
-require_once(__DIR__.'..\..\model\FUNCTIONALITY_Model.php');
+require_once("../model/FUNCTIONALITY_Model.php");
 
 
 //TESTS -> FUNCTIONALITY ID

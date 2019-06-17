@@ -21,7 +21,7 @@ class FLOOR_ADD{
 						<?=htmlentities($strings["Data of the new building's floor"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form method="POST" action="FLOOR_Controller.php?action=<?= $strings['Add']?>&building=<?= $this->building?>" enctype="multipart/form-data" onkeyup="validateFloor(this)">
+						<form method="POST" action="FLOOR_Controller.php?action=Add&building=<?= $this->building?>" enctype="multipart/form-data" onkeyup="validateFloor(this)">
 							<div id="group-form">
 
 								<div class="input-container">
@@ -63,7 +63,7 @@ class FLOOR_ADD{
 							</div>	
 							<button id="saveButton" type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>
 						</form>
-						<a href="FLOOR_Controller.php?building=<?= $this->building ?>"><?= $strings["Back"] ?></a>
+						<a class="a-back" href="FLOOR_Controller.php?building=<?= $this->building ?>"><?= $strings["Back"] ?></a>
 					</div>
 				</div>
 			</div>

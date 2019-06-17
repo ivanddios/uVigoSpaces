@@ -1,6 +1,6 @@
 <?php 
 
-require_once(__DIR__.'..\..\model\FLOOR_Model.php');
+require_once("../model/FLOOR_Model.php");
 
 
  //TESTS -> BUILDING ID
@@ -168,7 +168,7 @@ $tests['SM_FLOOR_ADD_TEST14']=(['Functionality' => "SM_FLOOR_ADD",
                 'Expected' => "There is already a floor with that id in this building",
                 'Result' => 'Not executed']);
 
-$planFile = (["name"=> "Planta Baja.jpg", "type"=> "image/jpeg", "tmp_name"=> "C:\xampp\tmp\php8622.tmp", "error"=> 0, "size"=> 1392574]);
+$planFile = (["name"=> "Planta Baja.jpg", "type"=> "image/jpeg", "tmp_name"=> "C:/xampp/tmp/php8622.tmp", "error"=> 0, "size"=> 1392574]);
 $floor = new FLOOR_Model('OSBI0', '00', 'nameFloor', $planFile, 10.05, 10.03);
 $addAnswer = $floor->addFloor();
 $tests['SM_FLOOR_ADD_TEST14']["Result"] = $addAnswer;

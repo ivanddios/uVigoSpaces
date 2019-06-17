@@ -24,7 +24,7 @@ class FUNCTIONALITY_EDIT{
                      <?=htmlentities($strings["Do you want to change something?"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form  method="POST" action="FUNCTIONALITY_Controller.php?action=<?= $strings['Edit']?>&function=<?=$this->values['sm_idFunction']?>" onkeyup="validateFunction(this)">
+						<form  method="POST" action="FUNCTIONALITY_Controller.php?action=Edit&function=<?=$this->values['sm_idFunction']?>" onkeyup="validateFunction(this)">
 							<div id="group-form">
 
                                 <div class="input-container">
@@ -43,18 +43,17 @@ class FUNCTIONALITY_EDIT{
                                     <?php foreach($this->actions as $action): ?>
                                         <div class="checkboxList">
                                             <?php if (in_array($action['sm_idAction'], $this->actionsForFunction)): ?>
-                                                <input type="checkbox" name="action" id="<?=$action['sm_idAction']?>" value="<?=$action['sm_idAction']?>" checked/>
+                                                <input type="checkbox" name="actions[]" id="<?=$action['sm_idAction']?>" value="<?=$action['sm_idAction']?>" checked/>
                                             <?php else : ?>
-                                                <input type="checkbox" name="action" id="<?=$action['sm_idAction']?>" value="<?=$action['sm_idAction']?>"/>
+                                                <input type="checkbox" name="actions[]" id="<?=$action['sm_idAction']?>" value="<?=$action['sm_idAction']?>"/>
                                             <?php endif; ?>
                                                 <label for="<?=$action['sm_idAction']?>"><?=$action['sm_nameAction']?></label>
                                         </div>
                                     <?php endforeach; ?>
-                                <input type="hidden" id="actions" name="actions">
-								<button id="saveButton" type="submit" name="submit" class="btn-dark" onclick="validateCheckboxes()"><?= $strings["Save"]?></button>
+								<button id="saveButton" type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
 							</div> 
 						</form>
-						<a href="FUNCTIONALITY_Controller.php"><?= $strings["Back"] ?></a>
+						<a class="a-back" href="FUNCTIONALITY_Controller.php"><?= $strings["Back"] ?></a>
 					</div>
 				</div>
 			</div>

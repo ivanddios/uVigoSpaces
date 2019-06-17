@@ -1,6 +1,6 @@
 <?php 
 
-require_once(__DIR__.'..\..\model\GROUP_Model.php');
+require_once("../model/GROUP_Model.php");
 
 $lasIDGroup = GROUP_Model::findLastGroupID();
 
@@ -136,9 +136,6 @@ $tests['SM_GROUP_EDIT_TEST12']=(['Functionality' => "SM_GROUP_EDIT",
                 'Result' => 'Not executed']);
 
 $permissions = array(array('idFunction'=>1000,"idAction"=>1),array("idFunction"=>1,"idAction"=>2),array("idFunction"=>1,"idAction"=>3),array("idFunction"=>1,"idAction"=>4),array("idFunction"=>1,"idAction"=>5));
-$permissions = json_encode($permissions);
-$permissions = json_decode($permissions);
-
 $group= new GROUP_Model($lasIDGroup,'nameGroup','descripGroup');
 $editAnswer = $group->updateGroup($permissions);
 $tests['SM_GROUP_EDIT_TEST12']["Result"] = $editAnswer;
@@ -153,9 +150,6 @@ $tests['SM_GROUP_EDIT_TEST13']=(['Functionality' => "SM_GROUP_EDIT",
                 'Result' => 'Not executed']);
 
 $permissions = array(array('idFunction'=>2, "idAction"=>1),array("idFunction"=>2,"idAction"=>2),array("idFunction"=>2, "idAction"=>3),array("idFunction"=>2, "idAction"=>4),array("idFunction"=>2,"idAction"=>5));
-$permissions = json_encode($permissions);
-$permissions = json_decode($permissions);
-
 $group= new GROUP_Model($lasIDGroup,'nameGroupUpdated','descripGroupUpdated');
 $editAnswer = $group->updateGroup($permissions);
 if($editAnswer === true){

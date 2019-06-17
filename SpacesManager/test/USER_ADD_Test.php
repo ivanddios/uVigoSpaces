@@ -1,6 +1,29 @@
 <?php 
 
-require_once(__DIR__.'..\..\model\USER_Model.php');
+require_once("../model/USER_Model.php");
+
+
+function generateRandomEmail($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    $randomString = $randomString.'@gmail.com';
+    return $randomString;
+}
+
+function generateDNI() {
+    $dni=rand(11111111,99999999);
+    $value= (int) ($dni/23);
+    $value *= 23;
+    $value= $dni-$value;
+    $letters= "TRWAGMYFPDXBNJZSQVHLCKEO";
+    $letter= substr ($letters, $value, 1);
+    $dni = $dni.$letter;
+    return $dni;
+}
 
 //TEST-> EMAIL
 $tests['SM_USER_ADD_TEST1']=(['Functionality' => "SM_USER_ADD",
@@ -265,7 +288,9 @@ $tests['SM_USER_ADD_TEST25']=(['Functionality' => "SM_USER_ADD",
                 'Expected' => 'User added successfully',
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('ivanddf1994@gmail.com', 'Aa98ygbgh', 'nameUser', 'surnamesUser', '34950154K', '25/04/1999', 988252875, '', 1);
+$email = generateRandomEmail();
+$dni = generateDNI();
+$user = new USER_Model($email, 'Aa98ygbgh', 'nameUser', 'surnamesUser', $dni, '25/04/1999', 988252875, '', 1);
 $addAnswer = $user->addUser();
 if($addAnswer === true){
     $tests['SM_USER_ADD_TEST25']["Result"] = 'User added successfully';

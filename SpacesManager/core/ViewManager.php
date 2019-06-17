@@ -18,6 +18,12 @@ class ViewManager {
 		ob_start();
 	}
 
+	 public function setElement($element, $content){
+    	$buffer = ob_get_contents();
+		ob_end_clean();
+		$buffer=str_replace($element, $content, $buffer);
+		echo $buffer;
+	}
 
 	public function setVariable($varName, $value) {
 		$this->variables[$varName] = $value;
@@ -69,11 +75,6 @@ class ViewManager {
 		die();		
 	}
 	
-  public function setElement($element, $content){
-    	$buffer = ob_get_contents();
-		ob_end_clean();
-		$buffer=str_replace($element, $content, $buffer);
-		echo $buffer;
-	}
+ 
 	
 }

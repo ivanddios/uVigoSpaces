@@ -22,7 +22,7 @@ class SPACE_ADD{
 						<?=htmlentities($strings["Data of the new space"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form method="POST" action="SPACE_Controller.php?action=<?= $strings['Add']?>&building=<?= $this->building?>&floor=<?= $this->floor?>" enctype="multipart/form-data" onkeyup="validateSpace(this)">
+						<form method="POST" action="SPACE_Controller.php?action=Add&building=<?= $this->building?>&floor=<?= $this->floor?>" enctype="multipart/form-data" onkeyup="validateSpace(this)">
 							<div id="group-form">
                       
 								<input type="hidden" name="idBuilding" value="<?=$this->building?>" readonly>
@@ -55,7 +55,7 @@ class SPACE_ADD{
 							</div>	
 							<button id="saveButton" type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>
 						</form>
-						<a href="SPACE_Controller.php?building=<?= $this->building?>&floor=<?= $this->floor?>"><?= $strings["Back"] ?></a>
+						<a class="a-back" href="SPACE_Controller.php?building=<?= $this->building?>&floor=<?= $this->floor?>"><?= $strings["Back"] ?></a>
 					</div>
 				</div>
 			</div>

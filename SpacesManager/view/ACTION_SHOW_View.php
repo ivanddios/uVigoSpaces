@@ -41,7 +41,7 @@ class ACTION_SHOW{
 								</div>
 
 							</div> 
-						<a href="ACTION_Controller.php"><?= $strings["Back"] ?></a>
+						<a class="a-back" href="ACTION_Controller.php"><?= $strings["Back"] ?></a>
 					</div>
 				</div>
 			</div>

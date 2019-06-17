@@ -1,15 +1,15 @@
 <?php
 
-require_once(__DIR__."../../core/ViewManager.php");
-require_once(__DIR__."../../core/ACL.php");
-require_once(__DIR__."../../model/FUNCTIONALITY_Model.php");
-require_once(__DIR__."../../model/ACTION_Model.php");
-require_once(__DIR__."../../model/USER_Model.php");
-require_once(__DIR__."../../model/GROUP_Model.php");
-require_once(__DIR__."../../view/GROUP_SHOWALL_View.php");
-require_once(__DIR__."../../view/GROUP_ADD_View.php");
-require_once(__DIR__."../../view/GROUP_EDIT_View.php");
-require_once(__DIR__."../../view/USER_SHOWALL_View.php");
+require_once("../core/ViewManager.php");
+require_once("../core/ACL.php");
+require_once("../model/FUNCTIONALITY_Model.php");
+require_once("../model/ACTION_Model.php");
+require_once("../model/USER_Model.php");
+require_once("../model/GROUP_Model.php");
+require_once("../view/GROUP_SHOWALL_View.php");
+require_once("../view/GROUP_ADD_View.php");
+require_once("../view/GROUP_EDIT_View.php");
+require_once("../view/USER_SHOWALL_View.php");
 
 $function = "GROUP";
 $view = new ViewManager();
@@ -33,7 +33,7 @@ if (!isset($_GET['action'])){
 
 Switch ($_GET['action']){
 
-    case  $strings['Add']:
+    case  'Add':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add groups requires login."]);
@@ -47,7 +47,7 @@ Switch ($_GET['action']){
 
         if (isset($_POST["submit"])) {
             $groupAdd = get_data_form();
-            $permissions = json_decode($_POST['permissions']);
+            $permissions = $groupAdd->convertArray($_POST["actions"]);
             $addAnswer = $groupAdd->addGroup($permissions);
             if($addAnswer === true){
                 $flashMessageSuccess = sprintf($strings["Group \"%s\" successfully added."], $groupAdd->getNameGroup());
@@ -70,7 +70,7 @@ Switch ($_GET['action']){
     break;
 
 
-    case  $strings['Edit']:
+    case  'Edit':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Edit groups requires login."]);
@@ -90,7 +90,7 @@ Switch ($_GET['action']){
 
         if (isset($_POST["submit"])) { 
             $groupEdit = get_data_form();
-            $permissions = json_decode($_POST['permissions']);
+            $permissions = $groupEdit->convertArray($_POST["actions"]);
             $updateAnswer = $groupEdit->updateGroup($permissions);
             if($updateAnswer === true){
                 $flashMessageSuccess = sprintf($strings["Group \"%s\" successfully updated."], $groupEdit->getNameGroup());
@@ -118,32 +118,7 @@ Switch ($_GET['action']){
 
 
 
-    // // case  $strings['Show']:
-
-    // //     // if (!isset($_SESSION['LOGIN'])){
-    // //     //     $view->setFlashDanger($strings["Not in session. Show floors requires login."]);
-    // //     //     $view->redirect("USER_Controller.php", "");
-    // //     // }
-
-    // //     // if(!checkRol('SHOW', $function)){
-    // //     //     $view->setFlashDanger($strings["You don't have the necessary permits"]);
-    // //     //     $view->redirect("BUILDING_Controller.php", "");
-    // //     // }
-
-    // //     if (!isset($_GET['building'])){
-    // //         $view->setFlashDanger($strings["Building id is mandatory"]);
-    // //         $view->redirect("BUILDING_Controller.php", "");
-    // //     }
-    // //     $buildingid = $_GET['building'];
-
-    // //     $building = new BUILDING_Model($buildingid);
-    // //     $values = $building->getBuilding();
-    // //     new BUILDING_SHOW($values);
-
-    // // break;
-
-
-    case  $strings['Users']:
+    case  'Users':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Show floors requires login."]);
@@ -168,7 +143,7 @@ Switch ($_GET['action']){
     break;
 
 
-    case  $strings['Delete']:
+    case  'Delete':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Delete groups requires login."]);

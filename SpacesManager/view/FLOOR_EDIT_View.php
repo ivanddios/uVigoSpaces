@@ -20,7 +20,7 @@ class FLOOR_EDIT{
 							<?=htmlentities($strings["Do you want to change something?"])?>
 						</div>
 						<div class="col-lg-12 center-block-content">
-							<form method="POST" action="FLOOR_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->floor['sm_idBuilding']?>&floor=<?= $this->floor['sm_idFloor']?>" enctype="multipart/form-data" onchange="validateFloor(this)">
+							<form method="POST" action="FLOOR_Controller.php?action=Edit&building=<?= $this->floor['sm_idBuilding']?>&floor=<?= $this->floor['sm_idFloor']?>" enctype="multipart/form-data" onchange="validateFloor(this)">
 								<div id="group-form">
 
 									<input type="hidden" id="idBuilding" name="idBuilding" value="<?=$this->floor['sm_idBuilding']?>" readonly>
@@ -59,7 +59,7 @@ class FLOOR_EDIT{
 								</div>
 								<button id="saveButton" type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
 							</form>
-							<a href="FLOOR_Controller.php?building=<?= $this->floor['sm_idBuilding']?>"><?= $strings["Back"] ?></a>
+							<a class="a-back" href="FLOOR_Controller.php?building=<?= $this->floor['sm_idBuilding']?>"><?= $strings["Back"] ?></a>
 						</div>
 					</div>
 				</div>

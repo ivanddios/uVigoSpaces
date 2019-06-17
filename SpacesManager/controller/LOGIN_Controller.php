@@ -1,9 +1,9 @@
 <?php
 
-require_once(__DIR__."..\..\core\ViewManager.php");
-require_once(__DIR__.'..\..\core\ACL.php');
-require_once(__DIR__.'..\..\model\USER_Model.php');
-require_once(__DIR__.'..\..\view\LOGIN_View.php');
+require_once("../core/ViewManager.php");
+require_once("../core/ACL.php");
+require_once("../model/USER_Model.php");
+require_once("../view/LOGIN_View.php");
 
 $view = new ViewManager();
 
@@ -15,7 +15,7 @@ if (!isset($_GET['action'])){
 }
 Switch ($_GET['action']){
 
-	case $strings['Login']:
+	case 'Login':
 
 		if(!isset($_POST['submit'])){
 			new Login();
@@ -37,7 +37,7 @@ Switch ($_GET['action']){
 		}
 	break;
 
-    case $strings['Logout']:
+    case 'Logout':
         session_destroy();
         $view->redirect("../index.php");
     break;	
@@ -47,7 +47,5 @@ Switch ($_GET['action']){
     break;
 						
 }
-
-
 
 ?>

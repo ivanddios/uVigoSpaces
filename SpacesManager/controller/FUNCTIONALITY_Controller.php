@@ -1,13 +1,13 @@
 <?php
 
-require_once(__DIR__."../../core/ViewManager.php");
-require_once(__DIR__."../../core/ACL.php");
-require_once(__DIR__."../../model/ACTION_Model.php");
-require_once(__DIR__."../../model/FUNCTIONALITY_Model.php");
-require_once(__DIR__."../../view/FUNCTIONALITY_SHOWALL_View.php");
-require_once(__DIR__."../../view/FUNCTIONALITY_ADD_View.php");
-require_once(__DIR__."../../view/FUNCTIONALITY_EDIT_View.php");
-require_once(__DIR__."../../view/FUNCTIONALITY_SHOW_View.php");
+require_once("../core/ViewManager.php");
+require_once("../core/ACL.php");
+require_once("../model/ACTION_Model.php");
+require_once("../model/FUNCTIONALITY_Model.php");
+require_once("../view/FUNCTIONALITY_SHOWALL_View.php");
+require_once("../view/FUNCTIONALITY_ADD_View.php");
+require_once("../view/FUNCTIONALITY_EDIT_View.php");
+require_once("../view/FUNCTIONALITY_SHOW_View.php");
 
 
 $function = "FUNCTIONALITY";
@@ -17,11 +17,11 @@ include '../view/locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
 
 function get_data_form() {
 
-    $idFunction = $_GET['function'];
     $nameFunction = $_POST['nameFunction'];
     $descripFunction = $_POST['descripFunction'];
+    $actions = $_POST['actions'];
    
-    $function = new FUNCTIONALITY_Model($idFunction, $nameFunction, $descripFunction);
+    $function = new FUNCTIONALITY_Model(null, $nameFunction, $descripFunction, $actions);
     return $function;
 }
 
@@ -32,7 +32,7 @@ if (!isset($_GET['action'])){
 
 Switch ($_GET['action']){
 
-    case  $strings['Add']:
+    case  'Add':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add functionalities requires login."]);
@@ -46,8 +46,7 @@ Switch ($_GET['action']){
 
         if (isset($_POST["submit"])) { 
             $functionAdd = get_data_form();
-            $actions = json_decode($_POST["actions"]);
-            $addAnswer = $functionAdd->addFunction($actions);
+            $addAnswer = $functionAdd->addFunction();
             if($addAnswer === true){
                 $flashMessageSuccess = sprintf($strings["Functionality \"%s\" successfully added."], $functionAdd->getNameFunction());
                 $view->setFlashSuccess($flashMessageSuccess);
@@ -55,7 +54,6 @@ Switch ($_GET['action']){
             }else{
                 $view->setFlashDanger($strings[$addAsnwer]);
                 $view->redirect("FUNCTIONALITY_Controller.php", $strings['Add']);
-
             }
                 
         } else {
@@ -69,7 +67,7 @@ Switch ($_GET['action']){
     break;
 
 
-    case  $strings['Edit']:
+    case  'Edit':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Edit functionalities requires login."]);
@@ -89,8 +87,8 @@ Switch ($_GET['action']){
 
         if (isset($_POST["submit"])) { 
             $functionEdit = get_data_form();
-            $actions = json_decode($_POST["actions"]);
-            $editAnswer = $functionEdit->updateFunction($actions);
+            $functionEdit->setIdFunction($functionId);
+            $editAnswer = $functionEdit->updateFunction();
             if($editAnswer === true){
                 $functionEdit->updateFunction($actions);
                 $flashMessageSuccess = sprintf($strings["Function \"%s\" successfully updated."], $functionEdit->getNameFunction());
@@ -108,6 +106,7 @@ Switch ($_GET['action']){
             $action = new ACTION_Model();
             $actions = $action->getAllActions();
             $actionsForFunctionality = $function->getAllActionsForFunctionality();
+
             new FUNCTIONALITY_EDIT($functionValues, $actions, $actionsForFunctionality);
         }
             
@@ -115,7 +114,7 @@ Switch ($_GET['action']){
 
 
 
-    case  $strings['Show']:
+    case  'Show':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Show function requires login."]);
@@ -143,7 +142,7 @@ Switch ($_GET['action']){
     break;
 
 
-    case  $strings['Delete']:
+    case  'Delete':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Delete functionalities requires login."]);

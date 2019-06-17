@@ -54,17 +54,21 @@ class FLOOR_SHOW{
 									<?php if(is_file($this->floor['sm_planFloor'])): ?>
 										<div class="input-file">
 											<label class="control-label"><?= $strings['Click to see the plan']?></label>
-											<div class="inputWithIcon inputIconBg">
-												<a target='_blank' href="FLOOR_Controller.php?action=<?= $strings['Show Plan']?>&building=<?= $this->floor['sm_idBuilding']?>&floor=<?= $this->floor['sm_idFloor']?>">
+											<div id="plane_floor" class="inputWithIcon inputIconBg">
+												<a target='_blank' href="FLOOR_Controller.php?action=ShowPlan&building=<?= $this->floor['sm_idBuilding']?>&floor=<?= $this->floor['sm_idFloor']?>">
 													<img id="view-plan" src='<?= $this->floor['sm_planFloor']; ?>' class="avatarplan">
-													<img id= "icon-view" src = "../view/img/iconTouch.png">
+													<img id="icon-view" src = "../view/img/iconTouch.png">
 												</a>
 											</div>
 										</div>
 									<?php endif; ?>
+
+									<div class="input-container">
+										<span class="input-group-text fa fa-cube"></span><label class="show-a"><?= $strings['seeSpaces']?> <a href="../controller/SPACE_Controller.php?building=<?=$this->floor['sm_idBuilding']?>&floor=<?=$this->floor['sm_idFloor']?>"><?=$strings['here']?></a></label>
+									</div>
 								
 								</div>
-							<a href="FLOOR_Controller.php?building=<?= $this->floor['sm_idBuilding']?>"><?= $strings["Back"] ?></a>
+							<a class="a-back" href="FLOOR_Controller.php?building=<?= $this->floor['sm_idBuilding']?>"><?= $strings["Back"] ?></a>
 						</div>
 					</div>
 				</div>

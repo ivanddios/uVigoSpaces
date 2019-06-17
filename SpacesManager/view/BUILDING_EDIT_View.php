@@ -20,7 +20,7 @@ class BUILDING_EDIT{
 							<?=htmlentities($strings["Do you want to change something?"])?>
 						</div>
 						<div class="col-lg-12 center-block-content">
-							<form method="POST" action="BUILDING_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->building['sm_idBuilding']?>" onkeyup="validateBuilding(this)">
+							<form method="POST" action="BUILDING_Controller.php?action=Edit&building=<?= $this->building['sm_idBuilding']?>" onkeyup="validateBuilding(this)">
 								<div id="group-form">
 
 									<div class="input-container">
@@ -50,7 +50,7 @@ class BUILDING_EDIT{
 								</div>
 								<button id="saveButton" type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
 							</form>
-							<a href="../controller/BUILDING_Controller.php?"><?= $strings["Back"] ?></a>
+							<a class="a-back" href="../controller/BUILDING_Controller.php"><?=$strings["Back"]?></a>
 						</div>
 					</div>
 				</div>

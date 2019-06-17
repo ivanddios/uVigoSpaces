@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__."..\..\core\ConnectionBD.php");
+require_once("../core/ConnectionBD.php");
 
 class ACTION_Model {
 
@@ -28,7 +28,7 @@ class ACTION_Model {
     public function getAllActions() {
         $sql = "SELECT * FROM `SM_ACTION`";
         if (!($resultado = $this->mysqli->query($sql))) {
-            throw new Exception('Error in the query on the database');
+            return 'Error in the query on the database';
         } else {
             $toret = array();
             $i = 0;
@@ -44,7 +44,7 @@ class ACTION_Model {
     public function getAction() {
         $sql = "SELECT * FROM `SM_ACTION` WHERE sm_idAction = '$this->idAction'";
         if (!($resultado = $this->mysqli->query($sql))) {
-            throw new Exception('Error in the query on the database');
+            return 'Error in the query on the database';
         } else {
             $result = $resultado->fetch_array();
             return $result;
@@ -71,7 +71,8 @@ class ACTION_Model {
 
         $errors = $this->checkIsValidForUpdate();
         if($errors === false){
-            $sql = "UPDATE `SM_ACTION` SET sm_nameAction = '$this->nameAction', sm_descripAction = '$this->descripAction' WHERE sm_idAction = '$this->idAction'";
+            $sql = "UPDATE `SM_ACTION` SET sm_nameAction = '$this->nameAction', sm_descripAction = '$this->descripAction' 
+                    WHERE sm_idAction = '$this->idAction'";
             if (!($resultado = $this->mysqli->query($sql))) {
                 return 'Error in the query on the database';
             } else {
@@ -104,7 +105,7 @@ class ACTION_Model {
     public function findNameAction() {
         $sql = "SELECT sm_nameAction FROM `SM_ACTION` WHERE sm_idAction = '$this->idAction'";
         if (!($resultado = $this->mysqli->query($sql))) {
-            throw new Exception('Error in the query on the database');
+            return 'Error in the query on the database';
         } else {
             $result = $resultado->fetch_array();
             return $result['nameAction'];
@@ -115,11 +116,11 @@ class ACTION_Model {
         This public function is only used in unit tests over ACTION_EDIT and ACTION_DELETE to get the last id action inserted (through the unit test ACTION_ADD_TEST), 
         because of this the connection with DB is realized in the public function to be able to access it through an anonymous class.
     */
-    public function getLastActionID() {
+    public static function getLastActionID() {
         $mysqli = Connection::connectionBD();
         $sql = "SELECT sm_idAction FROM `SM_ACTION` ORDER BY sm_idAction DESC LIMIT 1";
         if (!($resultado = $mysqli->query($sql))) {
-            throw new Exception('Error in the query on the database');
+            return 'Error in the query on the database';
         } else {
             $result = $resultado->fetch_array();
             return $result['sm_idAction'];
@@ -133,7 +134,7 @@ class ACTION_Model {
                 WHERE F.sm_idFunction = FA.sm_idFunction AND FA.sm_idAction = A.sm_idAction
                 ORDER BY A.sm_idAction";
         if (!($resultado = $this->mysqli->query($sql))) {
-            throw new Exception('Error in the query on the database');
+            return 'Error in the query on the database';
         } else {
             $toret = array();
             $i = 0;
@@ -229,3 +230,5 @@ class ACTION_Model {
     }
 
 }
+
+?>

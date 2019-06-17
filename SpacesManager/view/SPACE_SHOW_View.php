@@ -48,15 +48,15 @@ class SPACE_SHOW{
 								</div>
 
 								<label class="control-label"><?= $strings['Click to see the space in the plan']?></label>
-								<div class="inputWithIcon inputIconBg">
-									<a href="SPACE_Controller.php?action=<?= $strings['ShowSpacePlan']?>&building=<?= $this->space['sm_idBuilding']?>&floor=<?= $this->space['sm_idFloor']?>&space=<?= $this->space['sm_idSpace']?>">
+								<div id="plane_floor" class="inputWithIcon inputIconBg">
+									<a href="SPACE_Controller.php?action=ShowSpacePlan&building=<?= $this->space['sm_idBuilding']?>&floor=<?= $this->space['sm_idFloor']?>&space=<?= $this->space['sm_idSpace']?>">
 										<img id="view-plan" src='<?= $this->plan; ?>' class="avatarplan" onchange="validateUpdloadFile(this)">
 										<img id="icon-view" src="../view/img/iconTouch.png">
 									</a>
 								</div>
 								
 							</div>
-						<a href="<?= $_SERVER['HTTP_REFERER'];?>"><?= $strings["Back"] ?></a>
+						<a class="a-back" href="<?= $_SERVER['HTTP_REFERER'];?>"><?= $strings["Back"] ?></a>
 					</div>
 				</div>
 			</div>

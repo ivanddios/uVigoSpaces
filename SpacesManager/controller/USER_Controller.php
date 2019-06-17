@@ -1,13 +1,14 @@
 <?php
 
-require_once(__DIR__."..\..\core\ViewManager.php");
-require_once(__DIR__.'..\..\core\ACL.php');
-require_once(__DIR__.'..\..\model\USER_Model.php');
-require_once(__DIR__.'..\..\view\USER_SHOWALL_View.php');
-require_once(__DIR__.'..\..\view\USER_ADD_View.php');
-require_once(__DIR__.'..\..\view\USER_EDIT_View.php');
-require_once(__DIR__.'..\..\view\USER_SHOW_View.php');
-require_once(__DIR__.'..\..\view\USER_SEARCH_View.php');
+require_once("../core/ViewManager.php");
+require_once("../core/ACL.php");
+require_once("../model/USER_Model.php");
+require_once("../view/USER_SHOWALL_View.php");
+require_once("../view/USER_ADD_View.php");
+require_once("../view/USER_EDIT_View.php");
+require_once("../view/USER_EDIT_PROFILE_View.php");
+require_once("../view/USER_SHOW_View.php");
+require_once("../view/USER_SEARCH_View.php");
 
 $view = new ViewManager();
 $function = "USER";
@@ -48,13 +49,14 @@ function get_data_form_search() {
 if (!isset($_GET['action'])){
 	$_GET['action'] = '';
 }
+
 Switch ($_GET['action']){
 
-	case $strings['Add']:
+	case 'Add':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add users requires login."]);
-            $view->redirect("BUILDING_Controller.php");
+            $view->redirect("INDEX_Controller.php");
         }
 
         if(!checkRol('ADD', $function)){
@@ -81,7 +83,7 @@ Switch ($_GET['action']){
            	       
     break;
 
-    case $strings['Edit']:
+    case 'Edit':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Edit user requires login."]);
@@ -115,7 +117,44 @@ Switch ($_GET['action']){
         }
     break;
 
-    case  $strings['Delete']:
+
+
+    case 'EditProfile':
+
+    if (!isset($_SESSION['LOGIN'])){
+        $view->setFlashDanger($strings["Not in session. Edit user requires login."]);
+        $view->redirect("BUILDING_Controller.php");
+    }
+
+    if($_SESSION['LOGIN'] !== $_GET['user']){
+        $view->setFlashDanger($strings["You can't modify the data of another user"]);
+        $view->redirect("BUILDING_Controller.php");
+    }
+
+    $email = $_GET['user'];
+
+    if (isset($_POST["submit"])) { 
+        $userEdit = get_data_form();
+        $answerEdit = $userEdit->updateUser($_FILES['photo']['tmp_name']);
+        if($answerEdit === true){
+            $flashMessageSuccess = sprintf($strings["User \"%s\" successfully updated."], $userEdit->getEmail());
+            $view->setFlashSuccess($flashMessageSuccess);
+            $view->redirect("USER_Controller.php");
+        }else{
+            $view->setFlashDanger($strings[$answerEdit]);
+            $view->redirect("USER_Controller.php", $strings['Edit'],"user=$email");
+        }
+    } else{
+        $user = new USER_Model($email);
+        $userValues = $user->getUser();
+        $group = new GROUP_Model();
+        $groupsValues = $group->getAllGroups();
+        new USER_EDIT_PROFILE($userValues, $groupsValues);
+    }
+break;
+
+
+    case  'Delete':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Delete users requires login."]);
@@ -141,7 +180,7 @@ Switch ($_GET['action']){
     break;
 
 
-    case  $strings['Show']:
+    case  'Show':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Show floors requires login."]);
@@ -166,7 +205,7 @@ Switch ($_GET['action']){
     break;
 
 
-    case $strings['Search']:
+    case 'Search':
 
 
         if (!isset($_SESSION['LOGIN'])){
@@ -206,7 +245,5 @@ Switch ($_GET['action']){
     break;
 						
 }
-
-
 
 ?>

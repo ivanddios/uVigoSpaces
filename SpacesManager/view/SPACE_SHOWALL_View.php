@@ -2,13 +2,13 @@
 
 class SPACE_SHOWALL{
     private $spaces;
-    private $buildingName;
-    private $floorName;
+    private $building;
+    private $floor;
 
-    function __construct($spaces, $buildingName, $floorName) {
+    function __construct($spaces, $building, $floor) {
         $this->spaces = $spaces;
-        $this->buildingName = $buildingName;
-        $this->floorName = $floorName;
+        $this->building = $building;
+        $this->floor = $floor;
         $this->render();
     }
 
@@ -21,14 +21,14 @@ class SPACE_SHOWALL{
             <div class="row center-row">
                 <div class="col-lg-12 center-block">
                     <div id="titleView">
-                        <h1><?= $this->buildingName;?></h1>
-                        <h3><?= $this->floorName;?></h3>
+                        <h1><?= $this->building['sm_nameBuilding'];?></h1>
+                        <h3><?= $this->floor['sm_nameFloor'];?></h3>
                     </div>
                     <div id="subtitleView">
                         <?= $strings["Information about the building's spaces"] ?>
                     </div>
                     <div id="pnlBoxSearch">
-                        <a href="FLOOR_Controller.php?building=<?= $this->spaces[0]['sm_idBuilding']?>"><img src="../view/img/iconback.png" alt="<?= $strings["Back"]?>" class="iconBack"></a>
+                        <a href="FLOOR_Controller.php?building=<?= $this->building['sm_idBuilding']?>"><img src="../view/img/iconback.png" alt="<?= $strings["Back"]?>" class="iconBack"></a>
                         <input type="text" id="searchBox" onkeyup="searchInTable()" placeholder="<?= $strings["Search"]?>">
                     </div>
                     <table id="dataTable" class="table text-center">
@@ -39,7 +39,7 @@ class SPACE_SHOWALL{
                                 <?php endforeach; ?>
                                 <?php  if(checkRol('ADD', 'SPACE')): ?>
                                     <th scope="col">
-                                        <a href="SPACE_Controller.php?action=<?= $strings['Add']?>&building=<?= $_GET['building']?>&floor=<?= $_GET['floor']?>">
+                                        <a href="SPACE_Controller.php?action=Add&building=<?= $_GET['building']?>&floor=<?= $_GET['floor']?>">
                                             <span title="<?= $strings['Add Space']?>" class="btn btn-success btn-sm fa fa-plus"></span>
                                         </a>
                                     </th>
@@ -55,8 +55,9 @@ class SPACE_SHOWALL{
                                             if ($key === $listTitles[$i]): ?>
                                                 <?php if($key === 'sm_idBuilding'): ?>
                                                     <td id="item-idSpace-<?=$j?>">
-                                                    <a title="<?=$strings['Show']?>" href='SPACE_Controller.php?action=<?= $strings['Show']?>&building=<?= $this->spaces[$j]['sm_idBuilding']?>&floor=<?= $this->spaces[$j]['sm_idFloor']?>&space=<?= $this->spaces[$j]['sm_idSpace']?>'> <?= $this->spaces[$j]['sm_idBuilding'].$this->spaces[$j]['sm_idFloor'].$this->spaces[$j]['sm_idSpace']?></a>    
+                                                    <a title="<?=$strings['Show']?>" href='SPACE_Controller.php?action=Show&building=<?= $this->spaces[$j]['sm_idBuilding']?>&floor=<?= $this->spaces[$j]['sm_idFloor']?>&space=<?= $this->spaces[$j]['sm_idSpace']?>'> <?= $this->spaces[$j]['sm_idBuilding'].$this->spaces[$j]['sm_idFloor'].$this->spaces[$j]['sm_idSpace']?></a>    
                                                 <?php elseif ($key === 'sm_nameSpace'): ?>
+                                                    
                                                     <td id="item-nameSpace-<?=$j?>"> 
                                                     <?= $value; ?>
                                                 <?php elseif($key === 'sm_surfaceSpace'): ?>
@@ -73,7 +74,7 @@ class SPACE_SHOWALL{
                                     <?php if(isset($_SESSION['LOGIN'])) { ?>
                                         <td>
                                             <?php  if(checkRol('EDIT', 'SPACE')): ?>
-                                                <a href="SPACE_Controller.php?action=<?php echo $strings['Edit']?>&building=<?= $this->spaces[$j]['sm_idBuilding']?>&floor=<?= $this->spaces[$j]['sm_idFloor']?>&space=<?= $this->spaces[$j]['sm_idSpace']?>">
+                                                <a href="SPACE_Controller.php?action=Edit&building=<?= $this->spaces[$j]['sm_idBuilding']?>&floor=<?= $this->spaces[$j]['sm_idFloor']?>&space=<?= $this->spaces[$j]['sm_idSpace']?>">
                                                     <span title="<?= $strings['Edit Space']?>" class="btn btn-warning btn-sm fa fa-pencil"></span>
                                                 </a>
                                             <?php endif; ?>
@@ -90,7 +91,7 @@ class SPACE_SHOWALL{
                                                                 <b><strong><?= $strings["The information that this space has will be lost"]?></strong></b>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <form method="POST" action="SPACE_Controller.php?action=<?= htmlentities($strings['Delete'])?>&building=<?= htmlentities($this->spaces[$j]['sm_idBuilding'])?>&floor=<?= $this->spaces[$j]['sm_idFloor']?>&space=<?= $this->spaces[$j]['sm_idSpace']?>">
+                                                                <form method="POST" action="SPACE_Controller.php?action=Delete&building=<?= htmlentities($this->spaces[$j]['sm_idBuilding'])?>&floor=<?= $this->spaces[$j]['sm_idFloor']?>&space=<?= $this->spaces[$j]['sm_idSpace']?>">
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
                                                                     <button type="submit" name="submit" class="btn btn-primary success"><?= $strings["Ok"]?></button> 
                                                                 </form>

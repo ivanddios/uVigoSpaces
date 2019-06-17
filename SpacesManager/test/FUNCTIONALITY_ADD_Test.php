@@ -1,6 +1,7 @@
 <?php 
 
-require_once(__DIR__.'..\..\model\FUNCTIONALITY_Model.php');
+require_once("../model/FUNCTIONALITY_Model.php");
+// require_once("../test/TEST_View.php");
 
 
 //TESTS -> NAME FUNCTION
@@ -11,7 +12,7 @@ $tests['SM_FUNCTIONALITY_ADD_TEST1']=(['Functionality' => "SM_FUNCTIONALITY_ADD"
                 'Result' => 'Not executed']);
 
 $function = new FUNCTIONALITY_Model();
-$addAnswer = $function->addFunction(null);
+$addAnswer = $function->addFunction();
 $tests['SM_FUNCTIONALITY_ADD_TEST1']["Result"] = $addAnswer;
 
 
@@ -23,7 +24,7 @@ $tests['SM_FUNCTIONALITY_ADD_TEST2']=(['Functionality' => "SM_FUNCTIONALITY_ADD"
                 'Result' => 'Not executed']);
 
 $function = new FUNCTIONALITY_Model('','','descriptFunction');
-$addAnswer = $function->addFunction(null);
+$addAnswer = $function->addFunction();
 $tests['SM_FUNCTIONALITY_ADD_TEST2']["Result"] = $addAnswer;
 
 
@@ -37,7 +38,7 @@ $tests['SM_FUNCTIONALITY_ADD_TEST3']=(['Functionality' => "SM_FUNCTIONALITY_ADD"
 
 $function = new FUNCTIONALITY_Model('','uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
                             dE89t27sFO18FUUsXBcJeFCVo3ZzXo1oo1T5gVgWT4ffpW2y6zydJf6cU8EKC7Shi7PFlgynWFIZWdxsuiAJuA0jXgAe6IJgGtXH0lSfSYYCpmSXj3FnFMXDiYoDJCY','descriptFunction');
-$addAnswer = $function->addFunction(null);
+$addAnswer = $function->addFunction();
 $tests['SM_FUNCTIONALITY_ADD_TEST3']["Result"] = $addAnswer;
 
 
@@ -50,7 +51,7 @@ $tests['SM_FUNCTIONALITY_ADD_TEST4']=(['Functionality' => "SM_FUNCTIONALITY_ADD"
                 'Result' => 'Not executed']);
 
 $function = new FUNCTIONALITY_Model('','111111','descriptFunction');
-$addAnswer = $function->addFunction(null);
+$addAnswer = $function->addFunction();
 $tests['SM_FUNCTIONALITY_ADD_TEST4']["Result"] = $addAnswer;
 
 
@@ -64,7 +65,7 @@ $tests['SM_FUNCTIONALITY_ADD_TEST5']=(['Functionality' => "SM_FUNCTIONALITY_ADD"
                 'Result' => 'Not executed']);
 
 $function = new FUNCTIONALITY_Model('','nameFunction');
-$addAnswer = $function->addFunction(null);
+$addAnswer = $function->addFunction();
 $tests['SM_FUNCTIONALITY_ADD_TEST5']["Result"] = $addAnswer;
 
 
@@ -78,7 +79,7 @@ $tests['SM_FUNCTIONALITY_ADD_TEST6']=(['Functionality' => "SM_FUNCTIONALITY_ADD"
 
 $function = new FUNCTIONALITY_Model('','nameFunction','uozVHX6zmr7jGxWom0fwnVFbPZUivUfoc5wXbMI6j4Bxv7Kc7u5nUHQ1z0VCqofRKUHqthXsjWS9vOp5x0xTryslgOo2E4OvoiB7PfTevseHFs8nG5oOCmksupGkU4kcB
 dE89t27sFO18FUUsXBcJeFCVo3ZzXo1oo1T5gVgWT4ffpW2y6zydJf6cU8EKC7Shi7PFlgynWFIZWdxsuiAJuA0jXgAe6IJgGtXH0lSfSYYCpmSXj3FnFMXDiYoDJCY');
-$addAnswer = $function->addFunction(null);
+$addAnswer = $function->addFunction();
 $tests['SM_FUNCTIONALITY_ADD_TEST6']["Result"] = $addAnswer;
 
 
@@ -89,7 +90,7 @@ $tests['SM_FUNCTIONALITY_ADD_TEST7']=(['Functionality' => "SM_FUNCTIONALITY_ADD"
                 'Result' => 'Not executed']);
 
 $function = new FUNCTIONALITY_Model('','nameFunction','111111');
-$addAnswer = $function->addFunction(null);
+$addAnswer = $function->addFunction();
 $tests['SM_FUNCTIONALITY_ADD_TEST7']["Result"] = $addAnswer;
 
 
@@ -101,7 +102,7 @@ $tests['SM_FUNCTIONALITY_ADD_TEST8']=(['Functionality' => "SM_FUNCTIONALITY_ADD"
                 'Result' => 'Not executed']);
 
 $function = new FUNCTIONALITY_Model('','nameFunction','descripFunction');
-$addAnswer = $function->addFunction(null);
+$addAnswer = $function->addFunction();
 $tests['SM_FUNCTIONALITY_ADD_TEST8']["Result"] = $addAnswer;
 
 
@@ -111,30 +112,23 @@ $tests['SM_FUNCTIONALITY_ADD_TEST9']=(['Functionality' => "SM_FUNCTIONALITY_ADD"
                 'Expected' => "Some action for functionality doesn't exist",
                 'Result' => 'Not executed']);
 
-$actions = array(array('id'=>1000),array("id"=>2),array("id"=>3),array("id"=>4),array("id"=>5));
-$actions = json_encode($actions);
-$actions = json_decode($actions);
-
-$function = new FUNCTIONALITY_Model('','nameFunction','descripFunction');
-$addAnswer = $function->addFunction($actions);
+$actions = array('1000','1', '2', '3');
+$function = new FUNCTIONALITY_Model('','nameFunction','descripFunction', $actions);
+$addAnswer = $function->addFunction();
 $tests['SM_FUNCTIONALITY_ADD_TEST9']["Result"] = $addAnswer;
 
 
 
 //FINAL TEST
-
 $tests['SM_FUNCTIONALITY_ADD_TEST10']=(['Functionality' => "SM_FUNCTIONALITY_ADD",
                 'Description' => "Test 10. Attempt to add functionality with correct values",
                 'Expected' => 'Function successfully added',
                 'Result' => 'Not executed']);
 
         
-$actions = array(array('id'=>1),array("id"=>2),array("id"=>3),array("id"=>4));
-$actions = json_encode($actions);
-$actions = json_decode($actions);
-
-$function = new FUNCTIONALITY_Model('','nameFunctionAdded','descripFunctionAdded');
-$addAnswer = $function->addFunction($actions);
+$actions = array('1', '2', '3');
+$function = new FUNCTIONALITY_Model('','nameFunctionAdded','descripFunctionAdded', $actions);
+$addAnswer = $function->addFunction();
 if($addAnswer === true){
     $tests['SM_FUNCTIONALITY_ADD_TEST10']["Result"] = 'Function successfully added';
 } else {

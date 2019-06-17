@@ -1,6 +1,6 @@
 <?php 
 
-require_once(__DIR__.'..\..\model\FLOOR_Model.php');
+require_once("../model/FLOOR_Model.php");
 
 
 //TESTS -> BUILDING ID

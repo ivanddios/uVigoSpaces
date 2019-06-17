@@ -1,6 +1,6 @@
 <?php 
 
-require_once(__DIR__.'..\..\model\GROUP_Model.php');
+require_once("../model/GROUP_Model.php");
 
 
 //TEST GROUP ID

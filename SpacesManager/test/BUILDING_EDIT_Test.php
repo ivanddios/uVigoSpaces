@@ -1,6 +1,6 @@
 <?php 
 
-require_once(__DIR__.'..\..\model\BUILDING_Model.php');
+require_once("../model/BUILDING_Model.php");
 
 
 $tests['SN_BUILDING_EDIT_TEST1']=(['Functionality' => "SN_BUILDING_EDIT",

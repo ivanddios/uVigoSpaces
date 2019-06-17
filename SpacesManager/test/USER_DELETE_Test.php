@@ -1,6 +1,6 @@
 <?php 
 
-require_once(__DIR__.'..\..\model\USER_Model.php');
+require_once("../model/USER_Model.php");
 
 //TEST-> EMAIL
 $tests['SM_USER_DELETE_TEST1']=(['Functionality' => "SM_USER_DELETE",
@@ -53,7 +53,7 @@ $tests['SM_USER_DELETE_TEST5']=(['Functionality' => "SM_USER_DELETE",
                 'Expected' => 'User deleted successfully',
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('ivanddf1994@gmail.com');
+$user = new USER_Model($email);
 $deleteAnswer = $user->deleteUser();
 if($deleteAnswer === true){
     $tests['SM_USER_DELETE_TEST5']["Result"] = 'User deleted successfully';

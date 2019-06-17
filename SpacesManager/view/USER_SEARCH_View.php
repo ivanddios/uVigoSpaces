@@ -24,10 +24,10 @@ class USER_SEARCH{
 			<div class="row center-row">
 				<div class="col-lg-6 center-block">
 					<div id="titleView">
-						<?=htmlentities($strings["New user"])?>
+						<?=htmlentities($strings["Search user/s"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form method="POST" action="USER_Controller.php?action=<?= $strings['Search']?>" enctype="multipart/form-data">
+						<form method="POST" action="USER_Controller.php?action=Search" enctype="multipart/form-data">
 							<div id="group-form">
 
 								<div class="input-container">
@@ -87,13 +87,12 @@ class USER_SEARCH{
 								<button id="saveButton" type="submit" name="submit" class="btn-dark"><?= $strings["Search"]?></button>
 							</div> 
 						</form>
-						<a href="../controller/USER_Controller.php"><?= $strings["Back"] ?></a>
+						<a class="a-back" href="../controller/USER_Controller.php"><?= $strings["Back"] ?></a>
 					</div>
 				</div>
 			</div>
 		</div>
- <?php
-    include 'footer.php';  
+ 		<?php  include 'footer.php';  
   } 
 }
 

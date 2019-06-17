@@ -5,6 +5,10 @@ $(document).ready(function() {
     }, 4000);
 });
 
+function loadImage(id){
+     $("#loading-"+id).css("display", "none");
+     $("#div-plane-"+id).css("display", "block");
+ };
 
 
 function searchInTable() {
@@ -72,9 +76,3 @@ function highlightNumberInventoryAndSurface(){
         }
     }
 }
-
-
-// function loadWelcomeImg(){
-//     img = document.getElementById("imgIndex");
-
-// }

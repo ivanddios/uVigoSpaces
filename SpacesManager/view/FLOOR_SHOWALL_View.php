@@ -15,6 +15,7 @@ class FLOOR_SHOWALL{
         $this->view->setElement("%TITLE%", $strings["Floors"]);
         $listTitles = array('sm_idBuilding', 'sm_nameFloor', 'sm_planFloor', 'sm_surfaceBuildingFloor', 'sm_surfaceUsefulFloor'); ?>
 
+
         <div class="container">
             <div class="row center-row">
                 <div class="col-lg-12 center-block">
@@ -37,7 +38,7 @@ class FLOOR_SHOWALL{
                               
                                     <th scope="col">
                                         <?php  if(checkRol('ADD', 'FLOOR')): ?>
-                                            <a href="FLOOR_Controller.php?&action=<?= $strings['Add']?>&building=<?= $_GET['building']?>">
+                                            <a href="FLOOR_Controller.php?&action=Add&building=<?= $_GET['building']?>">
                                                 <span title="<?= $strings['Add Floor']?>" class="btn btn-success btn-sm fa fa-plus"></span>
                                             </a>
                                         <?php endif; ?>
@@ -53,13 +54,18 @@ class FLOOR_SHOWALL{
                                             if ($key === $listTitles[$i]): ?>
                                                 <td>
                                                     <?php if ($key === 'sm_idBuilding'): ?>
-                                                        <a title="<?= $strings['Show']?>" href='FLOOR_Controller.php?action=<?= $strings['Show']?>&building=<?= $this->floors[$j]['sm_idBuilding']?>&floor=<?= $this->floors[$j]['sm_idFloor']?>'> <?= $this->floors[$j]['sm_idBuilding'].$this->floors[$j]['sm_idFloor']?></a> 
+                                                        <a title="<?= $strings['Show']?>" href='FLOOR_Controller.php?action=Show&building=<?= $this->floors[$j]['sm_idBuilding']?>&floor=<?= $this->floors[$j]['sm_idFloor']?>'> <?= $this->floors[$j]['sm_idBuilding'].$this->floors[$j]['sm_idFloor']?></a> 
                                                     <?php elseif($key === 'sm_planFloor'): ?>
-                                                        <?php if($value === ''): ?>
-                                                            <img src="../view/img/noplane.png" width="25px" height="25px">
+														<div id="loading-<?=$this->floors[$j]['sm_idFloor']?>">
+															  <img id="loading-image" src="../view/img/glow.gif" width="50px" height="50px" alt="Loading..." />
+														</div>
+														<div id="div-plane-<?=$this->floors[$j]['sm_idFloor']?>" class="div-plane">
+                                                        <?php if(!is_file($value)): ?>
+                                                            <img id="no-plane" src="../view/img/noPlane.png" onload="loadImage('<?=$this->floors[$j]['sm_idFloor']?>')">
                                                         <?php else: ?>
-                                                            <a href="<?= $this->floors[$j]['sm_planFloor']?>" target="_blank"><img src="<?= $this->floors[$j]['sm_planFloor']?>" alt="plan" class="miniatureTable"></a>
-                                                        <?php endif; ?>   
+                                                             <a href="FLOOR_Controller.php?action=ShowPlan&building=<?= $this->floors[$j]['sm_idBuilding']?>&floor=<?= $this->floors[$j]['sm_idFloor']?>"><img src="<?= $this->floors[$j]['sm_planFloor']?>" onload="loadImage('<?=$this->floors[$j]['sm_idFloor']?>')" alt="plan" class="miniatureTable"></a>
+                                                        <?php endif; ?>  
+														</div>
                                                     <?php elseif($key === 'sm_surfaceBuildingFloor' || $key === 'sm_surfaceUsefulFloor'): ?>
                                                         <?=$value . ' m²'?>
                                                     <?php else:
@@ -74,7 +80,7 @@ class FLOOR_SHOWALL{
                                             <span title="<?= $strings['Show Space']?>" class="btn btn-primary btn-sm fa fa-cube"></span>
                                         </a>
                                         <?php if(checkRol('EDIT', 'FLOOR')): ?>
-                                            <a href="FLOOR_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->floors[$j]['sm_idBuilding']?>&floor=<?= $this->floors[$j]['sm_idFloor']?>">
+                                            <a href="FLOOR_Controller.php?action=Edit&building=<?= $this->floors[$j]['sm_idBuilding']?>&floor=<?= $this->floors[$j]['sm_idFloor']?>">
                                                 <span title="<?= $strings['Edit Floor']?>" class="btn btn-warning btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
@@ -91,7 +97,7 @@ class FLOOR_SHOWALL{
                                                             <b><strong><?= $strings["The information that this floor has will be lost"]?></strong></b>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <form method="POST" action="FLOOR_Controller.php?action=<?= htmlentities($strings['Delete'])?>&building=<?= htmlentities($this->floors[$j]['sm_idBuilding'])?>&floor=<?= $this->floors[$j]['sm_idFloor']?>">
+                                                            <form method="POST" action="FLOOR_Controller.php?action=Delete&building=<?= htmlentities($this->floors[$j]['sm_idBuilding'])?>&floor=<?= $this->floors[$j]['sm_idFloor']?>">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
                                                                 <button type="submit" name="submit" class="btn btn-primary success"><?= $strings["Ok"]?></button> 
                                                             </form>

@@ -2,11 +2,11 @@
 
 class ACTION_ADD{
 
-    function __construct() {
-        $this->render();
-    }
+  function __construct() {
+    $this->render();
+  }
     
-    function render() {
+  function render() {
 		include 'header.php';
 		$this->view->setElement("%TITLE%", $strings["Add Action"]);?>
 		
@@ -17,7 +17,7 @@ class ACTION_ADD{
 						<?=htmlentities($strings["Datas of the new action"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form  method="POST" action="ACTION_Controller.php?action=<?= $strings['Add']?>" onkeyup="validateAction(this)">
+						<form  method="POST" action="ACTION_Controller.php?action=Add" onkeyup="validateAction(this)">
 							<div id="group-form">
 
 								<div class="input-container">
@@ -35,13 +35,13 @@ class ACTION_ADD{
 								<button id="saveButton" type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>
 							</div> 
 						</form>
-						<a href="ACTION_Controller.php"><?= $strings["Back"] ?></a>
+						<a class="a-back" href="ACTION_Controller.php"><?= $strings["Back"] ?></a>
 					</div>
 				</div>
 			</div>
 		</div>
- <?php
-    include 'footer.php';  
+ 		<?php
+    	include 'footer.php';  
   } 
 }
 

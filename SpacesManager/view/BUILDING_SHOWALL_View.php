@@ -33,7 +33,7 @@ class BUILDING_SHOWALL{
                                
                                 <th scope="col">
                                     <?php  if(checkRol('ADD', 'BUILDING')): ?>
-                                        <a href="BUILDING_Controller.php?&action=<?= $strings['Add']?>">
+                                        <a href="BUILDING_Controller.php?&action=Add">
                                             <span title="<?= $strings['Add Building']?>" class="btn btn-success btn-sm fa fa-plus"></span>
                                         </a>
                                     <?php endif; ?>
@@ -49,7 +49,7 @@ class BUILDING_SHOWALL{
                                             if ($key === $listTitles[$i]) : ?>
                                                 <td>
                                                     <?php if ($key === 'sm_idBuilding') {?>
-                                                        <a title="<?= $strings['Show Building']?>" href='BUILDING_Controller.php?action=<?= $strings['Show']?>&building=<?= $this->buildings[$j]['sm_idBuilding']?>'><?= $value?></a>                
+                                                        <a title="<?= $strings['Show Building']?>" href='BUILDING_Controller.php?action=Show&building=<?= $this->buildings[$j]['sm_idBuilding']?>'><?= $value?></a>                
                                                     <?php }else {
                                                         echo $value;
                                                     } ?>
@@ -63,7 +63,7 @@ class BUILDING_SHOWALL{
                                             <span title="<?= $strings['Show Floors']?>" class="btn btn-primary btn-sm fa fa-building"></span>
                                         </a>
                                         <?php  if(checkRol('EDIT', 'BUILDING')): ?>
-                                            <a href="BUILDING_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->buildings[$j]['sm_idBuilding']?>">
+                                            <a href="BUILDING_Controller.php?action=Edit&building=<?= $this->buildings[$j]['sm_idBuilding']?>">
                                                 <span title="<?= $strings['Edit Building']?>" class="btn btn-warning btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
@@ -79,7 +79,7 @@ class BUILDING_SHOWALL{
                                                             <?= sprintf($strings["Are you sure you want to delete the building \"%s\" ?"], $this->buildings[$j]['sm_nameBuilding'] )?>
                                                             <p><?= $strings["The information that this building has will be lost"]?></p>
                                                         </div>
-                                                        <form method="POST" action="BUILDING_Controller.php?action=<?= htmlentities($strings['Delete'])?>">
+                                                        <form method="POST" action="BUILDING_Controller.php?action=Delete">
                                                             <input type="hidden" name="building" value="<?= $this->buildings[$j]['sm_idBuilding']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>

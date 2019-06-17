@@ -1,8 +1,8 @@
 <?php
 
-require_once(__DIR__."..\..\core\ConnectionBD.php");
-require_once(__DIR__."..\..\model\BUILDING_Model.php");
-require_once(__DIR__."..\..\model\FLOOR_Model.php");
+require_once("../core/ConnectionBD.php");
+require_once("../model/BUILDING_Model.php");
+require_once("../model/FLOOR_Model.php");
 
 class SPACE_Model {
 
@@ -28,7 +28,7 @@ class SPACE_Model {
         if(empty($numberInventorySpace)){
             $this->numberInventorySpace = "######";
         } else {
-        $this->numberInventorySpace = $numberInventorySpace;
+            $this->numberInventorySpace = $numberInventorySpace;
         }
     }
 
@@ -74,7 +74,9 @@ class SPACE_Model {
     }
 
     public function findSpace() {
-        $sql = "SELECT * FROM `SM_SPACE` WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
+        $sql = "SELECT * FROM `SM_SPACE` 
+                WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' 
+                    AND sm_idSpace = '$this->idSpace'";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
         } else {
@@ -85,7 +87,13 @@ class SPACE_Model {
 
 
     public function findInfoSpace() {
-        $sql = "SELECT SM_BUILDING.sm_nameBuilding, SM_FLOOR.sm_nameFloor, SM_SPACE.sm_nameSpace, SM_SPACE.sm_coordsplan FROM `SM_BUILDING`, `SM_FLOOR`, `SM_SPACE` WHERE SM_BUILDING.sm_idBuilding = SM_FLOOR.sm_idBuilding AND SM_FLOOR.sm_idFloor = SM_SPACE.sm_idFloor AND SM_BUILDING.sm_idBuilding = '$this->idBuilding' AND SM_FLOOR.sm_idFloor = '$this->idFloor' AND SM_SPACE.sm_idSpace = '$this->idSpace'";
+        $sql = "SELECT DISTINCT `SM_SPACE`.*, `SM_FLOOR`.`sm_nameFloor`, `SM_BUILDING`.`sm_nameBuilding` 
+                FROM `SM_SPACE`, `SM_FLOOR`, `SM_BUILDING` 
+                WHERE `SM_BUILDING`.`sm_idBuilding` = `SM_SPACE`.`sm_idBuilding` 
+                    AND `SM_FLOOR`.`sm_idFloor` = `SM_SPACE`.`sm_idFloor` 
+                    AND `SM_SPACE`.sm_idBuilding = '$this->idBuilding' 
+                    AND `SM_SPACE`.sm_idFloor = '$this->idFloor' 
+                    AND `SM_SPACE`.sm_idSpace = '$this->idSpace'";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
         } else {
@@ -95,13 +103,17 @@ class SPACE_Model {
     }
 
     public function findNameSpace() {
-        $sql = "SELECT sm_nameSpace FROM `SM_SPACE` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
+        $sql = "SELECT sm_nameSpace FROM `SM_SPACE` 
+                WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor' 
+                    AND sm_idSpace = '$this->idSpace'";
         $result = $this->mysqli->query($sql)->fetch_array();
         return $result['sm_nameSpace'];
     }
 
     public function findCoordsSpace() {
-        $sql = "SELECT sm_coordsplan FROM `SM_SPACE` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
+        $sql = "SELECT sm_coordsplan FROM `SM_SPACE` 
+                WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor' 
+                    AND sm_idSpace = '$this->idSpace'";
         $result = $this->mysqli->query($sql)->fetch_array();
         return $result['sm_coordsplan'];
     }
@@ -112,7 +124,8 @@ class SPACE_Model {
         $errors = $this->checkIsValidForAdd_Update();
         if($errors === false){
             if(!$this->existsSpace()){
-                $sql = "INSERT INTO `SM_SPACE` (sm_idBuilding, sm_idFloor, sm_idSpace, sm_nameSpace, sm_surfaceSpace, sm_numberInventorySpace) VALUES ('$this->idBuilding', '$this->idFloor', '$this->idSpace', '$this->nameSpace', $this->surfaceSpace, '$this->numberInventorySpace')";
+                $sql = "INSERT INTO `SM_SPACE` (sm_idBuilding, sm_idFloor, sm_idSpace, sm_nameSpace, sm_surfaceSpace, sm_numberInventorySpace) 
+                        VALUES ('$this->idBuilding', '$this->idFloor', '$this->idSpace', '$this->nameSpace', $this->surfaceSpace, '$this->numberInventorySpace')";
                 if (!($resultado = $this->mysqli->query($sql))) {
                     return 'Error in the query on the database';
                 } else {
@@ -131,7 +144,9 @@ class SPACE_Model {
     public function addCoords() {
         $errors = $this->checkCoords();
         if($errors === false){
-            $sql = "UPDATE `SM_SPACE` SET sm_coordsplan = '$this->coordsplan' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
+            $sql = "UPDATE `SM_SPACE` SET sm_coordsplan = '$this->coordsplan' 
+                    WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' 
+                        AND sm_idSpace = '$this->idSpace'";
             if (!($resultado = $this->mysqli->query($sql))) {
                 return 'Error in the query on the database';
             } else {
@@ -149,7 +164,9 @@ class SPACE_Model {
         if($errors === false){
             $exists = $this->existsSpaceForEdit($idSpaceOriginal);
             if($exists === false){
-                $sql = "UPDATE `SM_SPACE` SET sm_idSpace = '$this->idSpace', sm_nameSpace = '$this->nameSpace', sm_surfaceSpace = $this->surfaceSpace, sm_numberInventorySpace = '$this->numberInventorySpace' WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$idSpaceOriginal'";
+                $sql = "UPDATE `SM_SPACE` SET sm_idSpace = '$this->idSpace', sm_nameSpace = '$this->nameSpace', sm_surfaceSpace = $this->surfaceSpace, sm_numberInventorySpace = '$this->numberInventorySpace' 
+                        WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' 
+                            AND sm_idSpace = '$idSpaceOriginal'";
                 if (!($resultado = $this->mysqli->query($sql))) {
                     return $this->mysqli->error;
                 } else {
@@ -166,7 +183,8 @@ class SPACE_Model {
     public function deleteSpace() {
         $errors = $this->checkIsValidForDelete();
         if($errors === false){
-            $sql = "DELETE FROM `SM_SPACE` WHERE sm_idBuilding ='$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
+            $sql = "DELETE FROM `SM_SPACE` WHERE sm_idBuilding ='$this->idBuilding' 
+                        AND sm_idFloor = '$this->idFloor' AND sm_idSpace = '$this->idSpace'";
             if (!($resultado = $this->mysqli->query($sql))) {
                 return 'Error in the query on the database';
             } else {
@@ -179,7 +197,9 @@ class SPACE_Model {
 
 
     public function existsSpace() {
-        $sql = "SELECT * FROM `SM_SPACE` WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' AND sm_idSPace = '$this->idSpace'";
+        $sql = "SELECT * FROM `SM_SPACE` 
+                WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor' 
+                    AND sm_idSPace = '$this->idSpace'";
         $result = $this->mysqli->query($sql);
         if ($result->num_rows == 1) {
             return true;
@@ -220,7 +240,8 @@ class SPACE_Model {
 
 
     public function findplan() {
-        $sql = "SELECT sm_planFloor FROM `SM_FLOOR` WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
+        $sql = "SELECT sm_planFloor FROM `SM_FLOOR` 
+                WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
         $result = $this->mysqli->query($sql)->fetch_array();
         return $result['sm_planFloor'];
     }
@@ -274,6 +295,7 @@ class SPACE_Model {
         }else if (!preg_match('/^([0-9]{6}|[#]{6})$/', $this->numberInventorySpace)) {
             $this->setNumberInventorySpace("######");
         }
+
         return $errors;
     }
 
@@ -282,7 +304,7 @@ class SPACE_Model {
 
         $errors = false;
 
-        if(strlen(trim($this->coordsplan)) > 500) {
+        if(strlen(trim($this->coordsplan)) > 65535) {
             $errors = "Coords can't be larger than 500 characters";
         }else if($this->coordsplan !== null){
             if(!preg_match('/^[0-9]+ [0-9]+(, [0-9]+ [0-9]+)*$/', $this->coordsplan)){
@@ -330,5 +352,6 @@ class SPACE_Model {
         return $errors;
     }
 
-
 }
+
+?>

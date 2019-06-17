@@ -1,7 +1,7 @@
 <?php
 
-require_once(__DIR__."..\..\core\ConnectionBD.php");
-require_once(__DIR__."..\..\model\FUNCTIONALITY_Model.php");
+require_once("../core/ConnectionBD.php");
+require_once("../model/FUNCTIONALITY_Model.php");
 
 class GROUP_Model {
 
@@ -29,7 +29,7 @@ class GROUP_Model {
     public function getAllGroups() {
         $sql = "SELECT * FROM `SM_GROUP`";
         if (!($resultado = $this->mysqli->query($sql))) {
-            throw new Exception('Error in the query on the database');
+            return 'Error in the query on the database';
         } else {
             $toret = array();
             $i = 0;
@@ -45,14 +45,25 @@ class GROUP_Model {
     public function getGroup() {
         $sql = "SELECT * FROM `SM_GROUP` WHERE sm_idGroup = '$this->idGroup'";
         if (!($resultado = $this->mysqli->query($sql))) {
-            throw new Exception('Error in the query on the database');
+            return 'Error in the query on the database';
         } else {
             $result = $resultado->fetch_array();
             return $result;
         }
     }
 
+    public function convertArray($permissions){
+        $permissionsFormat = array();
+        foreach($permissions as $permission) {
+            $ids = explode(",", $permission);
+            array_push($permissionsFormat, ["idFunction"=> $ids[0], "idAction" => $ids[1]]);
+        }
+        return $permissionsFormat;
+    }
+
+
     public function addGroup($permissions) {
+
         $errors = $this->checkIsValidForAdd($permissions);
         if($errors === false){
             $sql = "INSERT INTO `SM_GROUP` (sm_nameGroup, sm_descripGroup) VALUES ('$this->nameGroup', '$this->descripGroup')";
@@ -84,7 +95,9 @@ class GROUP_Model {
                     return 'Error in the query on the database';
                 }else {
                     foreach($permissions as $permission){
-                        $sqlPermissions = "INSERT INTO `SM_PERMISSION` (sm_idGroup, sm_idFunction, sm_idAction) VALUES ($this->idGroup, $permission->idFunction, $permission->idAction)";
+                        $idFunction = $permission['idFunction'];
+                        $idAction = $permission['idAction'];
+                        $sqlPermissions = "INSERT INTO `SM_PERMISSION` (sm_idGroup, sm_idFunction, sm_idAction) VALUES ($this->idGroup, $idFunction, $idAction)";
                         if (!($resultado = $this->mysqli->query($sqlPermissions))) {
                             return 'Error in the query on the database';
                         }
@@ -117,7 +130,7 @@ class GROUP_Model {
     public function findNameGroup() {
         $sql = "SELECT sm_nameGroup FROM `SM_GROUP` WHERE sm_idGroup = '$this->idGroup'";
         if (!($resultado = $this->mysqli->query($sql))) {
-            throw new Exception('Error in the query on the database');
+            return 'Error in the query on the database';
         } else {
             $result = $resultado->fetch_array();
             return $result['sm_nameGroup'];
@@ -128,11 +141,11 @@ class GROUP_Model {
         This public function is only used in unit tests over GROUP_EDIT and GROUP_DELETE to get the last id action inserted (through the unit test GROUP_ADD_TEST), 
         because of this the connection with DB is realized in the public function to be able to access it through an anonymous class.
     */
-    public function findLastGroupID() {
+    public static function findLastGroupID() {
         $mysqli = Connection::connectionBD();
         $sql = "SELECT sm_idGroup FROM `SM_GROUP` ORDER BY sm_idGroup DESC LIMIT 1";
         if (!($resultado = $mysqli->query($sql))) {
-            throw new Exception('Error in the query on the database');
+            return 'Error in the query on the database';
         } else {
             $result = $resultado->fetch_array();
             return $result['sm_idGroup'];
@@ -142,7 +155,9 @@ class GROUP_Model {
     
     public function addPermission($idGroup, $permissions) {
         foreach($permissions as $permission){
-            $sql = "INSERT INTO `SM_PERMISSION` (sm_idGroup, sm_idFunction, sm_idAction) VALUES ('$idGroup', '$permission->idFunction', '$permission->idAction')";
+            $idFunction = $permission["idFunction"];
+            $idAction = $permission["idAction"];
+            $sql = "INSERT INTO `SM_PERMISSION` (sm_idGroup, sm_idFunction, sm_idAction) VALUES ('$idGroup', '$idFunction', '$idAction')";
             if (!($resultado = $this->mysqli->query($sql))) {
                 return 'Error in the query on the database';
             }
@@ -154,7 +169,7 @@ class GROUP_Model {
     public function getPermissionForGroup() {
         $sql = "SELECT * FROM `SM_PERMISSION` WHERE sm_idGroup = '$this->idGroup'";
         if (!($resultado = $this->mysqli->query($sql))) {
-            throw new Exception('Error in the query on the database');
+            return 'Error in the query on the database';
         } else {
             $toret = array();
             $i = 0;
@@ -170,9 +185,9 @@ class GROUP_Model {
         $toret = array();
         $i = 0;
         foreach($actions as $action){
-            $sql = "SELECT sm_idGroup, sm_idAction FROM `SM_PERMISSION` WHERE sm_idFunction = '$idFunction' AND sm_idAction = '$action->id'";
+            $sql = "SELECT sm_idGroup, sm_idAction FROM `SM_PERMISSION` WHERE sm_idFunction = '$idFunction' AND sm_idAction = '$action'";
             if (!($resultado = $this->mysqli->query($sql))) {
-                throw new Exception('Error in the query on the database');
+                return 'Error in the query on the database';
             }else {
                 $fila = $resultado->fetch_array();
                 if($fila['sm_idGroup'] !== null){
@@ -224,7 +239,7 @@ class GROUP_Model {
         }else{
             $function = new FUNCTIONALITY_Model();
             foreach($permissions as $permission){
-                if(!$function->existsFunctionAction($permission->idFunction, $permission->idAction)){
+                if(!$function->existsFunctionAction($permission["idFunction"], $permission["idAction"])){
                     $errors = "Some action for functionality doesn't exist";
                 }
             }
@@ -235,6 +250,7 @@ class GROUP_Model {
 
 
     public function checkIsValidForUpdate($permissions) {
+        
 
         $errors = false;
 
@@ -263,7 +279,7 @@ class GROUP_Model {
         }else{
             $function = new FUNCTIONALITY_Model();
             foreach($permissions as $permission){
-                if(!$function->existsFunctionAction($permission->idFunction, $permission->idAction)){
+                if(!$function->existsFunctionAction($permission["idFunction"], $permission["idAction"])){
                     $errors = "Some action for functionality doesn't exist";
                 }
             }
@@ -288,3 +304,5 @@ class GROUP_Model {
     }
 
 }
+
+?>

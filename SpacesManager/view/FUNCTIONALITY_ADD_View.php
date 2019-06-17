@@ -20,7 +20,7 @@ class FUNCTIONALITY_ADD{
 						<?=htmlentities($strings["Datas of the new functionality"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form  method="POST" action="FUNCTIONALITY_Controller.php?action=<?= $strings['Add']?>" onkeyup="validateFunction(this)">
+						<form  method="POST" action="FUNCTIONALITY_Controller.php?action=Add" onkeyup="validateFunction(this)">
 							<div id="group-form">
 
 								<div class="input-container">
@@ -38,15 +38,15 @@ class FUNCTIONALITY_ADD{
 								<label class="control-label"><?=$strings['Check the actions:']?></label>
                                 <?php foreach($this->actions as $action): ?>
                                     <div class="checkboxList">
-                                        <input type="checkbox" name="action" id="<?=$action['sm_idAction']?>" value="<?=$action['sm_idAction']?>"/>
+                                        <input type="checkbox" name="actions[]" id="<?=$action['sm_idAction']?>" value="<?=$action['sm_idAction']?>"/>
                                         <label for="<?=$action['sm_idAction']?>"><?=$action['sm_nameAction']?></label>
                                     </div>
                                 <?php endforeach; ?>
-                                <input type="hidden" id="actions" name="actions">
-								<button id="saveButton" type="submit" name="submit" class="btn-dark" onclick="validateCheckboxes()" disabled><?= $strings["Save"]?></button>
+                                
+								<button id="saveButton" type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>
 							</div> 
 						</form>
-						<a href="FUNCTIONALITY_Controller.php"><?= $strings["Back"] ?></a>
+						<a class="a-back" href="FUNCTIONALITY_Controller.php"><?= $strings["Back"] ?></a>
 					</div>
 				</div>
 			</div>

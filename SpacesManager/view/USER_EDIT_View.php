@@ -27,14 +27,14 @@ class USER_EDIT{
 			<div class="row center-row">
 				<div class="col-lg-6 center-block">
 					<div id="titleView">
-						<?=htmlentities($strings["Edit User"])?>
+						<?=htmlentities($strings["Do you want to change something?"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form method="POST" action="USER_Controller.php?action=<?= $strings['Edit']?>&user=<?= $this->user['email']?>" enctype="multipart/form-data" onkeyup="validateEditUser(this)">
+						<form method="POST" action="USER_Controller.php?action=Edit&user=<?= $this->user['email']?>" enctype="multipart/form-data" onkeyup="validateEditUser(this)">
 							<div id="group-form">
 
 								<div id="profilePhoto-container">
-									<?php if($this->user['photo']): ?>
+									<?php if(is_file($this->user['photo'])): ?>
 										<img id="profilePhoto" alt="<?= $strings['ProfilePhoto']?>" src="<?=$this->user['photo']?>" onclick="uploadProfilePhoto()"/>
 									<?php else: ?>
 										<img id="profilePhoto" alt="<?= $strings['ProfilePhoto']?>" src="../view/img/notUser.jpg" onclick="uploadProfilePhoto()"/>
@@ -102,6 +102,7 @@ class USER_EDIT{
 									<label for="phone"><?= $strings['What is his phone?']?></label>
 								</div>
 
+
 								<label class="labelSelect"><?= $strings['What is his group?']?></label>
 								<div class="input-container">
 									<select class="custom-select" name="group" required>
@@ -119,7 +120,7 @@ class USER_EDIT{
 								<button id="savetButton" type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
 							</div> 
 						</form>
-						<a href="<?=$_SERVER["HTTP_REFERER"]?>"><?= $strings["Back"] ?></a>
+						<a class="a-back" href="USER_Controller.php"><?= $strings["Back"] ?></a>
 					</div>
 				</div>
 			</div>

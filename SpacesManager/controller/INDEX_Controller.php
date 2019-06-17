@@ -1,8 +1,8 @@
 <?php
 
-require_once(__DIR__."..\..\core\ViewManager.php");
-require_once(__DIR__.'..\..\core\ACL.php');
-require_once(__DIR__.'..\..\view\INDEX_View.php');
+require_once("../core/ViewManager.php");
+require_once("../core/ACL.php");
+require_once("../view/INDEX_View.php");
 
 $view = new ViewManager();
 
@@ -19,3 +19,5 @@ Switch ($_GET['action']){
     break;
 						
 }
+
+?>

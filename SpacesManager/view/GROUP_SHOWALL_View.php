@@ -46,11 +46,7 @@ class GROUP_SHOWALL{
                                         for ($i = 0; $i < count($listTitles); $i++):
                                             if ($key === $listTitles[$i]) : ?>
                                                 <td>
-                                                    <?php if ($key === 'sm_nameGroup') {?>
-                                                        <a title="<?= $strings['Show Group']?>" href='GROUP_Controller.php?action=<?= $strings['Show']?>&group=<?= $this->groups[$j]['sm_idGroup']?>'><?= $value?></a>                
-                                                    <?php }else {
-                                                        echo $value;
-                                                    } ?>
+                                                    <?= $value; ?>
                                                 </td>
                                             <?php endif;
                                         endfor;

@@ -1,7 +1,6 @@
 <?php
 
 function checkRol($action, $funcion){
-	
 	if(isset($_SESSION['PERMISSIONS'])){
 		$permissions = $_SESSION['PERMISSIONS'];
 		for($i=0; $i<count($permissions);$i++){

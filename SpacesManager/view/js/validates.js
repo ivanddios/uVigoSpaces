@@ -8,7 +8,7 @@ function changeColors(element, color){
 
 function checkBuildingId(idBuildingInput){
     
-    var expr = /^[A-Z]{4}[0-9]$/;
+    var expr = /^[A-Z]{3}[A-Z0-9]{2}$/;
 
     if (expr.test(idBuildingInput.value) && idBuildingInput.value.length > 0 && idBuildingInput.value.length < 6){ 
         changeColors(idBuildingInput, "green");
@@ -412,37 +412,72 @@ function validateFunction(form) {
 
 
 
+function actionManage (idFunction, idAction, button){
+
+    checkboxModalId = "" + idFunction + idAction;
+    checkboxModal = document.getElementById(checkboxModalId);
+    checkboxModal.checked = false;
+    button.style.display = "none";
+}
 
 
-function validateCheckboxes() {
-
-    var checkboxChecked = [];
-    var checkbox = document.getElementsByName('action');
-
-    for (var i = 0; i < checkbox.length; i++) {
-        if (checkbox[i].checked) {
-            checkboxChecked.push({"id":checkbox[i].value});
+function selectAll(idFunction, toggle){
+    
+    checkboxes = document.getElementsByClassName(idFunction);
+    for (var i = 0; i < checkboxes.length; i++) {
+        actionId = checkboxes[i].value.split(',');
+        buttonActionId = 'buttonAction-'+idFunction+actionId[1];
+        buttonAction = document.getElementById(buttonActionId);
+        if(toggle.checked == true){
+            checkboxes[i].checked = true;
+            buttonAction.style.display = 'block';
+        } else{
+            checkboxes[i].checked = false;
+            buttonAction.style.display = 'none';
         }
     }
-    document.getElementById("actions").value = JSON.stringify(checkboxChecked);
 }
 
 
 
-function validatePermissions() {
+function inputManager(idFunction, idAction){
+    toggleid = 'toggleAll-'+idFunction;
+    toggle = document.getElementById(toggleid);
+    checkboxModalId = "" + idFunction + idAction;
+    checkboxModal = document.getElementById(checkboxModalId);
+    buttonActionId = 'buttonAction-'+idFunction+idAction;
+    buttonAction = document.getElementById(buttonActionId);
 
-    var checkboxChecked = [];
-    var checkbox = document.getElementsByName('action');
-
-    for (var i = 0; i < checkbox.length; i++) {
-        if (checkbox[i].checked) {
-            var ids = checkbox[i].value.split(',');
-            checkboxChecked.push({"idFunction": ids[0], "idAction":ids[1]});
-        }
+    if(buttonAction.style.display == 'none'){
+        checkboxModal.checked = true;
+        buttonAction.style.display = 'block';
+    }else{
+        buttonAction.style.display = 'none';
+        checkboxModal.checked = false;
+        toggle.checked = false;
     }
-    document.getElementById("permissions").value = JSON.stringify(checkboxChecked);
-
 }
+
+
+// function checkCheckboxes(idFunction){
+//     //Evaluamos si todos los checkboxes están seleccionados, entonces checkeamos el SELECT ALL
+//     checkboxes = document.getElementsByClassName(idFunction);
+//     contChecked = 0;
+//     for (var i = 0; i < checkboxes.length; i++) {
+//         if(checkboxes[i].checked = true){
+//             contChecked += 1;
+//         }
+//     }
+
+//     toggleid = 'toggleAll-'+idFunction;
+//     toggle = document.getElementById(toggleid);
+//     if(checkboxes.length == contChecked){
+//         toggle.checked = true;
+//     }
+// }
+
+
+
 
 
 

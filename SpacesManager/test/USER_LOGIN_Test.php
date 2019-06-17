@@ -1,6 +1,6 @@
 
 <?php 
-require_once(__DIR__.'..\..\model\USER_Model.php');
+require_once("../model/USER_Model.php");
 
 $tests = array();
 

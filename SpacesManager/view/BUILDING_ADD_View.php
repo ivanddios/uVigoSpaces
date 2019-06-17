@@ -17,7 +17,7 @@ class BUILDING_ADD{
 						<?=htmlentities($strings["Datas of the new building"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form method="POST" action="BUILDING_Controller.php?action=<?= $strings['Add']?>" onkeyup="validateBuilding(this)">
+						<form method="POST" action="BUILDING_Controller.php?action=Add" onkeyup="validateBuilding(this)">
 							<div id="group-form">
 
 								<div class="input-container">
@@ -47,7 +47,7 @@ class BUILDING_ADD{
 								<button id="saveButton" type="submit" name="submit" class="btn-dark" disabled><?= $strings["Save"]?></button>
 							</div> 
 						</form>
-						<a href="../controller/BUILDING_Controller.php?"><?= $strings["Back"] ?></a>
+						<a class="a-back" href="../controller/BUILDING_Controller.php"><?=$strings["Back"]?></a>
 					</div>
 				</div>
 			</div>

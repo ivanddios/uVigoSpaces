@@ -23,7 +23,7 @@ class SPACE_EDIT{
 							<?=htmlentities($strings["Do you want to change something?"])?>
 						</div>
 						<div class="col-lg-12 center-block-content">
-							<form method="POST" action="SPACE_Controller.php?action=<?= $strings['Edit']?>&building=<?= $this->space['sm_idBuilding']?>&floor=<?= $this->space['sm_idFloor']?>&space=<?=$this->space['sm_idSpace']?>" onkeyup="validateSpace(this)">
+							<form method="POST" action="SPACE_Controller.php?action=Edit&building=<?= $this->space['sm_idBuilding']?>&floor=<?= $this->space['sm_idFloor']?>&space=<?=$this->space['sm_idSpace']?>" onkeyup="validateSpace(this)">
 								<div id="group-form">
 
 									<input type="hidden" name="idBuilding" value="<?=$this->space['sm_idBuilding']?>" readonly>
@@ -54,8 +54,8 @@ class SPACE_EDIT{
 									</div>
 
 									<label class="control-label"><?= $strings['Click to edit the space in the plan']?></label>
-									<div class="inputWithIcon inputIconBg">
-										<a href="SPACE_Controller.php?action=<?= $strings['EditSpacePlan']?>&building=<?= $this->space['sm_idBuilding']?>&floor=<?= $this->space['sm_idFloor']?>&space=<?= $this->space['sm_idSpace']?>">
+									<div id="plane_floor" class="inputWithIcon inputIconBg">
+										<a href="SPACE_Controller.php?action=SelectSpacePlan&building=<?= $this->space['sm_idBuilding']?>&floor=<?= $this->space['sm_idFloor']?>&space=<?= $this->space['sm_idSpace']?>">
 											<img id="view-plan" src='<?= $this->plan; ?>' class="avatarplan">
 											<img id="icon-view" src="../view/img/iconTouch.png">
 										</a>
@@ -64,7 +64,7 @@ class SPACE_EDIT{
 								</div>	
 								<button id="saveButton" type="submit" name="submit" class="btn-dark"><?= $strings["Save"]?></button>
 							</form>
-							<a href="SPACE_Controller.php?building=<?=$this->space['sm_idBuilding']?>&floor=<?=$this->space['sm_idFloor']?>"><?= $strings["Back"] ?></a>
+							<a class="a-back" href="SPACE_Controller.php?building=<?=$this->space['sm_idBuilding']?>&floor=<?=$this->space['sm_idFloor']?>"><?= $strings["Back"] ?></a>
 						</div>
 					</div>
 				</div>

@@ -1,5 +1,5 @@
 <?php
-    require_once(__DIR__."..\..\core\ViewManager.php");
+    require_once("../core/ViewManager.php");
     $this->view = new ViewManager();
     include '../view/locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
     $this->flashMessageSuccess = $this->view->popFlashSuccess("successMessage");
@@ -55,79 +55,70 @@
                             <div class="nav-item dropdown">
                                 <a id="navbarDropdown-User" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?=$strings['Admin']?></a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown-User">
-                                    <a class="dropdown-item" href="../controller/ACTION_CONTROLLER.php"><?=$strings['Actions']?></a>
+                                    <?php  if(checkRol('SHOW ALL', 'ACTION')): ?>
+                                    <a class="dropdown-item" href="../controller/ACTION_Controller.php"><?=$strings['Actions']?></a>
+                                    <?php endif; ?>  
+                                    <?php  if(checkRol('SHOW ALL', 'FUNCTIONALITY')): ?>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="../controller/FUNCTIONALITY_Controller.php"><?=$strings['Functionalities']?></a>
+                                    <?php endif; ?>  
+                                    <?php  if(checkRol('SHOW ALL', 'GROUP')): ?>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="../controller/GROUP_Controller.php"><?=$strings['Groups']?></a>
+                                    <?php endif; ?>  
+                                    <?php  if(checkRol('SHOW ALL', 'USER')): ?>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="../controller/USER_CONTROLLER.php"><?=$strings['Users']?></a>    
+                                    <a class="dropdown-item" href="../controller/USER_Controller.php"><?=$strings['Users']?></a>
+                                    <?php endif; ?> 
+                                    <div class="dropdown-divider"></div> 
+                                    <?php  if(checkRol('SHOW ALL', 'TEST')): ?>
+                                    <a class="dropdown-item" href="../controller/TEST_Controller.php"><?=$strings['Tests']?></a>
+                                    <?php endif; ?>  
                                 </div>
                             </div>
                         <?php endif; ?>   
-                        <li><a class="nav-link" href="../controller/BUILDING_Controller.php"><?=$strings['Show Buildings']?></a></li>&nbsp;&nbsp;  
+                        <li><a class="nav-link" href="../controller/BUILDING_Controller.php"><?=$strings['Show Buildings']?></a></li>
                     </ul>
+                </div>
 
-                    <?php if(isset($_SESSION['LOGIN'])): ?>
-                        <div  class="nav-item dropdown noArrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <div class="inset">
-                                    <?php if(isset($_SESSION['PHOTO'])): ?>    
-                                        <img src="<?=$_SESSION['PHOTO']?>">
-                                    <?php else: ?>
-                                        <img src="../view/img/notUser.jpg">
-                                    <?php endif; ?>
-                                </div>
-                            </a>	
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="../controller/USER_Controller.php?action=<?=$strings['Edit']?>&user=<?=$_SESSION['LOGIN']?>"><?=$strings['My Profile']?></a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="../controller/LOGIN_Controller.php?action=<?=$strings['Logout']?>"><?=$strings['Logout']?></a>
+                <?php if(isset($_SESSION['LOGIN'])): ?>
+
+                <div class="nav-item language-box">
+                    <?php if($_SESSION['LANGUAGE'] === 'Castellano') { ?>
+                        <a class="lang-selected" href="#">ESP</a> |
+                        <a class="lang-no-selected" href="../core/ChangeLanguage.php?idioma=Galego">GAL</a> |
+                        <a class="lang-no-selected" href="../core/ChangeLanguage.php?idioma=English">ENG</a>
+                    <?php } elseif($_SESSION['LANGUAGE'] === 'English') { ?>
+                        <a class="lang-no-selected" href="../core/ChangeLanguage.php?idioma=Castellano">ESP</a> |
+                        <a class="lang-no-selected" href="../core/ChangeLanguage.php?idioma=Galego">GAL</a> |
+                        <a class="lang-selected" href="#">ENG</a>
+                    <?php } else { ?>
+                        <a class="lang-no-selected" href="../core/ChangeLanguage.php?idioma=Castellano">ESP</a> |
+                        <a class="lang-selected" href="#">GAL</a> |
+                        <a class="lang-no-selected" href="../core/ChangeLanguage.php?idioma=English">ENG</a>
+                    <?php } ?>
+                </div>
+
+        
+                    <div  class="nav-item dropdown noArrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="inset">
+                                <?php if(isset($_SESSION['PHOTO']) && is_file($_SESSION['PHOTO'])): ?>    
+                                    <img src="<?=$_SESSION['PHOTO']?>">
+                                <?php else: ?>
+                                    <img src="../view/img/notUser.jpg">
+                                <?php endif; ?>
                             </div>
-                        </div>
-                    <?php else: ?>
-                        <a class="nav-link nav-a" href="../controller/LOGIN_Controller.php?action=<?=$strings['Login']?>"><?=$strings['Login']?></a>
-                    <?php endif; ?>
-
-                    <div class="nav-item dropdown noArrow">
-                        <a id="navbarDropdownLang" class="nav-link dropdown-toggle nav-a" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <?php if($_SESSION['LANGUAGE'] === 'Castellano') { ?>
-                                <img src="../view/img/spain.png" alt="lang" class="languageFlag">
-                            <?php } elseif($_SESSION['LANGUAGE'] === 'English') { ?>
-                                <img src="../view/img/uk.png" alt="lang" class="languageFlag">
-                            <?php } else { ?>
-                                <img src="../view/img/galician.png" alt="lang" class="languageFlag">
-                            <?php } ?>
-                        </a>
-                        <div class="dropdown-menu languages" aria-labelledby="navbarDropdownLang">
-                            <?php if($_SESSION['LANGUAGE'] === 'Castellano') { ?>
-                                <a href="../core/CambioIdioma.php?idioma=Galego">
-                                    <img src="../view//img/galician.png" alt="lang" class="languageFlag">
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="../core/CambioIdioma.php?idioma=English">
-                                    <img src="../view//img/uk.png" alt="lang" class="languageFlag">
-                                </a>
-                            <?php } elseif($_SESSION['LANGUAGE'] === 'Galego') { ?>
-                                <a href="../core/CambioIdioma.php?idioma=Castellano">
-                                    <img src="../view//img/spain.png" alt="lang" class="languageFlag">
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="../core/CambioIdioma.php?idioma=English">
-                                    <img src="../view//img/uk.png" alt="lang" class="languageFlag">
-                                </a>
-                            <?php } elseif($_SESSION['LANGUAGE'] === 'English') { ?>
-                                <a href="../core/CambioIdioma.php?idioma=Galego">
-                                    <img src="../view//img/galician.png" alt="lang" class="languageFlag">
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="../core/CambioIdioma.php?idioma=Castellano">
-                                    <img src="../view//img/spain.png" alt="lang" class="languageFlag">
-                                </a>
-                            <?php } ?>
+                        </a>	
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="../controller/USER_Controller.php?action=EditProfile&user=<?=$_SESSION['LOGIN']?>"><?=$strings['My Profile']?></a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="../controller/LOGIN_Controller.php?action=Logout"><?=$strings['Logout']?></a>
                         </div>
                     </div>
-                </div>
+                <?php else: ?>
+                    <a class="nav-link nav-a" href="../controller/LOGIN_Controller.php?action=Login"><?=$strings['Login']?></a>
+                <?php endif; ?>
             </nav>
         </header>
 

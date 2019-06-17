@@ -21,13 +21,13 @@ class BUILDING_SHOW{
 						<div class="col-lg-12 center-block-content">
 								<div id="group-form">
 									<div class="input-container">
-											<span class="input-group-text fa fa-lock"></span>
-											<input type="text" id="idBuilding" name="idBuilding" value="<?=$this->building['sm_idBuilding']?>" readonly/>
-											<label for="idBuilding"><?= $strings['idBuilding']?></label>
+										<span class="input-group-text fa fa-lock"></span>
+										<input type="text" id="idBuilding" name="idBuilding" value="<?=$this->building['sm_idBuilding']?>" readonly/>
+										<label for="idBuilding"><?= $strings['idBuilding']?></label>
 									</div>
 
 									<div class="input-container">
-										<span class="input-group-text fa fa-building"></span>
+										<span class="input-group-text fa fa-reorder"></span>
 										<input type="text" id="nameBuilding" name="nameBuilding" value="<?=$this->building['sm_nameBuilding']?>" readonly/>
 										<label for="nameBuilding"><?= $strings['nameBuilding']?></label>
 									</div>
@@ -43,8 +43,13 @@ class BUILDING_SHOW{
 										<input type="text" id="phoneBuilding" name="phoneBuilding" value="<?=$this->building['sm_phoneBuilding']?>" readonly/>
 										<label for="phoneBuilding"><?= $strings['phoneBuilding']?></label>
 									</div>
+
+									<div class="input-container">
+										<span class="input-group-text fa fa-building"></span><label class="show-a"><?=$strings['seeFloors']?><a href="../controller/FLOOR_Controller.php?building=<?=$this->building['sm_idBuilding']?>"><?=$strings['here']?></a></label>
+									</div>
+
 								</div>
-							<a href="../controller/BUILDING_Controller.php?"><?= $strings["Back"] ?></a>
+							<a class="a-back" href="../controller/BUILDING_Controller.php"><?=$strings["Back"]?></a>
 						</div>
 					</div>
 				</div>

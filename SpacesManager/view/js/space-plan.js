@@ -1,48 +1,62 @@
 
-function loadImageOriginal(srcImage, ctx) {
+function loadImageOriginal(srcImage, ctxImage) {
     var image = new Image();    
     image.onload = function(){
-        canvas.width = this.width;
-        canvas.height = this.height;
+        canvasImage.width = this.width;
+        canvasImage.height = this.height;
+        canvasSelection.width = canvasImage.width;
+        canvasSelection.height = canvasImage.height;
         ratioResize = 1;
-        ctx.drawImage(image, 0, 0, canvas.width, canvas.height); 
+        ctxImage.drawImage(image, 0, 0, canvasImage.width, canvasImage.height); 
     };
     image.src = srcImage;
 };
 
-function loadImageOriginalWithSelectSpace(srcImage, coordsSpace, ctx) {
+function loadImageOriginalWithSelectSpace(srcImage, coordsSpace, ctxImage, ctxLines, edges) {
     var image = new Image();  
     image.onload = function(){
-        canvas.width = this.width;
-        canvas.height = this.height;
+        canvasImage.width = this.width;
+        canvasImage.height = this.height;
+        canvasSelection.width = canvasImage.width;
+        canvasSelection.height = canvasImage.height;
         ratioResize = 1; 
-        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-        spacePoints = convertCoordsToImageSize(coordsSpace, ratioResize, false); 
-        drawPolygon(spacePoints, ctx);
+        ctxImage.drawImage(image, 0, 0, canvasImage.width, canvasImage.height);
+        storedLines = convertCoordsToImageSize(coordsSpace, ratioResize, false);
+        drawPolygon(storedLines, ctxLines);
+        if(edges){
+            drawAllPoints(storedLines, ctxLines);
+        }
     };
     image.src = srcImage;
 };
 
-function loadImageResize(srcImage, ctx) {
+function loadImageResize(srcImage, ctxImage) {
     var image = new Image();
     image.onload = function(){
-        canvas.width = document.body.clientWidth;
-        canvas.height = (this.height/this.width)*document.body.clientWidth;
-        ratioResize = this.height/canvas.height;
-        ctx.drawImage(image, 0, 0, canvas.width, canvas.height); 
+        canvasImage.width = document.body.clientWidth;
+        canvasImage.height = (this.height/this.width)*document.body.clientWidth;
+        canvasSelection.width = canvasImage.width;
+        canvasSelection.height = canvasImage.height;
+        ratioResize = this.height/canvasImage.height;
+        ctxImage.drawImage(image, 0, 0, canvasImage.width, canvasImage.height); 
     };
     image.src = srcImage;
 };
 
-function loadImageResizeWithSelectSpace(srcImage, coordsSpace, ctx) {
+function loadImageResizeWithSelectSpace(srcImage, coordsSpace, ctxImage, ctxLines, edges) {
     var image = new Image();
     image.onload = function(){
-        canvas.width = document.body.clientWidth;
-        canvas.height = (this.height/this.width) * document.body.clientWidth;
-        ratioResize = this.height/canvas.height;
-        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-        spacePoints = convertCoordsToImageSize(coordsSpace, ratioResize, true); 
-        drawPolygon(spacePoints, ctx);
+        canvasImage.width = document.body.clientWidth;
+        canvasImage.height = (this.height/this.width) * document.body.clientWidth;
+        canvasSelection.width = canvasImage.width;
+        canvasSelection.height = canvasImage.height;
+        ratioResize = this.height/canvasImage.height;
+        ctxImage.drawImage(image, 0, 0, canvasImage.width, canvasImage.height);
+        storedLines = convertCoordsToImageSize(coordsSpace, ratioResize, true);
+        drawPolygon(storedLines, ctxLines);
+        if(edges){
+            drawAllPoints(storedLines, ctxLines);
+        }
     }; 
     image.src = srcImage;
 };
@@ -98,72 +112,121 @@ function isInitialPoint(position) {
     return (dx * dx + dy * dy < radius * radius)
 };
 
-function drawPoint(position, ctx) {
-    ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
-    ctx.strokeStyle = 'rgb(255,20,20)';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    if(storedLines.length == 1){
-        ctx.moveTo(position.x, position.y);
-        ctx.strokeRect(position.x - radius/2, position.y - radius/2, radius, radius);
-        ctx.fillRect(position.x - radius/2, position.y - radius/2, radius, radius);
-        document.getElementById("clearButton").disabled = false;
-    } else {
-        ctx.moveTo(storedLines[storedLines.length - 2].x, storedLines[storedLines.length - 2].y);
-        ctx.strokeRect(position.x - radius/2, position.y - radius/2, radius, radius);
-        ctx.fillRect(position.x - radius/2, position.y - radius/2, radius, radius);
-        ctx.lineTo(position.x,position.y);
+function isAPoint(position) {
+    for(var i = 0; i< storedLines.length; i++)   {
+        dx = position.x - storedLines[i].x,
+        dy = position.y - storedLines[i].y;
+        
+        if(dx * dx + dy * dy < radius * radius){
+            return storedLines[i];
+        }
     }
-    ctx.stroke();
-    ctx.fill();
+    return false;
 };
 
-function drawPolygon(polyLines, ctx) {
-    ctx.fillStyle = "rgb(255,20,20,0.3)";
-    ctx.strokeStyle = 'rgb(255,20,20)';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(polyLines[0].x, polyLines[0].y);
-    for (var i = 0; i < polyLines.length; i++) {
-        ctx.lineTo(polyLines[i].x, polyLines[i].y);
+
+
+function drawPoint(position, ctxLines) {
+    ctxLines.fillStyle = "rgba(255, 255, 255, 0.5)";
+    ctxLines.lineWidth = 1;
+    ctxLines.beginPath();
+    if(storedLines.length == 1){
+        ctxLines.strokeStyle = 'rgb(0, 0, 255)';
+        ctxLines.moveTo(position.x, position.y);
+        ctxLines.strokeRect(position.x - radius/2, position.y - radius/2, radius, radius);
+        ctxLines.fillRect(position.x - radius/2, position.y - radius/2, radius, radius);
+        document.getElementById("clearButton").disabled = false;
+    } else {
+        ctxLines.strokeStyle = 'rgb(255,20,20)';
+        ctxLines.moveTo(storedLines[storedLines.length - 2].x, storedLines[storedLines.length - 2].y);
+        ctxLines.strokeRect(position.x - radius/2, position.y - radius/2, radius, radius);
+        ctxLines.fillRect(position.x - radius/2, position.y - radius/2, radius, radius);
+        ctxLines.lineTo(position.x,position.y);
     }
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
+    ctxLines.stroke();
+    ctxLines.fill();
+};
+
+
+
+function drawAllPoints(polyLines, ctxLines) {
+    ctxLines.fillStyle = "rgba(255, 255, 255, 0.5)";
+    ctxLines.lineWidth = 1;
+    ctxLines.beginPath();
+    for (var i = 0; i < polyLines.length; i++) {
+        if(i == 0){
+            if(!isThereSpace){
+                ctxLines.strokeStyle = 'rgb(0, 0, 255)';
+            }else{
+                ctxLines.strokeStyle = 'rgb(255,20,20)';
+            }
+            ctxLines.moveTo(polyLines[i].x, polyLines[i].y);
+        } else {
+            ctxLines.strokeStyle = 'rgb(255,20,20)';
+            ctxLines.moveTo(polyLines[i-1].x, polyLines[i-1].y);
+        }
+        ctxLines.strokeRect(polyLines[i].x - radius/2, polyLines[i].y - radius/2, radius, radius);
+        ctxLines.fillRect(polyLines[i].x - radius/2, polyLines[i].y - radius/2, radius, radius);
+        ctxLines.lineTo(polyLines[i].x, polyLines[i].y);
+        }
+    ctxLines.stroke();
+    ctxLines.fill();
+};
+
+
+
+function drawPolygon(polyLines, ctxLines) {
+    ctxLines.fillStyle = "rgb(255,20,20,0.3)";
+    ctxLines.strokeStyle = 'rgb(255,20,20)';
+    ctxLines.lineWidth = 1;
+    ctxLines.beginPath();
+    ctxLines.moveTo(polyLines[0].x, polyLines[0].y);
+    for (var i = 0; i < polyLines.length; i++) {
+        ctxLines.lineTo(polyLines[i].x, polyLines[i].y);
+    }
+    ctxLines.closePath();
+    ctxLines.fill();
+    ctxLines.stroke();
 };
 
 
 
 function viewSpace(coordsSpace, srcImage) {
 
-    var canvas = document.getElementById("canvas"),
-        ctx = canvas.getContext("2d")
+    var canvasImage = document.getElementById("canvasImage"),
+        ctxImage = canvasImage.getContext("2d")
+        canvasSelection = document.getElementById("canvasSelection"),
+        ctxLines = canvasSelection.getContext("2d")
         resizeMode = true,
         fullButton =  document.getElementById("fullButton"),
         resizeButton =  document.getElementById("resizeButton");
-    loadImageResizeWithSelectSpace(srcImage,coordsSpace, ctx);
+    loadImageResizeWithSelectSpace(srcImage, coordsSpace, ctxImage, ctxLines, false);
 
 
-    $("#fullButton").click(function () {
+    fullButton.addEventListener("click", function() {
         resizeMode = false;
         btnsFull_Resize(fullButton, resizeButton);
-        ctx.clearRect(0, 0, canvas.width, canvas.height); 
-        loadImageOriginalWithSelectSpace(srcImage, coordsSpace, ctx);  
+        ctxImage.clearRect(0, 0, canvasImage.width, canvasImage.height);
+        ctxLines.clearRect(0, 0, canvasSelection.width, canvasSelection.height); 
+        loadImageOriginalWithSelectSpace(srcImage, coordsSpace, ctxImage, ctxLines, false);  
     });
     
     
-    $("#resizeButton").click(function () {
+    resizeButton.addEventListener("click", function() {
         resizeMode = true;
         btnsFull_Resize(resizeButton, fullButton);
-        ctx.clearRect(0, 0, canvas.width, canvas.height); 
-        loadImageResizeWithSelectSpace(srcImage, coordsSpace, ctx);
+        ctxImage.clearRect(0, 0, canvasImage.width, canvasImage.height);
+        ctxLines.clearRect(0, 0, canvasSelection.width, canvasSelection.height);  
+        loadImageResizeWithSelectSpace(srcImage, coordsSpace, ctxImage, ctxLines, false);
     });
 };
 
 function selectSpace(coordsSpace, srcImage) {
 
-    var canvas = document.getElementById("canvas"),
-        ctx = canvas.getContext("2d")
+    var canvasImage = document.getElementById("canvasImage"),
+        ctxImage = canvasImage.getContext("2d")
+        canvasSelection = document.getElementById("canvasSelection"),
+        ctxLines = canvasSelection.getContext("2d")
         inputCoords = document.getElementById("coordsSpace"),
         inputCoords.value = coordsSpace;
         savedButton = document.getElementById("saveButton"),
@@ -175,6 +238,11 @@ function selectSpace(coordsSpace, srcImage) {
         isThereSpace = false,
         resizeMode = true;
         ratioResize = 1,
+        pointMove = null,
+        initXPoint = 0,
+        initYPoint = 0,
+        isDragging = false,
+        startingPos = [],
         radius = 10;
 
         
@@ -182,111 +250,153 @@ function selectSpace(coordsSpace, srcImage) {
         savedButton.disabled = true;
         clearButton.disabled = true;
         fullButton.disabled = false;
-        loadImageResize(srcImage, ctx);
+        loadImageResize(srcImage, ctxImage);
     } else{
         isThereSpace = true;
         fullButton.disabled = false;
         resizeButton.disabled = true;
-        loadImageResizeWithSelectSpace(srcImage, coordsSpace, ctx);
+        loadImageResizeWithSelectSpace(srcImage, coordsSpace, ctxImage, ctxLines, true);
     }
 
-    $("#canvas").mousedown(function (event) {
+    canvasSelection.addEventListener("mousedown", function(event){
+        isDragging = false; 
+        startingPos = [event.pageX, event.pageY]; 
         switch (event.which) {
             case 1:
                 var position = selectCoords(event);
-                if (isInitialPoint(position)) { 
-                    polyLines.push(storedLines);
-                    storedLines = [];
-                    for(var i=0; i<polyLines.length; i++){
-                        drawPolygon(polyLines[i], ctx);
-                    }
-                    isThereSpace = true;
-                    savedButton.disabled = false;
-                    if(resizeMode){
-                        fullButton.disabled = false;
-                        resizeButton.disabled = true;
-                    }else{
-                        fullButton.disabled = true;
-                        resizeButton.disabled = false;
-                    }
-                }else{
+                var selectedPoint = isAPoint(position);
+                if(selectedPoint){
+                    pointMove = selectedPoint;
+                    initYPoint = event.clientY - selectedPoint.y;
+                    initXPoint = event.clientX - selectedPoint.x;
+                } else{ 
                     if(!isThereSpace){
                         fullButton.disabled = true;
                         resizeButton.disabled = true;
-                        if(inputCoords.value.length === 0) {
-                            coords = resizeCoordsToDB(position, ratioResize);
-                            inputCoords.value = coords.x + ' ' + coords.y;
-                        } else{
-                            coords = resizeCoordsToDB(position, ratioResize);
-                            inputCoords.value = inputCoords.value + ', ' + coords.x + ' ' + coords.y;
-                        }
                         storedLines.push(position);
-                        drawPoint(position, ctx);
+                        drawPoint(position, ctxLines);
                     } 
-                }
+                 }    
             break;
             
             default:
             break;
         }
-    });
+    }, false);
 
 
-    $("#clearButton").click(function () {
+    canvasSelection.addEventListener("mousemove", function(event) {
+        if(pointMove != null){
+            ctxLines.clearRect(0, 0, canvasSelection.width, canvasSelection.height);
+            for(var i=0; i<storedLines; i++){
+                if(storedLines[i] == pointMove){
+                    storedLines[i] = pointMove
+                }
+            }
+            pointMove.x = event.clientX - initXPoint;
+            pointMove.y = event.clientY - initYPoint;
+            drawAllPoints(storedLines, ctxLines);
+            if(isThereSpace){
+                drawPolygon(storedLines, ctxLines); 
+            }
+        }
+
+        if (!(event.pageX === startingPos[0] && event.pageY === startingPos[1])) { 
+            isDragging = true;
+        }
+
+    }, false);
+        
+
+    canvasSelection.addEventListener("mouseup", function(event) {
+        pointMove = null;
+        inputCoords.value = "";
+        for(var i=0; i<storedLines.length; i++){
+            if(inputCoords.value.length === 0) {
+                coords = resizeCoordsToDB(storedLines[i], ratioResize);
+                inputCoords.value = coords.x + ' ' + coords.y;
+            } else{
+                coords = resizeCoordsToDB(storedLines[i], ratioResize);
+                inputCoords.value = inputCoords.value + ', ' + coords.x + ' ' + coords.y;
+            }
+        }
+        
+        if (!isDragging) { 
+            var position = selectCoords(event);
+            if (storedLines.length > 1 && isInitialPoint(position) && !isThereSpace) { 
+                polyLines.push(storedLines);
+                for(var i=0; i<polyLines.length; i++){
+                    drawPolygon(polyLines[i], ctxLines);
+                }
+                isThereSpace = true;
+                savedButton.disabled = false;
+                if(resizeMode){
+                    fullButton.disabled = false;
+                    resizeButton.disabled = true;
+                }else{
+                    fullButton.disabled = true;
+                    resizeButton.disabled = false;
+                }
+             }
+         }
+    }, false);
+
+
+
+    clearButton.addEventListener("click", function() {
         polyLines = [];
         storedLines = [];
-        inputCoords.value = "";
         isThereSpace = false;
         savedButton.disabled = true;
         clearButton.disabled = true;
-        ctx.clearRect(0, 0, canvas.width, canvas.height); 
+        ctxLines.clearRect(0, 0, canvasSelection.width, canvasSelection.height); 
         if(resizeMode){
             fullButton.disabled = false;
             resizeButton.disabled = true;
-            loadImageResize(srcImage, ctx);
+            loadImageResize(srcImage, ctxImage);
          }else{
             fullButton.disabled = true;
             resizeButton.disabled = false;
-            loadImageOriginal(srcImage, ctx);
+            loadImageOriginal(srcImage, ctxImage);
          }
     });
     
-    $("#fullButton").click(function () {
+    fullButton.addEventListener("click", function() {
         resizeMode = false;
         btnsFull_Resize(fullButton,resizeButton);
-        ctx.clearRect(0, 0, canvas.width, canvas.height); 
+        ctxImage.clearRect(0, 0, canvasImage.width, canvasImage.height);
+        ctxLines.clearRect(0, 0, canvasSelection.width, canvasSelection.height); 
         if(isThereSpace){
             savedButton.disabled = false;
             clearButton.disabled = false;
-            loadImageOriginalWithSelectSpace(srcImage, inputCoords.value, ctx);
+            loadImageOriginalWithSelectSpace(srcImage, inputCoords.value, ctxImage, ctxLines, true);
+            
         }else{
             savedButton.disabled = true;
             clearButton.disabled = true;
             polyLines = [];
             storedLines = [];
-            inputCoords.value = "";
-            loadImageOriginal(srcImage, ctx);
+            loadImageOriginal(srcImage, ctxImage);
         }
     });
     
     
-    $("#resizeButton").click(function () {
+    resizeButton.addEventListener("click", function() {
         resizeMode = true;
         btnsFull_Resize(resizeButton, fullButton);
-        ctx.clearRect(0, 0, canvas.width, canvas.height); 
+        ctxImage.clearRect(0, 0, canvasImage.width, canvasImage.height);
+        ctxLines.clearRect(0, 0, canvasSelection.width, canvasSelection.height); 
         if(isThereSpace){
             savedButton.disabled = false;
             clearButton.disabled = false;
-           
-
-            loadImageResizeWithSelectSpace(srcImage, inputCoords.value, ctx);
+            loadImageResizeWithSelectSpace(srcImage, inputCoords.value, ctxImage, ctxLines, true);
+            
         }else{
             savedButton.disabled = true;
             clearButton.disabled = true;
             polyLines = [];
             storedLines = [];
-            inputCoords.value = "";
-            loadImageResize(srcImage, ctx);
+            loadImageResize(srcImage, ctxImage);
         }
     });
 

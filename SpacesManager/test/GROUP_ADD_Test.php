@@ -1,6 +1,7 @@
 <?php 
 
-require_once(__DIR__.'..\..\model\GROUP_Model.php');
+require_once("../model/GROUP_Model.php");
+// require_once("../test/TEST_View.php");
 
 
 
@@ -109,10 +110,9 @@ $tests['SM_GROUP_ADD_TEST9']=(['Functionality' => "SM_GROUP_ADD",
                 'Expected' => "Some action for functionality doesn't exist",
                 'Result' => 'Not executed']);
 
-$permissions = array(array('idFunction'=>1000,"idAction"=>1),array("idFunction"=>1,"idAction"=>2),array("idFunction"=>1,"idAction"=>3),array("idFunction"=>1,"idAction"=>4),array("idFunction"=>1,"idAction"=>5));
-$permissions = json_encode($permissions);
-$permissions = json_decode($permissions);
 
+
+$permissions = array(array('idFunction'=>1000,"idAction"=>1),array("idFunction"=>1,"idAction"=>2),array("idFunction"=>1,"idAction"=>3),array("idFunction"=>1,"idAction"=>4),array("idFunction"=>1,"idAction"=>5));
 $group= new GROUP_Model('','nameGroup','descripGroup');
 $addAnswer = $group->addGroup($permissions);
 $tests['SM_GROUP_ADD_TEST9']["Result"] = $addAnswer;
@@ -126,8 +126,6 @@ $tests['SM_GROUP_ADD_TEST10']=(['Functionality' => "SM_GROUP_ADD",
                 'Result' => 'Not executed']);
 
 $permissions = array(array('idFunction'=>1, "idAction"=>1),array("idFunction"=>1,"idAction"=>2),array("idFunction"=>1, "idAction"=>3),array("idFunction"=>1, "idAction"=>4),array("idFunction"=>1, "idAction"=>5));
-$permissions = json_encode($permissions);
-$permissions = json_decode($permissions);
 
 $group= new GROUP_Model('','nameGroupAdded','descripGroupAdded');
 $addAnswer = $group->addGroup($permissions);

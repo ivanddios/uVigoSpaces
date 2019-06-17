@@ -31,7 +31,7 @@ class ACTION_SHOWALL{
                                 <?php endforeach; ?>
                                 <?php  if(checkRol('ADD','ACTION')): ?>
                                     <th scope="col">
-                                        <a href="ACTION_Controller.php?action=<?= $strings['Add']?>">
+                                        <a href="ACTION_Controller.php?action=Add">
                                             <span title="<?= $strings['Add Action']?>" class="btn btn-success btn-sm fa fa-plus"></span>
                                         </a>
                                     </th>
@@ -47,7 +47,7 @@ class ACTION_SHOWALL{
                                             if ($key === $listTitles[$i]) : ?>
                                                 <td>
                                                     <?php if ($key === 'sm_nameAction') {?>
-                                                        <a title="<?= $strings['Show Action']?>" href="ACTION_Controller.php?action=<?= $strings['Show']?>&id=<?= $this->actions[$j]['sm_idAction']?>"><?=$value?></a>                
+                                                        <a title="<?= $strings['Show Action']?>" href="ACTION_Controller.php?action=Show&id=<?= $this->actions[$j]['sm_idAction']?>"><?=$value?></a>                
                                                     <?php }else {
                                                         echo $value;
                                                     } ?>
@@ -58,7 +58,7 @@ class ACTION_SHOWALL{
                                         
                                     <td>
                                         <?php  if(checkRol('EDIT', 'ACTION')): ?>
-                                            <a href="ACTION_Controller.php?action=<?= $strings['Edit']?>&accion=<?= $this->actions[$j]['sm_idAction']?>">
+                                            <a href="ACTION_Controller.php?action=Edit&accion=<?= $this->actions[$j]['sm_idAction']?>">
                                                 <span title="<?= $strings['Edit Action']?>" class="btn btn-warning btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
@@ -74,7 +74,7 @@ class ACTION_SHOWALL{
                                                             <?= sprintf($strings["Are you sure you want to delete the action \"%s\" ?"], $this->actions[$j]['sm_nameAction'] )?>
                                                             <p><?= $strings["The information that this action has will be lost"]?></p>
                                                         </div>
-                                                        <form method="POST" action="ACTION_Controller.php?action=<?=$strings['Delete']?>">
+                                                        <form method="POST" action="ACTION_Controller.php?action=Delete">
                                                             <input type="hidden" name="action" value="<?=$this->actions[$j]['sm_idAction']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>

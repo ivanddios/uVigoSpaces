@@ -56,7 +56,7 @@ class FUNCTIONALITY_SHOW{
                                 </div>
                             <?php endforeach; ?>
 						</div> 
-						<a href="FUNCTIONALITY_Controller.php"><?= $strings["Back"] ?></a>
+						<a class="a-back" href="FUNCTIONALITY_Controller.php"><?= $strings["Back"] ?></a>
 					</div>
 				</div>
 			</div>

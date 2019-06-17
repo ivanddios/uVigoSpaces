@@ -1,12 +1,12 @@
 <?php
 
-require_once(__DIR__."../../core/ViewManager.php");
-require_once(__DIR__."../../core/ACL.php");
-require_once(__DIR__."../../model/ACTION_Model.php");
-require_once(__DIR__."../../view/ACTION_SHOWALL_View.php");
-require_once(__DIR__."../../view/ACTION_ADD_View.php");
-require_once(__DIR__."../../view/ACTION_EDIT_View.php");
-require_once(__DIR__."../../view/ACTION_SHOW_View.php");
+require_once("../core/ViewManager.php");
+require_once("../core/ACL.php");
+require_once("../model/ACTION_Model.php");
+require_once("../view/ACTION_SHOWALL_View.php");
+require_once("../view/ACTION_ADD_View.php");
+require_once("../view/ACTION_EDIT_View.php");
+require_once("../view/ACTION_SHOW_View.php");
 
 
 $function = "ACTION";
@@ -31,7 +31,7 @@ if (!isset($_GET['action'])){
 
 Switch ($_GET['action']){
 
-    case  $strings['Add']:
+    case 'Add':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add actions requires login."]);
@@ -62,7 +62,7 @@ Switch ($_GET['action']){
     break;
 
 
-    case  $strings['Edit']:
+    case  'Edit':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Edit actions requires login."]);
@@ -103,7 +103,7 @@ Switch ($_GET['action']){
 
 
 
-    case  $strings['Show']:
+    case  'Show':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Show action requires login."]);
@@ -129,7 +129,7 @@ Switch ($_GET['action']){
     break;
 
 
-    case  $strings['Delete']:
+    case  'Delete':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Delete actions requires login."]);
