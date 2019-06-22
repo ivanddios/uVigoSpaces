@@ -24,6 +24,8 @@ SET time_zone = "+00:00";
 DROP DATABASE IF EXISTS `uvigoSpaces`;
 CREATE DATABASE IF NOT EXISTS `uvigoSpaces` DEFAULT CHARACTER SET latin1 COLLATE latin1_spanish_ci;
 USE `uvigoSpaces`;
+CREATE USER 'uvigoSpaces'@'localhost' IDENTIFIED BY 'uvigoSpacesPass';
+GRANT ALL PRIVILEGES ON *.* TO 'uvigoSpaces'@'localhost';
 
 -- --------------------------------------------------------
 
