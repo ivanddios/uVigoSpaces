@@ -37,8 +37,8 @@ class SPACE_SHOW{
 									
 								<div class="input-container">
 									<span class="input-group-text fa fa-area-chart"></span>
-									<input type="text" id="surfaceSpace" name="surfaceSpace" value="<?=$this->space['sm_surfaceSpace']?> m²" readonly>
-									<label for="surfaceSpace"><?= $strings['sm_surfaceSpace']?></label>
+									<input type="text" id="surfaceSpace" name="surfaceSpace" value="<?=$this->space['sm_builtSurface']?> m²" readonly>
+									<label for="surfaceSpace"><?= $strings['sm_builtSurface']?></label>
 								</div>
 
 								<div class="input-container">

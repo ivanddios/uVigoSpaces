@@ -1,7 +1,6 @@
 <?php
 
 require_once("../core/ViewManager.php");
-require_once("../core/ACL.php");
 require_once("../view/TEST_View.php");
 require_once("../test/USER_LOGIN_Test.php");
 require_once("../test/ACTION_ADD_Test.php");

@@ -353,12 +353,28 @@ input[type="checkbox"]:checked ~ label:before {
 
 /* MODAL */
 
+.modal{
+	margin-top: 5%;
+}
+
 .modal-header{
 	background-color: #337ab7;
 	color: #FFF;
 }
 .modal-body{
 	margin-top: 4%;
+}
+
+.modal-delete{
+	background-color: #dc3545;
+
+}
+
+#helpButton{
+	width: 97%;
+}
+#demo-gif{
+	width: 100%;
 }
 
 /* BUTTONS */
@@ -476,7 +492,7 @@ input[type="checkbox"]:checked ~ label:before {
 /* TITLE AND SUBTITLE VIEWS */
 #titleView{
 	margin: auto;
-	margin-top: 1%;
+	margin-top: 3%;
 	font-size: 32px;
 	text-align: center;
 	line-height: 100%; 

@@ -4,6 +4,7 @@ class INDEX{
 
     function __construct() {
         $this->render();
+        
     }
     
     function render() {

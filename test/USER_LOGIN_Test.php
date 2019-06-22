@@ -53,7 +53,7 @@ $tests['SM_USER_LOGIN_TEST5']=(['Functionality' => "SM_USER_LOGIN",
                 'Expected' => "Password is mandatory",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('ivanddf1994@hotmail.com');
+$user = new USER_Model('ivandd@hotmail.com');
 $loginAnswer = $user->login();
 $tests['SM_USER_LOGIN_TEST5']["Result"] = $loginAnswer;
 
@@ -63,7 +63,7 @@ $tests['SM_USER_LOGIN_TEST6']=(['Functionality' => "SM_USER_LOGIN",
                 'Expected' => 'Password format is invalid',
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('ivanddf1994@hotmail.com','abd*¨Ç');
+$user = new USER_Model('ivandd@hotmail.com','abd*¨Ç');
 $loginAnswer = $user->login();
 $tests['SM_USER_LOGIN_TEST6']["Result"] = $loginAnswer;
 
@@ -73,7 +73,7 @@ $tests['SM_USER_LOGIN_TEST7']=(['Functionality' => "SM_USER_LOGIN",
                 'Expected' => 'Password is incorrect',
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('ivanddf1994@hotmail.com','ABCd1234');
+$user = new USER_Model('ivandd@hotmail.com','ABCd1234');
 $loginAnswer = $user->login();
 $tests['SM_USER_LOGIN_TEST7']["Result"] = $loginAnswer;
 
@@ -84,7 +84,7 @@ $tests['SM_USER_LOGIN_TEST8']=(['Functionality' => "SM_USER_LOGIN",
                 'Expected' => 'Login successfully',
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('ivanddf1994@hotmail.com','ABcd1234');
+$user = new USER_Model('ivandd@hotmail.com','ABcd1234');
 $loginAnswer = $user->login();
 $tests['SM_USER_LOGIN_TEST8']["Result"] = $loginAnswer;
 if($loginAnswer === true){

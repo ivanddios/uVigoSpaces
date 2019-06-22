@@ -1,3 +1,13 @@
+/*
+ * File: calendar.js
+ *
+ * Author: ivanddios <ivanddf1994@gmail.com>
+ */
+
+
+/**
+ * Call the bootstrap Date Picker
+ */
 $(document).ready(function(){
 
     $('#date-es').bootstrapMaterialDatePicker

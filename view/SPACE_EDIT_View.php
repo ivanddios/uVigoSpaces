@@ -43,7 +43,7 @@ class SPACE_EDIT{
 									
 									<div class="input-container">
 										<span class="input-group-text fa fa-area-chart"></span>
-										<input type="text" id="surfaceSpace" name="surfaceSpace" value="<?=$this->space['sm_surfaceSpace']?>" onkeyup="checkSurface(this)">
+										<input type="text" id="surfaceSpace" name="surfaceSpace" value="<?=$this->space['sm_builtSurface']?>" onkeyup="checkSurface(this)">
 										<label for="surfaceSpace"><?= $strings['What is the surface of space?']?></label>
 									</div>
 

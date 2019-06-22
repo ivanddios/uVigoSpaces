@@ -29,7 +29,7 @@ class GROUP_SHOWALL{
                                 <?php foreach ($listTitles as $title): ?>
                                     <th scope="col"><?=$strings[$title]?></th>
                                 <?php endforeach; ?>
-                                <?php  if(checkRol('ADD', 'GROUP')): ?>
+                                <?php  if($this->view->checkRol('ADD', 'GROUP')): ?>
                                     <th scope="col">
                                         <a href="GROUP_Controller.php?action=Add">
                                             <span title="<?= $strings['Add Group']?>" class="btn btn-success btn-sm fa fa-plus"></span>
@@ -53,22 +53,22 @@ class GROUP_SHOWALL{
                                     endforeach;?>
                                         
                                     <td>
-                                        <?php  if(checkRol('SHOW ALL', 'USER')): ?> 
+                                        <?php  if($this->view->checkRol('SHOW ALL', 'USER')): ?> 
                                             <a href="GROUP_Controller.php?action=<?= $strings['Users']?>&group=<?= $this->groups[$j]['sm_idGroup']?>">
                                                 <span title="<?= $strings['Show Users']?>" class="btn btn-primary btn-sm fa fa-users"></span>
                                             </a>
                                         <?php endif; ?> 
-                                        <?php  if(checkRol('EDIT', 'GROUP')): ?>
+                                        <?php  if($this->view->checkRol('EDIT', 'GROUP')): ?>
                                             <a href="GROUP_Controller.php?action=Edit&group=<?= $this->groups[$j]['sm_idGroup']?>">
                                                 <span title="<?= $strings['Edit Group']?>" class="btn btn-warning btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
-                                        <?php  if(checkRol('DELETE', 'GROUP')): ?>
+                                        <?php  if($this->view->checkRol('DELETE', 'GROUP')): ?>
                                             <i title="<?= $strings['Delete Group']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->groups[$j]['sm_idGroup']?>"></i>
                                             <div id="item-<?= $this->groups[$j]['sm_idGroup']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
-                                                        <div class="modal-header">
+                                                        <div class="modal-header modal-delete">
                                                             <?= $strings["Attention"]?>
                                                         </div>
                                                         <div class="modal-body">
@@ -79,7 +79,7 @@ class GROUP_SHOWALL{
                                                             <input type="hidden" name="group" value="<?=$this->groups[$j]['sm_idGroup']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
-                                                                <button type="submit" name="submit" id="submit" class="btn btn-primary success"><?= $strings["Ok"]?></button>
+                                                                <button type="submit" name="submit" id="submit" class="btn btn-secondary success"><?= $strings["Ok"]?></button>
                                                             </div>
                                                         </form>
                                                     </div>

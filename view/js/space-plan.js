@@ -1,4 +1,21 @@
 
+/*
+ * File: space-plan.js
+ *
+ * Description: Library of functions used to manipulate the canvas elements
+ * 
+ * Author: ivanddios <ivanddf1994@gmail.com>
+ */
+
+
+/**
+* Loads in canvas element a image (floor's plane) with the original dimensions
+*
+* @param string $srcImage The source of the image
+* @param ImageData $ctxImage The underlying pixel data for the canvas area for the floor's plane
+*
+* @return void
+*/
 function loadImageOriginal(srcImage, ctxImage) {
     var image = new Image();    
     image.onload = function(){
@@ -12,6 +29,19 @@ function loadImageOriginal(srcImage, ctxImage) {
     image.src = srcImage;
 };
 
+/**
+* Loads in canvas element a image (floor's plane) with the original dimensions
+* and over this canvas element another one with the same dimensions is placed 
+* on which draws the location of the space
+*
+* @param string $srcImage The source of the image
+* @param string $coordsSpace The coordinates of the space
+* @param ImageData $ctxImage The underlying pixel data for the canvas area for the floor's plane
+* @param ImageData $ctxLines The underlying pixel data for the canvas area for the transparent layer in which the space is drawn.
+* @param boolean $edges If it is true, draws the points with the squares
+*
+* @return void
+*/
 function loadImageOriginalWithSelectSpace(srcImage, coordsSpace, ctxImage, ctxLines, edges) {
     var image = new Image();  
     image.onload = function(){
@@ -30,6 +60,14 @@ function loadImageOriginalWithSelectSpace(srcImage, coordsSpace, ctxImage, ctxLi
     image.src = srcImage;
 };
 
+/**
+* Loads in canvas element a image (floor's plane) with its dimensions adapted to the customer's screen.
+*
+* @param string $srcImage The source of the image
+* @param ImageData $ctxImage The underlying pixel data for the canvas area for the floor's plane
+*
+* @return void
+*/
 function loadImageResize(srcImage, ctxImage) {
     var image = new Image();
     image.onload = function(){
@@ -43,6 +81,20 @@ function loadImageResize(srcImage, ctxImage) {
     image.src = srcImage;
 };
 
+
+/**
+* Loads in canvas element a image (floor's plane) with its dimensions adapted to the customer's screen
+* and over this canvas element another one with the same dimensions is placed 
+* on which draws the location of the space resize too.
+*
+* @param string $srcImage The source of the image
+* @param array $coordsSpace The coordinates of the space 
+* @param ImageData $ctxImage The underlying pixel data for the canvas area for the floor's plane
+* @param ImageData $ctxLines The underlying pixel data for the canvas area for the transparent layer in which the space is drawn.
+* @param boolean $edges If it is true, draws the points with the squares
+*
+* @return void
+*/
 function loadImageResizeWithSelectSpace(srcImage, coordsSpace, ctxImage, ctxLines, edges) {
     var image = new Image();
     image.onload = function(){
@@ -61,6 +113,17 @@ function loadImageResizeWithSelectSpace(srcImage, coordsSpace, ctxImage, ctxLine
     image.src = srcImage;
 };
 
+
+/**
+* Resizes the space's coordinates that the client select 
+* to adapted they for the real dimensions of floor plan
+*
+* @param array $position The coordinates of a pixel
+* @param float $ratioResize The ratio of sizes between the real dimensions of floors plane
+* and the real floors plane resize
+*
+* @return array
+*/
 function resizeCoordsToDB(position, ratioResize){
 
     return{
@@ -69,6 +132,16 @@ function resizeCoordsToDB(position, ratioResize){
     };
 }
 
+
+/**
+* Changes the button active, when the user click in resize (for example)
+* this button disabled and disappeared and the full button is active and visible
+*
+* @param html_button $btnActive Button active in this moment (Resize of Full)
+* @param html_button $btnNoActive Button not active in this moment (Resize of Full)
+*
+* @return void
+*/
 function btnsFull_Resize(btnActive, btnNoActive){
     btnActive.disabled = true;
     btnActive.style.display = "none";
@@ -76,6 +149,14 @@ function btnsFull_Resize(btnActive, btnNoActive){
     btnNoActive.style.display = "block";
 }
 
+
+/**
+* Catches the coordinates in the screen when a user click
+*
+* @param event Event on click
+*
+* @return array with the coordinates x and y of the pixel
+*/
 function selectCoords(event) {
     return {
         x: event.offsetX,
@@ -83,6 +164,17 @@ function selectCoords(event) {
     };
 };
 
+
+/**
+* Transforms the coordinates that arrive as a string from the database 
+* to an array to be able to work with them more easily
+*
+* @param string $coordsSpace Coordinates of the space's location in format string
+* @param float $ratioResize Ratio of resizes
+* @param boolean $resizeMode Flag to inform if the floor's plane is in full dimensions or not
+*
+* @return array with the coordinates x and y of the pixel
+*/
 function convertCoordsToImageSize(coordsSpace, ratioResize, resizeMode){
     var arrayCoords = coordsSpace.split(", "),
         arrayXYCoords,
@@ -99,6 +191,15 @@ function convertCoordsToImageSize(coordsSpace, ratioResize, resizeMode){
     return spacePoints;
 };
 
+
+/**
+* Checks if the click is in the first point 
+* to inform if it is necessary to create the polygon or not
+*
+* @param array $position Coordinates of pixel when a user clik on the screen
+*
+* @return true when the point is a initial point and false when it isn't
+*/
 function isInitialPoint(position) {
 
     let start = {x:0,y:0};
@@ -112,6 +213,14 @@ function isInitialPoint(position) {
     return (dx * dx + dy * dy < radius * radius)
 };
 
+/**
+* Checks if the click is over a one point drawn 
+* to inform if it is possible to apply drag and drop
+*
+* @param array $position Coordinates of pixel when a user clik on the screen
+*
+* @return array with the coordinates of a one point when the pixel is a point drawn and false when it isn't
+*/
 function isAPoint(position) {
     for(var i = 0; i< storedLines.length; i++)   {
         dx = position.x - storedLines[i].x,
@@ -125,7 +234,14 @@ function isAPoint(position) {
 };
 
 
-
+/**
+* Draws a point (square) on the layers that is over the floor's plane.
+*
+* @param array $position Coordinates of pixel where the square will be drawn
+* @param ImageData $ctxLines The underlying pixel data for the canvas area for the transparent layer in which the space is drawn.
+*
+* @return void
+*/
 function drawPoint(position, ctxLines) {
     ctxLines.fillStyle = "rgba(255, 255, 255, 0.5)";
     ctxLines.lineWidth = 1;
@@ -148,7 +264,15 @@ function drawPoint(position, ctxLines) {
 };
 
 
-
+/**
+* Draws all points forming a polygon with the coordinates of the space's location
+* The points have a square shape
+*
+* @param array $polyLines Array with all points (coordinates) of the space
+* @param ImageData $ctxLines The underlying pixel data for the canvas area for the transparent layer in which the space is drawn.
+*
+* @return void
+*/
 function drawAllPoints(polyLines, ctxLines) {
     ctxLines.fillStyle = "rgba(255, 255, 255, 0.5)";
     ctxLines.lineWidth = 1;
@@ -174,7 +298,14 @@ function drawAllPoints(polyLines, ctxLines) {
 };
 
 
-
+/**
+* Draws the polygon with the points of space's location
+*
+* @param array $polyLines Array with all points (coordinates) of the space
+* @param ImageData $ctxLines The underlying pixel data for the canvas area for the transparent layer in which the space is drawn.
+*
+* @return void
+*/
 function drawPolygon(polyLines, ctxLines) {
     ctxLines.fillStyle = "rgb(255,20,20,0.3)";
     ctxLines.strokeStyle = 'rgb(255,20,20)';
@@ -190,7 +321,16 @@ function drawPolygon(polyLines, ctxLines) {
 };
 
 
-
+/**
+* Loads a floor's plane on a canvas element and loads the space's location on another one canvas element that placed over the floor's plane
+* The space's location can't be modified
+* Place two listeners on the buttons to expand and reduce the plane on the screen
+*
+* @param string $coordsSpace Array with all points (coordinates) of the space
+* @param string $srcImage The underlying pixel data for the canvas area for the transparent layer in which the space is drawn.
+*
+* @return void
+*/
 function viewSpace(coordsSpace, srcImage) {
 
     var canvasImage = document.getElementById("canvasImage"),
@@ -221,6 +361,19 @@ function viewSpace(coordsSpace, srcImage) {
     });
 };
 
+
+
+/**
+* Loads a floor's plane on a canvas element and loads the space's location on another one canvas element that placed over the floor's plane
+* The space's location can be modified
+* Place two listeners on the buttons to expand and reduce the plane on the screen
+* Place another listeners over the layer that contains the space's location to allow drag and drop each point
+*
+* @param string $coordsSpace Array with all points (coordinates) of the space
+* @param string $srcImage The underlying pixel data for the canvas area for the transparent layer in which the space is drawn.
+*
+* @return void
+*/
 function selectSpace(coordsSpace, srcImage) {
 
     var canvasImage = document.getElementById("canvasImage"),
@@ -245,7 +398,7 @@ function selectSpace(coordsSpace, srcImage) {
         startingPos = [],
         radius = 10;
 
-        
+    //If there isn't coordinates of space only loads the floor's plane resize    
     if(!coordsSpace){
         savedButton.disabled = true;
         clearButton.disabled = true;
@@ -341,8 +494,10 @@ function selectSpace(coordsSpace, srcImage) {
          }
     }, false);
 
-
-
+    /** 
+    * When the user click in clear's button, resets the parametres 
+    * and loads again the layer that contains the space's location
+    */
     clearButton.addEventListener("click", function() {
         polyLines = [];
         storedLines = [];
@@ -361,6 +516,9 @@ function selectSpace(coordsSpace, srcImage) {
          }
     });
     
+    /** 
+    * When the user click in fulls's button loads the two layers
+    */
     fullButton.addEventListener("click", function() {
         resizeMode = false;
         btnsFull_Resize(fullButton,resizeButton);
@@ -380,7 +538,9 @@ function selectSpace(coordsSpace, srcImage) {
         }
     });
     
-    
+     /** 
+    * When the user click in resize's button loads the two layers
+    */
     resizeButton.addEventListener("click", function() {
         resizeMode = true;
         btnsFull_Resize(resizeButton, fullButton);
@@ -401,6 +561,8 @@ function selectSpace(coordsSpace, srcImage) {
     });
 
 };
+
+
 
 function resizeImgMap(resizeMode) {
 

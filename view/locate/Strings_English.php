@@ -1,7 +1,14 @@
 <?php
-//CADENAS UTILIZADAS EN INGÉS
+
+/*
+ * File: Strings_English.php
+ *
+ * Traductions for English
+ * 
+ * Author: ivanddios <ivanddf1994@gmail.com>
+ */
+
 $strings = array(
-     //MAIN 
     "Welcome"=> "Welcome",
     "Add"=> "Add",
     "Edit" => "Edit",
@@ -29,6 +36,8 @@ $strings = array(
     "Extend" => "Extend",
     "Adjust" => "Adjust",
     "Close" => "Close",
+    "Help" => "Help",
+    "Demonstration" => "Demonstration",
     "selectAll" => "Select all actions",
     "Tests"=>"Tests",
     "Error in the query on the database" => "Error in the query on the database",
@@ -76,10 +85,10 @@ $strings = array(
     "sm_planFloor" => "Plan",
     "idFloor" => "Floor identifier",
     "nameFloor" => "Floor",
-    "surfaceBuildingFloor" => "Builded surface",
+    "builtSurfaceFloor" => "Builded surface",
     "surfaceUsefulFloor" => "Useful surface",
     "Click to see the plan" => "Click to see the plan",
-    "sm_surfaceBuildingFloor" => "Builded surface",
+    "sm_builtSurfaceFloor" => "Builded surface",
     "sm_surfaceUsefulFloor" => "Useful surface",
     "Show Spaces" => "Show Spaces",
     "Add Floor" => "Add Floor",
@@ -110,7 +119,7 @@ $strings = array(
     "Spaces" => "Spaces",
     "sm_idSpace" => "Identifier",
     "sm_nameSpace" => "Space",
-    "sm_surfaceSpace" => "Space surface",
+    "sm_builtSurface" => "Space surface",
     "sm_numberInventorySpace" => "Num. Inventory",
     "Show Space" => "Show Space",
     "Add Space" => "Add Space",
@@ -124,7 +133,7 @@ $strings = array(
     "The information that this space has will be lost" => "The information that this space has will be lost",
     "Clear" => "Clear",
     "Space successfully updated in plan" => "Space successfully updated in plan",
-    "Select the space in the plan" => "Identify the space in the plane by selecting its vertices",
+    "Select the space in the plan" => "Select the location of the space",
     "ViewSpace" => "Show Space",
     "SelectSpace" => "Select Space",
     "EditSpace" => "Edit Space",
@@ -270,6 +279,131 @@ $strings = array(
     "Datas of the new action" => "Datas of the new action",
     "What action is it?" => "What action is it?",
     "What is the action about?" => "What is the action about?",
+
+
+
+    //VALIDATES ERRORS
+    //BUILDING
+    "Building identifier is mandatory" => "Building identifier is mandatory",
+    "Building identifier can't be less than 5 characters" => "Building identifier can't be less than 5 characters",
+    "Building identifier can't be larger than 5 characters" =>"Building identifier can't be larger than 5 characters",
+    "Building identifier format is invalid" => "Building identifier format is invalid",
+    "Building name is mandatory" => "Building name is mandatory",
+    "Building name can't be larger than 255 characters" => "Building name can't be larger than 255 characters",
+    "Building name format is invalid" => "Building name format is invalid",
+    "Building address is mandatory" => "Building address is mandatory",
+    "Building address can't be larger than 255 characters" => "Building address can't be larger than 255 characters",
+    "Building address format is invalid" => "Building address format is invalid",
+    "Building phone is incorrect" => "Building phone is incorrect",
+    "Building phone format is invalid" => "Building phone format is invalid",
+    "There is already a building with that identifier" => "There is already a building with that identifier",
+    "There isn't a building with that identifier" => "There isn't a building with that identifier",
+
+    //FLOOR
+    "Floor identifier is mandatory" => "Floor identifier is mandatory",
+    "Floor identifier can't be less than 2 characters" => "Floor identifier can't be less than 2 characters",
+    "Floor identifier can't be larger than 2 characters" => "Floor identifier can't be larger than 2 characters",
+    "Floor identifier format is invalid" => "Floor identifier format is invalid",
+    "Floor name is mandatory" => "Floor name is mandatory",
+    "Floor name can't be larger than 255 characters" => "Floor name can't be larger than 255 characters",
+    "Floor name format is invalid" => "Floor name format is invalid",
+    "Floor building surface can't be long than 99999999.99" => "Floor building surface can't be long than 99999999.99",
+    "Floor useful surface can't be long than 99999999.99" => "Floor useful surface can't be long than 99999999.99",
+    "The usable surface can't be greater than the building surface" => "The usable surface can't be greater than the building surface",
+    "Floor plan extension is invalid" => "Floor plan extension is invalid",
+    "There is already a floor with that id in this building" => "There is already a floor with that id in this building",
+    "There isn't a floor with that identifier in the building" => "There isn't a floor with that identifier in the building",
+
+    //SPACE
+    "Space identifier is mandatory" => "Space identifier is mandatory",
+    "Space identifier can't be less than 5 characters" => "Space identifier can't be less than 5 characters",
+    "Space identifier can't be larger than 5 characters" => "Space identifier can't be larger than 5 characters",
+    "Space identifier is invalid" => "Space identifier is invalid",
+    "Space name is mandatory" => "Space name is mandatory",
+    "Space name can't be larger than 225 characters" => "Space name can't be larger than 225 characters",
+    "Space name format is invalid" => "Space name format is invalid",
+    "Space surface can't be larger than 99999999.99" => "Space surface can't be larger than 99999999.99",
+    "Number inventory can't be larger than 6 characters" => "Number inventory can't be larger than 6 characters",
+    "Coords can't be larger than 65535 characters" => "Coordinates can't be larger than 65535 characters",
+    "Coords format is invalid" => "Coordinates format is invalid",
+    "There is already a space with that identifier in this floor" => "There is already a space with that identifier in this floor",
+    "There isn't a space with that identifier in the floor" => "There isn't a space with that identifier in the floor",
+
+    //USER
+    "Email is mandatory" => "Email is mandatory",
+    "Email can't be larger than 50 characters" => "Email can't be larger than 50 characters",
+    "Email format is invalid" => "Email format is invalid",
+    "There isn't a user with that email" => "There isn't a user with that email",
+    "There is already a user with that email in this aplication" => "There is already a user with that email in this aplication",
+    "There is already a user with that email" => "There is already a user with that email",
+    "Password is mandatory" => "Password is mandatory",
+    "Password can't be less than 8 characters" => "Password can't be less than 8 characters",
+    "Password can't be larger than 16 characters" => "Password can't be larger than 16 characters",
+    "Password format is invalid" => "Password format is invalid",
+    "Password is incorrect" => "Password is incorrect",
+    "User name is mandatory" => "User name is mandatory",
+    "User name can't be larger than 40 characters" => "User name can't be larger than 40 characters",
+    "User name format is invalid" => "User name format is invalid",
+    "User surnames are mandatory" => "User surnames are mandatory",
+    "User surnames can't be larger than 100 characters" => "User surnames can't be larger than 100 characters",
+    "User surnames format is invalid" => "User surnames format is invalid",
+    "NID can't be different from 9 characters" => "NID can't be different from 9 characters",
+    "User NID format is invalid" => "User NID format is invalid",
+    "User NID letter is incorrect" => "User NID letter is incorrect",
+    "Birthdate is mandatory" => "Birthdate is mandatory",
+    "Birthdate can't be larger than 10 characters" => "Birthdate can't be larger than 10 characters",
+    "Birthdate format is invalid" => "Birthdate format is invalid",
+    "User phone size is incorrect" => "User phone size is incorrect",
+    "User phone format is invalid" => "User phone format is invalid",
+    "The role format is invalid" => "The role format is invalid",
+    "The role doesn't exist" => "The role doesn't exist",
+    "There is another user with that DNI in the DB" => "There is another user with that DNI in the DB",
+    "The image extension is incorrect" => "The image extension is incorrect",
+    "Your user had been deleted." => "Your user had been deleted",
+    "Not exists this account" => "Not exists this account",
+    "There is a user with that email" => "There is a user with that email",
+
+    //ACTION
+    "Action identifier is mandatory" => "Action identifier is mandatory",
+    "Action identifier format is invalid" => "Action identifier format is invalid",
+    "Action name and description are mandatory" => "Action name and description are mandatory",
+    "Action name is mandatory" => "Action name is mandatory",
+    "Action name can't be larger than 50 characters" => "Action name can't be larger than 50 characters",
+    "Action name format is invalid" => "Action name format is invalid",
+    "Action description is mandatory" => "Action description is mandatory",
+    "Action description can't be larger than 255 characters" => "Action description can't be larger than 255 characters",
+    "Action description format is invalid" => "Action description format is invalid",
+    "Action doesn't exist" => "Action doesn't exist",
+
+    //FUNCTIONALITY
+    "Function identifier is mandatory" => "Function identifier is mandatory",
+    "Function identifier format is invalid" => "Function identifier format is invalid",
+    "Function name and description are mandatory" => "Function name and description are mandatory",
+    "Function name is mandatory" => "Function name is mandatory",
+    "Function name can't be larger than 50 characters" => "Function name can't be larger than 50 characters",
+    "Function name format is invalid" => "Function name format is invalid",
+    "Function description is mandatory" => "Function description is mandatory",
+    "Function description can't be larger than 255 characters" => "Function description can't be larger than 255 characters",
+    "Function description format is invalid" => "Function description format is invalid",
+    "Access to some functionality is mandatory" => "Access to some functionality is mandatory",
+    "Some action for functionality doesn't exist" => "Some action for functionality doesn't exist",
+    "Function doesn't exist" => "Function doesn't exist",
+
+    //GROUP
+    "Group identifier is mandatory" => "Group identifier is mandatory",
+    "Group identifier format is invalid" => "Group identifier format is invalid",
+    "Group name and description are mandatory" => "Group name and description are mandatory",
+    "Group name is mandatory" => "Group name is mandatory",
+    "Group name can't be larger than 50 characters" => "Group name can't be larger than 50 characters",
+    "Group name format is invalid" => "Group name format is invalid",
+    "Group description is mandatory" => "Group description is mandatory",
+    "Group description can't be larger than 255 characters" => "Group description can't be larger than 255 characters",
+    "Group description format is invalid" => "Group description format is invalid",
+    "Group doesn't exist" => "Group doesn't exist",
+
+
+
+
     
 )
 ?>

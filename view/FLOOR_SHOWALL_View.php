@@ -13,7 +13,7 @@ class FLOOR_SHOWALL{
     function render() {
         include 'header.php';
         $this->view->setElement("%TITLE%", $strings["Floors"]);
-        $listTitles = array('sm_idBuilding', 'sm_nameFloor', 'sm_planFloor', 'sm_surfaceBuildingFloor', 'sm_surfaceUsefulFloor'); ?>
+        $listTitles = array('sm_idBuilding', 'sm_nameFloor', 'sm_planFloor', 'sm_builtSurfaceFloor', 'sm_surfaceUsefulFloor'); ?>
 
 
         <div class="container">
@@ -37,7 +37,7 @@ class FLOOR_SHOWALL{
                                 <?php endforeach; ?>
                               
                                     <th scope="col">
-                                        <?php  if(checkRol('ADD', 'FLOOR')): ?>
+                                        <?php  if($this->view->checkRol('ADD', 'FLOOR')): ?>
                                             <a href="FLOOR_Controller.php?&action=Add&building=<?= $_GET['building']?>">
                                                 <span title="<?= $strings['Add Floor']?>" class="btn btn-success btn-sm fa fa-plus"></span>
                                             </a>
@@ -66,7 +66,7 @@ class FLOOR_SHOWALL{
                                                              <a href="FLOOR_Controller.php?action=ShowPlan&building=<?= $this->floors[$j]['sm_idBuilding']?>&floor=<?= $this->floors[$j]['sm_idFloor']?>"><img src="<?= $this->floors[$j]['sm_planFloor']?>" onload="loadImage('<?=$this->floors[$j]['sm_idFloor']?>')" alt="plan" class="miniatureTable"></a>
                                                         <?php endif; ?>  
 														</div>
-                                                    <?php elseif($key === 'sm_surfaceBuildingFloor' || $key === 'sm_surfaceUsefulFloor'): ?>
+                                                    <?php elseif($key === 'sm_builtSurfaceFloor' || $key === 'sm_surfaceUsefulFloor'): ?>
                                                         <?=$value . ' m²'?>
                                                     <?php else:
                                                         echo $value;
@@ -79,17 +79,17 @@ class FLOOR_SHOWALL{
                                         <a href="SPACE_Controller.php?building=<?= $this->floors[$j]['sm_idBuilding']?>&floor=<?= $this->floors[$j]['sm_idFloor']?>">
                                             <span title="<?= $strings['Show Space']?>" class="btn btn-primary btn-sm fa fa-cube"></span>
                                         </a>
-                                        <?php if(checkRol('EDIT', 'FLOOR')): ?>
+                                        <?php if($this->view->checkRol('EDIT', 'FLOOR')): ?>
                                             <a href="FLOOR_Controller.php?action=Edit&building=<?= $this->floors[$j]['sm_idBuilding']?>&floor=<?= $this->floors[$j]['sm_idFloor']?>">
                                                 <span title="<?= $strings['Edit Floor']?>" class="btn btn-warning btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
-                                        <?php if(checkRol('DELETE', 'FLOOR')): ?>
+                                        <?php if($this->view->checkRol('DELETE', 'FLOOR')): ?>
                                             <i title="<?= $strings['Delete Floor']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?=$this->floors[$j]['sm_idFloor']?>"></i>
                                             <div id="item-<?=$this->floors[$j]['sm_idFloor']?>" class="modal fade"  tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
-                                                        <div class="modal-header">
+                                                        <div class="modal-header modal-delete">
                                                             <?= $strings["Attention"]?>
                                                         </div>
                                                         <div class="modal-body">
@@ -99,7 +99,7 @@ class FLOOR_SHOWALL{
                                                         <div class="modal-footer">
                                                             <form method="POST" action="FLOOR_Controller.php?action=Delete&building=<?= htmlentities($this->floors[$j]['sm_idBuilding'])?>&floor=<?= $this->floors[$j]['sm_idFloor']?>">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
-                                                                <button type="submit" name="submit" class="btn btn-primary success"><?= $strings["Ok"]?></button> 
+                                                                <button type="submit" name="submit" class="btn btn-secondary success"><?= $strings["Ok"]?></button> 
                                                             </form>
                                                         </div>
                                                     </div>

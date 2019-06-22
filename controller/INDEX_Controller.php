@@ -1,7 +1,6 @@
 <?php
 
 require_once("../core/ViewManager.php");
-require_once("../core/ACL.php");
 require_once("../view/INDEX_View.php");
 
 $view = new ViewManager();

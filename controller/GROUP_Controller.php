@@ -1,7 +1,6 @@
 <?php
 
 require_once("../core/ViewManager.php");
-require_once("../core/ACL.php");
 require_once("../model/FUNCTIONALITY_Model.php");
 require_once("../model/ACTION_Model.php");
 require_once("../model/USER_Model.php");
@@ -16,6 +15,12 @@ $view = new ViewManager();
 
 include '../view/locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
 
+
+/**
+* Gets values from the forms
+*
+* @return Group with the form values
+*/
 function get_data_form() {
 
     $idGroup = $_GET['group'];
@@ -40,7 +45,7 @@ Switch ($_GET['action']){
             $view->redirect("USER_Controller.php");
         }
 
-        if(!checkRol('ADD', $function)){
+        if(!$view->checkRol('ADD', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("GROUP_Controller.php");
         }
@@ -77,7 +82,7 @@ Switch ($_GET['action']){
             $view->redirect("USER_Controller.php");
         }
 
-        if(!checkRol('EDIT', $function)){
+        if(!$view->checkRol('EDIT', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("GROUP_Controller.php");
         }
@@ -125,7 +130,7 @@ Switch ($_GET['action']){
             $view->redirect("LOGIN_Controller.php");
         }
 
-        if(!checkRol('SHOW ALL', 'USER')){
+        if(!$view->checkRol('SHOW ALL', 'USER')){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("GROUP_Controller.php");
         }
@@ -150,7 +155,7 @@ Switch ($_GET['action']){
             $view->redirect("USER_Controller.php");
         }
 
-        if(!checkRol('DELETE', $function)){
+        if(!$view->checkRol('DELETE', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("GROUP_Controller.php");
         }
@@ -182,7 +187,7 @@ Switch ($_GET['action']){
             $view->redirect("USER_Controller.php");
         }
 
-        if(!checkRol('SHOW ALL', $function)){
+        if(!$view->checkRol('SHOW ALL', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php");
         }

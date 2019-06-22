@@ -50,27 +50,27 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <?php  if(checkRol('SHOW ALL', 'USER')): ?>
+                        <?php  if($this->view->checkRol('SHOW ALL', 'USER')): ?>
                             <div class="nav-item dropdown">
                                 <a id="navbarDropdown-User" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?=$strings['Admin']?></a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown-User">
-                                    <?php  if(checkRol('SHOW ALL', 'ACTION')): ?>
+                                    <?php  if($this->view->checkRol('SHOW ALL', 'ACTION')): ?>
                                     <a class="dropdown-item" href="../controller/ACTION_Controller.php"><?=$strings['Actions']?></a>
                                     <?php endif; ?>  
-                                    <?php  if(checkRol('SHOW ALL', 'FUNCTIONALITY')): ?>
+                                    <?php  if($this->view->checkRol('SHOW ALL', 'FUNCTIONALITY')): ?>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="../controller/FUNCTIONALITY_Controller.php"><?=$strings['Functionalities']?></a>
                                     <?php endif; ?>  
-                                    <?php  if(checkRol('SHOW ALL', 'GROUP')): ?>
+                                    <?php  if($this->view->checkRol('SHOW ALL', 'GROUP')): ?>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="../controller/GROUP_Controller.php"><?=$strings['Groups']?></a>
                                     <?php endif; ?>  
-                                    <?php  if(checkRol('SHOW ALL', 'USER')): ?>
+                                    <?php  if($this->view->checkRol('SHOW ALL', 'USER')): ?>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="../controller/USER_Controller.php"><?=$strings['Users']?></a>
                                     <?php endif; ?> 
                                     <div class="dropdown-divider"></div> 
-                                    <?php  if(checkRol('SHOW ALL', 'TEST')): ?>
+                                    <?php  if($this->view->checkRol('SHOW ALL', 'TEST')): ?>
                                     <a class="dropdown-item" href="../controller/TEST_Controller.php"><?=$strings['Tests']?></a>
                                     <?php endif; ?>  
                                 </div>

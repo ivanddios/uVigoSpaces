@@ -29,7 +29,7 @@ class ACTION_SHOWALL{
                                 <?php foreach ($listTitles as $title): ?>
                                     <th scope="col"><?=$strings[$title]?></th>
                                 <?php endforeach; ?>
-                                <?php  if(checkRol('ADD','ACTION')): ?>
+                                <?php  if($this->view->checkRol('ADD','ACTION')): ?>
                                     <th scope="col">
                                         <a href="ACTION_Controller.php?action=Add">
                                             <span title="<?= $strings['Add Action']?>" class="btn btn-success btn-sm fa fa-plus"></span>
@@ -57,17 +57,17 @@ class ACTION_SHOWALL{
                                     endforeach;?>
                                         
                                     <td>
-                                        <?php  if(checkRol('EDIT', 'ACTION')): ?>
+                                        <?php  if($this->view->checkRol('EDIT', 'ACTION')): ?>
                                             <a href="ACTION_Controller.php?action=Edit&accion=<?= $this->actions[$j]['sm_idAction']?>">
                                                 <span title="<?= $strings['Edit Action']?>" class="btn btn-warning btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
-                                        <?php  if(checkRol('DELETE', 'ACTION')): ?>
+                                        <?php  if($this->view->checkRol('DELETE', 'ACTION')): ?>
                                             <i title="<?= $strings['Delete Action']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->actions[$j]['sm_idAction']?>"></i>
                                             <div id="item-<?= $this->actions[$j]['sm_idAction']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
-                                                        <div class="modal-header">
+                                                        <div class="modal-header modal-delete">
                                                             <?= $strings["Attention"]?>
                                                         </div>
                                                         <div class="modal-body">
@@ -78,7 +78,7 @@ class ACTION_SHOWALL{
                                                             <input type="hidden" name="action" value="<?=$this->actions[$j]['sm_idAction']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
-                                                                <button type="submit" name="submit" id="submit" class="btn btn-primary success"><?= $strings["Ok"]?></button>
+                                                                <button type="submit" name="submit" id="submit" class="btn btn-secondary success"><?= $strings["Ok"]?></button>
                                                             </div>
                                                         </form>
                                                     </div>

@@ -39,12 +39,12 @@ class USER_SHOWALL{
                                     <?php endforeach; ?>
                                     <?php if(isset($_SESSION['LOGIN'])): ?>
                                         <th scope="col">
-                                            <?php  if(checkRol('ADD', 'USER')): ?>
+                                            <?php  if($this->view->checkRol('ADD', 'USER')): ?>
                                                 <a href="USER_Controller.php?action=Add">
                                                     <span title="<?= $strings['Add User']?>" class="btn btn-success btn-sm fa fa-plus"></span>
                                                 </a>
                                             <?php endif; ?>
-                                            <?php  if(checkRol('SEARCH', 'USER')): ?>    
+                                            <?php  if($this->view->checkRol('SEARCH', 'USER')): ?>    
                                                 <a href="USER_Controller.php?action=Search">
                                                     <span title="<?= $strings['Search User']?>" class="btn btn-info btn-sm fa fa-search"></span>
                                                 </a>
@@ -80,17 +80,17 @@ class USER_SHOWALL{
                                         endforeach;?>
                                             
                                         <td>
-                                            <?php  if(checkRol('EDIT', 'USER')): ?>
+                                            <?php  if($this->view->checkRol('EDIT', 'USER')): ?>
                                                 <a href="USER_Controller.php?action=Edit&user=<?= $this->users[$j]['email']?>">
                                                     <span title="<?= $strings['Edit User']?>" class="btn btn-warning btn-sm fa fa-pencil"></span>
                                                 </a>
                                             <?php endif; ?>
-                                            <?php  if(checkRol('DELETE', 'USER')): ?>
+                                            <?php  if($this->view->checkRol('DELETE', 'USER')): ?>
                                                 <i title="<?= $strings['Delete User']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->users[$j]['dni']?>"></i>
                                                 <div id="item-<?= $this->users[$j]['dni']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
-                                                            <div class="modal-header">
+                                                            <div class="modal-header modal-delete">
                                                                 <?= $strings["Attention"]?>
                                                             </div>
                                                             <div class="modal-body">
@@ -101,7 +101,7 @@ class USER_SHOWALL{
                                                                 <input type="hidden" name="email" value="<?= $this->users[$j]['email']?>" readonly>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
-                                                                    <button type="submit" name="submit" id="submit" class="btn btn-primary success"><?= $strings["Ok"]?></button>
+                                                                    <button type="submit" name="submit" id="submit" class="btn btn-secondary"><?= $strings["Ok"]?></button>
                                                                 </div>
                                                             </form>
                                                         </div>

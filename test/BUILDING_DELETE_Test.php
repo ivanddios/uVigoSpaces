@@ -15,18 +15,18 @@ $tests['SM_BUILDING_DELETE_TEST1']["Result"] = $deleteAnswer;
 
 
 $tests['SM_BUILDING_DELETE_TEST2']=(['Functionality' => "SM_BUILDING_DELETE",
-                'Description' => 'Test 2. Attempt to delete building with a identifier format invalid or incorrect',
-                'Expected' => 'Building identifier format is invalid',
+                'Description' => 'Test 2. Attempt to delete building with a identifier less than 5 characters',
+                'Expected' => "Building identifier can't be less than 5 characters",
                 'Result' => 'Not executed']);
 
-$building = new BUILDING_Model('?!');
+$building = new BUILDING_Model('badb');
 $deleteAnswer = $building->deleteBuilding();
 $tests['SM_BUILDING_DELETE_TEST2']["Result"] = $deleteAnswer;
 
 
 
 $tests['SM_BUILDING_DELETE_TEST3']=(['Functionality' => "SM_BUILDING_DELETE",
-                'Description' => 'Test 3. Attempt to delete building with a identifier format invalid or incorrect',
+                'Description' => 'Test 3. Attempt to delete building with a identifier bigger than 5 characters',
                 'Expected' => "Building identifier can't be larger than 5 characters",
                 'Result' => 'Not executed']);
 
@@ -35,31 +35,40 @@ $deleteAnswer = $building->deleteBuilding();
 $tests['SM_BUILDING_DELETE_TEST3']["Result"] = $deleteAnswer;
 
 
-
-
 $tests['SM_BUILDING_DELETE_TEST4']=(['Functionality' => "SM_BUILDING_DELETE",
-                'Description' => "Test 4. Attempt to delete building with a identifier that not exists in the DB",
-                'Expected' => "There isn't a building with that identifier",
+                'Description' => 'Test 4. Attempt to delete building with a identifier format invalid or incorrect',
+                'Expected' => 'Building identifier format is invalid',
                 'Result' => 'Not executed']);
 
-$building = new BUILDING_Model('0');
+$building = new BUILDING_Model('¿?{.');
 $deleteAnswer = $building->deleteBuilding();
 $tests['SM_BUILDING_DELETE_TEST4']["Result"] = $deleteAnswer;
 
 
-//FINAL TEST
 
 $tests['SM_BUILDING_DELETE_TEST5']=(['Functionality' => "SM_BUILDING_DELETE",
-                'Description' => "Test 5. Attempt to delete building with correct values",
+                'Description' => "Test 5. Attempt to delete building with a identifier that not exists in the DB",
+                'Expected' => "There isn't a building with that identifier",
+                'Result' => 'Not executed']);
+
+$building = new BUILDING_Model('00000');
+$deleteAnswer = $building->deleteBuilding();
+$tests['SM_BUILDING_DELETE_TEST5']["Result"] = $deleteAnswer;
+
+
+//FINAL TEST
+
+$tests['SM_BUILDING_DELETE_TEST6']=(['Functionality' => "SM_BUILDING_DELETE",
+                'Description' => "Test 6. Attempt to delete building with correct values",
                 'Expected' => 'Building successfully deleted',
                 'Result' => 'Not executed']);
 
 $building = new BUILDING_Model($randId);
 $deleteAnswer = $building->deleteBuilding();
 if($deleteAnswer === true){
-    $tests['SM_BUILDING_DELETE_TEST5']["Result"] = 'Building successfully deleted';
-} else {
-    $tests['SM_BUILDING_DELETE_TEST5']["Result"] = $deleteAnswer;
+    $tests['SM_BUILDING_DELETE_TEST6']["Result"] = 'Building successfully deleted';
+}else {
+    $tests['SM_BUILDING_DELETE_TEST6']["Result"] = $deleteAnswer;
 }
 
 

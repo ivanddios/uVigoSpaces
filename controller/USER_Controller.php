@@ -1,7 +1,6 @@
 <?php
 
 require_once("../core/ViewManager.php");
-require_once("../core/ACL.php");
 require_once("../model/USER_Model.php");
 require_once("../view/USER_SHOWALL_View.php");
 require_once("../view/USER_ADD_View.php");
@@ -59,7 +58,7 @@ Switch ($_GET['action']){
             $view->redirect("INDEX_Controller.php");
         }
 
-        if(!checkRol('ADD', $function)){
+        if(!$view->checkRol('ADD', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("USER_Controller.php");
         }
@@ -90,7 +89,7 @@ Switch ($_GET['action']){
             $view->redirect("BUILDING_Controller.php");
         }
 
-		if(!checkRol('EDIT', $function)){
+		if(!$view->checkRol('EDIT', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("USER_Controller.php");
         }
@@ -99,8 +98,10 @@ Switch ($_GET['action']){
 
         if (isset($_POST["submit"])) { 
             $userEdit = get_data_form();
-            $answerEdit = $userEdit->updateUser($_FILES['photo']['tmp_name']);
+            $answerEdit = $userEdit->updateUser($email);
             if($answerEdit === true){
+                $_SESSION['LOGIN'] = $userEdit->getEmail();
+                $_SESSION['PHOTO'] = $userEdit->getLinkProfilePhoto($userEdit->getEmail());
                 $flashMessageSuccess = sprintf($strings["User \"%s\" successfully updated."], $userEdit->getEmail());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("USER_Controller.php");
@@ -135,8 +136,9 @@ Switch ($_GET['action']){
 
         if (isset($_POST["submit"])) { 
             $userEdit = get_data_form();
-            $answerEdit = $userEdit->updateUserProfile($_FILES['photo']['tmp_name']);
+            $answerEdit = $userEdit->updateUserProfile();
             if($answerEdit === true){
+                $_SESSION['PHOTO'] = $userEdit->getLinkProfilePhoto($userEdit->getEmail());
                 $flashMessageSuccess = sprintf($strings["User \"%s\" successfully updated."], $userEdit->getEmail());
                 $view->setFlashSuccess($flashMessageSuccess);
                 $view->redirect("USER_Controller.php");
@@ -161,7 +163,7 @@ Switch ($_GET['action']){
             $view->redirect("BUILDING_Controller.php");
         }
 
-        if(!checkRol('DELETE', $function)){
+        if(!$view->checkRol('DELETE', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("USER_Controller.php");
         }
@@ -169,9 +171,16 @@ Switch ($_GET['action']){
         $userDelete = new USER_Model($_POST['email']);
         $answerDelete =  $userDelete->deleteUser();
         if($answerDelete === true){
-            $flashMessageSuccess = sprintf($strings["User \"%s\" successfully deleted."], $userDelete->getEmail());
-            $view->setFlashSuccess($flashMessageSuccess);
-            $view->redirect("USER_Controller.php");     
+            if($_SESSION['LOGIN'] == $userDelete->getEmail()){
+                $flashMessageSuccess = sprintf($strings["Your user had been deleted."], $userDelete->getEmail());
+                $view->setFlashSuccess($flashMessageSuccess);
+                session_destroy();
+                $view->redirect("INDEX_Controller.php");
+            }else{
+                $flashMessageSuccess = sprintf($strings["User \"%s\" successfully deleted."], $userDelete->getEmail());
+                $view->setFlashSuccess($flashMessageSuccess);
+                $view->redirect("USER_Controller.php");
+            }
         }else{
             $view->setFlashDanger($strings[$answerDelete]);
             $view->redirect("USER_Controller.php");
@@ -187,7 +196,7 @@ Switch ($_GET['action']){
             $view->redirect("BUILDING_Controller.php");
         }
 
-        if(!checkRol('SHOW', $function)){
+        if(!$view->checkRol('SHOW', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("USER_Controller.php");
         }
@@ -213,7 +222,7 @@ Switch ($_GET['action']){
             $view->redirect("BUILDING_Controller.php");
         }
 
-        if(!checkRol('SEARCH', $function)){
+        if(!$view->checkRol('SEARCH', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("USER_Controller.php");
         }
@@ -233,7 +242,7 @@ Switch ($_GET['action']){
 
     default:
     
-        if(!checkRol('SHOW ALL', $function)){
+        if(!$view->checkRol('SHOW ALL', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php");
 		}else{

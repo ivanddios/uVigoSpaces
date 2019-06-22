@@ -15,7 +15,7 @@ class SPACE_SHOWALL{
     function render() {
         include 'header.php';
         $this->view->setElement("%TITLE%", $strings["Spaces"]);
-        $listTitles = array('sm_idBuilding', 'sm_nameSpace', 'sm_surfaceSpace', 'sm_numberInventorySpace'); ?>
+        $listTitles = array('sm_idBuilding', 'sm_nameSpace', 'sm_builtSurface', 'sm_numberInventorySpace'); ?>
 
         <div class="container">
             <div class="row center-row">
@@ -37,7 +37,7 @@ class SPACE_SHOWALL{
                                 <?php foreach ($listTitles as $title): ?>
                                     <th scope="col"><?=$strings[$title]?></th>
                                 <?php endforeach; ?>
-                                <?php  if(checkRol('ADD', 'SPACE')): ?>
+                                <?php  if($this->view->checkRol('ADD', 'SPACE')): ?>
                                     <th scope="col">
                                         <a href="SPACE_Controller.php?action=Add&building=<?= $_GET['building']?>&floor=<?= $_GET['floor']?>">
                                             <span title="<?= $strings['Add Space']?>" class="btn btn-success btn-sm fa fa-plus"></span>
@@ -60,7 +60,7 @@ class SPACE_SHOWALL{
                                                     
                                                     <td id="item-nameSpace-<?=$j?>"> 
                                                     <?= $value; ?>
-                                                <?php elseif($key === 'sm_surfaceSpace'): ?>
+                                                <?php elseif($key === 'sm_builtSurface'): ?>
                                                         <td id="item-surfaceSpace-<?=$j?>" class="surface">
                                                         <?=$value . ' m²'?>
                                                 <?php else:?>
@@ -73,17 +73,17 @@ class SPACE_SHOWALL{
                                     <?php endforeach; ?>
                                     <?php if(isset($_SESSION['LOGIN'])) { ?>
                                         <td>
-                                            <?php  if(checkRol('EDIT', 'SPACE')): ?>
+                                            <?php  if($this->view->checkRol('EDIT', 'SPACE')): ?>
                                                 <a href="SPACE_Controller.php?action=Edit&building=<?= $this->spaces[$j]['sm_idBuilding']?>&floor=<?= $this->spaces[$j]['sm_idFloor']?>&space=<?= $this->spaces[$j]['sm_idSpace']?>">
                                                     <span title="<?= $strings['Edit Space']?>" class="btn btn-warning btn-sm fa fa-pencil"></span>
                                                 </a>
                                             <?php endif; ?>
-                                            <?php  if(checkRol('DELETE', 'SPACE')): ?>
+                                            <?php  if($this->view->checkRol('DELETE', 'SPACE')): ?>
                                                 <i title="<?= $strings['Delete Space']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?=$this->spaces[$j]['sm_idSpace']?>"></i>
                                                 <div id="item-<?=$this->spaces[$j]['sm_idSpace']?>" class="modal fade"  tabindex="-1" role="dialog" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
-                                                            <div class="modal-header">
+                                                            <div class="modal-header modal-delete">
                                                                 <?= $strings["Attention"]?>
                                                             </div>
                                                             <div class="modal-body">
@@ -93,7 +93,7 @@ class SPACE_SHOWALL{
                                                             <div class="modal-footer">
                                                                 <form method="POST" action="SPACE_Controller.php?action=Delete&building=<?= htmlentities($this->spaces[$j]['sm_idBuilding'])?>&floor=<?= $this->spaces[$j]['sm_idFloor']?>&space=<?= $this->spaces[$j]['sm_idSpace']?>">
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
-                                                                    <button type="submit" name="submit" class="btn btn-primary success"><?= $strings["Ok"]?></button> 
+                                                                    <button type="submit" name="submit" class="btn btn-secondary success"><?= $strings["Ok"]?></button> 
                                                                 </form>
                                                             </div>
                                                         </div>

@@ -1,7 +1,6 @@
 <?php
 
 require_once("../core/ViewManager.php");
-require_once("../core/ACL.php");
 require_once("../model/BUILDING_Model.php");
 require_once("../model/FLOOR_Model.php");
 require_once("../model/SPACE_Model.php");
@@ -53,7 +52,7 @@ Switch ($_REQUEST['action']){
         $buildingid = $_GET['building'];
         $floorid = $_GET['floor'];
 
-        if(!checkRol('ADD', $function)){
+        if(!$view->checkRol('ADD', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("SPACE_Controller.php", 'Add'."&building=".$buildingid, "&floor=".$floorid);
         }
@@ -85,7 +84,7 @@ Switch ($_REQUEST['action']){
             $view->redirect("USER_Controller.php");
         }
 
-		if(!checkRol('EDIT', $function)){
+		if(!$view->checkRol('EDIT', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
         }
@@ -146,7 +145,7 @@ Switch ($_REQUEST['action']){
             $view->redirect("USER_Controller.php");
         }
 
-        if(!checkRol('DELETE', $function)){
+        if(!$view->checkRol('DELETE', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
         }
@@ -180,7 +179,7 @@ Switch ($_REQUEST['action']){
             $view->redirect("USER_Controller.php");
         } 
 
-        if(!checkRol('SELECT', $function)){
+        if(!$view->checkRol('SELECT', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("SPACE_Controller.php", "index&building=".$buildingid, "&floor=".$floorid);
         }

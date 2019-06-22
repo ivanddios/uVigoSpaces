@@ -41,8 +41,8 @@ class FLOOR_SHOW{
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-area-chart"></span>
-										<input type="text" id="surfaceBuildingFloor" name="surfaceBuildingFloor" value="<?=$this->floor['sm_surfaceBuildingFloor']?>  m²" readonly>
-										<label for="surfaceBuildingFloor"><?= $strings['surfaceBuildingFloor']?></label>
+										<input type="text" id="builtSurfaceFloor" name="builtSurfaceFloor" value="<?=$this->floor['sm_builtSurfaceFloor']?>  m²" readonly>
+										<label for="builtSurfaceFloor"><?= $strings['builtSurfaceFloor']?></label>
 									</div>
 
 									<div class="input-container">

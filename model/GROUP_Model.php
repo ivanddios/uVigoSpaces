@@ -3,14 +3,34 @@
 require_once("../core/ConnectionBD.php");
 require_once("../model/FUNCTIONALITY_Model.php");
 
+/**
+* Class GROUP_Model
+*
+* Represents a Group 
+*
+*/
+
 class GROUP_Model {
 
+    /**
+    * Attributes:  
+	*   @var int $idGroup The group identifier. 
+    *   @var string $nameGroup The group name.
+    *   @var string $descripGroup The group description. 
+    *   @var mysqli $mysqli Connection with the database. 
+    */
     private $idGroup;
 	private $nameGroup;
 	private $descripGroup;
 	private $mysqli;
 
-
+    /**
+	* The GROUP_Model constructor
+	*
+	* @param int $idGroup The identifier of the group in database.
+    * @param string $nameGroup The name of the group.
+    * @param string $descripGroup The description of the group.
+	*/
     public function __construct($idGroup=null, $nameGroup=null, $descripGroup=null)
     {
         $this->idGroup = $idGroup;
@@ -19,13 +39,21 @@ class GROUP_Model {
         $this->mysqli = Connection::connectionBD();
     }
 
+    /**
+	* Gets the name of this group instance
+	*
+	* @return string The name of the group
+	*/
     public function getNameGroup(){
         return $this->nameGroup;
     }
 
 
-    /* MAIN FUNCTIONS */
-
+    /**
+	* Retrieves all groups
+	*
+	* @return mixed Fetch array with groups and its values
+	*/
     public function getAllGroups() {
         $sql = "SELECT * FROM `SM_GROUP`";
         if (!($resultado = $this->mysqli->query($sql))) {
@@ -41,7 +69,12 @@ class GROUP_Model {
         }
     }
 
-
+    /**
+	* Loads a group values from the database given its identifier
+	*
+	* @return Fetch array with a group values or empty array
+	* if the group isn't found
+	*/
     public function getGroup() {
         $sql = "SELECT * FROM `SM_GROUP` WHERE sm_idGroup = '$this->idGroup'";
         if (!($resultado = $this->mysqli->query($sql))) {
@@ -52,6 +85,11 @@ class GROUP_Model {
         }
     }
 
+    /**
+	* Transforms the array of permissions in a key-value array
+	*
+	* @return Array with key (idFunction) and value (idAction)
+	*/
     public function convertArray($permissions){
         $permissionsFormat = array();
         foreach($permissions as $permission) {
@@ -62,6 +100,12 @@ class GROUP_Model {
     }
 
 
+    /**
+	* Saves a group into the database
+	*
+    * @return true when the operations is successfully or
+    * string with the error
+    */
     public function addGroup($permissions) {
 
         $errors = $this->checkIsValidForAdd($permissions);
@@ -83,6 +127,16 @@ class GROUP_Model {
         }
     }
 
+    /**
+	* Updates a group in the database
+    *
+    * First, update the group values
+    * The, delete the group in permissions table to delete the old associations with functionalities and actions
+    * Add the group with its functionalities and actions associated
+    *
+	* @return true when the operations is successfully or
+    * string with the error
+	*/
     public function updateGroup($permissions) {
         $errors = $this->checkIsValidForUpdate($permissions);
         if($errors === false){
@@ -110,6 +164,12 @@ class GROUP_Model {
     }
 
 
+    /**
+	* Deletes a group to the database
+	*
+	* @return true when the operations is successfully or
+    * string with the error
+	*/
     public function deleteGroup() {
         $errors = $this->checkIsValidForDelete();
         if($errors === false){
@@ -125,8 +185,12 @@ class GROUP_Model {
     }
 
 
-    /*AUXILARY FUNCTIONS */
-
+    /**
+	* Retrieves a group name given its identifier
+	*
+    * @return string with the group name or NULL if 
+    * the group isn't found
+	*/
     public function findNameGroup() {
         $sql = "SELECT sm_nameGroup FROM `SM_GROUP` WHERE sm_idGroup = '$this->idGroup'";
         if (!($resultado = $this->mysqli->query($sql))) {
@@ -137,10 +201,14 @@ class GROUP_Model {
         }
     }
 
-    /*
-        This public function is only used in unit tests over GROUP_EDIT and GROUP_DELETE to get the last id action inserted (through the unit test GROUP_ADD_TEST), 
-        because of this the connection with DB is realized in the public function to be able to access it through an anonymous class.
-    */
+    /**
+	* Retrieves the last group identifier that added to database
+    *
+    * This function is used in unit_test
+    *
+    * @return int with the group identifier or NULL if 
+    * the action isn't found
+	*/
     public static function findLastGroupID() {
         $mysqli = Connection::connectionBD();
         $sql = "SELECT sm_idGroup FROM `SM_GROUP` ORDER BY sm_idGroup DESC LIMIT 1";
@@ -152,7 +220,12 @@ class GROUP_Model {
         }
     }
 
-    
+    /**
+	* Saves a group with its functionalities and actions associated
+	*
+    * @return true when the operations is successfully or
+    * string with the error
+    */
     public function addPermission($idGroup, $permissions) {
         foreach($permissions as $permission){
             $idFunction = $permission["idFunction"];
@@ -165,7 +238,12 @@ class GROUP_Model {
         return true;
     }
 
-
+    /**
+	* Gets functionalities and actions associated with the group
+	*
+    * @return Fetch array with a group values with functionalities and actions
+    * or empty array  if the group isn't found
+	*/
     public function getPermissionForGroup() {
         $sql = "SELECT * FROM `SM_PERMISSION` WHERE sm_idGroup = '$this->idGroup'";
         if (!($resultado = $this->mysqli->query($sql))) {
@@ -181,6 +259,11 @@ class GROUP_Model {
         }
     }
 
+    /**
+	* Gets groups with a functionality and action associated
+	*
+    * @return Fetch array with a group and actions values
+	*/
     public function getGroupsActionsForPermission($idFunction, $actions) {
         $toret = array();
         $i = 0;
@@ -200,8 +283,13 @@ class GROUP_Model {
         return $toret;
     }
 
-
-        public function existsGroup() {
+    /**
+	* Checks if a group identifier is in database
+    *
+    * @return true when the group is in database and false
+    * when its isn't in database
+	*/
+    public function existsGroup() {
         $sql = "SELECT * FROM `SM_GROUP` WHERE sm_idGroup = '$this->idGroup'";
         $result = $this->mysqli->query($sql);
         if ($result->num_rows == 1) {
@@ -211,11 +299,13 @@ class GROUP_Model {
         }
     }
 
-
-    /* SERVER VALIDATIONS*/
-
-    /* Server validations functions*/
-
+    /**
+	* Checks if the current group instance is valid
+	* for being added in the database
+	*
+    * @return false when the group values are valids or
+    * string with the error when some value is wrong
+	*/
     public function checkIsValidForAdd($permissions) {
 
         $errors = false;
@@ -244,16 +334,19 @@ class GROUP_Model {
                 }
             }
         }
-
         return $errors;
     }
 
 
+    /**
+	* Checks if the current group instance is valid
+	* for being modified in the database
+	*
+    * @return false when the group values are valids or
+    * string when some value is wrong
+	*/
     public function checkIsValidForUpdate($permissions) {
-        
-
         $errors = false;
-
         if(strlen(trim($this->idGroup)) == 0){
             $errors = "Group identifier is mandatory";
         }else if(!preg_match('/^\d+$/', $this->idGroup)){
@@ -284,14 +377,18 @@ class GROUP_Model {
                 }
             }
         }
-
         return $errors;
     }
 
+    /**
+	* Checks if the current group instance is valid
+	* for being deleted to the database
+	*
+    * @return false when the group identifier is valid or
+    * string when some value is wrong
+	*/
     public function checkIsValidForDelete() {
-
         $errors = false;
-
         if(strlen(trim($this->idGroup)) == 0){
             $errors = "Group identifier is mandatory";
         }else if(!preg_match('/^\d+$/', $this->idGroup)){
@@ -299,10 +396,8 @@ class GROUP_Model {
         }else if($this->existsGroup() !== true) {
             $errors = "Group doesn't exist";
         }
-            
         return $errors;
     }
-
 }
 
 ?>

@@ -1,7 +1,16 @@
 <?php
 
+/**
+* File: Building_Controller
+*
+* Script that controller to add new building, edit building, delete building, show building
+* and show all building
+*
+* @author ivanddios <ivanddios1994@gmail.com>
+*/
+
+
 require_once("../core/ViewManager.php");
-require_once("../core/ACL.php");
 require_once("../model/BUILDING_Model.php");
 require_once("../view/BUILDING_SHOWALL_View.php");
 require_once("../view/BUILDING_ADD_View.php");
@@ -14,6 +23,12 @@ $view = new ViewManager();
 
 include '../view/locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
 
+
+/**
+* Gets values from the forms
+*
+* @return Bulding with the form values
+*/
 function get_data_form() {
 
     $idBuilding = $_POST['idBuilding'];
@@ -39,7 +54,7 @@ Switch ($_GET['action']){
             $view->redirect("USER_Controller.php");
         }
 
-        if(!checkRol('ADD', $function)){
+        if(!$view->checkRol('ADD', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php");
         }
@@ -73,7 +88,7 @@ Switch ($_GET['action']){
             $view->redirect("USER_Controller.php");
         }
 
-        if(!checkRol('EDIT', $function)){
+        if(!$view->checkRol('EDIT', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php");
         }
@@ -127,7 +142,7 @@ Switch ($_GET['action']){
             $view->redirect("USER_Controller.php");
         }
 
-        if(!checkRol('DELETE', $function)){
+        if(!$view->checkRol('DELETE', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php");
         }

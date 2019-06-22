@@ -2,14 +2,34 @@
 
 require_once("../core/ConnectionBD.php");
 
+/**
+* Class ACTION_Model
+*
+* Represents a Action 
+*
+*/
+
 class ACTION_Model {
 
+    /**
+    * Attributes:  
+	*   @var int $idAction The action identifier.  
+    *   @var string $nameAction The action name. 
+    *   @var string $descripAction The action description 
+    *   @var mysqli $mysqli Connection with the database. 
+    */
     private $idAction;
 	private $nameAction;
 	private $descripAction;
 	private $mysqli;
 
-
+    /**
+	* The ACTION constructor
+	*
+	* @param int $idAction The identifier of the action in database.
+    * @param string $nameAction The name of the action.
+    * @param string $descripAction The description of the action.
+	*/
     public function __construct($idAction=null, $nameAction=null, $descripAction=null)
     {
         $this->idAction = $idAction;
@@ -18,13 +38,20 @@ class ACTION_Model {
         $this->mysqli = Connection::connectionBD();
     }
 
+    /**
+	* Gets the name of current action
+	*
+	* @return string The name of the action
+	*/
     public function getNameAction(){
         return $this->nameAction;
     }
 
-
-    /*MAIN FUNCTIONS*/
-
+	/**
+	* Retrieves all actions
+	*
+	* @return mixed Fetch array with actions and its values
+	*/
     public function getAllActions() {
         $sql = "SELECT * FROM `SM_ACTION`";
         if (!($resultado = $this->mysqli->query($sql))) {
@@ -40,7 +67,12 @@ class ACTION_Model {
         }
     }
 
-
+    /**
+	* Loads a action's values from the database given its identifier
+	*
+	* @return Fetch array with a action values or empty array
+	* if the action isn't found
+	*/
     public function getAction() {
         $sql = "SELECT * FROM `SM_ACTION` WHERE sm_idAction = '$this->idAction'";
         if (!($resultado = $this->mysqli->query($sql))) {
@@ -51,9 +83,13 @@ class ACTION_Model {
         }
     }
 
-
+    /**
+	* Saves a action into the database
+	*
+    * @return true when the operations is successfully or
+    * string with the error
+    */
     public function addAction() {
-
         $errors = $this->checkIsValidForAdd();
         if($errors === false){
             $sql = "INSERT INTO `SM_ACTION` (sm_nameAction, sm_descripAction) VALUES ('$this->nameAction', '$this->descripAction')";
@@ -67,8 +103,13 @@ class ACTION_Model {
         }
     }
 
+    /**
+	* Updates a action in the database
+	*
+	* @return true when the operations is successfully or
+    * string with the error
+	*/
     public function updateAction() {
-
         $errors = $this->checkIsValidForUpdate();
         if($errors === false){
             $sql = "UPDATE `SM_ACTION` SET sm_nameAction = '$this->nameAction', sm_descripAction = '$this->descripAction' 
@@ -83,9 +124,13 @@ class ACTION_Model {
         }
     }
 
-
+    /**
+	* Deletes a action to the database
+	*
+	* @return true when the operations is successfully or
+    * string with the error
+	*/
     public function deleteAction() {
-
         $errors = $this->checkIsValidForDelete();
         if($errors === false){
             $sql = "DELETE FROM `SM_ACTION` WHERE sm_idAction ='$this->idAction'";
@@ -99,9 +144,12 @@ class ACTION_Model {
         }
     }
 
-
-    /* AUXILIARY FUNCTIONS*/
-
+    /**
+	* Retrieves a action's name given its identifier
+	*
+    * @return string with the action's name or NULL if 
+    * the action isn't found
+	*/
     public function findNameAction() {
         $sql = "SELECT sm_nameAction FROM `SM_ACTION` WHERE sm_idAction = '$this->idAction'";
         if (!($resultado = $this->mysqli->query($sql))) {
@@ -112,10 +160,14 @@ class ACTION_Model {
         }
     }
 
-    /*
-        This public function is only used in unit tests over ACTION_EDIT and ACTION_DELETE to get the last id action inserted (through the unit test ACTION_ADD_TEST), 
-        because of this the connection with DB is realized in the public function to be able to access it through an anonymous class.
-    */
+    /**
+	* Retrieves the last action's identifier that added to database
+    *
+    * This function is used in unit_test
+    *
+    * @return int with the action's identifier or NULL if 
+    * the action isn't found
+	*/
     public static function getLastActionID() {
         $mysqli = Connection::connectionBD();
         $sql = "SELECT sm_idAction FROM `SM_ACTION` ORDER BY sm_idAction DESC LIMIT 1";
@@ -127,7 +179,11 @@ class ACTION_Model {
         }
     }
 
-
+    /**
+	* Retrieves the actions with the functionality to which they are associated.
+    *
+    * @return Array fetch with functionality and its actions associated
+	*/
     public function getAllActionsForFunction() {
         $sql = "SELECT F.sm_idFunction,F.sm_nameFunction, A.sm_idAction, A.sm_nameAction
                 FROM `SM_FUNCTIONALITY` AS F, `SM_ACTION` AS A, `SM_FUNCTIONALITY_ACTION` AS FA
@@ -146,7 +202,12 @@ class ACTION_Model {
         }
     }
 
-
+    /**
+	* Checks if a action's identifier exists in database
+    *
+    * @return boolean true when the action exists in database 
+    * and false when its isn't in database
+	*/
     public function existsAction() {
         $sql = "SELECT * FROM `SM_ACTION` WHERE sm_idAction = '$this->idAction'";
         $result = $this->mysqli->query($sql);
@@ -158,13 +219,15 @@ class ACTION_Model {
     }
 
 
-
-    /* SERVER VALIDATIONS FUNCTIONS*/
-
+    /**
+	* Checks if the current action's instance is valid
+	* for being added in the database
+	*
+    * @return false when the action's values are valids or
+    * string with the error when some value is wrong
+	*/
     public function checkIsValidForAdd() {
-
         $errors = false;
-
         if (strlen(trim($this->nameAction)) == 0  && (strlen(trim($this->descripAction)) == 0 )){
             $errors = "Action name and description are mandatory";
         }else if (strlen(trim($this->nameAction)) == 0) {
@@ -180,15 +243,19 @@ class ACTION_Model {
         }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->descripAction)){
             $errors = "Action description format is invalid";
         }
-
         return $errors;
     }
 
 
+    /**
+	* Checks if the current action's instance is valid
+	* for being modified in the database
+	*
+    * @return false when the action's values are valids or
+    * string when some value is wrong
+	*/
     public function checkIsValidForUpdate() {
-
         $errors = false;
-
         if(strlen(trim($this->idAction)) == 0){
             $errors = "Action identifier is mandatory";
         }else if(!preg_match('/^\d+$/', $this->idAction)){
@@ -210,25 +277,27 @@ class ACTION_Model {
         }else if(!preg_match('/[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s\t-]/', $this->descripAction)){
             $errors = "Action description format is invalid";
         }
-
         return $errors;
     }
 
+    /**
+	* Checks if the current action's instance is valid
+	* for being deleted to the database
+	*
+    * @return false when the action's values are valids or
+    * string when some value is wrong
+	*/
     public function checkIsValidForDelete() {
-
         $errors = false;
-
         if(strlen(trim($this->idAction)) == 0){
             $errors = "Action identifier is mandatory";
         }else if(!preg_match('/^\d+$/', $this->idAction)){
             $errors = "Action identifier format is invalid";
         }else if($this->existsAction() !== true) {
             $errors = "Action doesn't exist";
-        }
-            
+        }  
         return $errors;
     }
-
 }
 
 ?>

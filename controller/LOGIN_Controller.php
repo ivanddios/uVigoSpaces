@@ -1,7 +1,6 @@
 <?php
 
 require_once("../core/ViewManager.php");
-require_once("../core/ACL.php");
 require_once("../model/USER_Model.php");
 require_once("../view/LOGIN_View.php");
 
@@ -16,7 +15,6 @@ if (!isset($_GET['action'])){
 Switch ($_GET['action']){
 
 	case 'Login':
-
 		if(!isset($_POST['submit'])){
 			new Login();
 		}else{
@@ -24,10 +22,11 @@ Switch ($_GET['action']){
                 $user = new USER_Model($_POST['email'], $_POST['passwd']);
                 $loginAnswer = $user->login();
 				if($loginAnswer === true){
-                    $_SESSION['LOGIN'] = $user->getEmail();
-                    $_SESSION['PERMISSIONS'] = $user->getPermissions();
-                    $_SESSION['PHOTO'] = $user->getLinkProfilePhoto();
-                    $_SESSION['LANGUAGE'] = $_POST['language'];
+                    //Set the variables of sessions 
+                    $view->setVariableSession('LOGIN', $user->getEmail());
+                    $view->setVariableSession('PERMISSIONS', $user->getPermissions());
+                    $view->setVariableSession('PHOTO', $user->getLinkProfilePhoto($user->getEmail()));
+                    $view->setVariableSession('LANGUAGE', $_POST['language']);
                     $view->redirect("BUILDING_Controller.php");
                 } else {
                     $view->setFlashDanger($loginAnswer);
@@ -43,7 +42,6 @@ Switch ($_GET['action']){
     break;	
 
     default:
-        
     break;
 						
 }

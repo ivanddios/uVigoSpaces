@@ -19,11 +19,11 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `u716496248_infra`
+-- Base de datos: `uvigoSpaces`
 --
-DROP DATABASE IF EXISTS `u716496248_infra`;
-CREATE DATABASE IF NOT EXISTS `u716496248_infra` DEFAULT CHARACTER SET latin1 COLLATE latin1_spanish_ci;
-USE `u716496248_infra`;
+DROP DATABASE IF EXISTS `uvigoSpaces`;
+CREATE DATABASE IF NOT EXISTS `uvigoSpaces` DEFAULT CHARACTER SET latin1 COLLATE latin1_spanish_ci;
+USE `uvigoSpaces`;
 
 -- --------------------------------------------------------
 
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `SM_FLOOR` (
   `sm_idFloor` char(2) COLLATE utf8_spanish_ci NOT NULL,
   `sm_nameFloor` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
   `sm_planFloor` varchar(500) COLLATE utf8_spanish_ci DEFAULT '',
-  `sm_surfaceBuildingFloor` decimal(10,2) NOT NULL,
+  `sm_builtSurfaceFloor` decimal(10,2) NOT NULL,
   `sm_surfaceUsefulFloor` decimal(10,2) NOT NULL,
   PRIMARY KEY (`sm_idFloor`,`sm_idBuilding`),
   KEY `idBuilding` (`sm_idBuilding`)
@@ -162,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `SM_FLOOR` (
 -- Volcado de datos para la tabla `SM_FLOOR`
 --
 
-INSERT INTO `SM_FLOOR` (`sm_idBuilding`, `sm_idFloor`, `sm_nameFloor`, `sm_planFloor`, `sm_surfaceBuildingFloor`, `sm_surfaceUsefulFloor`) VALUES
+INSERT INTO `SM_FLOOR` (`sm_idBuilding`, `sm_idFloor`, `sm_nameFloor`, `sm_planFloor`, `sm_builtSurfaceFloor`, `sm_surfaceUsefulFloor`) VALUES
 ('ONEA0', '00', 'Planta Baixa', '../document/Buildings/ONEA0/ONEA000/plant_baixa.jpg', '309.00', '240.75'),
 ('ONP10', '00', 'Planta Baixa', '../document/Buildings/ONP10/ONP1000/planta_baixa.jpg', '1054.00', '885.80'),
 ('ONP20', '00', 'Planta Baixa', '../document/Buildings/ONP20/ONP2000/planta_baixa_pavillon2.jpg', '675.00', '515.20'),
@@ -325,7 +325,24 @@ INSERT INTO `SM_PERMISSION` (`sm_idGroup`, `sm_idFunction`, `sm_idAction`) VALUE
 (1, 7, 3),
 (1, 7, 4),
 (1, 7, 5),
-(1, 8, 1);
+(1, 8, 1),
+(2, 2, 1),
+(2, 2, 2),
+(2, 2, 3),
+(2, 2, 4),
+(2, 2, 5),
+(2, 3, 1),
+(2, 3, 2),
+(2, 3, 3),
+(2, 3, 4),
+(2, 3, 5),
+(2, 4, 1),
+(2, 4, 2),
+(2, 4, 3),
+(2, 4, 4),
+(2, 4, 5),
+(2, 4, 7);
+
 
 -- --------------------------------------------------------
 
@@ -338,7 +355,7 @@ CREATE TABLE IF NOT EXISTS `SM_SPACE` (
   `sm_idFloor` char(2) COLLATE utf8_spanish_ci NOT NULL,
   `sm_idSpace` char(5) COLLATE utf8_spanish_ci NOT NULL,
   `sm_nameSpace` varchar(225) COLLATE utf8_spanish_ci NOT NULL,
-  `sm_surfaceSpace` decimal(10,2) DEFAULT '0.00',
+  `sm_builtSurface` decimal(10,2) DEFAULT '0.00',
   `sm_numberInventorySpace` char(6) COLLATE utf8_spanish_ci DEFAULT '######',
   `sm_coordsplan` text COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`sm_idFloor`,`sm_idBuilding`,`sm_idSpace`),
@@ -349,7 +366,7 @@ CREATE TABLE IF NOT EXISTS `SM_SPACE` (
 -- Volcado de datos para la tabla `SM_SPACE`
 --
 
-INSERT INTO `SM_SPACE` (`sm_idBuilding`, `sm_idFloor`, `sm_idSpace`, `sm_nameSpace`, `sm_surfaceSpace`, `sm_numberInventorySpace`, `sm_coordsplan`) VALUES
+INSERT INTO `SM_SPACE` (`sm_idBuilding`, `sm_idFloor`, `sm_idSpace`, `sm_nameSpace`, `sm_builtSurface`, `sm_numberInventorySpace`, `sm_coordsplan`) VALUES
 ('OSBI0', '00', '00001', 'Escaleiras', '0.00', '######', '442 590, 538 590, 536 661, 440 663'),
 ('OSBI0', '00', '00002', 'Pasillo', '0.00', '######', '464 389, 464 487, 272 488, 273 389'),
 ('OSBI0', '00', '00003', 'Aseos', '0.00', '######', '191 552, 255 553, 250 665, 188 667'),
@@ -1722,7 +1739,8 @@ CREATE TABLE IF NOT EXISTS `SM_USER` (
 --
 
 INSERT INTO `SM_USER` (`sm_email`) VALUES
-('ivandd@hotmail.com');
+('ivandd@hotmail.com'),
+('yeraylf@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -1742,7 +1760,8 @@ CREATE TABLE IF NOT EXISTS `SM_USER_GROUP` (
 --
 
 INSERT INTO `SM_USER_GROUP` (`sm_email`, `sm_idGroup`) VALUES
-('ivandd@hotmail.com', 1);
+('ivandd@hotmail.com', 1),
+('yeraylf@gmail.com', 2);
 
 -- --------------------------------------------------------
 
@@ -1769,7 +1788,7 @@ CREATE TABLE IF NOT EXISTS `USER` (
 
 INSERT INTO `USER` (`photo`, `email`, `passwd`, `name`, `surname`, `dni`, `birthdate`, `phone`) VALUES
 ('../document/Users/ivandd@hotmail.com/ivan.jpg', 'ivandd@hotmail.com', 'bb4e90a7639add09cf8629499638760c', 'Iván', 'de Dios Fernández', '44488795X', '1994-03-26', 617129241),
-(null, 'info@responsable.es', 'responsable', 'RespInfr1', 'Informatica', '232323232Y', '2019-03-03', 674949955);
+('../document/Users/yeraylf@gmail.com/', 'yeraylf@gmail.com', 'a25094795b76d7d407404c52983f1694', 'Yeray', 'Lage Freitas', '53187812J', '1996-06-22', 677677677);
 
 -- --------------------------------------------------------
 

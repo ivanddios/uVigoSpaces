@@ -5,7 +5,6 @@ class BUILDING_SHOWALL{
 
     function __construct($buildings) {
         $this->buildings = $buildings;
-
         $this->render();
     }
 
@@ -32,7 +31,7 @@ class BUILDING_SHOWALL{
                                 <?php endforeach; ?>
                                
                                 <th scope="col">
-                                    <?php  if(checkRol('ADD', 'BUILDING')): ?>
+                                    <?php  if($this->view->checkRol('ADD', 'BUILDING')): ?>
                                         <a href="BUILDING_Controller.php?&action=Add">
                                             <span title="<?= $strings['Add Building']?>" class="btn btn-success btn-sm fa fa-plus"></span>
                                         </a>
@@ -62,17 +61,17 @@ class BUILDING_SHOWALL{
                                         <a href="FLOOR_Controller.php?building=<?= htmlentities($this->buildings[$j]['sm_idBuilding'])?>">
                                             <span title="<?= $strings['Show Floors']?>" class="btn btn-primary btn-sm fa fa-building"></span>
                                         </a>
-                                        <?php  if(checkRol('EDIT', 'BUILDING')): ?>
+                                        <?php  if($this->view->checkRol('EDIT', 'BUILDING')): ?>
                                             <a href="BUILDING_Controller.php?action=Edit&building=<?= $this->buildings[$j]['sm_idBuilding']?>">
                                                 <span title="<?= $strings['Edit Building']?>" class="btn btn-warning btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
-                                        <?php  if(checkRol('DELETE', 'BUILDING')): ?>
+                                        <?php  if($this->view->checkRol('DELETE', 'BUILDING')): ?>
                                             <i title="<?= $strings['Delete Building']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->buildings[$j]['sm_idBuilding']?>"></i>
                                             <div id="item-<?= $this->buildings[$j]['sm_idBuilding']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
-                                                        <div class="modal-header">
+                                                        <div class="modal-header modal-delete">
                                                             <?= $strings["Attention"]?>
                                                         </div>
                                                         <div class="modal-body">
@@ -83,7 +82,7 @@ class BUILDING_SHOWALL{
                                                             <input type="hidden" name="building" value="<?= $this->buildings[$j]['sm_idBuilding']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
-                                                                <button type="submit" name="submit" id="submit" class="btn btn-primary success"><?= $strings["Ok"]?></button>
+                                                                <button type="submit" name="submit" id="submit" class="btn btn-secondary success"><?= $strings["Ok"]?></button>
                                                             </div>
                                                         </form>
                                                     </div>

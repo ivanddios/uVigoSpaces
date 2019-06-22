@@ -39,8 +39,8 @@ class FLOOR_EDIT{
 
 									<div class="input-container">
 										<span class="input-group-text fa fa-area-chart"></span>
-										<input type="text" id="surfaceBuildingFloor" name="surfaceBuildingFloor" value="<?=$this->floor['sm_surfaceBuildingFloor']?>" onkeyup="checkSurface(this)" required>
-										<label for="surfaceBuildingFloor"><?= $strings['What is the constructed surface?']?></label>
+										<input type="text" id="builtSurfaceFloor" name="builtSurfaceFloor" value="<?=$this->floor['sm_builtSurfaceFloor']?>" onkeyup="checkSurface(this)" required>
+										<label for="builtSurfaceFloor"><?= $strings['What is the constructed surface?']?></label>
 									</div>
 
 									<div class="input-container">

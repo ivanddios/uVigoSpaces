@@ -29,7 +29,7 @@ class FUNCTIONALITY_SHOWALL{
                                 <?php foreach ($listTitles as $title): ?>
                                     <th scope="col"><?=$strings[$title]?></th>
                                 <?php endforeach; ?>
-                                <?php  if(checkRol('ADD', 'FUNCTIONALITY')): ?>
+                                <?php  if($this->view->checkRol('ADD', 'FUNCTIONALITY')): ?>
                                     <th scope="col">
                                         <a href="FUNCTIONALITY_Controller.php?action=Add">
                                             <span title="<?= $strings['Add Functionality']?>" class="btn btn-success btn-sm fa fa-plus"></span>
@@ -57,17 +57,17 @@ class FUNCTIONALITY_SHOWALL{
                                     endforeach;?>
                                         
                                     <td>
-                                        <?php  if(checkRol('EDIT', 'FUNCTIONALITY')): ?>
+                                        <?php  if($this->view->checkRol('EDIT', 'FUNCTIONALITY')): ?>
                                             <a href="FUNCTIONALITY_Controller.php?action=Edit&function=<?= $this->functions[$j]['sm_idFunction']?>">
                                                 <span title="<?= $strings['Edit Functionality']?>" class="btn btn-warning btn-sm fa fa-pencil"></span>
                                             </a>
                                         <?php endif; ?>
-                                        <?php  if(checkRol('DELETE', 'FUNCTIONALITY')): ?>
+                                        <?php  if($this->view->checkRol('DELETE', 'FUNCTIONALITY')): ?>
                                             <i title="<?= $strings['Delete Functionality']?>" class="btn btn-danger btn-sm fa fa-trash" data-toggle="modal" data-target="#item-<?= $this->functions[$j]['sm_idFunction']?>"></i>
                                             <div id="item-<?= $this->functions[$j]['sm_idFunction']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
-                                                        <div class="modal-header">
+                                                        <div class="modal-header modal-delete">
                                                             <?= $strings["Attention"]?>
                                                         </div>
                                                         <div class="modal-body">
@@ -78,7 +78,7 @@ class FUNCTIONALITY_SHOWALL{
                                                             <input type="hidden" name="function" value="<?=$this->functions[$j]['sm_idFunction']?>" readonly>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?= $strings["Cancel"]?></button>
-                                                                <button type="submit" name="submit" id="submit" class="btn btn-primary success"><?= $strings["Ok"]?></button>
+                                                                <button type="submit" name="submit" id="submit" class="btn btn-secondary success"><?= $strings["Ok"]?></button>
                                                             </div>
                                                         </form>
                                                     </div>

@@ -1,3 +1,14 @@
+/*
+ * bootstrap-filestyle
+ * doc: http://markusslima.github.io/bootstrap-filestyle/
+ * github: https://github.com/markusslima/bootstrap-filestyle
+ *
+ * Copyright (c) 2017 Markus Vinicius da Silva Lima
+ * Version 2.1.0
+ * Licensed under the MIT license.
+ */
+
+
 (function ($, moment)
 {
    var pluginName = "bootstrapMaterialDatePicker";

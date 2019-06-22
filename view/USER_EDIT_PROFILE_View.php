@@ -44,7 +44,7 @@ class USER_EDIT_PROFILE{
 
 								<div class="input-container">
 									<span class="input-group-text fa fa-envelope"></span>
-									<input type="text" id="email" name="email" value="<?=$this->user['email']?>" onkeyup="checkEmail(this)" required/>
+									<input type="text" id="email" name="email" value="<?=$this->user['email']?>" onkeyup="checkEmail(this)" readonly/>
 									<label for="email"><?= $strings['What is his email?']?></label>
 								</div>
 								

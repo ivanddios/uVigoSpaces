@@ -1,7 +1,6 @@
 <?php
 
 require_once("../core/ViewManager.php");
-require_once("../core/ACL.php");
 require_once("../model/BUILDING_Model.php");
 require_once("../model/FLOOR_Model.php");
 require_once("../model/SPACE_Model.php");
@@ -17,16 +16,21 @@ $view = new ViewManager();
 include '../view/locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
 
 
+/**
+* Gets values from the forms
+*
+* @return FLOOR with the form values
+*/
 function get_data_form() {
 
     $idBuilding = $_POST['idBuilding'];
     $idFloor = $_POST['idFloor'];
     $nameFloor = $_POST['nameFloor'];
-    $surfaceBuildingFloor =  $_POST['surfaceBuildingFloor'];
+    $builtSurfaceFloor =  $_POST['builtSurfaceFloor'];
     $surfaceUsefulFloor =  $_POST['surfaceUsefulFloor'];
     $planFloor = $_FILES['planFloor'];
 
-    $floor = new FLOOR_Model($idBuilding, $idFloor, $nameFloor, $planFloor, $surfaceBuildingFloor, $surfaceUsefulFloor);
+    $floor = new FLOOR_Model($idBuilding, $idFloor, $nameFloor, $planFloor, $builtSurfaceFloor, $surfaceUsefulFloor);
     return $floor;
 }
 
@@ -50,7 +54,7 @@ Switch ($_REQUEST['action']){
         }
         $buildingid = $_GET['building'];
 
-        if(!checkRol('ADD', $function)){
+        if(!$view->checkRol('ADD', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("FLOOR_Controller.php", "index&building=", $buildingid);
         }
@@ -88,7 +92,7 @@ Switch ($_REQUEST['action']){
         $buildingid = $_GET["building"];
         $floorid = $_GET['floor'];
 
-		if(!checkRol('EDIT', $function)){
+		if(!$view->checkRol('EDIT', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("FLOOR_Controller.php", "index&building=".$buildingid);
         }
@@ -145,7 +149,7 @@ Switch ($_REQUEST['action']){
         $buildingid = $_GET['building'];
         $floorid = $_GET['floor'];
 
-        if(!checkRol('DELETE', $function)){
+        if(!$view->checkRol('DELETE', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("FLOOR_Controller.php", "building=".$buildingid);
         }

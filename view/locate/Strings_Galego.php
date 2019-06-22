@@ -1,7 +1,15 @@
 <?php
-//CADENAS UTILIZADAS EN GALEGO
+
+/*
+ * File: Strings_Castellano.php
+ *
+ * Traductions for Galician
+ * 
+ * Author: ivanddios <ivanddf1994@gmail.com>
+ */
+
+
 $strings = array(
-    //MAIN 
     "Welcome"=> "Benvido",
     "Add"=> "Engadir",
     "Edit" => "Editar",
@@ -29,6 +37,8 @@ $strings = array(
     "Extend" => "Ampliar",
     "Adjust" => "Axustar",
     "Close" => "Pechar",
+    "Help" => "Axuda",
+    "Demostration" => "Demostración",
     "selectAll" => "Selecciona todas as accións",
     "Tests"=>"Tests",
     "Error in the query on the database" => "Error na consulta sobre a base de datos",
@@ -76,10 +86,10 @@ $strings = array(
     "sm_planFloor" => "Plano",
     "idFloor" => "Identificador do andar",
     "nameFloor" => "Andar",
-    "surfaceBuildingFloor" => "Superficie construida",
+    "builtSurfaceFloor" => "Superficie construida",
     "surfaceUsefulFloor" => "Superficie útil",
     "Click to see the plan" => "Click para ver o plano",
-    "sm_surfaceBuildingFloor" => "Sup. Construida",
+    "sm_builtSurfaceFloor" => "Sup. Construida",
     "sm_surfaceUsefulFloor" => "Sup. Útil",
     "Show Spaces" => "Ver Espazos",
     "Add Floor" => "Engadir Andar",
@@ -110,7 +120,7 @@ $strings = array(
     "Spaces" => "Espazos",
     "sm_idSpace" => "Identificador",
     "sm_nameSpace" => "Espazo",
-    "sm_surfaceSpace" => "Sup. Espazo",
+    "sm_builtSurface" => "Sup. Espazo",
     "sm_numberInventorySpace" => "Núm. Inventario",
     "Show Space" => "Ver Espazo",
     "Add Space" => "Engadir Espazo",
@@ -124,7 +134,7 @@ $strings = array(
     "The information that this space has will be lost" => "A información que ten este espazo perderase",
     "Clear" => "Eliminar",
     "Space successfully updated in plan" => "Espazo correctamente actualizado no plano",
-    "Select the space in the plan" => "Identifique o espazo no plano seleccionando os seus vértices",
+    "Select the space in the plan" => "Seleccione a ubicación do espazo",
     "ViewSpace" => "Ver Espazo",
     "SelectSpace" => "Seleccionar Espazo",
     "EditSpace" => "Editar Espazo",
@@ -313,7 +323,7 @@ $strings = array(
     "Space name format is invalid" => "O formato do nome do espazo é incorrecto",
     "Space surface can't be larger than 99999999.99" => "A superficie do espazo non pode ser máis grande de 99999999.99",
     "Number inventory can't be larger than 6 characters" => "O número de inventario non pode ter máis de 6 caracteres",
-    "Coords can't be larger than 500 characters" => "As coordenadas do espazo son demasiado grandes",
+    "Coords can't be larger than 65535 characters" => "As coordenadas do espazo son demasiado grandes",
     "Coords format is invalid" => "O formato das coordenadas do espazo é incorrecto",
     "There is already a space with that identifier in this floor" => "Xa existe un espazo con ese identificador neste andar",
     "There isn't a space with that identifier in the floor" => "Non existe ningún espazo con ese identificador neste andar",
@@ -348,6 +358,9 @@ $strings = array(
     "The role doesn't exist" => "O role non existe no sistema",
     "There is another user with that DNI in the DB" => "Xa hai outro usuario con ese DNI",
     "The image extension is incorrect" => "A extensión da imaxe é inválida",
+    "Your user had been deleted." => "O teu usuario foi eliminado",
+    "Not exists this account" => "Non existe a conta de usuario",
+    "There is a user with that email" => "Xa existe un usuario con ese email",
 
     //ACTION
     "Action identifier is mandatory" => "O identificador da acción é obrigatorio",
@@ -385,8 +398,6 @@ $strings = array(
     "Group description is mandatory" => "A descripción da funcionalidade é obrigatorio",
     "Group description can't be larger than 255 characters" => "A descripción do rol non pode ter máis de 255 caracteres",
     "Group description format is invalid" => "O formato da descripción do rol é incorrecto",
-    "Access to some functionality is mandatory" => "O acceso a algunha funcionalidade é obrigatorio",
-    "Some action for functionality doesn't exist" => "Algunha acción para unha funcionalidade non existe",
     "Group doesn't exist" => "O rol non existe",
 
 )

@@ -1,21 +1,32 @@
 <?php
 
+/**
+* File: Action_Controller
+*
+* Script that controller to add new action, edit action, delete action, show action
+* and show all actions
+*
+* @author ivanddios <ivanddios1994@gmail.com>
+*/
+
 require_once("../core/ViewManager.php");
-require_once("../core/ACL.php");
 require_once("../model/ACTION_Model.php");
 require_once("../view/ACTION_SHOWALL_View.php");
 require_once("../view/ACTION_ADD_View.php");
 require_once("../view/ACTION_EDIT_View.php");
 require_once("../view/ACTION_SHOW_View.php");
 
-
 $function = "ACTION";
 $view = new ViewManager();
-
 include '../view/locate/Strings_'.$_SESSION['LANGUAGE'].'.php';
 
-function get_data_form() {
 
+/**
+* Gets values from the forms
+*
+* @return Action with the form values
+*/
+function get_data_form() {
     $idAction = $_GET['accion'];
     $nameAction = $_POST['nameAction'];
     $descripAction = $_POST['descripAction'];
@@ -29,6 +40,7 @@ if (!isset($_GET['action'])){
 	$_GET['action'] = '';
 }
 
+
 Switch ($_GET['action']){
 
     case 'Add':
@@ -38,7 +50,7 @@ Switch ($_GET['action']){
             $view->redirect("USER_Controller.php");
         }
 
-        if(!checkRol('ADD', $function)){
+        if(!$view->checkRol('ADD', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("ACTION_Controller.php");
         }
@@ -69,7 +81,7 @@ Switch ($_GET['action']){
             $view->redirect("USER_Controller.php");
         }
 
-        if(!checkRol('EDIT', $function)){
+        if(!$view->checkRol('EDIT', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("ACTION_Controller.php");
         }
@@ -102,7 +114,6 @@ Switch ($_GET['action']){
     break;
 
 
-
     case  'Show':
 
         if (!isset($_SESSION['LOGIN'])){
@@ -110,7 +121,7 @@ Switch ($_GET['action']){
             $view->redirect("USER_Controller.php");
         }
 
-        if(!checkRol('SHOW', $function)){
+        if(!$view->checkRol('SHOW', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("ACTION_Controller.php");
         }
@@ -120,10 +131,8 @@ Switch ($_GET['action']){
             $view->redirect("ACTION_Controller.php");
         }
         $actionId = $_GET['id'];
-
         $action = new ACTION_Model($actionId);
         $actionValues = $action->getAction();
-        
         new ACTION_SHOW($actionValues);
 
     break;
@@ -136,7 +145,7 @@ Switch ($_GET['action']){
             $view->redirect("USER_Controller.php");
         }
 
-        if(!checkRol('DELETE', $function)){
+        if(!$view->checkRol('DELETE', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("ACTION_Controller.php");
         }
@@ -169,7 +178,7 @@ Switch ($_GET['action']){
             $view->redirect("USER_Controller.php");
         }
 
-        if(!checkRol('SHOW ALL', $function)){
+        if(!$view->checkRol('SHOW ALL', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php");
         }

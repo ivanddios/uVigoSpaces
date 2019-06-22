@@ -61,7 +61,7 @@ $tests['SM_USER_ADD_TEST4']=(['Functionality' => "SM_USER_ADD",
                 'Expected' => "There is already a user with that email in this aplication",
                 'Result' => 'Not executed']);
 
-$user = new USER_Model('ivanddf1994@hotmail.com');
+$user = new USER_Model('ivandd@hotmail.com');
 $addAnswer = $user->addUser();
 $tests['SM_USER_ADD_TEST4']["Result"] = $addAnswer;
 

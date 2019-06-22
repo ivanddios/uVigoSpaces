@@ -31,11 +31,29 @@ class SPACE_SELECT_PLAN{
 					<ul><button id="clearButton" type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp<?= $strings['Delete']?></button></ul>
 					<ul><button id="fullButton" type="button" class="btn btn-primary "><i class="fa fa-expand" aria-hidden="true"></i>&nbsp<?= $strings['Extend']?></button></ul>
 					<ul><button id="resizeButton" type="button" class="btn btn-primary" disabled><i class="fa fa-window-maximize" aria-hidden="true"></i>&nbsp<?= $strings['Adjust']?></button></ul>
+					<ul><button id="helpButton" type="button" class="btn btn-light" data-toggle="modal" data-target=#helpModal><i class="fa fa-info" aria-hidden="true"></i>&nbsp<?= $strings['Help']?></button></ul>
 					<ul><a href="SPACE_Controller.php?building=<?= $this->space['sm_idBuilding']?>&floor=<?= $this->space['sm_idFloor']?>" class="btn btn-secondary"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp<?= $strings['Back']?></a></ul>
 				</li>
 			</div>
 			<input type="hidden" id="coordsSpace" name="coordsSpace">
-		</form> 		 	
+		</form>
+		
+		
+		<div id="helpModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <?= $strings["Demonstration"]?>
+                    </div>
+                	<div class="modal-body">
+						<img id="demo-gif" src="../view/img/demo.gif" alt="Demostration">
+                    </div>                             
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><?= $strings["Close"]?></button>
+                    </div>                                
+                </div>
+            </div>
+        </div>
 		<?php
 	} 
 }

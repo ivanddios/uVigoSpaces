@@ -1,11 +1,33 @@
 
+/*
+ * File: validates.js
+ *
+ * Description: Library of functions used to validate inputs field and forms
+ * 
+ * Author: ivanddios <ivanddf1994@gmail.com>
+ */
 
+
+/**
+* Changes the input and icon color when its value is valid or invalid
+*
+* @param input element Input element 
+* @param string color Green or Red
+*
+* @return void
+*/
 function changeColors(element, color){
-    element.style.borderColor = color; // Input 
+    element.style.borderColor = color;  
     element.previousElementSibling.style.backgroundColor = color; //Previous Element in the same div (icon)
 }
 
-
+/**
+* Checks if the building's identifier is valid
+*
+* @param input idBuildingInput 
+*
+* @return boolean
+*/
 function checkBuildingId(idBuildingInput){
     
     var expr = /^[A-Z]{3}[A-Z0-9]{2}$/;
@@ -20,6 +42,13 @@ function checkBuildingId(idBuildingInput){
     }
 }
 
+/**
+* Checks if the building's floor identifier is valid
+*
+* @param input idFloorInput 
+*
+* @return boolean
+*/
 function checkFloorId(idFloorInput){
     
     var expr = /^[0-9A-Z]{2}$/;
@@ -34,6 +63,13 @@ function checkFloorId(idFloorInput){
     }
 }
 
+/**
+* Checks if the space's identifier is valid
+*
+* @param input idSpaceInput 
+*
+* @return boolean
+*/
 function checkSpaceId(idSpaceInput){
     
     var expr = /^[0-9]{5}$/;
@@ -49,6 +85,13 @@ function checkSpaceId(idSpaceInput){
 }
 
 
+/**
+* Checks if the text's input value is valid
+*
+* @param input textInput 
+*
+* @return boolean
+*/
 function checkText(textInput){
     
     var expr = /([A-Za-z0-9ñÑ-áéíóúÁÉÍÓÚ]+[\s]*)+$/;
@@ -64,6 +107,13 @@ function checkText(textInput){
 }
 
 
+/**
+* Checks if the format of phone's number is valid
+*
+* @param input phoneInput 
+*
+* @return boolean
+*/
 function checkNumPhone(phoneInput){
     
     var expr = /^[9|6|7][0-9]{8}$/;
@@ -79,6 +129,13 @@ function checkNumPhone(phoneInput){
 }
 
 
+/**
+* Checks if the format of surface is valid
+*
+* @param input surfaceInput 
+*
+* @return boolean
+*/
 function checkSurface(surfaceInput){
     
     var expr =/^[0-9]{1,8}([.][0-9]{1,2}){0,1}?$/;
@@ -99,6 +156,13 @@ function checkSurface(surfaceInput){
 }
 
 
+/**
+* Checks if the format of inventory number is valid
+*
+* @param input numInventoryInput 
+*
+* @return boolean
+*/
 function checkNumberInventory(numInventoryInput){
     
     var expr =/^([0-9]{6}|[#]{6})$/;
@@ -121,6 +185,13 @@ function checkNumberInventory(numInventoryInput){
 }
 
 
+/**
+* Checks if the format of space's surface is valid
+*
+* @param input surfaceInput 
+*
+* @return boolean
+*/
 function checkSurfaceSpace(surfaceInput){
     
     var expr =/^[0-9]{1,8}([.][0-9]{1,2}){0,1}?$/;
@@ -137,11 +208,15 @@ function checkSurfaceSpace(surfaceInput){
     }
 }
 
-
+/**
+* Checks if the extension of image is valid
+*
+* @param img img 
+*
+* @return boolean
+*/
 function validateUpdloadFile(img) {
     var validFileExtensions = [".jpg", ".jpeg",".png"];
-
-    
     if(img.value !== ""){
         if (img.type == "file") {
             var fileName = img.value;
@@ -157,7 +232,6 @@ function validateUpdloadFile(img) {
                     return false;
                 }
             }
-       
     } else{
         img.previousElementSibling.previousElementSibling.style.backgroundColor = "green";
         return true;
@@ -165,6 +239,13 @@ function validateUpdloadFile(img) {
 }
 
 
+/**
+* Checks if user's email is valid
+*
+* @param input emailInput 
+*
+* @return boolean
+*/
 function checkEmail(emailInput){
     var expr = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -179,6 +260,13 @@ function checkEmail(emailInput){
 
 }
 
+/**
+* Checks if user's password is valid
+*
+* @param input passwordInput 
+*
+* @return boolean
+*/
 function checkPassword(passwordInput){
 
     var expr = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
@@ -254,6 +342,14 @@ function checkPassword(passwordInput){
     }
 }
 
+
+/**
+* Checks if user's confirm password is valid
+*
+* @param input confirmPasswordInput 
+*
+* @return boolean
+*/
 function checkConfirmPassword(confirmPasswordInput){
 
     var passwordInput = document.getElementById("password");
@@ -270,6 +366,14 @@ function checkConfirmPassword(confirmPasswordInput){
     } 
 }
 
+
+/**
+* Checks if user's dni is valid
+*
+* @param input dniInput 
+*
+* @return boolean
+*/
 function checkDNI(dniInput) {
     var numberDNI, letterDNI, validLetter
     var expr = /^\d{8}[a-zA-Z]$/;
@@ -294,14 +398,16 @@ function checkDNI(dniInput) {
 }
 
 
+/**
+* Checks if user's birthdate is valid
+*
+* @param input dateInput 
+*
+* @return boolean
+*/
 function checkDate(dateInput){
     var expr = /^(0[1-9]|[12][0-9]|3[01])[\- \/.](?:(0[1-9]|1[012])[\- \/.](19|20)[0-9]{2})$/;
-    var dateArray = dateInput.value.split("/");
-    var dateConvert = dateArray[1] + '/' + dateArray[0] + '/' + dateArray[2];
-    // var dateFormat = new Date(dateConvert);
-    // var currentDate = new Date();
 
-    // if(dateInput.value.length === 10 && expr.test(dateInput.value) && (currentDate.getFullYear() - dateFormat.getFullYear()) > 18){
         if(dateInput.value.length === 10 && expr.test(dateInput.value)){
         changeColors(dateInput, "green");
         return true;    
@@ -313,7 +419,13 @@ function checkDate(dateInput){
 }
 
 
-
+/**
+* Checks if building's form is valid to submit
+*
+* @param form form 
+*
+* @return void
+*/
 function validateBuilding(form) {
     
     if(checkBuildingId(form.idBuilding) && checkText(form.nameBuilding) && checkText(form.addressBuilding) && checkNumPhone(form.phoneBuilding)) {
@@ -324,15 +436,29 @@ function validateBuilding(form) {
 }
 
 
+/**
+* Checks if building's floor's form is valid to submit
+*
+* @param form form 
+*
+* @return void
+*/
 function validateFloor(form) {
 
-    if(checkFloorId(form.idFloor) && checkText(form.nameFloor) && checkSurface(form.surfaceBuildingFloor) && checkSurface(form.surfaceUsefulFloor) && validateUpdloadFile(document.getElementById("filestyle-0"))) { 
+    if(checkFloorId(form.idFloor) && checkText(form.nameFloor) && checkSurface(form.builtSurfaceFloor) && checkSurface(form.surfaceUsefulFloor) && validateUpdloadFile(document.getElementById("filestyle-0"))) { 
         document.getElementById("saveButton").disabled = false;
     }else{
         document.getElementById("saveButton").disabled = true;
     }           
 }
 
+/**
+* Checks if space's form is valid to submit
+*
+* @param form form 
+*
+* @return void
+*/
 function validateSpace(form) {
     
     if(checkSpaceId(form.idSpace) && checkText(form.nameSpace) && checkSurface(form.surfaceSpace) && checkNumberInventory(form.numberInventorySpace)) { 
@@ -344,7 +470,13 @@ function validateSpace(form) {
 
 }
 
-
+/**
+* Checks if user's add form is valid to submit
+*
+* @param form form 
+*
+* @return void
+*/
 function validateAddUser(form) {
 
     if(checkEmail(form.email) && checkPassword(form.password) && checkConfirmPassword(form.passwordConfirm) && checkText(form.name) && checkText(form.surname) && checkDNI(form.dni) 
@@ -359,7 +491,13 @@ function validateAddUser(form) {
 }
 
 
-
+/**
+* Checks if user's edit form is valid to submit
+*
+* @param form form 
+*
+* @return void
+*/
 function validateEditUser(form) {
 
     if(checkEmail(form.email) && checkText(form.name) && checkText(form.surname) && checkDNI(form.dni) 
@@ -383,7 +521,13 @@ function validateEditUser(form) {
 }
 
 
-
+/**
+* Checks if group form is valid to submit
+*
+* @param form form 
+*
+* @return void
+*/
 function validateGroup(form) {
     
     if(checkText(form.nameGroup) && checkText(form.descripGroup)) {
@@ -393,6 +537,13 @@ function validateGroup(form) {
     }    
 }
 
+/**
+* Checks if action form is valid to submit
+*
+* @param form form 
+*
+* @return void
+*/
 function validateAction(form) {
 
     if(checkText(form.nameAction) && checkText(form.descripAction)) {
@@ -402,6 +553,14 @@ function validateAction(form) {
     }   
 }
 
+
+/**
+* Checks if function form is valid to submit
+*
+* @param form form 
+*
+* @return void
+*/
 function validateFunction(form) {
 
     if(checkText(form.nameFunction) && checkText(form.descripFunction)) {
@@ -412,7 +571,15 @@ function validateFunction(form) {
 }
 
 
-
+/**
+* Manager of buttons delete (visually) actions for a functionality in GROUP_ADD_View and GROUP_EDIT_View
+*
+* @param string idFunction function's identifier 
+* @param string idAction action's identifier 
+* @param button button html button
+*
+* @return void
+*/
 function actionManage (idFunction, idAction, button){
 
     checkboxModalId = "" + idFunction + idAction;
@@ -422,6 +589,14 @@ function actionManage (idFunction, idAction, button){
 }
 
 
+/**
+* Selects all actions for a functionality
+*
+* @param string idAction action's identifier 
+* @param input toggle checkbox to "SELECT ALL"
+*
+* @return void
+*/
 function selectAll(idFunction, toggle){
     
     checkboxes = document.getElementsByClassName(idFunction);
@@ -440,7 +615,14 @@ function selectAll(idFunction, toggle){
 }
 
 
-
+/**
+* Manager to show/not show actions checkbox like buttons 
+*
+* @param string idFunction functions's identifier 
+* @param string idAction action's identifier 
+*
+* @return void
+*/
 function inputManager(idFunction, idAction){
     toggleid = 'toggleAll-'+idFunction;
     toggle = document.getElementById(toggleid);
@@ -459,23 +641,6 @@ function inputManager(idFunction, idAction){
     }
 }
 
-
-// function checkCheckboxes(idFunction){
-//     //Evaluamos si todos los checkboxes están seleccionados, entonces checkeamos el SELECT ALL
-//     checkboxes = document.getElementsByClassName(idFunction);
-//     contChecked = 0;
-//     for (var i = 0; i < checkboxes.length; i++) {
-//         if(checkboxes[i].checked = true){
-//             contChecked += 1;
-//         }
-//     }
-
-//     toggleid = 'toggleAll-'+idFunction;
-//     toggle = document.getElementById(toggleid);
-//     if(checkboxes.length == contChecked){
-//         toggle.checked = true;
-//     }
-// }
 
 
 
