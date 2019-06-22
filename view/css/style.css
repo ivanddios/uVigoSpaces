@@ -419,10 +419,10 @@ input[type="checkbox"]:checked ~ label:before {
 
 
 
-
 /* TESTS */
 
 .resume{
+	padding-top: 2%;
 	font-weight: bold;
 }
 

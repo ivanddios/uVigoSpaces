@@ -37,9 +37,10 @@ $strings = array(
     "Adjust" => "Ajustar",
     "Close" => "Cerrar",
     "Help" => "Ayuda",
-    "Demostration" => "Demostración",
+    "Demonstration" => "Demostración",
     "selectAll" => "Selecciona todas las acciones",
     "Tests"=>"Tests",
+    "SearchTest" =>"Filtra por Valid o Error",
     "Error in the query on the database" => "Error en la consulta sobre la base de datos",
 
     //BUILDING

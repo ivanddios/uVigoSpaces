@@ -64,6 +64,40 @@ function searchInTable() {
     }
 }
 
+
+
+/**
+* View: All views that contain tables
+*
+* Filter the rows of table by some field
+*
+* @return void
+*/
+function searchInTableTest() {
+    let filter = document.getElementById("searchBox").value.toUpperCase(),
+        tr = document.getElementById("dataTable").getElementsByTagName("tr"); 
+
+    for (let i = 0; i < tr.length; i++) {
+        let isFound = true, j=0;
+        while(isFound && j < tr[i].childElementCount){ 
+                let td = tr[i].getElementsByTagName("td")[j];
+            if (td) {
+                if (td.innerText.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = '';
+                    isFound = false;
+                } else {
+                    tr[i].style.display = 'none';
+                }
+            } 
+            j++;
+        }
+    }
+}
+
+
+
+
+
 /**
 * View: USER_ADD_View, USER_EDIT_View, USER_EDITPROFILE_View
 *

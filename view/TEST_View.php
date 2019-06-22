@@ -18,19 +18,21 @@ class TEST_VIEW{
 
         include 'header.php';
         $this->view->setElement("%TITLE%", $strings["Tests"]); ?>
-        <?php $listTitles = array('Functionality', 'Description', 'Expected', 'Result'); ?>
+        <?php $listTitles = array('Functionality', 'Description', 'Expected', 'Result', 'Tag'); ?>
             <div class="container">
                 <div class="row center-row">
                     <div class="col-lg-12 center-block">
                         <div id="titleView">
-                            <h1>TESTING SPACES MANAGER</h1>
+                            <h1>Unit tests for uVigoSpaces</h1>
                         </div>
                     
                         <div class="resume-tests" style="margin-left:auto;margin-right:auto;margin-top:2%;">
                             <label class="resume">Total Tests: <?= $this->totalTests ?></label>
                             <label class="test-valid">Valid: <?= $this->testsValids ?></label>
-                            <label class="test-invalid">Invalid: <?= $this->testsInvalids ?></label>
+                            <label class="test-invalid">Error: <?= $this->testsInvalids ?></label>
+                            <input type="text" id="searchBox" onkeyup="searchInTableTest()" placeholder="<?= $strings["SearchTest"]?>">
                         </div>
+
 
                         <table id="dataTable" class="table text-center">
                             <thead>
@@ -57,7 +59,12 @@ class TEST_VIEW{
                                                     </td>
                                                 <?php endif;
                                             endfor;
-                                        endforeach;?>
+                                        endforeach;
+                                        if($values['Expected'] === $values['Result']){ ?>
+                                            <td>Valid</td>
+                                        <?php } else { ?>
+                                            <td>Error</td>
+                                        <?php } ?> 
                                     </tr>
                                 <?php endforeach;?>
                             </tbody>

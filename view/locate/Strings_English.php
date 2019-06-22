@@ -40,6 +40,7 @@ $strings = array(
     "Demonstration" => "Demonstration",
     "selectAll" => "Select all actions",
     "Tests"=>"Tests",
+    "SearchTest" =>"Filter by Valid or Error",
     "Error in the query on the database" => "Error in the query on the database",
 
     //BUILDING

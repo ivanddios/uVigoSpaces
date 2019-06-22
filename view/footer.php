@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="copyright">
-                            <span>&copy;Spaces 2019. Space Manager. By </span><a href="#">Iván de Dios Fernández</a>
+                            <span>&copy;uVigoSpaces 2019. By </span><a target="_blank"href="https://github.com/ivanddios">Iván de Dios Fernández</a>
                         </div>
                     </div>
                 </div>
