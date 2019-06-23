@@ -8,8 +8,8 @@ require_once("../view/SPACE_SHOWALL_View.php");
 require_once("../view/SPACE_ADD_View.php");
 require_once("../view/SPACE_EDIT_View.php");
 require_once("../view/SPACE_SHOW_View.php");
-require_once("../view/SPACE_SELECT_PLAN_View.php");
-require_once("../view/SPACE_SHOW_PLAN_View.php");
+require_once("../view/SPACE_SELECTUBICATION_View.php");
+require_once("../view/SPACE_SHOWUBICATION_View.php");
 
 $function = "SPACE";
 $view = new ViewManager();
@@ -207,7 +207,7 @@ Switch ($_REQUEST['action']){
                 $space = new SPACE_Model($buildingid, $floorid, $spaceid);
                 $spaceValues = $space->findSpace();
                 $floorplan = $space->findplan();
-                new SPACE_SELECT_PLAN($spaceValues, $floorplan);
+                new SPACE_SELECTUBICATION($spaceValues, $floorplan);
         }
 
     break;
@@ -226,7 +226,7 @@ Switch ($_REQUEST['action']){
         $space = new SPACE_Model($buildingid, $floorid, $spaceid);
         $spaceValues = $space->findInfoSpace();
         $floorplan = $space->findplan();
-        new SPACE_SHOW_PLAN($spaceValues, $floorplan);
+        new SPACE_SHOWUBICATION($spaceValues, $floorplan);
 
     break;
     

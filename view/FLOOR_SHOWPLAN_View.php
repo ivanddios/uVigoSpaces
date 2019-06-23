@@ -1,6 +1,6 @@
 <?php
 
-class FLOOR_SHOW_plan{
+class FLOOR_SHOWPLAN{
 
 	private $spaces;
 	private $plan;

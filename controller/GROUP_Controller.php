@@ -8,6 +8,7 @@ require_once("../model/GROUP_Model.php");
 require_once("../view/GROUP_SHOWALL_View.php");
 require_once("../view/GROUP_ADD_View.php");
 require_once("../view/GROUP_EDIT_View.php");
+require_once("../view/GROUP_SHOW_View.php");
 require_once("../view/USER_SHOWALL_View.php");
 
 $function = "GROUP";
@@ -38,7 +39,7 @@ if (!isset($_GET['action'])){
 
 Switch ($_GET['action']){
 
-    case  'Add':
+    case 'Add':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add groups requires login."]);
@@ -75,7 +76,7 @@ Switch ($_GET['action']){
     break;
 
 
-    case  'Edit':
+    case 'Edit':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Edit groups requires login."]);
@@ -123,7 +124,7 @@ Switch ($_GET['action']){
 
 
 
-    case  'Users':
+    case 'Users':
 
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Show floors requires login."]);
@@ -145,6 +146,38 @@ Switch ($_GET['action']){
         $users = $user->getUsersForGroup();
         new USER_SHOWALL($users);
 
+    break;
+
+    case 'Show':
+
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Edit groups requires login."]);
+            $view->redirect("USER_Controller.php");
+        }
+
+        if(!$view->checkRol('SHOW', $function)){
+            $view->setFlashDanger($strings["You don't have the necessary permits"]);
+            $view->redirect("GROUP_Controller.php");
+        }
+
+        if (!isset($_GET['group'])){
+            $view->setFlashDanger($strings["Group id is mandatory"]);
+            $view->redirect("GROUP_Controller.php");
+        }
+        $groupId = $_GET['group'];
+
+        $group = new GROUP_Model($groupId);
+        $groupValues = $group->getGroup();
+        $permissions = $group->getPermissionForGroup();
+
+        $function = new FUNCTIONALITY_Model();
+        $functions = $function->getAllFunctions();
+
+        $action = new ACTION_Model();
+        $actions = $action->getAllActionsForFunction();
+
+        new GROUP_SHOW($groupValues, $functions, $actions, $permissions);
+            
     break;
 
 
