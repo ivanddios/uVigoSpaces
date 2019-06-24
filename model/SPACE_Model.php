@@ -13,8 +13,7 @@ require_once("../model/FLOOR_Model.php");
 
 class SPACE_Model {
 
-    /**
-    * Attributes:  
+    /** 
     *   @var int $idBuilding The building's identifier.
     *   @var int $idFloor The floor's identifier in the building. 
     *   @var int $idSpace The space's identifier in the floor. 
@@ -141,11 +140,9 @@ class SPACE_Model {
     }
 
     /**
-    * Get a space values from the database given the building's identifier
-    * and the building's floor identifier
+    * Get a space values from the database given the building's identifier and the building's floor identifier
 	*
-	* @return Fetch array with a space values or empty array
-	* if the space isn't found
+	* @return Fetch array with a space values or empty arrayb if the space isn't found
 	*/
     public function findSpace() {
         $sql = "SELECT * FROM `SM_SPACE` 
@@ -161,11 +158,9 @@ class SPACE_Model {
 
 
     /**
-    * Get a space information, the name of the building's floor  
-    * and the name of the building where the space is located.
+    * Get a space information, the name of the building's floor and the name of the building where the space is located.
 	*
-	* @return Fetch array with a space info or empty array
-	* if the space isn't found
+	* @return Fetch array with a space info or empty array if the space isn't found
 	*/
     public function findInfoSpace() {
         $sql = "SELECT DISTINCT `SM_SPACE`.*, `SM_FLOOR`.`sm_nameFloor`, `SM_BUILDING`.`sm_nameBuilding` 
@@ -184,11 +179,9 @@ class SPACE_Model {
     }
 
     /**
-    * Retrieve a space name given its identifier, the building's floor id
-    * and the building's identifier
+    * Retrieve a space name given its identifier, the building's floor id and the building's identifier
 	*
-    * @return string with the space name or NULL if 
-    * the space isn't found
+    * @return string with the space name or NULL if the space isn't found
 	*/
     public function findNameSpace() {
         $sql = "SELECT sm_nameSpace FROM `SM_SPACE` 
@@ -199,11 +192,9 @@ class SPACE_Model {
     }
 
     /**
-    * Retrieve a space coordinates given its identifier, the building's floor id
-    * and the building's identifier
+    * Retrieve a space coordinates given its identifier, the building's floor id and the building's identifier
 	*
-    * @return string with the space coordinates in the building's floor plan or NULL if 
-    * the space isn't found
+    * @return string with the space coordinates in the building's floor plan or NULL if the space isn't found
 	*/
     public function findCoordsSpace() {
         $sql = "SELECT sm_coordsplan FROM `SM_SPACE` 
@@ -217,8 +208,7 @@ class SPACE_Model {
     /**
 	* Saves a space into the database
 	*
-    * @return true when the operations is successfully or
-    * string with the error
+    * @return true when the operations is successfully or string with the error
     */
     public function addSpace() {
         $errors = $this->checkIsValidForAdd_Update();
@@ -243,8 +233,7 @@ class SPACE_Model {
     /**
 	* Saves a space coordinates into the database
 	*
-    * @return true when the operations is successfully or
-    * string with the error
+    * @return true when the operations is successfully or string with the error
     */
     public function addCoords() {
         $errors = $this->checkCoords();
@@ -265,11 +254,9 @@ class SPACE_Model {
     /**
 	* Updates a spaces values in the database
     *
-    * @param string $idSpaceOriginal The space identifier original because
-    * it's possible modify its identifier
+    * @param string $idSpaceOriginal The space identifier original because it's possible modify its identifier
     * 
-	* @return true when the operations is successfully or
-    * string with the error
+	* @return true when the operations is successfully or string with the error
 	*/
     public function updateSpace($idSpaceOriginal) {
 
@@ -294,11 +281,9 @@ class SPACE_Model {
     }
 
     /**
-    * Deletes a space to the database given a building's identifier,
-    * building's floor identifier and the space's identifier
+    * Deletes a space to the database given a building's identifier, building's floor identifier and the space's identifier
     *
-	* @return true when the operations is successfully or
-    * string with the error
+	* @return true when the operations is successfully or string with the error
 	*/
     public function deleteSpace() {
         $errors = $this->checkIsValidForDelete();
@@ -318,8 +303,7 @@ class SPACE_Model {
     /**
 	* Check if the space exists in database
     *
-    * @return boolean true when the space is in database and false
-    * when it isn't in database
+    * @return boolean true when the space is in database and false when it isn't in database
 	*/
     public function existsSpace() {
         $sql = "SELECT * FROM `SM_SPACE` 
@@ -334,11 +318,9 @@ class SPACE_Model {
     }
 
     /**
-	* Check if it's possible change the space's identifier checking 
-    * if the new identifier already exists in database
+	* Check if it's possible change the space's identifier checking if the new identifier already exists in database
     *
-    * @return false when the new space's identifier doesn't exists in database  
-    * and string with errors when it exists in database
+    * @return false when the new space's identifier doesn't exists in database and string with errors when it exists in database
 	*/
     public function existsSpaceForEdit($idSpaceOriginal) {
         $sql = "SELECT sm_idSpace 
@@ -386,11 +368,9 @@ class SPACE_Model {
 
 
     /**
-	* Checks if the current space instance is valid
-	* for being added or modified in the database
+	* Checks if the current space instance is valid for being added or modified in the database
 	*
-    * @return false when the space values are valids or
-    * string with the error when some value is wrong
+    * @return false when the space values are valids or string with the error when some value is wrong
 	*/
     public function checkIsValidForAdd_Update() {
         $errors = false;
@@ -444,11 +424,9 @@ class SPACE_Model {
 
 
     /**
-	* Checks if the current space's coordinates are valids
-	* for being added or modified in the database
+	* Checks if the current space's coordinates are valids for being added or modified in the database
 	*
-    * @return false when the space's coordinates are invalids or
-    * string with the error when some value is wrong
+    * @return false when the space's coordinates are invalids or string with the error when some value is wrong
 	*/
     public function checkCoords(){
         $errors = false;
@@ -464,11 +442,9 @@ class SPACE_Model {
 
 
     /**
-	* Checks if the current space instance is valid
-	* for being deleted to the database
+	* Checks if the current space instance is valid for being deleted to the database
 	*
-    * @return false when the space's identifier, building's floor identifier
-    * and building's identifier are valids or
+    * @return false when the space's identifier, building's floor identifier and building's identifier are valids or
     * string with the error when some value is wrong
 	*/
     public function checkIsValidForDelete() {

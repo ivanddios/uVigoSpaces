@@ -1,11 +1,19 @@
 <?php
 
+/**
+* File: LOGIN_Controller
+*
+* Script that controller to add new group, edit group, delete group, show group
+* and show all group
+*
+* @author ivanddios <ivanddios1994@gmail.com>
+*/
+
 require_once("../core/ViewManager.php");
 require_once("../model/USER_Model.php");
 require_once("../view/LOGIN_View.php");
 
 $view = new ViewManager();
-
 include '../view/locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
 
 

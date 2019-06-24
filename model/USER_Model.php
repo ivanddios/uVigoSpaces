@@ -12,8 +12,7 @@ require_once("../model/GROUP_Model.php");
 
 class USER_Model {
     
-    /**
-    * Attributes:  
+    /** 
     *   @var string $email The user's email.
     *   @var string $password The user's password.  
     *   @var string $name. The user's name. 
@@ -97,8 +96,7 @@ class USER_Model {
     }
 
     /**
-    * Gets name of the image of user's photo
-    * or the file temporal of the image.
+    * Gets image's name of user's photo or the file temporal of the image.
     *
     * @param $option @var string. Key to the associative array. 
     *
@@ -193,8 +191,7 @@ class USER_Model {
     /**
 	* Loads a user values from the database given its email
 	*
-	* @return Fetch array with a user's values or empty array
-	* if the action isn't found
+	* @return Fetch array with a user's values or empty array if the action isn't found
     */
     public function getUser() {
         $sql = "SELECT U.*, G.sm_nameGroup, G.sm_descripGroup 
@@ -212,8 +209,7 @@ class USER_Model {
     /**
 	* Saves a user into the database 
 	*
-    * @return true when the operations is successfully or
-    * string with the error
+    * @return true when the operations is successfully or string with the error
     */
     public function addUser() {
         $errors = $this->checkIsValidForAdd();
@@ -255,11 +251,9 @@ class USER_Model {
     /**
 	* Updates all user's values in the database (ADMIN)
     *
-    * @param string $emailOriginal The original email of the user
-    * because it's posible modify its email
+    * @param string $emailOriginal The original email of the user because it's posible modify its email
     *
-	* @return true when the operations is successfully or
-    * string with the error
+	* @return true when the operations is successfully or string with the error
 	*/
     public function updateUser($emailOriginal) {
        
@@ -301,8 +295,7 @@ class USER_Model {
     /**
 	* Updates a user's some values in the database (Any user)
     *
-	* @return true when the operations is successfully or
-    * string with the error
+	* @return true when the operations is successfully or string with the error
 	*/
     public function updateUserProfile() {
             $errors = $this->checkIsValidForEditProfile();
@@ -337,20 +330,18 @@ class USER_Model {
 
 
     /**
-	* Checks if it's possible change the user's email checking 
-    * if the new email already exists in database
+	* Checks if it's possible change the user's email checking if the new email already exists in database
     *
-    * @return false when the new space's identifier doesn't exists in database  
-    * and string with errors when it exists in database
+    * @return false when the new space's identifier doesn't exists in database and string with errors when it exists in database
 	*/
     public function existsUserForEdit($emailOriginal) {
         $sql = "SELECT email
                 FROM `USER` 
                 WHERE email NOT IN (
-                                        SELECT email 
-                                        FROM `USER` 
-                                        WHERE email='$emailOriginal'
-                                        )
+                                SELECT email 
+                                FROM `USER` 
+                                WHERE email='$emailOriginal'
+                                )
                 AND email = '$this->email'";
         if (!($resultado = $this->mysqli->query($sql))) {
             return 'Error in the query on the database';
@@ -372,11 +363,9 @@ class USER_Model {
     }
 
     /**
-    * Deletes a user's access to the system
-    * but keeps its values 
+    * Deletes a user's access to the system but keeps its values 
 	*
-	* @return true when the operations is successfully or
-    * string with the error
+	* @return true when the operations is successfully or string with the error
 	*/
     public function deleteUser() {
         $errors = $this->checkIsValidForDelete();
@@ -397,8 +386,7 @@ class USER_Model {
     /**
 	* Retrieves all users that match with user's instance values
 	*
-    * @return mixed Fetch array with users and its values or
-    * empty array if no user matches with the values
+    * @return mixed Fetch array with users and its values or empty array if no user matches with the values
 	*/
     public function searchUser() {
 
@@ -443,8 +431,7 @@ class USER_Model {
     /**
 	* Saves the user's group
 	*
-    * @return true when the operations is successfully or
-    * string with the error
+    * @return true when the operations is successfully or  string with the error
     */
     public function addRoleUser() {
         $sql = "INSERT INTO `SM_USER_GROUP` VALUES ('$this->email','$this->group')";
@@ -459,8 +446,7 @@ class USER_Model {
     /**
 	* Gets the user photo route on the server
 	*
-    * @return string with the photo route or NULL if 
-    * the photo route isn't found
+    * @return string with the photo route or NULL if the photo route isn't found
 	*/
     public function getLinkProfilePhoto($email) {
         $sql = "SELECT photo FROM `USER` WHERE email='$email'";
@@ -498,7 +484,7 @@ class USER_Model {
     }
 
     /**
-	* Deletes the photp directory in server
+	* Deletes the photo directory in server
     *
     * @return void
 	*/
@@ -517,8 +503,7 @@ class USER_Model {
     /**
 	* Retrieve all users that have a group of permissions
 	*
-    * @return mixed Fetch array with users and its values or
-    * empty array if no user 
+    * @return mixed Fetch array with users and its values or empty array if no user 
 	*/
     public function getUsersForGroup() {
         $sql = "SELECT U.* FROM `USER` AS U, `SM_USER` AS SMU, `SM_USER_GROUP`AS SMUG, `SM_GROUP` AS SMG 
@@ -540,8 +525,7 @@ class USER_Model {
     /**
 	* Checks if a user exists in database (Table USER ->Common for others systems)
     *
-    * @return boolean true when the user is in database and false
-    * when it isn't in database 
+    * @return boolean true when the user is in database and false when it isn't in database 
 	*/
     public function existsUser() {
         $sql = "SELECT * FROM `USER` WHERE email = '$this->email'";
@@ -556,8 +540,7 @@ class USER_Model {
     /**
 	* Checks if a user exists in database (Table SM_USER ->Specific for this system)
     *
-    * @return boolean true when the user is in database and false
-    * when it isn't in database 
+    * @return boolean true when the user is in database and false when it isn't in database 
 	*/
     public function existsUserInSM() {
         $sql = "SELECT * FROM `SM_USER` WHERE sm_email = '$this->email'";
@@ -572,8 +555,7 @@ class USER_Model {
     /**
 	* Checks if a user's dni already is in database
     *
-    * @return boolean true when the user's dni is in database and false
-    * when it isn't in database 
+    * @return boolean true when the user's dni is in database and false when it isn't in database 
 	*/
     public function existsDNI() {
         $sqlDNI = "SELECT * FROM `USER` WHERE dni = '$this->dni'";
@@ -594,8 +576,7 @@ class USER_Model {
     /**
 	* Checks if a user's dni's format is valid
     *
-    * @return boolean true when the user's dni is valid and false
-    * when it isn't valid 
+    * @return boolean true when the user's dni is valid and false when it isn't valid 
 	*/
     public function validateletterDNI($dni) {
         $letterDNI = substr($dni, -1, 1);
@@ -616,8 +597,7 @@ class USER_Model {
     /**
 	* Checks if a user's birthdate's format is valid
     *
-    * @return boolean true when the user's birthdate is valid and false
-    * when it isn't valid 
+    * @return boolean true when the user's birthdate is valid and false  when it isn't valid 
 	*/
     public function validateDate($date){
         $day = (int) substr($date, 0, 2);
@@ -636,11 +616,9 @@ class USER_Model {
 
 
     /**
-	* Checks if the current user's instance is valid
-	* for being logged in the system
+	* Checks if the current user's instance is valid for being logged in the system
 	*
-    * @return false when the user's values are valids or
-    * string with the error when some value is wrong
+    * @return false when the user's values are valids or string with the error when some value is wrong
 	*/
     public function checkLogin(){
         $errors = false;
@@ -666,11 +644,9 @@ class USER_Model {
     }
 
     /**
-	* Checks if the current user's instance is valid
-	* for being added in the database
+	* Checks if the current user's instance is valid for being added in the database
 	*
-    * @return false when the user's values are valids or
-    * string with the error when some value is wrong
+    * @return false when the user's values are valids or string with the error when some value is wrong
 	*/
     public function checkIsValidForAdd() {
         $errors = false;
@@ -724,8 +700,6 @@ class USER_Model {
         }else if(!$group->existsGroup()){
             $errors = "The role doesn't exist";
         }else if($this->getPhoto('name') !== null && $this->getPhoto('name') !== ''){
-            var_dump($this->getPhoto('name'));
-            exit();
             $extension = explode('.', $this->getPhoto('name'));
             if($extension[1] !== 'jpg' || $extension[1] !== 'jpeg' || $extension[1] !== 'png'){
                 $errors = "The image extension is incorrect";
@@ -736,14 +710,11 @@ class USER_Model {
 
 
     /**
-	* Checks if the current user's instance is valid
-	* for being modified in the database
+	* Checks if the current user's instance is valid for being modified in the database
     *
-    * @param string $emailOriginal The original email of user before
-    * the operation
+    * @param string $emailOriginal The original email of user before the operation
     *
-    * @return false when the user's values are valids or
-    * string with the error when some value is wrong
+    * @return false when the user's values are valids or string with the error when some value is wrong
 	*/
     public function checkIsValidForEdit($emailOriginal) {
         $errors = false;
@@ -805,11 +776,9 @@ class USER_Model {
 
 
     /**
-	* Checks if the current user's instance is valid
-	* for being modified in the database
+	* Checks if the current user's instance is valid for being modified in the database
     *
-    * @return false when the user's values are valids or
-    * string with the error when some value is wrong
+    * @return false when the user's values are valids or string with the error when some value is wrong
 	*/
     public function checkIsValidForEditProfile() {
 
@@ -865,11 +834,9 @@ class USER_Model {
 
     
     /**
-	* Checks if the current user's instance is valid
-	* for being deleted to database
+	* Checks if the current user's instance is valid for being deleted to database
     *
-    * @return false when the user's values are valids or
-    * string with the error when some value is wrong
+    * @return false when the user's values are valids or string with the error when some value is wrong
 	*/
     public function checkIsValidForDelete() {
 

@@ -1,5 +1,16 @@
 <?php
 
+
+/**
+* File: USER_Controller
+*
+* Script that controller to add new user, edit user, delete user, show user
+* show all user and edit profile of a user in session
+*
+* @author ivanddios <ivanddios1994@gmail.com>
+*/
+
+
 require_once("../core/ViewManager.php");
 require_once("../model/USER_Model.php");
 require_once("../view/USER_SHOWALL_View.php");
@@ -8,12 +19,15 @@ require_once("../view/USER_EDIT_View.php");
 require_once("../view/USER_EDIT_PROFILE_View.php");
 require_once("../view/USER_SHOW_View.php");
 require_once("../view/USER_SEARCH_View.php");
-
 $view = new ViewManager();
 $function = "USER";
-
 include '../view/locate/Strings_' . $_SESSION['LANGUAGE'] . '.php';
 
+/**
+* Gets values from the forms
+*
+* @return User with the form values
+*/
 function get_data_form() {
 
     $email = $_POST['email'];
@@ -30,6 +44,11 @@ function get_data_form() {
     return $user;
 }
 
+/**
+* Gets values from the search's forms
+*
+* @return User with the form values
+*/
 function get_data_form_search() {
 
     $email = $_POST['email'];
@@ -49,23 +68,44 @@ if (!isset($_GET['action'])){
 	$_GET['action'] = '';
 }
 
+
+/**
+ * Evaluates the 'action' parameter passed for URL
+ * For each action, the controller checks if the user is logged and if the user has the permissions necessary.
+ * 
+ * The controller calls a view (with floor data or no, depending the action).
+ * 
+ * The controller gets the forms' data of the views and call the User model to make the actions against the database.
+ */
 Switch ($_GET['action']){
 
 	case 'Add':
 
+        //@if Checks if the user is logged
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Add users requires login."]);
             $view->redirect("INDEX_Controller.php");
         }
 
+        //@if Checks if the user can add a new users
         if(!$view->checkRol('ADD', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("USER_Controller.php");
         }
 
+
+       /**
+        * @if Checks if exists $_POST gets the form's data, instances a new object User, 
+        * checks if the data are valids and adds the space to database
+        */
         if (isset($_POST["submit"])) { 
             $userAdd = get_data_form();
             $answerAdd = $userAdd->addUser();
+            /**
+            * @if The controller notices the user if the operation was successfully
+            * 
+            * @else Returns the error message
+            */
             if($answerAdd === true){
                 $flashMessageSuccess = sprintf($strings["User \"%s\" successfully added."], $userAdd->getEmail());
                 $view->setFlashSuccess($flashMessageSuccess);
@@ -84,11 +124,13 @@ Switch ($_GET['action']){
 
     case 'Edit':
 
+        //@if Checks if the user is logged
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Edit user requires login."]);
             $view->redirect("BUILDING_Controller.php");
         }
 
+        //@if Checks if the user can edit a new users
 		if(!$view->checkRol('EDIT', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("USER_Controller.php");
@@ -96,9 +138,21 @@ Switch ($_GET['action']){
 
         $email = $_GET['user'];
 
+        /**
+        * @if Checks if exists $_POST gets the form's data, instances a new object User, 
+        * checks if the data are valids and modifies the user in database.
+        *
+        * @else Otherwise, checks if exists anything user with the email passed by GET
+        * gets the users values and shows it in USER_EDIT_View.
+        */
         if (isset($_POST["submit"])) { 
             $userEdit = get_data_form();
             $answerEdit = $userEdit->updateUser($email);
+            /**
+            * @if The controller notices the user if the operation was successfully
+            * 
+            * @else Returns the error message
+            */
             if($answerEdit === true){
                 $_SESSION['LOGIN'] = $userEdit->getEmail();
                 $_SESSION['PHOTO'] = $userEdit->getLinkProfilePhoto($userEdit->getEmail());
@@ -111,10 +165,15 @@ Switch ($_GET['action']){
             }
         } else{
             $user = new USER_Model($email);
-            $userValues = $user->getUser();
-            $group = new GROUP_Model();
-            $groupsValues = $group->getAllGroups();
-            new USER_EDIT($userValues, $groupsValues);
+            if($user->existsUser()){
+                $userValues = $user->getUser();
+                $group = new GROUP_Model();
+                $groupsValues = $group->getAllGroups();
+                new USER_EDIT($userValues, $groupsValues);
+            }else{
+                $view->setFlashDanger($strings["There isn't a user with that email"]);
+                $view->redirect("USER_Controller.php");
+            }
         }
     break;
 
@@ -122,11 +181,13 @@ Switch ($_GET['action']){
 
     case 'EditProfile':
 
+        //@if Checks if the user is logged
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Edit user requires login."]);
             $view->redirect("BUILDING_Controller.php");
         }
 
+        //@if Checks if the user is authenticated is the same that requires modifies his profile
         if($_SESSION['LOGIN'] !== $_GET['user']){
             $view->setFlashDanger($strings["You can't modify the data of another user"]);
             $view->redirect("BUILDING_Controller.php");
@@ -134,6 +195,13 @@ Switch ($_GET['action']){
 
         $email = $_GET['user'];
 
+        /**
+        * @if Checks if exists $_POST gets the form's data, instances a new object User, 
+        * checks if the data are valids and modifies the user values in database.
+        *
+        * @else Otherwise, checks if exists anything user with the email passed by GET
+        * gets the user values and shows it in USER_EDIT_View.
+        */
         if (isset($_POST["submit"])) { 
             $userEdit = get_data_form();
             $answerEdit = $userEdit->updateUserProfile();
@@ -148,21 +216,28 @@ Switch ($_GET['action']){
             }
         } else{
             $user = new USER_Model($email);
-            $userValues = $user->getUser();
-            $group = new GROUP_Model();
-            $groupsValues = $group->getAllGroups();
-            new USER_EDIT_PROFILE($userValues, $groupsValues);
+            if($user->existsUser()){
+                $userValues = $user->getUser();
+                $group = new GROUP_Model();
+                $groupsValues = $group->getAllGroups();
+                new USER_EDIT_PROFILE($userValues, $groupsValues);
+            }else{
+                $view->setFlashDanger($strings["There isn't a user with that email"]);
+                $view->redirect("USER_Controller.php");
+            }
         }
     break;
 
 
     case  'Delete':
 
+        //@if Checks if the user is logged
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Delete users requires login."]);
             $view->redirect("BUILDING_Controller.php");
         }
 
+         //@if Checks if the user can delete users
         if(!$view->checkRol('DELETE', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("USER_Controller.php");
@@ -191,37 +266,49 @@ Switch ($_GET['action']){
 
     case  'Show':
 
+        //@if Checks if the user is logged
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Show floors requires login."]);
             $view->redirect("BUILDING_Controller.php");
         }
 
+         //@if Checks if the user can see a user
         if(!$view->checkRol('SHOW', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("USER_Controller.php");
         }
 
+         //@if Checks if exists a parameter user
         if (!isset($_GET['user'])){
             $view->setFlashDanger($strings["Email is mandatory"]);
             $view->redirect("USER_Controller.php");
         }
+
         $email = $_GET['user'];
-
+         /**
+        * @if Checks if exists anything user with the email passed by GET
+        * gets the user values and shows it in USER_SHOW_View.
+        */
         $user = new USER_Model($email);
-        $values = $user->getUser();
-        new USER_SHOW($values);
-
+        if($user->existsUser()){
+            $values = $user->getUser();
+            new USER_SHOW($values);
+        }else{
+            $view->setFlashDanger($strings["There isn't a user with that email"]);
+            $view->redirect("USER_Controller.php");
+        }
     break;
 
 
     case 'Search':
 
-
+        //@if Checks if the user is logged
         if (!isset($_SESSION['LOGIN'])){
             $view->setFlashDanger($strings["Not in session. Search users requires login."]);
             $view->redirect("BUILDING_Controller.php");
         }
 
+        //@if Checks if the user can search users
         if(!$view->checkRol('SEARCH', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("USER_Controller.php");
@@ -242,14 +329,22 @@ Switch ($_GET['action']){
 
     default:
     
+        //@if Checks if the user is logged
+        if (!isset($_SESSION['LOGIN'])){
+            $view->setFlashDanger($strings["Not in session. Search users requires login."]);
+            $view->redirect("BUILDING_Controller.php");
+        }
+
+        //@if Checks if the user can see all system's users
         if(!$view->checkRol('SHOW ALL', $function)){
             $view->setFlashDanger($strings["You don't have the necessary permits"]);
             $view->redirect("BUILDING_Controller.php");
-		}else{
-			$user = new USER_Model();
-			$users = $user->getAllUsers();
-			new USER_SHOWALL($users);
         }
+
+        //Gets all users and shows in USER_SHOWALL
+		$user = new USER_Model();
+		$users = $user->getAllUsers();
+		new USER_SHOWALL($users);
         
     break;
 						

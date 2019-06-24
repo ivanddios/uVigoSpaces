@@ -12,7 +12,6 @@ require_once("../model/BUILDING_Model.php");
 class FLOOR_Model {
 
     /**
-    * Attributes:  
     *   @var int  $idBuilding The building's identifier. 
     *   @var int $idFloor The building's floor identifier.  
     *   @var string $nameFloor The building's floor name. 
@@ -81,13 +80,11 @@ class FLOOR_Model {
     }
 
     /**
-    * Gets name of the image of building's floor plan
-    * or the file temporal of the image.
+    * Gets name of the image of building's floor plane or the file temporal of the image.
     *
     * @param $option @var string. Key to the associative array. 
     *
-    * @return string When $option is 'name', return the name of image file,
-    * when it's 'tmp_name' return the temporal image file.
+    * @return string When $option is 'name', return the name of image file, when it's 'tmp_name' return the temporal image file.
 	*/
     public function getplanFloor($option){
         if($option !== null && isset($this->planFloor[$option])){
@@ -122,8 +119,7 @@ class FLOOR_Model {
     * Gets a building's floor values from the database given the building's floor identifier 
     * and the building's identifier where the floor is located
 	*
-	* @return Fetch array with a floor values or empty array
-	* if the floor isn't found in the building
+	* @return Fetch array with a floor values or empty array if the floor isn't found in the building
 	*/
     public function getFloor() {
         $sql = "SELECT * FROM `SM_FLOOR` WHERE sm_idBuilding = '$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
@@ -138,8 +134,7 @@ class FLOOR_Model {
     /**
 	* Saves a floor into the database
 	*
-    * @return true when the operations is successfully or
-    * string with the error
+    * @return true when the operations is successfully or string with the error
     */
     public function addFloor() {
 
@@ -168,8 +163,7 @@ class FLOOR_Model {
     * Note: If not exists a plan, not modified this field in database
     * Otherwise, the old plan directory is deleted and added with the new plan image.
     *
-	* @return true when the operations is successfully or
-    * string with the error
+	* @return true when the operations is successfully or string with the error
 	*/
     public function updateFloor() {
         $errors = $this->checkIsValidForAdd_Update();
@@ -200,10 +194,9 @@ class FLOOR_Model {
     * Deletes a building's floor to the database given building's floor identifier
     * and a building's identifier where the floor is located
     *
-    *Note: The directory that contain the plan is deleted too.
+    * Note: The directory that contain the plan is deleted too.
     *
-	* @return true when the operations is successfully or
-    * string with the error
+	* @return true when the operations is successfully or string with the error
 	*/
     public function deleteFloor() {
         $errors = $this->checkIsValidForDelete();
@@ -224,8 +217,7 @@ class FLOOR_Model {
     /**
 	* Gets a floor's name given its identifier and the building where it is located.
 	*
-    * @return string with the building's name or NULL if 
-    * the building isn't found
+    * @return string with the building's name or NULL if the building isn't found
 	*/
     public function getFloorName() {
         $sql = "SELECT sm_nameFloor FROM `SM_FLOOR` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
@@ -236,8 +228,7 @@ class FLOOR_Model {
     /**
 	* Gets the building's floor plane route on the server
 	*
-    * @return string with the plane route or NULL if 
-    * the building's floor plane route isn't found
+    * @return string with the plane route or NULL if the building's floor plane route isn't found
 	*/
     public function getLinkplan() {
         $sql = "SELECT sm_planFloor FROM `SM_FLOOR` WHERE sm_idBuilding='$this->idBuilding' AND sm_idFloor = '$this->idFloor'";
@@ -326,11 +317,9 @@ class FLOOR_Model {
     }
 
     /**
-	* Checks if the current building's floor's instance is valid
-	* for being added or modified in the database
+	* Checks if the current building's floor's instance is valid for being added or modified in the database
 	*
-    * @return false when the floor's values are valids or
-    * string with the error when some value is wrong
+    * @return false when the floor's values are valids or string with the error when some value is wrong
 	*/
     public function checkIsValidForAdd_Update() {
         $errors = false;
@@ -375,12 +364,10 @@ class FLOOR_Model {
     
 
     /**
-	* Checks if the current building's floor's instance is valid
-	* for being deleted for the database
+	* Checks if the current building's floor's instance is valid for being deleted for the database
 	*
-    * @return false when the floor's values are valids and 
-    * the building's identifier is correct. Otherwise, 
-    * the function return a string with the error.
+    * @return false when the floor's values are valids and  the building's identifier is correct. 
+    * Otherwise, the function returns a string with the error.
 	*/
     public function checkIsValidForDelete() {
         $errors = false;

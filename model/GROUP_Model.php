@@ -12,8 +12,7 @@ require_once("../model/FUNCTIONALITY_Model.php");
 
 class GROUP_Model {
 
-    /**
-    * Attributes:  
+    /** 
 	*   @var int $idGroup The group identifier. 
     *   @var string $nameGroup The group name.
     *   @var string $descripGroup The group description. 
@@ -72,8 +71,7 @@ class GROUP_Model {
     /**
 	* Loads a group values from the database given its identifier
 	*
-	* @return Fetch array with a group values or empty array
-	* if the group isn't found
+	* @return Fetch array with a group values or empty array if the group isn't found
 	*/
     public function getGroup() {
         $sql = "SELECT * FROM `SM_GROUP` WHERE sm_idGroup = '$this->idGroup'";
@@ -103,8 +101,7 @@ class GROUP_Model {
     /**
 	* Saves a group into the database
 	*
-    * @return true when the operations is successfully or
-    * string with the error
+    * @return true when the operations is successfully or string with the error
     */
     public function addGroup($permissions) {
 
@@ -167,8 +164,7 @@ class GROUP_Model {
     /**
 	* Deletes a group to the database
 	*
-	* @return true when the operations is successfully or
-    * string with the error
+	* @return true when the operations is successfully or string with the error
 	*/
     public function deleteGroup() {
         $errors = $this->checkIsValidForDelete();
@@ -188,8 +184,7 @@ class GROUP_Model {
     /**
 	* Retrieves a group name given its identifier
 	*
-    * @return string with the group name or NULL if 
-    * the group isn't found
+    * @return string with the group name or NULL if the group isn't found
 	*/
     public function findNameGroup() {
         $sql = "SELECT sm_nameGroup FROM `SM_GROUP` WHERE sm_idGroup = '$this->idGroup'";
@@ -206,8 +201,7 @@ class GROUP_Model {
     *
     * This function is used in unit_test
     *
-    * @return int with the group identifier or NULL if 
-    * the action isn't found
+    * @return int with the group identifier or NULL if the action isn't found
 	*/
     public static function findLastGroupID() {
         $mysqli = Connection::connectionBD();
@@ -223,8 +217,7 @@ class GROUP_Model {
     /**
 	* Saves a group with its functionalities and actions associated
 	*
-    * @return true when the operations is successfully or
-    * string with the error
+    * @return true when the operations is successfully or string with the error
     */
     public function addPermission($idGroup, $permissions) {
         foreach($permissions as $permission){
@@ -241,8 +234,7 @@ class GROUP_Model {
     /**
 	* Gets functionalities and actions associated with the group
 	*
-    * @return Fetch array with a group values with functionalities and actions
-    * or empty array  if the group isn't found
+    * @return Fetch array with a group values with functionalities and actions or empty array  if the group isn't found
 	*/
     public function getPermissionForGroup() {
         $sql = "SELECT * FROM `SM_PERMISSION` WHERE sm_idGroup = '$this->idGroup'";
@@ -286,8 +278,7 @@ class GROUP_Model {
     /**
 	* Checks if a group identifier is in database
     *
-    * @return true when the group is in database and false
-    * when its isn't in database
+    * @return true when the group is in database and false when its isn't in database
 	*/
     public function existsGroup() {
         $sql = "SELECT * FROM `SM_GROUP` WHERE sm_idGroup = '$this->idGroup'";
@@ -300,11 +291,9 @@ class GROUP_Model {
     }
 
     /**
-	* Checks if the current group instance is valid
-	* for being added in the database
+	* Checks if the current group instance is valid for being added in the database
 	*
-    * @return false when the group values are valids or
-    * string with the error when some value is wrong
+    * @return false when the group values are valids or string with the error when some value is wrong
 	*/
     public function checkIsValidForAdd($permissions) {
 
@@ -339,11 +328,9 @@ class GROUP_Model {
 
 
     /**
-	* Checks if the current group instance is valid
-	* for being modified in the database
+	* Checks if the current group instance is valid for being modified in the database
 	*
-    * @return false when the group values are valids or
-    * string when some value is wrong
+    * @return false when the group values are valids or string when some value is wrong
 	*/
     public function checkIsValidForUpdate($permissions) {
         $errors = false;
@@ -384,8 +371,7 @@ class GROUP_Model {
 	* Checks if the current group instance is valid
 	* for being deleted to the database
 	*
-    * @return false when the group identifier is valid or
-    * string when some value is wrong
+    * @return false when the group identifier is valid or string when some value is wrong
 	*/
     public function checkIsValidForDelete() {
         $errors = false;

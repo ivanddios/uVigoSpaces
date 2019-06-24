@@ -13,8 +13,7 @@ require_once("../model/GROUP_Model.php");
 
 class FUNCTIONALITY_Model {
 
-    /**
-    * Attributes:  
+    /** 
     *   @var int $idFunction The functionality identifier. 
     *   @var string $nameFunction The functionality name.  
     *   @var string $descripFunction The functionality description. 
@@ -87,8 +86,7 @@ class FUNCTIONALITY_Model {
     /**
     * Gets a functionality values from the database given the functionality identifier 
 	*
-	* @return Fetch array with a functionality values or empty array
-	* if the functionality isn't found
+	* @return Fetch array with a functionality values or empty array if the functionality isn't found
 	*/
     public function getFunction() {
         $sql = "SELECT * FROM `SM_FUNCTIONALITY` WHERE sm_idFunction =  '$this->idFunction'";
@@ -157,8 +155,7 @@ class FUNCTIONALITY_Model {
     * Adds the new assciations -> (Step 4)
     * And adds again the permissions over the roles (step 2) -> (Step 5)
     *
-	* @return true when the operations is successfully or
-    * string with the error
+	* @return true when the operations is successfully or string with the error
 	*/
     public function updateFunction() {
 
@@ -228,8 +225,7 @@ class FUNCTIONALITY_Model {
     *
     * This function is used in unit_test
     *
-    * @return int with the function's identifier or NULL if 
-    * the functionality isn't found
+    * @return int with the function's identifier or NULL if the functionality isn't found
 	*/
     public static function findLastFunctionID() {
         $mysqli = Connection::connectionBD();
@@ -245,8 +241,7 @@ class FUNCTIONALITY_Model {
     /**
 	* Checks if a function exists is in database
     *
-    * @return boolean true when the function is in database and false
-    * when it isn't in database
+    * @return boolean true when the function is in database and false when it isn't in database
 	*/
     public function existsFunction() {
         $sql = "SELECT * FROM `SM_FUNCTIONALITY` WHERE sm_idFunction = '$this->idFunction'";
@@ -261,8 +256,7 @@ class FUNCTIONALITY_Model {
     /**
 	* Checks if for a function exists the action 
     *
-    * @return boolean true when the action exists for functionality and false
-    * when it not exists
+    * @return boolean true when the action exists for functionality and false when it not exists
 	*/
     public function existsFunctionAction($idFunction, $idAction) {
         $sql = "SELECT * FROM `SM_FUNCTIONALITY_ACTION` WHERE sm_idFunction = '$idFunction' AND sm_idAction = '$idAction'";
@@ -276,11 +270,9 @@ class FUNCTIONALITY_Model {
 
 
     /**
-	* Checks if the current function's instance is valid 
-	* and if the actions exists for being added in the database
+	* Checks if the current function's instance is valid  and if the actions exists for being added in the database
 	*
-    * @return false when the function's values are valids or
-    * string with the error when some value is wrong
+    * @return false when the function's values are valids or string with the error when some value is wrong
 	*/
     public function checkIsValidForAdd() {
         $errors = false;
@@ -312,11 +304,9 @@ class FUNCTIONALITY_Model {
     }
 
     /**
-	* Checks if the current functionality instance is valid 
-	* and if the actions exists for being modified in the database
+	* Checks if the current functionality instance is valid and if the actions exists for being modified in the database
 	*
-    * @return false when the functionalitiy values are valids or
-    * string with the error when some value is wrong
+    * @return false when the functionalitiy values are valids or string with the error when some value is wrong
 	*/
     public function checkIsValidForUpdate() {
         $errors = false;
@@ -354,11 +344,9 @@ class FUNCTIONALITY_Model {
     }
 
     /**
-	* Checks if the current functionality instance is valid 
-	* for being deleted to the database
+	* Checks if the current functionality instance is valid for being deleted to the database
 	*
-    * @return false when the identifier of functionalitiy is valid or
-    * string with the error when some value is wrong
+    * @return false when the identifier of functionalitiy is valid or string with the error when some value is wrong
 	*/
     public function checkIsValidForDelete() {
         $errors = false;

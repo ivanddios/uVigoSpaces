@@ -1,4 +1,11 @@
 <?php
+/**
+* File: INDEX_Controller
+*
+* Script that present the welcome page
+*
+* @author ivanddios <ivanddios1994@gmail.com>
+*/
 
 require_once("../core/ViewManager.php");
 require_once("../view/INDEX_View.php");

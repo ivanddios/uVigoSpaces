@@ -11,8 +11,7 @@ require_once("../core/ConnectionBD.php");
 
 class BUILDING_Model {
 
-    /**
-    * Attributes:  
+    /**  
 	*   @var int $idBuilding The building identifier. 
     *   @var string $nameBuilding. The building name. 
     *   @var string $addressBuilding. The building postal address. 
@@ -83,8 +82,7 @@ class BUILDING_Model {
     /**
 	* Loads a building values from the database given its identifier
 	*
-	* @return Fetch array with a building values or empty array
-	* if the building isn't found
+	* @return Fetch array with a building values or empty array if the building isn't found
 	*/
     public function getBuilding() {
         $sql = "SELECT * FROM `SM_BUILDING` WHERE sm_idBuilding = '$this->idBuilding'";
@@ -99,8 +97,7 @@ class BUILDING_Model {
     /**
 	* Saves a building into the database
 	*
-    * @return true when the operations is successfully or
-    * string with the error
+    * @return true when the operations is successfully or string with the error
     */
     public function addBuilding() {
         $errors = $this->checkIsValidForAdd_Update();
@@ -123,8 +120,7 @@ class BUILDING_Model {
     /**
 	* Updates a building in the database
 	*
-	* @return true when the operations is successfully or
-    * string with the error
+	* @return true when the operations is successfully or string with the error
 	*/
     public function updateBuilding() {
         $errors = $this->checkIsValidForAdd_Update();
@@ -147,8 +143,7 @@ class BUILDING_Model {
     /**
 	* Deletes a building to the database
 	*
-	* @return true when the operations is successfully or
-    * string with the error
+	* @return true when the operations is successfully or string with the error
 	*/
     public function deleteBuilding() {
         $errors = $this->checkIsValidForDelete();
@@ -167,8 +162,7 @@ class BUILDING_Model {
     /**
 	* Gets a building's name given its identifier
 	*
-    * @return string with the building's name or NULL if 
-    * the building isn't found
+    * @return string with the building's name or NULL if the building isn't found
 	*/
     public function getBuildingName() {
         $sql = "SELECT sm_nameBuilding FROM `SM_BUILDING` WHERE sm_idBuilding='$this->idBuilding'";
@@ -180,8 +174,7 @@ class BUILDING_Model {
     /**
 	* Checks if a building's identifier exists in database
     *
-    * @return boolean true when the building exists in database and false
-    * when its isn't in database
+    * @return boolean true when the building exists in database and false when its isn't in database
 	*/
     public function existsBuilding() {
         $sql = "SELECT * FROM `SM_BUILDING` WHERE sm_idBuilding = '$this->idBuilding'";
@@ -195,11 +188,9 @@ class BUILDING_Model {
 
 
     /**
-	* Checks if the current building's instance is valid
-	* for being added or modified in the database
+	* Checks if the current building's instance is valid for being added or modified in the database
 	*
-    * @return false when the building's values are valids or
-    * string with the error when some value is wrong
+    * @return false when the building's values are valids or string with the error when some value is wrong
 	*/
     public function checkIsValidForAdd_Update() {
         $errors = false;
@@ -232,13 +223,11 @@ class BUILDING_Model {
     }
 
     /**
-	* Checks if the current building's instance is valid
-	* for being deleted to the database
+	* Checks if the current building's instance is valid for being deleted to the database
 	*
-    * @return false when the building identifier is valid and 
-    * the building exists in database. In case of that the building identifier
-    * is invalid or the building doesn't exist in database, return a message with 
-    * the error
+    * @return false when the building identifier is valid and the building exists in database. 
+    * In case of that the building identifier is invalid or the building doesn't exist in database,
+    * returns a message with the error
     */
     public function checkIsValidForDelete() {
         $errors = false;
