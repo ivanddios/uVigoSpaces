@@ -20,7 +20,7 @@ $tests['SM_BUILDING_ADD_TEST2']=(['Functionality' => "SM_BUILDING_ADD",
                 'Expected' => "Building identifier can't be less than 5 characters",
                 'Result' => 'Not executed']);
 
-$building = new BUILDING_Model('12345');
+$building = new BUILDING_Model('123');
 $addAnswer = $building->addBuilding();
 $tests['SM_BUILDING_ADD_TEST2']["Result"] = $addAnswer;
 
