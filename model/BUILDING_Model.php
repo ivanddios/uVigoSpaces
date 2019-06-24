@@ -15,13 +15,15 @@ class BUILDING_Model {
 	*   @var int $idBuilding The building identifier. 
     *   @var string $nameBuilding. The building name. 
     *   @var string $addressBuilding. The building postal address. 
-    *   @var int $phoneBuilding. The building contact phone. 
+    *   @var int $phoneBuilding. The building contact phone.
+    *   @var string $directoryBuilding. The building directory in server. 
     *   @var mysqli $mysqli. Connection with the database. 
     */
 	private $idBuilding;
 	private $nameBuilding;
 	private $addressBuilding;
-	private $phoneBuilding;
+    private $phoneBuilding;
+    private $directoryBuilding;
 	private $mysqli;
 
     /**
@@ -38,6 +40,7 @@ class BUILDING_Model {
         $this->nameBuilding = $nameBuilding;
         $this->addressBuilding = $addressBuilding;
         $this->phoneBuilding = $phoneBuilding;
+        $this->directoryBuilding = '../document/Buildings/'.$this->getIdBuilding().'/';
         $this->mysqli = Connection::connectionBD();
     }
 
@@ -148,6 +151,7 @@ class BUILDING_Model {
     public function deleteBuilding() {
         $errors = $this->checkIsValidForDelete();
         if($errors === false){
+            $this->deleteDirPhoto($this->directoryBuilding);
             $sql = "DELETE FROM `SM_BUILDING` WHERE sm_idBuilding ='$this->idBuilding'";
             if (!($resultado = $this->mysqli->query($sql))) {
                 return 'Error in the query on the database';
@@ -170,6 +174,25 @@ class BUILDING_Model {
         return $result['sm_nameBuilding'];
     }
 
+
+    /**
+	* Deletes the building directory recursively 
+    *
+    * @return void
+	*/
+    public function deleteDirPhoto($path) {
+        $files = glob($path . '/*');
+      
+        foreach($files as $file){
+            if(is_dir($file)){
+                $this->deleteDirPhoto($file);
+            } else {
+                unlink($file);
+            }
+        }
+        return rmdir($path);
+    }
+        
 
     /**
 	* Checks if a building's identifier exists in database

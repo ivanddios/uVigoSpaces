@@ -35,11 +35,10 @@ function get_data_form() {
     $idBuilding = $_POST['idBuilding'];
     $idFloor = $_POST['idFloor'];
     $idSpace = $_POST['idSpace'];
-    $categorySpace = $_POST['categorySpace'];
     $nameSpace = $_POST['nameSpace'];
     $surfaceSpace = $_POST['surfaceSpace'];
     $numInventorySpace = $_POST['numberInventorySpace'];
-    $space = new SPACE_Model($idBuilding, $idFloor, $idSpace, $categorySpace, $nameSpace, $surfaceSpace, $numInventorySpace);
+    $space = new SPACE_Model($idBuilding, $idFloor, $idSpace, $nameSpace, $surfaceSpace, $numInventorySpace);
     return $space;
 }
 
