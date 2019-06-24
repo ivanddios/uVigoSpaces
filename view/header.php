@@ -30,9 +30,9 @@
         </head>
 
 
-        <?php if(get_class($this) === 'SPACE_SHOW_PLAN'){ ?>
+        <?php if(get_class($this) === 'SPACE_SHOWUBICATION'){ ?>
             <body onload = "viewSpace('<?= $this->space['sm_coordsplan'] ?>','<?= $this->plan ?>')">
-        <?php } else if(get_class($this) === 'SPACE_SELECT_PLAN'){ ?>
+        <?php } else if(get_class($this) === 'SPACE_SELECTUBICATION'){ ?>
             <body onload = "selectSpace('<?= $this->space['sm_coordsplan'] ?>','<?= $this->plan ?>')"> 
         <?php } else { ?>
              <body>

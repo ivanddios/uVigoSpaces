@@ -1,6 +1,6 @@
 <?php
 
-class SPACE_SHOW_PLAN{
+class SPACE_SHOWUBICATION{
 
 	private $space;
 	private $plan;

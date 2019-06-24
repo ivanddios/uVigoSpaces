@@ -260,7 +260,7 @@ class GROUP_Model {
     }
 
     /**
-	* Gets groups with a functionality and action associated
+	* Gets groups with its actions associated
 	*
     * @return Fetch array with a group and actions values
 	*/

@@ -46,7 +46,11 @@ class GROUP_SHOWALL{
                                         for ($i = 0; $i < count($listTitles); $i++):
                                             if ($key === $listTitles[$i]) : ?>
                                                 <td>
-                                                    <?= $value; ?>
+                                                    <?php if ($key === 'sm_nameGroup') {?>
+                                                        <a title="<?= $strings['Show Group']?>" href="GROUP_Controller.php?action=Show&group=<?= $this->groups[$j]['sm_idGroup']?>"><?=$value?></a>
+                                                    <?php } else{ ?>
+                                                        <?= $value; ?>
+                                                    <?php } ?>
                                                 </td>
                                             <?php endif;
                                         endfor;
@@ -54,7 +58,7 @@ class GROUP_SHOWALL{
                                         
                                     <td>
                                         <?php  if($this->view->checkRol('SHOW ALL', 'USER')): ?> 
-                                            <a href="GROUP_Controller.php?action=<?= $strings['Users']?>&group=<?= $this->groups[$j]['sm_idGroup']?>">
+                                            <a href="GROUP_Controller.php?action=Users&group=<?= $this->groups[$j]['sm_idGroup']?>">
                                                 <span title="<?= $strings['Show Users']?>" class="btn btn-primary btn-sm fa fa-users"></span>
                                             </a>
                                         <?php endif; ?> 

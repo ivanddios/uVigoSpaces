@@ -1,6 +1,6 @@
 <?php
 
-class SPACE_SELECT_PLAN{
+class SPACE_SELECTUBICATION{
 
 	private $space;
 	private $plan;

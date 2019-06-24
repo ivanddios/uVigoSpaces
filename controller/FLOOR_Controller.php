@@ -8,7 +8,7 @@ require_once("../view/FLOOR_SHOWALL_View.php");
 require_once("../view/FLOOR_ADD_View.php");
 require_once("../view/FLOOR_EDIT_View.php");
 require_once("../view/FLOOR_SHOW_View.php");
-require_once("../view/FLOOR_SHOW_PLAN_View.php");
+require_once("../view/FLOOR_SHOWPLAN_View.php");
 
 $function = "FLOOR";
 $view = new ViewManager();
@@ -182,7 +182,7 @@ Switch ($_REQUEST['action']){
         $planFloor = $floor->getLinkplan();
         $infoFloor = $floor->getInfoFloor();
 
-        new FLOOR_SHOW_plan($spacesValues, $planFloor, $infoFloor);
+        new FLOOR_SHOWPLAN($spacesValues, $planFloor, $infoFloor);
         
     break;
     
