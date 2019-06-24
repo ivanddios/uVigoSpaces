@@ -151,11 +151,13 @@ class BUILDING_Model {
     public function deleteBuilding() {
         $errors = $this->checkIsValidForDelete();
         if($errors === false){
-            $this->deleteDirPhoto($this->directoryBuilding);
             $sql = "DELETE FROM `SM_BUILDING` WHERE sm_idBuilding ='$this->idBuilding'";
             if (!($resultado = $this->mysqli->query($sql))) {
                 return 'Error in the query on the database';
             } else {
+                if(is_dir($this->directoryBuilding)){
+                    $this->deleteDirPhoto($this->directoryBuilding);
+                }
                 return true;
             }
         }else{
