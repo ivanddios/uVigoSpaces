@@ -13,7 +13,7 @@ class SPACE_ADD{
     
     function render() {
         include 'header.php';
-        $this->view->setElement("%TITLE%", $strings["Add Floor"]); ?>
+        $this->view->setElement("%TITLE%", $strings["Add Space"]); ?>
 
 		<div class="container">
 			<div class="row center-row">
@@ -22,7 +22,7 @@ class SPACE_ADD{
 						<?=htmlentities($strings["Data of the new space"])?>
 					</div>
 					<div class="col-lg-12 center-block-content">
-						<form method="POST" action="SPACE_Controller.php?action=Add&building=<?= $this->building?>&floor=<?= $this->floor?>" enctype="multipart/form-data" onkeyup="validateSpace(this)">
+						<form method="POST" action="SPACE_Controller.php?action=Add&building=<?= $this->building?>&floor=<?= $this->floor?>" onkeyup="validateSpace(this)">
 							<div id="group-form">
                       
 								<input type="hidden" name="idBuilding" value="<?=$this->building?>" readonly>
