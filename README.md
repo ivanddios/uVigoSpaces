@@ -16,9 +16,9 @@ Connect to MySQL console and import the file /bd/uVigoSpaces.sql
 
 ### Test Users
 
-**ADMINISTRATOR** ivandd@hotmail.com - ABcd1234
-**PAS** yeraylf@gmail.com - 1234ABcd
+* **ADMINISTRATOR**:  ivandd@hotmail.com - ABcd1234
+* **PAS**:  yeraylf@gmail.com - 1234ABcd
 
-## Author
+### Author 
 
 * **Iván de Dios Fernández** - [ivanddios](https://github.com/ivanddios)
