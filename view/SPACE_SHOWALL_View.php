@@ -15,8 +15,12 @@ class SPACE_SHOWALL{
     function render() {
         include 'header.php';
         $this->view->setElement("%TITLE%", $strings["Spaces"]);
-        $listTitles = array('sm_idBuilding', 'sm_nameSpace', 'sm_builtSurface', 'sm_numberInventorySpace'); ?>
-
+        if(isset($_SESSION['LOGIN'])):
+            $listTitles = array('sm_idBuilding', 'sm_categorySpace', 'sm_nameSpace', 'sm_builtSurface', 'sm_numberInventorySpace'); 
+        else:
+            $listTitles = array('sm_idBuilding', 'sm_categorySpace', 'sm_builtSurface', 'sm_numberInventorySpace'); 
+        endif;
+        ?>
         <div class="container">
             <div class="row center-row">
                 <div class="col-lg-12 center-block">
@@ -57,14 +61,16 @@ class SPACE_SHOWALL{
                                                     <td id="item-idSpace-<?=$j?>">
                                                     <a title="<?=$strings['Show']?>" href='SPACE_Controller.php?action=Show&building=<?= $this->spaces[$j]['sm_idBuilding']?>&floor=<?= $this->spaces[$j]['sm_idFloor']?>&space=<?= $this->spaces[$j]['sm_idSpace']?>'> <?= $this->spaces[$j]['sm_idBuilding'].$this->spaces[$j]['sm_idFloor'].$this->spaces[$j]['sm_idSpace']?></a>    
                                                 <?php elseif ($key === 'sm_nameSpace'): ?>
-                                                    
                                                     <td id="item-nameSpace-<?=$j?>"> 
-                                                    <?= $value; ?>
-                                                <?php elseif($key === 'sm_builtSurface'): ?>
+                                                    <?= $value; 
+                                                elseif($key === 'sm_builtSurface'): ?>
                                                         <td id="item-surfaceSpace-<?=$j?>" class="surface">
-                                                        <?=$value . ' m²'?>
-                                                <?php else:?>
-                                                        <td id="item-numberInventorySpace-<?=$j?>" class="numberInventory">
+                                                        <?=$value . ' m²';
+                                                elseif($key === 'sm_numberInventorySpace'): ?>
+                                                       <td id="item-numberInventorySpace-<?=$j?>" class="numberInventory">
+                                                        <?=$value;
+                                                else:?>
+                                                        <td>
                                                         <?=$value; 
                                                     endif; ?>
                                                 </td> 

@@ -8,13 +8,13 @@ class SPACE_EDIT{
 	function __construct($space, $plan) {
 			$this->space = $space;
 			$this->plan = $plan;
-			
 			$this->render();
     }
     
     function render() {
 			include 'header.php';
-			$this->view->setElement("%TITLE%", $strings["Edit Space"]); ?>
+			$this->view->setElement("%TITLE%", $strings["Edit Space"]); 
+			$selectOptions = array('Infraestructura', 'PAS', 'Servicios', 'Docencia'); ?>
 
 			<div class="container">
 				<div class="row center-row">
@@ -29,10 +29,24 @@ class SPACE_EDIT{
 									<input type="hidden" name="idBuilding" value="<?=$this->space['sm_idBuilding']?>" readonly>
                                 	<input type="hidden" name="idFloor" value="<?=$this->space['sm_idFloor']?>" readonly>
 
-									<div class="input-container">
+									<div class="input-container inputidSpace">
 										<span class="input-group-text fa fa-cube"></span>
-										<input type="text" id="idSpace" name="idSpace" value="<?=$this->space['sm_idSpace']?>"  onkeyup="checkSpaceId(this)" required>
+										<input type="text" id="idSpace" name="idSpace" value="<?=$this->space['sm_idSpace']?>" onkeyup="checkSpaceId(this)" required>
 										<label for="idSpace"><?= $strings['What is the identifier of this space?']?></label>
+									</div>
+
+									<label class="labelSelect"><?= $strings['What is its category?']?></label>
+									<div class="input-container labelCategory">
+										<select class="custom-select" name="categorySpace" required>
+											<?php foreach($selectOptions as $option): 
+												if($option == $this->space['sm_categorySpace']) : ?>
+													<option value="<?=$option?>" selected ><?=$strings[$this->space['sm_categorySpace']]?></option>
+												<?php else: ?>
+													<option value="<?=$option?>"><?=$strings[$option]?></option>
+												<?php endif;
+											endforeach; ?>
+										</select>
+										<i class="input-group-text fa fa-tag" aria-hidden="true"></i>
 									</div>
 
 									<div class="input-container">

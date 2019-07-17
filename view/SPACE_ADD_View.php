@@ -13,7 +13,8 @@ class SPACE_ADD{
     
     function render() {
         include 'header.php';
-        $this->view->setElement("%TITLE%", $strings["Add Space"]); ?>
+		$this->view->setElement("%TITLE%", $strings["Add Floor"]);
+		$selectOptions = array('Infraestructura', 'PAS', 'Docencia', 'Servicios'); ?>
 
 		<div class="container">
 			<div class="row center-row">
@@ -28,11 +29,23 @@ class SPACE_ADD{
 								<input type="hidden" name="idBuilding" value="<?=$this->building?>" readonly>
                                 <input type="hidden" name="idFloor" value="<?=$this->floor?>" readonly>
 
-								<div class="input-container">
+								<div class="input-container inputidSpace">
 									<span class="input-group-text fa fa-cube"></span>
 									<input type="text" id="idSpace" name="idSpace" onkeyup="checkSpaceId(this)" required/>
 									<label for="idSpace"><?= $strings['What is the identifier of this space?']?></label>
 								</div>
+
+								<label class="labelSelect"><?= $strings['What is its category?']?></label>
+								<div class="input-container labelCategory">
+									<select class="custom-select" name="categorySpace" required>
+										<option selected disabled><?=$strings['Choose']?></option>
+										<?php foreach($selectOptions as $option): ?>
+											<option value="<?=$option?>"><?=$strings[$option]?></option>
+										<?php endforeach; ?>
+									</select>
+									<i class="input-group-text fa fa-tag" aria-hidden="true"></i>
+								</div>
+
 
 								<div class="input-container">
 									<span class="input-group-text fa fa-reorder"></span>

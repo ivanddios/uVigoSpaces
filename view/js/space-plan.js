@@ -398,7 +398,7 @@ function selectSpace(coordsSpace, srcImage) {
         startingPos = [],
         radius = 10;
 
-    //If there isn't coordinates only loads the floor's plane resize    
+    //If there isn't coordinates of space only loads the floor's plane resize    
     if(!coordsSpace){
         savedButton.disabled = true;
         clearButton.disabled = true;
@@ -411,14 +411,6 @@ function selectSpace(coordsSpace, srcImage) {
         loadImageResizeWithSelectSpace(srcImage, coordsSpace, ctxImage, ctxLines, true);
     }
 
-
-    /**
-     * Listener to detect mousedown event over layer where the polygon is going to be drawn
-     * 
-     * If the click is on a drawn point, calculates the coordinates to drag  the point on the floor's plane (drag and drop)
-     * If the click isn't on a drawn point, draws one point in this coordinates (square)
-     * 
-     */
     canvasSelection.addEventListener("mousedown", function(event){
         isDragging = false; 
         startingPos = [event.pageX, event.pageY]; 
@@ -446,13 +438,6 @@ function selectSpace(coordsSpace, srcImage) {
     }, false);
 
 
-    /**
-     * Listener to detect mousemove event and do drag and drop of one point
-     * 
-     * Evaluates if "drag and drop" is activated. In this case, clears the selection's layer,
-     * change the value of point that is dragging in global points array and re-draws all points
-     * 
-     */
     canvasSelection.addEventListener("mousemove", function(event) {
         if(pointMove != null){
             ctxLines.clearRect(0, 0, canvasSelection.width, canvasSelection.height);
@@ -476,13 +461,6 @@ function selectSpace(coordsSpace, srcImage) {
     }, false);
         
 
-    /**
-     * Listener to detect mouseup event
-     * 
-     * Recalculates the coordinates with the values that will save in database (applying the ratioResize)
-     * If the event is over initial point, draws the polygon with the global points array
-     * 
-     */
     canvasSelection.addEventListener("mouseup", function(event) {
         pointMove = null;
         inputCoords.value = "";
@@ -515,7 +493,6 @@ function selectSpace(coordsSpace, srcImage) {
              }
          }
     }, false);
-
 
     /** 
     * When the user click in clear's button, resets the parametres 
@@ -561,7 +538,7 @@ function selectSpace(coordsSpace, srcImage) {
         }
     });
     
-    /** 
+     /** 
     * When the user click in resize's button loads the two layers
     */
     resizeButton.addEventListener("click", function() {

@@ -20,7 +20,11 @@ class SPACE_SHOWUBICATION{
 
 		<div id="titleView">
 			<h3><?= $this->space['sm_nameBuilding'];?><h3>
-			<h4><?= $this->space['sm_nameFloor'];?> ~ <?= $this->space['sm_nameSpace'];?>
+			<?php if(isset($_SESSION['LOGIN'])): ?>
+				<h4><?= $this->space['sm_nameFloor'];?> ~ <?= $this->space['sm_nameSpace'];?>
+			<?php else: ?>
+				<h4><?= $strings['SpaceOf'];?>  <?= $this->space['sm_categorySpace'];?>
+			<?php endif; ?>
 		</div>
 		<div id="container-canvas">
 			<canvas id="canvasImage"></canvas>

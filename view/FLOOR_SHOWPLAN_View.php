@@ -29,7 +29,7 @@ class FLOOR_SHOWPLAN{
 				<?php for($i=0; $i<count($this->spaces); $i++):
 					if($this->spaces[$i]['sm_coordsplan'] != ''): ?>
 						<area shape="poly" class="mapArea" title="<?= $this->spaces[$i]['sm_nameSpace']?>" coords="<?= $this->spaces[$i]['sm_coordsplan']?>" onclick="loadModal('#'+'<?=$this->spaces[$i]['sm_idSpace']?>')">
-						<div id="<?=$this->spaces[$i]['sm_idSpace']?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+						<div id="<?=$this->spaces[$i]['sm_idSpace']?>" class="modal floorModal fade" tabindex="-1" role="dialog" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
@@ -39,21 +39,30 @@ class FLOOR_SHOWPLAN{
 										</button>
 									</div>
 									<div class="modal-body">
-										<div class="input-container">
-											<span class="input-group-text fa fa-reorder"></span>
-											<input type="text" id="nameSpace" name="idFloor" value="<?=$this->spaces[$i]['sm_nameSpace']?>" readonly>
-											<label for="idFloor"><?= $strings['sm_nameSpace']?></label>
+									
+									<div class="input-container">
+											<span class="input-group-text fa fa-tag"></span>
+											<input type="text" id="categorySpace" value="<?=$this->spaces[$i]['sm_categorySpace']?>" readonly>
+											<label for="categorySpace"><?= $strings['sm_categorySpace']?></label>
 										</div>
+
+										<?php if(isset($_SESSION['LOGIN'])): ?>
+											<div class="input-container">
+												<span class="input-group-text fa fa-reorder"></span>
+												<input type="text" id="nameSpace" value="<?=$this->spaces[$i]['sm_nameSpace']?>" readonly>
+												<label for="nameSpace"><?= $strings['sm_nameSpace']?></label>
+											</div>
+										<?php endif; ?>
 									
 										<div class="input-container">
 											<span class="input-group-text fa fa-area-chart"></span>
-											<input type="text" id="surfaceSpace" name="surfaceSpace" value="<?=$this->spaces[$i]['sm_builtSurface']?> m²" readonly>
-											<label for="surfaceSpace"><?= $strings['sm_builtSurface']?></label>
+											<input type="text" id="builtSurface" value="<?=$this->spaces[$i]['sm_builtSurface']?> m²" readonly>
+											<label for="builtSurface"><?= $strings['sm_builtSurface']?></label>
 										</div>
 
 										<div class="input-container">
 											<span class="input-group-text fa fa-barcode"></span>
-											<input type="text" id="numberInventorySpace" name="numberInventorySpace" value="<?=$this->spaces[$i]['sm_numberInventorySpace']?>" readonly>
+											<input type="text" id="numberInventorySpace" value="<?=$this->spaces[$i]['sm_numberInventorySpace']?>" readonly>
 											<label for="numberInventorySpace"><?= $strings['sm_numberInventorySpace']?></label>
 										</div>
 
